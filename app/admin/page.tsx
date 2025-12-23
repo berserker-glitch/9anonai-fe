@@ -20,6 +20,21 @@ interface SystemStats {
     totalMessages: number;
 }
 
+interface UserChat {
+    id: string;
+    title: string;
+    createdAt: string;
+    updatedAt: string;
+    messageCount: number;
+}
+
+interface ChatMessage {
+    id: string;
+    role: "user" | "assistant";
+    content: string;
+    createdAt: string;
+}
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
 
 export default function AdminDashboard() {
@@ -32,6 +47,14 @@ export default function AdminDashboard() {
     const [searchQuery, setSearchQuery] = useState("");
     const [sortField, setSortField] = useState<"conversationCount" | "messageCount" | "createdAt">("createdAt");
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+
+    // Drawer state
+    const [drawerOpen, setDrawerOpen] = useState(false);
+    const [selectedUser, setSelectedUser] = useState<UserStats | null>(null);
+    const [userChats, setUserChats] = useState<UserChat[]>([]);
+    const [selectedChat, setSelectedChat] = useState<string | null>(null);
+    const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
+    const [drawerLoading, setDrawerLoading] = useState(false);
 
     // Redirect if not authenticated or not superadmin
     useEffect(() => {
@@ -99,6 +122,64 @@ export default function AdminDashboard() {
             month: "short",
             day: "numeric"
         });
+    };
+
+    const formatTime = (dateString: string) => {
+        return new Date(dateString).toLocaleString("en-US", {
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+    };
+
+    // Open drawer and fetch user's conversations
+    const handleViewConversations = async (u: UserStats) => {
+        setSelectedUser(u);
+        setDrawerOpen(true);
+        setDrawerLoading(true);
+        setSelectedChat(null);
+        setChatMessages([]);
+
+        try {
+            const res = await fetch(`${API_URL}/admin/users/${u.id}/chats`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            const data = await res.json();
+            setUserChats(data.chats || []);
+        } catch (e) {
+            console.error("Failed to fetch user chats", e);
+            setUserChats([]);
+        } finally {
+            setDrawerLoading(false);
+        }
+    };
+
+    // Fetch messages for selected conversation
+    const handleSelectConversation = async (chatId: string) => {
+        setSelectedChat(chatId);
+        setDrawerLoading(true);
+
+        try {
+            const res = await fetch(`${API_URL}/admin/chats/${chatId}/messages`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            const data = await res.json();
+            setChatMessages(data.messages || []);
+        } catch (e) {
+            console.error("Failed to fetch chat messages", e);
+            setChatMessages([]);
+        } finally {
+            setDrawerLoading(false);
+        }
+    };
+
+    const closeDrawer = () => {
+        setDrawerOpen(false);
+        setSelectedUser(null);
+        setUserChats([]);
+        setSelectedChat(null);
+        setChatMessages([]);
     };
 
     if (authLoading || isLoading) {
@@ -251,8 +332,7 @@ export default function AdminDashboard() {
                                             )}
                                         </div>
                                     </th>
-                                    <th
-                                        className="text-left px-6 py-4 text-sm font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
+                                    <th className="text-left px-6 py-4 text-sm font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
                                         onClick={() => handleSort("createdAt")}
                                     >
                                         <div className="flex items-center gap-1">
@@ -261,6 +341,9 @@ export default function AdminDashboard() {
                                                 <span>{sortOrder === "asc" ? "↑" : "↓"}</span>
                                             )}
                                         </div>
+                                    </th>
+                                    <th className="text-left px-6 py-4 text-sm font-medium text-muted-foreground">
+                                        Actions
                                     </th>
                                 </tr>
                             </thead>
@@ -295,11 +378,19 @@ export default function AdminDashboard() {
                                         <td className="px-6 py-4 text-muted-foreground">
                                             {formatDate(u.createdAt)}
                                         </td>
+                                        <td className="px-6 py-4">
+                                            <button
+                                                onClick={() => handleViewConversations(u)}
+                                                className="px-3 py-1.5 text-xs font-medium bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors"
+                                            >
+                                                View Chats
+                                            </button>
+                                        </td>
                                     </tr>
                                 ))}
                                 {filteredUsers.length === 0 && (
                                     <tr>
-                                        <td colSpan={5} className="px-6 py-12 text-center text-muted-foreground">
+                                        <td colSpan={6} className="px-6 py-12 text-center text-muted-foreground">
                                             No users found
                                         </td>
                                     </tr>
@@ -309,6 +400,110 @@ export default function AdminDashboard() {
                     </div>
                 </div>
             </main>
+
+            {/* Conversation Drawer */}
+            {drawerOpen && (
+                <>
+                    {/* Backdrop */}
+                    <div
+                        className="fixed inset-0 bg-black/50 z-40"
+                        onClick={closeDrawer}
+                    />
+                    {/* Drawer */}
+                    <div className="fixed right-0 top-0 h-full w-full max-w-xl bg-card border-l border-border z-50 shadow-2xl flex flex-col">
+                        {/* Drawer Header */}
+                        <div className="p-4 border-b border-border flex items-center justify-between">
+                            <div>
+                                <h2 className="text-lg font-semibold">
+                                    {selectedChat ? "Conversation" : "Conversations"}
+                                </h2>
+                                <p className="text-sm text-muted-foreground">
+                                    {selectedUser?.name || selectedUser?.email}
+                                </p>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                {selectedChat && (
+                                    <button
+                                        onClick={() => { setSelectedChat(null); setChatMessages([]); }}
+                                        className="px-3 py-1.5 text-sm bg-muted rounded-lg hover:bg-muted/80 transition-colors"
+                                    >
+                                        ← Back
+                                    </button>
+                                )}
+                                <button
+                                    onClick={closeDrawer}
+                                    className="p-2 rounded-lg hover:bg-muted transition-colors"
+                                >
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path d="M18 6L6 18M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Drawer Content */}
+                        <div className="flex-1 overflow-y-auto">
+                            {drawerLoading ? (
+                                <div className="flex items-center justify-center h-32">
+                                    <div className="animate-spin h-6 w-6 border-2 border-primary border-t-transparent rounded-full" />
+                                </div>
+                            ) : selectedChat ? (
+                                // Messages View
+                                <div className="p-4 space-y-4">
+                                    {chatMessages.length === 0 ? (
+                                        <p className="text-center text-muted-foreground py-8">No messages</p>
+                                    ) : (
+                                        chatMessages.map((msg) => (
+                                            <div
+                                                key={msg.id}
+                                                className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+                                            >
+                                                <div
+                                                    className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${msg.role === "user"
+                                                            ? "bg-primary text-primary-foreground"
+                                                            : "bg-muted"
+                                                        }`}
+                                                >
+                                                    <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
+                                                    <p className={`text-[10px] mt-1 ${msg.role === "user" ? "text-primary-foreground/70" : "text-muted-foreground"
+                                                        }`}>
+                                                        {formatTime(msg.createdAt)}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        ))
+                                    )}
+                                </div>
+                            ) : (
+                                // Conversations List
+                                <div className="divide-y divide-border">
+                                    {userChats.length === 0 ? (
+                                        <p className="text-center text-muted-foreground py-8">No conversations</p>
+                                    ) : (
+                                        userChats.map((chat) => (
+                                            <button
+                                                key={chat.id}
+                                                onClick={() => handleSelectConversation(chat.id)}
+                                                className="w-full p-4 text-left hover:bg-muted/50 transition-colors"
+                                            >
+                                                <div className="flex items-center justify-between">
+                                                    <p className="font-medium truncate pr-4">{chat.title}</p>
+                                                    <span className="text-xs text-muted-foreground whitespace-nowrap">
+                                                        {chat.messageCount} msgs
+                                                    </span>
+                                                </div>
+                                                <p className="text-xs text-muted-foreground mt-1">
+                                                    {formatTime(chat.updatedAt)}
+                                                </p>
+                                            </button>
+                                        ))
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     );
 }

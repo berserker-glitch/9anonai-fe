@@ -32,7 +32,7 @@ export function MessageContent({ content, className = "" }: MessageContentProps)
                 components={{
                     // Custom styling for code blocks
                     pre: ({ children }) => (
-                        <pre className="bg-zinc-900 dark:bg-zinc-950 rounded-lg p-4 overflow-x-auto my-3" dir="ltr">
+                        <pre className="bg-zinc-900 dark:bg-zinc-950 rounded-lg p-4 overflow-x-auto my-4" dir="ltr">
                             {children}
                         </pre>
                     ),
@@ -59,22 +59,53 @@ export function MessageContent({ content, className = "" }: MessageContentProps)
                             {children}
                         </a>
                     ),
-                    // Better list styling
+                    // Better list styling with more spacing
                     ul: ({ children }) => (
-                        <ul className="list-disc list-inside my-2 space-y-1">
+                        <ul className="list-disc list-outside ml-5 my-4 space-y-2">
                             {children}
                         </ul>
                     ),
                     ol: ({ children }) => (
-                        <ol className="list-decimal list-inside my-2 space-y-1">
+                        <ol className="list-decimal list-outside ml-5 my-4 space-y-2">
                             {children}
                         </ol>
                     ),
+                    li: ({ children }) => (
+                        <li className="pl-1">
+                            {children}
+                        </li>
+                    ),
                     // Better paragraph spacing
                     p: ({ children }) => (
-                        <p className="my-2 first:mt-0 last:mb-0">
+                        <p className="my-3 first:mt-0 last:mb-0 leading-7">
                             {children}
                         </p>
+                    ),
+                    // Heading styles
+                    h1: ({ children }) => (
+                        <h1 className="text-xl font-bold mt-6 mb-3 first:mt-0">
+                            {children}
+                        </h1>
+                    ),
+                    h2: ({ children }) => (
+                        <h2 className="text-lg font-semibold mt-5 mb-2 first:mt-0">
+                            {children}
+                        </h2>
+                    ),
+                    h3: ({ children }) => (
+                        <h3 className="text-base font-semibold mt-4 mb-2 first:mt-0">
+                            {children}
+                        </h3>
+                    ),
+                    // Blockquote styling
+                    blockquote: ({ children }) => (
+                        <blockquote className="border-l-4 border-primary/50 pl-4 my-4 italic text-muted-foreground">
+                            {children}
+                        </blockquote>
+                    ),
+                    // Horizontal rule
+                    hr: () => (
+                        <hr className="my-6 border-border" />
                     ),
                 }}
             >
