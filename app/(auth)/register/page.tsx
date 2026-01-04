@@ -17,7 +17,13 @@ export default function RegisterPage() {
     // Redirect if already logged in
     useEffect(() => {
         if (user) {
-            router.push("/");
+            if (user.role === "superadmin") {
+                router.push("/admin");
+            } else if (!user.isOnboarded) {
+                router.push("/setup");
+            } else {
+                router.push("/chat");
+            }
         }
     }, [user, router]);
 
@@ -29,7 +35,7 @@ export default function RegisterPage() {
         const result = await register(email, password, name);
 
         if (result.success) {
-            router.push("/");
+            router.push("/setup");
         } else {
             setError(result.error || "Registration failed");
         }

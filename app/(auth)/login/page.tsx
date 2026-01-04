@@ -16,7 +16,13 @@ export default function LoginPage() {
     // Redirect if already logged in
     useEffect(() => {
         if (user) {
-            router.push(user.role === "superadmin" ? "/admin" : "/chat");
+            if (user.role === "superadmin") {
+                router.push("/admin");
+            } else if (!user.isOnboarded) {
+                router.push("/setup");
+            } else {
+                router.push("/chat");
+            }
         }
     }, [user, router]);
 

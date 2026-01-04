@@ -26,6 +26,7 @@ import { AttachButton } from "@/components/interaction/attach-button";
 import { ScrollToBottom } from "@/components/utility/scroll-to-bottom";
 import { ConfirmModal } from "@/components/utility/modal";
 import { SettingsModal } from "@/components/settings/settings-modal";
+import { FilesModal } from "@/components/chat/files-modal";
 
 // UI Components
 import { Textarea } from "@/components/ui/textarea";
@@ -83,6 +84,7 @@ export default function ChatWithIdPage() {
     const [chatToDelete, setChatToDelete] = useState<string | null>(null);
     const [attachedFiles, setAttachedFiles] = useState<File[]>([]);
     const [showWelcome, setShowWelcome] = useState(true);
+    const [filesModalOpen, setFilesModalOpen] = useState(false);
     const [pendingMessage, setPendingMessage] = useState<string | null>(initialMessage || null);
 
     const messageContainerRef = useRef<HTMLDivElement>(null);
@@ -129,6 +131,11 @@ export default function ChatWithIdPage() {
                             content: msg.content,
                             timestamp: new Date(msg.createdAt),
                             sources: msg.sources ? JSON.parse(msg.sources) : [],
+                            contract: msg.attachmentUrl ? {
+                                title: msg.attachmentName || "Generated Document",
+                                path: msg.attachmentUrl,
+                                type: "pdf"
+                            } : undefined,
                         }));
                         setMessages(formattedMessages);
                         setShowWelcome(formattedMessages.length === 0);
@@ -323,6 +330,7 @@ export default function ChatWithIdPage() {
 
         let fullContent = "";
         let finalSources: any[] = [];
+        let finalContract: { title: string; path: string; type: string } | null = null;
 
         // Compress images
         const imageData: { data: string; mimeType: string }[] = [];
@@ -412,10 +420,17 @@ export default function ChatWithIdPage() {
                             } else if (event.type === "contract_generated") {
                                 // Handle generated contract - add download link
                                 const doc = event.document;
+                                // Save for DB persistence
+                                finalContract = {
+                                    title: doc.title,
+                                    path: `/api/pdf/download/${doc.id}`, // Use API download link
+                                    type: doc.type
+                                };
+
                                 setMessages(prev =>
                                     prev.map(m =>
                                         m.id === assistantId
-                                            ? { ...m, contract: { title: doc.title, path: doc.path, type: doc.type } }
+                                            ? { ...m, contract: finalContract! }
                                             : m
                                     )
                                 );
@@ -439,6 +454,8 @@ export default function ChatWithIdPage() {
                         role: "assistant",
                         content: fullContent,
                         sources: JSON.stringify(finalSources),
+                        attachmentUrl: finalContract ? finalContract.path : null,
+                        attachmentName: finalContract ? finalContract.title : null
                     }),
                 });
             } catch (e) {
@@ -569,7 +586,12 @@ export default function ChatWithIdPage() {
             <div className="flex h-screen bg-background">
                 {/* Sidebar */}
                 <Sidebar>
-                    <SidebarHeader onNewChat={handleNewChat} />
+                    <SidebarHeader
+                        onNewChat={handleNewChat}
+                        searchQuery={searchQuery}
+                        onSearchChange={setSearchQuery}
+                        onOpenFiles={() => setFilesModalOpen(true)}
+                    />
                     <SidebarChatList>
                         {filteredChats.map(chat => (
                             <SidebarChatItem
@@ -739,7 +761,7 @@ export default function ChatWithIdPage() {
                                                                         <p className="text-xs text-muted-foreground">PDF Document</p>
                                                                     </div>
                                                                     <a
-                                                                        href={`${API_URL.replace('/api', '')}${message.contract.path}`}
+                                                                        href={`${API_URL.replace('/api', '')}${message.contract.path}?token=${token}`}
                                                                         download
                                                                         target="_blank"
                                                                         rel="noopener noreferrer"
@@ -848,6 +870,11 @@ export default function ChatWithIdPage() {
                     onClose={() => setSettingsOpen(false)}
                     user={user}
                     onLogout={logout}
+                />
+
+                <FilesModal
+                    isOpen={filesModalOpen}
+                    onClose={() => setFilesModalOpen(false)}
                 />
             </div>
         </SidebarProvider>

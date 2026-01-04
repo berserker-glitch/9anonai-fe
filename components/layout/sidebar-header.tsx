@@ -5,62 +5,126 @@ import { IconButton } from "../ui/icon-button";
 
 interface SidebarHeaderProps {
     onNewChat?: () => void;
+    searchQuery: string;
+    onSearchChange: (query: string) => void;
+    onOpenFiles: () => void;
 }
 
-export function SidebarHeader({ onNewChat }: SidebarHeaderProps) {
+export function SidebarHeader({ onNewChat, searchQuery, onSearchChange, onOpenFiles }: SidebarHeaderProps) {
     const { toggle } = useSidebar();
 
     return (
-        <div className="flex items-center justify-between p-3">
-            <button
-                onClick={onNewChat}
-                className="
-          flex items-center gap-2 flex-1
-          px-3 py-2.5 mr-2
-          text-sm font-medium text-sidebar-foreground
-          bg-sidebar-accent rounded-lg
-          hover:bg-sidebar-accent/80
-          transition-colors duration-200
-        "
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+        <div className="flex flex-col p-3 gap-2">
+            {/* Top Row: New Chat and Toggle */}
+            <div className="flex items-center gap-2">
+                <button
+                    onClick={onNewChat}
+                    className="
+                        flex items-center gap-2 flex-1
+                        px-3 py-2
+                        text-sm font-medium text-sidebar-foreground
+                        hover:bg-sidebar-accent rounded-lg
+                        transition-colors duration-200
+                        group
+                    "
                 >
-                    <path d="M12 5v14" />
-                    <path d="M5 12h14" />
-                </svg>
-                New chat
-            </button>
+                    <div className="w-6 h-6 rounded-full bg-sidebar-accent/50 group-hover:bg-background flex items-center justify-center border border-border/50">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        >
+                            <path d="M12 5v14" />
+                            <path d="M5 12h14" />
+                        </svg>
+                    </div>
+                    New chat
+                </button>
 
-            <IconButton
-                label="Toggle sidebar"
-                onClick={toggle}
-                variant="ghost"
-                size="sm"
-            >
+                <IconButton
+                    label="Toggle sidebar"
+                    onClick={toggle}
+                    variant="ghost"
+                    size="sm"
+                    className="text-sidebar-foreground hover:bg-sidebar-accent"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    >
+                        <rect width="18" height="18" x="3" y="3" rx="2" />
+                        <path d="M9 3v18" />
+                    </svg>
+                </IconButton>
+            </div>
+
+            {/* Search Item */}
+            <div className="relative group">
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/70 group-focus-within:text-primary transition-colors duration-200"
                     fill="none"
                     stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+                    viewBox="0 0 24 24"
                 >
-                    <rect width="18" height="18" x="3" y="3" rx="2" />
-                    <path d="M9 3v18" />
+                    <circle cx="11" cy="11" r="8" strokeWidth="2" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" strokeWidth="2" />
                 </svg>
-            </IconButton>
+                <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => onSearchChange(e.target.value)}
+                    placeholder="Search chats"
+                    className="
+                        w-full pl-9 pr-3 py-2
+                        bg-transparent
+                        hover:bg-sidebar-accent/50 focus:bg-sidebar-accent
+                        rounded-lg
+                        text-sm text-sidebar-foreground
+                        placeholder:text-muted-foreground/70
+                        outline-none
+                        transition-colors duration-200
+                    "
+                />
+            </div>
+
+            {/* Files Item */}
+            <button
+                onClick={onOpenFiles}
+                className="
+                    flex items-center gap-3 w-full
+                    px-3 py-2
+                    text-sm font-medium text-sidebar-foreground
+                    hover:bg-sidebar-accent rounded-lg
+                    transition-colors duration-200
+                    group
+                "
+            >
+                <div className="relative">
+                    <svg
+                        className="w-5 h-5 text-muted-foreground group-hover:text-foreground transition-colors"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                </div>
+                <span>PDFs Generated</span>
+                <span className="ml-auto text-[10px] font-bold bg-primary text-primary-foreground px-1.5 py-0.5 rounded-sm">NEW</span>
+            </button>
         </div>
     );
 }

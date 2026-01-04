@@ -7,6 +7,9 @@ interface User {
     email: string;
     name?: string;
     role?: string;
+    personalization?: string;
+    isOnboarded?: boolean;
+    marketingSource?: string;
 }
 
 interface AuthContextType {
@@ -15,6 +18,8 @@ interface AuthContextType {
     login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
     register: (email: string, password: string, name?: string) => Promise<{ success: boolean; error?: string }>;
     logout: () => void;
+    updateProfile: (data: { name?: string; personalization?: string; isOnboarded?: boolean; marketingSource?: string }) => Promise<{ success: boolean; error?: string }>;
+    changePassword: (current: string, newPass: string) => Promise<{ success: boolean; error?: string }>;
     isLoading: boolean;
 }
 
@@ -108,8 +113,45 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(null);
     };
 
+    const updateProfile = async (updates: { name?: string; personalization?: string; isOnboarded?: boolean; marketingSource?: string }) => {
+        try {
+            const res = await fetch(`${API_URL}/auth/profile`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(updates),
+            });
+            const data = await res.json();
+            if (!res.ok) return { success: false, error: data.error };
+            setUser(data.user);
+            return { success: true };
+        } catch (e) {
+            return { success: false, error: "Failed to update profile" };
+        }
+    };
+
+    const changePassword = async (current: string, newPass: string) => {
+        try {
+            const res = await fetch(`${API_URL}/auth/change-password`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({ currentPassword: current, newPassword: newPass }),
+            });
+            const data = await res.json();
+            if (!res.ok) return { success: false, error: data.error };
+            return { success: true };
+        } catch (e) {
+            return { success: false, error: "Failed to change password" };
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ user, token, login, register, logout, isLoading }}>
+        <AuthContext.Provider value={{ user, token, login, register, logout, updateProfile, changePassword, isLoading }}>
             {children}
         </AuthContext.Provider>
     );

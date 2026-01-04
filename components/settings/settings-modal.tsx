@@ -1,21 +1,143 @@
-"use client";
-
-import { useState, ReactNode } from "react";
+import { useState, ReactNode, useEffect } from "react";
 import { Modal } from "../utility/modal";
 import { useLanguage, languages, Language } from "@/lib/language-context";
+
+import { useAuth } from "@/lib/auth-context";
+import { useTheme } from "../providers/theme-provider";
 
 interface SettingsModalProps {
     isOpen: boolean;
     onClose: () => void;
-    user: { name?: string; email?: string } | null;
+    user: { name?: string; email?: string; personalization?: string } | null;
     onLogout: () => void;
 }
 
 type SettingsTab = "general" | "notifications" | "personalization" | "account" | "data" | "security";
 
-export function SettingsModal({ isOpen, onClose, user, onLogout }: SettingsModalProps) {
+export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: SettingsModalProps) {
     const [activeTab, setActiveTab] = useState<SettingsTab>("general");
     const { language, setLanguage } = useLanguage();
+    const { updateProfile, changePassword } = useAuth();
+
+    // Profile State
+    const [name, setName] = useState(propUser?.name || "");
+
+    const [personalizationInput, setPersonalizationInput] = useState("");
+    const [selectedTones, setSelectedTones] = useState<string[]>([]);
+    const [spokenLanguage, setSpokenLanguage] = useState("auto");
+    const [isEditingName, setIsEditingName] = useState(false);
+    const { theme, setTheme } = useTheme();
+
+    const TONE_OPTIONS = [
+        { id: "Professional", label: "Professional" },
+        { id: "Friendly", label: "Friendly" },
+        { id: "Concise", label: "Concise" },
+        { id: "Detailed", label: "Detailed" },
+        { id: "Simplifying", label: "Simple Language" },
+        { id: "Legal-Focused", label: "Legal Citations" }
+    ];
+
+    // Password State
+    const [passwordData, setPasswordData] = useState({ current: "", new: "", confirm: "" });
+    const [status, setStatus] = useState<{ type: "success" | "error"; message: string } | null>(null);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        if (propUser) {
+            if (propUser.name) setName(propUser.name);
+
+            if (propUser.personalization) {
+                try {
+                    const parsed = JSON.parse(propUser.personalization);
+                    if (typeof parsed === 'object' && parsed !== null) {
+                        setSelectedTones(parsed.tones || []);
+                        setPersonalizationInput(parsed.customInstructions || "");
+                        setSpokenLanguage(parsed.spokenLanguage || "auto");
+                    } else {
+                        // Legacy: it was just a string
+                        setPersonalizationInput(String(parsed));
+                    }
+                } catch (e) {
+                    // Plain text fallback
+                    setPersonalizationInput(propUser.personalization);
+                }
+            }
+        }
+    }, [propUser]);
+
+    useEffect(() => {
+        if (!isOpen) {
+            setStatus(null);
+            setPasswordData({ current: "", new: "", confirm: "" });
+            setIsEditingName(false);
+            if (propUser?.personalization) setPersonalizationInput(propUser.personalization);
+        }
+    }, [isOpen, propUser]);
+
+    const handleUpdateProfile = async () => {
+        setLoading(true);
+        setStatus(null);
+        const res = await updateProfile({ name });
+        setLoading(false);
+        if (res.success) {
+            setStatus({ type: "success", message: "Profile updated successfully" });
+            setIsEditingName(false);
+        } else {
+            setStatus({ type: "error", message: res.error || "Failed to update profile" });
+        }
+    };
+
+    const handleUpdatePersonalization = async () => {
+        setLoading(true);
+        setStatus(null);
+
+        const data = JSON.stringify({
+            tones: selectedTones,
+            customInstructions: personalizationInput,
+            spokenLanguage // Include this
+        });
+
+        const res = await updateProfile({ personalization: data });
+        setLoading(false);
+        if (res.success) {
+            setStatus({ type: "success", message: "Preferences saved successfully" });
+        } else {
+            setStatus({ type: "error", message: res.error || "Failed to save preferences" });
+        }
+    };
+
+    const handleSpokenLanguageChange = async (val: string) => {
+        setSpokenLanguage(val);
+        // Auto-save
+        const data = JSON.stringify({
+            tones: selectedTones,
+            customInstructions: personalizationInput,
+            spokenLanguage: val
+        });
+        await updateProfile({ personalization: data });
+    };
+
+    const handleChangePassword = async () => {
+        if (passwordData.new !== passwordData.confirm) {
+            setStatus({ type: "error", message: "New passwords do not match" });
+            return;
+        }
+        if (passwordData.new.length < 6) {
+            setStatus({ type: "error", message: "Password must be at least 6 characters" });
+            return;
+        }
+
+        setLoading(true);
+        setStatus(null);
+        const res = await changePassword(passwordData.current, passwordData.new);
+        setLoading(false);
+        if (res.success) {
+            setStatus({ type: "success", message: "Password changed successfully" });
+            setPasswordData({ current: "", new: "", confirm: "" });
+        } else {
+            setStatus({ type: "error", message: res.error || "Failed to change password" });
+        }
+    };
 
     const tabs: { id: SettingsTab; label: string; icon: ReactNode }[] = [
         {
@@ -90,7 +212,7 @@ export function SettingsModal({ isOpen, onClose, user, onLogout }: SettingsModal
                     {tabs.map((tab) => (
                         <button
                             key={tab.id}
-                            onClick={() => setActiveTab(tab.id)}
+                            onClick={() => { setActiveTab(tab.id); setStatus(null); }}
                             className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${activeTab === tab.id
                                 ? "bg-accent text-foreground font-medium"
                                 : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
@@ -104,6 +226,12 @@ export function SettingsModal({ isOpen, onClose, user, onLogout }: SettingsModal
 
                 {/* Content */}
                 <div className="flex-1 p-6 overflow-y-auto">
+                    {status && (
+                        <div className={`mb-4 p-3 rounded-lg text-sm ${status.type === "success" ? "bg-green-500/10 text-green-600" : "bg-red-500/10 text-red-600"}`}>
+                            {status.message}
+                        </div>
+                    )}
+
                     {activeTab === "general" && (
                         <div className="space-y-6">
                             <h2 className="text-lg font-semibold">General</h2>
@@ -114,18 +242,15 @@ export function SettingsModal({ isOpen, onClose, user, onLogout }: SettingsModal
                                     <p className="text-sm font-medium">Appearance</p>
                                     <p className="text-xs text-muted-foreground">Theme mode</p>
                                 </div>
-                                <span className="text-sm text-muted-foreground">System</span>
-                            </div>
-
-                            {/* Accent Color */}
-                            <div className="flex items-center justify-between py-3 border-b border-border">
-                                <div>
-                                    <p className="text-sm font-medium">Accent color</p>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <div className="w-4 h-4 rounded-full bg-primary border-2 border-primary" />
-                                    <span className="text-sm text-muted-foreground">Default</span>
-                                </div>
+                                <select
+                                    value={theme}
+                                    onChange={(e) => setTheme(e.target.value as any)}
+                                    className="bg-accent border border-border rounded-lg px-3 py-1.5 text-sm"
+                                >
+                                    <option value="light">Light</option>
+                                    <option value="dark">Dark</option>
+                                    <option value="system">System</option>
+                                </select>
                             </div>
 
                             {/* Language */}
@@ -153,10 +278,19 @@ export function SettingsModal({ isOpen, onClose, user, onLogout }: SettingsModal
                                     <div>
                                         <p className="text-sm font-medium">Spoken language</p>
                                     </div>
-                                    <span className="text-sm text-muted-foreground">Auto-detect</span>
+                                    <select
+                                        value={spokenLanguage}
+                                        onChange={(e) => handleSpokenLanguageChange(e.target.value)}
+                                        className="bg-accent border border-border rounded-lg px-3 py-1.5 text-sm"
+                                    >
+                                        <option value="auto">Auto-detect</option>
+                                        <option value="ar">Arabic (العربية)</option>
+                                        <option value="fr">French (Français)</option>
+                                        <option value="en">English</option>
+                                    </select>
                                 </div>
                                 <p className="text-xs text-muted-foreground mt-1">
-                                    For best results, select the language you mainly speak. If it&apos;s not listed, it may still be supported via auto-detection.
+                                    The AI will detect the language you speak. If auto-detect is on, response will match your input.
                                 </p>
                             </div>
                         </div>
@@ -182,8 +316,57 @@ export function SettingsModal({ isOpen, onClose, user, onLogout }: SettingsModal
                         <div className="space-y-6">
                             <h2 className="text-lg font-semibold">Personalization</h2>
                             <p className="text-sm text-muted-foreground">
-                                Customize how 9anon responds to you based on your preferences.
+                                Customize how 9anon responds to you. These settings will adapt the AI's behavior.
                             </p>
+
+                            <div className="space-y-4">
+                                {/* Tones Selection */}
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium">Communication Style</label>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        {TONE_OPTIONS.map((tone) => {
+                                            const isSelected = selectedTones.includes(tone.id);
+                                            return (
+                                                <button
+                                                    key={tone.id}
+                                                    onClick={() => {
+                                                        if (isSelected) {
+                                                            setSelectedTones(selectedTones.filter(t => t !== tone.id));
+                                                        } else {
+                                                            setSelectedTones([...selectedTones, tone.id]);
+                                                        }
+                                                    }}
+                                                    className={`px-3 py-2 text-sm rounded-lg border transition-all ${isSelected
+                                                        ? "bg-primary text-primary-foreground border-primary"
+                                                        : "bg-muted/30 border-border hover:bg-muted text-muted-foreground"
+                                                        }`}
+                                                >
+                                                    {tone.label}
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+
+                                {/* Custom Instructions */}
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium">Additional Custom Instructions</label>
+                                    <textarea
+                                        value={personalizationInput}
+                                        onChange={(e) => setPersonalizationInput(e.target.value)}
+                                        placeholder="Specific rules, e.g. 'Always clarify legal jargon', 'Prioritize labor code articles'..."
+                                        className="w-full h-32 px-3 py-2 bg-muted/50 border border-border rounded-lg text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary"
+                                    />
+                                </div>
+
+                                <button
+                                    onClick={handleUpdatePersonalization}
+                                    disabled={loading}
+                                    className="px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50"
+                                >
+                                    {loading ? "Saving..." : "Save Preferences"}
+                                </button>
+                            </div>
                         </div>
                     )}
 
@@ -211,12 +394,38 @@ export function SettingsModal({ isOpen, onClose, user, onLogout }: SettingsModal
                     {activeTab === "security" && (
                         <div className="space-y-6">
                             <h2 className="text-lg font-semibold">Security</h2>
-                            <div className="py-3 border-b border-border">
-                                <p className="text-sm font-medium">Two-factor authentication</p>
-                                <p className="text-xs text-muted-foreground mt-1">Add an extra layer of security to your account</p>
-                                <button className="mt-3 px-4 py-2 text-sm bg-accent hover:bg-accent/80 rounded-lg transition-colors">
-                                    Enable 2FA
-                                </button>
+                            <div className="py-3">
+                                <p className="text-sm font-medium mb-4">Change Password</p>
+                                <div className="space-y-3">
+                                    <input
+                                        type="password"
+                                        placeholder="Current Password"
+                                        value={passwordData.current}
+                                        onChange={(e) => setPasswordData({ ...passwordData, current: e.target.value })}
+                                        className="w-full px-3 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                                    />
+                                    <input
+                                        type="password"
+                                        placeholder="New Password"
+                                        value={passwordData.new}
+                                        onChange={(e) => setPasswordData({ ...passwordData, new: e.target.value })}
+                                        className="w-full px-3 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                                    />
+                                    <input
+                                        type="password"
+                                        placeholder="Confirm New Password"
+                                        value={passwordData.confirm}
+                                        onChange={(e) => setPasswordData({ ...passwordData, confirm: e.target.value })}
+                                        className="w-full px-3 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                                    />
+                                    <button
+                                        onClick={handleChangePassword}
+                                        disabled={loading || !passwordData.current || !passwordData.new}
+                                        className="px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50"
+                                    >
+                                        {loading ? "Changing..." : "Change Password"}
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     )}
@@ -227,17 +436,46 @@ export function SettingsModal({ isOpen, onClose, user, onLogout }: SettingsModal
 
                             <div className="py-3 border-b border-border">
                                 <p className="text-sm font-medium">Email</p>
-                                <p className="text-sm text-muted-foreground mt-1">{user?.email}</p>
+                                <p className="text-sm text-muted-foreground mt-1">{propUser?.email}</p>
                             </div>
 
                             <div className="py-3 border-b border-border">
-                                <p className="text-sm font-medium">Name</p>
-                                <p className="text-sm text-muted-foreground mt-1">{user?.name || "Not set"}</p>
-                            </div>
-
-                            <div className="py-3 border-b border-border">
-                                <p className="text-sm font-medium">Plan</p>
-                                <p className="text-sm text-muted-foreground mt-1">Free Plan</p>
+                                <div className="flex items-center justify-between mb-1">
+                                    <p className="text-sm font-medium">Name</p>
+                                    {!isEditingName && (
+                                        <button
+                                            onClick={() => setIsEditingName(true)}
+                                            className="text-xs text-primary hover:underline"
+                                        >
+                                            Edit
+                                        </button>
+                                    )}
+                                </div>
+                                {isEditingName ? (
+                                    <div className="flex gap-2">
+                                        <input
+                                            type="text"
+                                            value={name}
+                                            onChange={(e) => setName(e.target.value)}
+                                            className="flex-1 px-3 py-1.5 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                                        />
+                                        <button
+                                            onClick={handleUpdateProfile}
+                                            disabled={loading}
+                                            className="px-3 py-1.5 bg-primary text-primary-foreground text-xs rounded-lg hover:bg-primary/90"
+                                        >
+                                            Save
+                                        </button>
+                                        <button
+                                            onClick={() => { setIsEditingName(false); setName(propUser?.name || ""); }}
+                                            className="px-3 py-1.5 bg-accent text-accent-foreground text-xs rounded-lg hover:bg-accent/80"
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <p className="text-sm text-muted-foreground">{propUser?.name || "Not set"}</p>
+                                )}
                             </div>
 
                             <div className="pt-4 space-y-3">
