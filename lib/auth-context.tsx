@@ -114,8 +114,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     const updateProfile = async (updates: { name?: string; personalization?: string; isOnboarded?: boolean; marketingSource?: string }) => {
+        const url = `${API_URL}/auth/profile`;
+        console.log("[updateProfile] Calling:", url);
+        console.log("[updateProfile] Token exists:", !!token);
+        console.log("[updateProfile] Updates:", updates);
+
         try {
-            const res = await fetch(`${API_URL}/auth/profile`, {
+            const res = await fetch(url, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
@@ -123,12 +128,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 },
                 body: JSON.stringify(updates),
             });
+
+            console.log("[updateProfile] Response status:", res.status, res.statusText);
+
             const data = await res.json();
-            if (!res.ok) return { success: false, error: data.error };
+            console.log("[updateProfile] Response data:", data);
+
+            if (!res.ok) {
+                console.error("[updateProfile] Failed:", res.status, data);
+                return { success: false, error: data.error || `HTTP ${res.status}: ${res.statusText}` };
+            }
             setUser(data.user);
             return { success: true };
         } catch (e) {
-            return { success: false, error: "Failed to update profile" };
+            console.error("[updateProfile] Exception:", e);
+            return { success: false, error: "Failed to update profile: " + (e instanceof Error ? e.message : String(e)) };
         }
     };
 
