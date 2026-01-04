@@ -715,7 +715,7 @@ export default function NewChatPage() {
                                                                         <p className="text-xs text-muted-foreground">PDF Document</p>
                                                                     </div>
                                                                     <a
-                                                                        href={`${API_URL}/pdf/download/${message.contract.path.split('/').pop()}?token=${token}`}
+                                                                        href={`https://api.9anonai.com/api/pdf/download/${message.contract.path.split('/').pop()}?token=${token}`}
                                                                         download
                                                                         target="_blank"
                                                                         rel="noopener noreferrer"
