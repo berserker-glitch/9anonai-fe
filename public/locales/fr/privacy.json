@@ -1,0 +1,79 @@
+{
+    "title": "Politique de Confidentialité",
+    "lastUpdated": "Dernière mise à jour: Janvier 2026",
+    "intro": "Cette Politique de Confidentialité décrit comment nous collectons, utilisons et protégeons vos informations personnelles lors de l'utilisation de 9anon AI.",
+    "sections": {
+        "collection": {
+            "title": "1. Informations que Nous Collectons",
+            "content": "Nous collectons différents types d'informations pour fournir et améliorer nos services:",
+            "items": [
+                "Informations de compte: nom, email et mot de passe crypté",
+                "Historique des conversations: questions et réponses pour améliorer votre expérience",
+                "Données d'utilisation: comment vous interagissez avec nos services",
+                "Informations techniques: type de navigateur, appareil et adresse IP"
+            ]
+        },
+        "usage": {
+            "title": "2. Comment Nous Utilisons Vos Informations",
+            "content": "Nous utilisons les informations collectées aux fins suivantes:",
+            "items": [
+                "Fournir et améliorer nos services",
+                "Personnaliser votre expérience",
+                "Communiquer avec vous sur les mises à jour et services",
+                "Analyser l'utilisation pour développer nos produits",
+                "Assurer la sécurité de notre plateforme"
+            ]
+        },
+        "protection": {
+            "title": "3. Protection des Données",
+            "content": "Nous prenons la sécurité de vos données au sérieux:",
+            "items": [
+                "Toutes les données sont cryptées en transit et au repos",
+                "Nous utilisons des technologies de sécurité de pointe",
+                "L'accès aux données est restreint et surveillé",
+                "Nous effectuons des audits de sécurité réguliers"
+            ]
+        },
+        "sharing": {
+            "title": "4. Partage d'Informations",
+            "content": "Nous ne vendons ni ne louons vos informations personnelles. Nous pouvons partager des informations uniquement dans les cas suivants:",
+            "items": [
+                "Avec votre consentement explicite",
+                "Pour se conformer aux exigences légales",
+                "Avec des prestataires de services de confiance qui nous aident à exploiter notre plateforme"
+            ]
+        },
+        "cookies": {
+            "title": "5. Cookies",
+            "content": "Nous utilisons des cookies pour améliorer votre expérience. Vous pouvez contrôler les paramètres des cookies via votre navigateur."
+        },
+        "rights": {
+            "title": "6. Vos Droits",
+            "content": "Vous avez les droits suivants concernant vos données:",
+            "items": [
+                "Accéder à vos données personnelles",
+                "Corriger les informations inexactes",
+                "Supprimer votre compte et vos données",
+                "Exporter vos données",
+                "Vous opposer à certains traitements"
+            ]
+        },
+        "retention": {
+            "title": "7. Conservation des Données",
+            "content": "Nous conservons vos données tant que votre compte est actif ou selon les besoins pour fournir nos services. Vous pouvez demander la suppression de vos données à tout moment."
+        },
+        "children": {
+            "title": "8. Confidentialité des Enfants",
+            "content": "Nos services ne sont pas destinés aux enfants de moins de 13 ans. Nous ne collectons pas sciemment d'informations auprès des enfants."
+        },
+        "changes": {
+            "title": "9. Modifications de Cette Politique",
+            "content": "Nous pouvons mettre à jour cette Politique de Confidentialité de temps en temps. Nous vous informerons de tout changement important par email ou par un avis sur notre plateforme."
+        },
+        "contact": {
+            "title": "10. Nous Contacter",
+            "content": "Si vous avez des questions concernant cette Politique de Confidentialité, veuillez nous contacter:",
+            "email": "privacy@9anonai.com"
+        }
+    }
+}

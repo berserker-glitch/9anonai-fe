@@ -1,0 +1,87 @@
+{
+    "nav": {
+        "features": "المميزات",
+        "about": "حول",
+        "login": "تسجيل الدخول",
+        "getStarted": "ابدأ الآن",
+        "goToChat": "الذهاب للمحادثة"
+    },
+    "hero": {
+        "badge": "مساعد قانوني ذكي",
+        "badgeEn": "AI-Powered Legal Assistant",
+        "title1": "مساعدك القانوني",
+        "title2": "المغربي الذكي",
+        "description": "احصل على إجابات فورية حول القانون المغربي وإجراءاته القانونية وحقوقك.",
+        "descriptionEn": "Get instant answers about Moroccan law, legal procedures, and your rights.",
+        "ctaPrimary": "ابدأ المحادثة مجانًا",
+        "ctaSecondary": "اكتشف المزيد",
+        "free": "مجاني تمامًا",
+        "noRegistration": "بدون تسجيل",
+        "available247": "متاح 24/7"
+    },
+    "chat": {
+        "userQuestion": "ما هي عقوبة السرقة في المغرب؟",
+        "aiResponse": "حسب القانون الجنائي المغربي (المواد 505-534)، السرقة البسيطة معاقب عليها بالحبس من سنة إلى 5 سنوات. إذا كان هناك كسر أو عنف، تصل العقوبة إلى 10-20 سنة...",
+        "sources": "3 مصادر قانونية",
+        "placeholder": "اطرح سؤالك القانوني..."
+    },
+    "stats": {
+        "activeUsers": "مستخدم نشط",
+        "activeUsersValue": "+10,000",
+        "questionsAnswered": "سؤال مجاب",
+        "questionsAnsweredValue": "+50,000",
+        "accuracy": "دقة الإجابات",
+        "accuracyValue": "99.9%",
+        "languages": "لغات مدعومة",
+        "languagesValue": "4"
+    },
+    "features": {
+        "sectionTag": "المميزات",
+        "sectionTitle": "لماذا تختار",
+        "brand": "9anon",
+        "sectionDescription": "مساعد قانوني متخصص في القانون المغربي بإمكانيات ذكاء اصطناعي متقدمة",
+        "expertTitle": "خبير في القانون المغربي",
+        "expertDesc": "مدرب على آلاف الوثائق القانونية المغربية والمدونات والإجراءات القانونية.",
+        "multilingualTitle": "متعدد اللغات",
+        "multilingualDesc": "يتحدث العربية والفرنسية والإنجليزية والدارجة بطلاقة.",
+        "instantTitle": "إجابات فورية",
+        "instantDesc": "احصل على معلومات قانونية في ثوانٍ وليس أيام.",
+        "sourcesTitle": "مصادر موثقة",
+        "sourcesDesc": "كل إجابة مدعومة بمصادر قانونية ومواد قانونية محددة.",
+        "secureTitle": "آمن وخاص",
+        "secureDesc": "محادثاتك مشفرة ولا تتم مشاركتها مع أي طرف ثالث.",
+        "freeTitle": "مجاني للجميع",
+        "freeDesc": "الوصول الأساسي مجاني إلى الأبد. لا بطاقة ائتمان مطلوبة."
+    },
+    "howItWorks": {
+        "sectionTag": "كيف يعمل",
+        "sectionTitle": "ثلاث خطوات",
+        "simple": "بسيطة",
+        "step1Title": "اطرح سؤالك",
+        "step1Desc": "اكتب سؤالك القانوني بأي لغة تفضلها.",
+        "step2Title": "الذكاء الاصطناعي يبحث",
+        "step2Desc": "نحلل سؤالك ونبحث في آلاف الوثائق القانونية.",
+        "step3Title": "احصل على إجابتك",
+        "step3Desc": "تلقى إجابة دقيقة مع المصادر القانونية الداعمة."
+    },
+    "cta": {
+        "title": "مستعد للحصول على",
+        "titleHighlight": "إجابات قانونية؟",
+        "description": "انضم إلى آلاف المستخدمين الذين يحصلون على إرشادات قانونية فورية حول القانون المغربي.",
+        "button": "ابدأ الآن مجانًا"
+    },
+    "footer": {
+        "description": "Your AI-powered Moroccan law assistant. Get instant answers about legal matters, procedures, and rights in Arabic, French, English, and Darija.",
+        "product": "المنتج",
+        "features": "المميزات",
+        "howItWorks": "كيف يعمل",
+        "startChat": "ابدأ المحادثة",
+        "legal": "قانوني",
+        "privacy": "سياسة الخصوصية",
+        "terms": "شروط الخدمة",
+        "contact": "اتصل بنا",
+        "copyright": "© 2026 9anon AI. جميع الحقوق محفوظة.",
+        "madeWith": "صنع بـ",
+        "inMorocco": "في المغرب"
+    }
+}

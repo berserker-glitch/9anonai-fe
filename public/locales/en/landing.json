@@ -1,0 +1,87 @@
+{
+    "nav": {
+        "features": "Features",
+        "about": "About",
+        "login": "Login",
+        "getStarted": "Get Started",
+        "goToChat": "Go to Chat"
+    },
+    "hero": {
+        "badge": "AI-Powered Legal Assistant",
+        "badgeEn": "AI-Powered Legal Assistant",
+        "title1": "Your Intelligent",
+        "title2": "Moroccan Legal Assistant",
+        "description": "Get instant answers about Moroccan law, legal procedures, and your rights.",
+        "descriptionEn": "Available in Arabic, French, English, and Darija.",
+        "ctaPrimary": "Start Chatting Free",
+        "ctaSecondary": "Learn More",
+        "free": "Completely Free",
+        "noRegistration": "No Registration",
+        "available247": "Available 24/7"
+    },
+    "chat": {
+        "userQuestion": "What is the penalty for theft in Morocco?",
+        "aiResponse": "According to the Moroccan Penal Code (Articles 505-534), simple theft is punishable by imprisonment from 1 to 5 years. If there is breaking or violence, the penalty can reach 10-20 years...",
+        "sources": "3 Legal Sources",
+        "placeholder": "Ask your legal question..."
+    },
+    "stats": {
+        "activeUsers": "Active Users",
+        "activeUsersValue": "+10,000",
+        "questionsAnswered": "Questions Answered",
+        "questionsAnsweredValue": "+50,000",
+        "accuracy": "Accuracy Rate",
+        "accuracyValue": "99.9%",
+        "languages": "Languages",
+        "languagesValue": "4"
+    },
+    "features": {
+        "sectionTag": "Features",
+        "sectionTitle": "Why Choose",
+        "brand": "9anon",
+        "sectionDescription": "A specialized legal assistant for Moroccan law powered by advanced AI capabilities",
+        "expertTitle": "Moroccan Law Expert",
+        "expertDesc": "Trained on thousands of Moroccan legal documents, codes, and procedures.",
+        "multilingualTitle": "Multilingual",
+        "multilingualDesc": "Fluent in Arabic, French, English, and Darija.",
+        "instantTitle": "Instant Answers",
+        "instantDesc": "Get legal information in seconds, not days.",
+        "sourcesTitle": "Documented Sources",
+        "sourcesDesc": "Every answer is backed by legal sources and specific legal articles.",
+        "secureTitle": "Secure & Private",
+        "secureDesc": "Your conversations are encrypted and never shared with third parties.",
+        "freeTitle": "Free for Everyone",
+        "freeDesc": "Basic access is free forever. No credit card required."
+    },
+    "howItWorks": {
+        "sectionTag": "How It Works",
+        "sectionTitle": "Three Simple",
+        "simple": "Steps",
+        "step1Title": "Ask Your Question",
+        "step1Desc": "Type your legal question in any language you prefer.",
+        "step2Title": "AI Searches",
+        "step2Desc": "We analyze your question and search through thousands of legal documents.",
+        "step3Title": "Get Your Answer",
+        "step3Desc": "Receive an accurate answer with supporting legal sources."
+    },
+    "cta": {
+        "title": "Ready to Get",
+        "titleHighlight": "Legal Answers?",
+        "description": "Join thousands of users who get instant legal guidance on Moroccan law.",
+        "button": "Start Free Now"
+    },
+    "footer": {
+        "description": "Your AI-powered Moroccan law assistant. Get instant answers about legal matters, procedures, and rights in Arabic, French, English, and Darija.",
+        "product": "Product",
+        "features": "Features",
+        "howItWorks": "How It Works",
+        "startChat": "Start Chat",
+        "legal": "Legal",
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service",
+        "contact": "Contact Us",
+        "copyright": "© 2026 9anon AI. All rights reserved.",
+        "madeWith": "Made with",
+        "inMorocco": "in Morocco"
+    }
+}

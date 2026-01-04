@@ -11,7 +11,15 @@ interface ModalProps {
     description?: string;
     children?: ReactNode;
     footer?: ReactNode;
+    size?: "sm" | "md" | "lg" | "xl";
 }
+
+const sizeClasses = {
+    sm: "max-w-sm",
+    md: "max-w-md",
+    lg: "max-w-2xl",
+    xl: "max-w-4xl",
+};
 
 export function Modal({
     isOpen,
@@ -20,6 +28,7 @@ export function Modal({
     description,
     children,
     footer,
+    size = "md",
 }: ModalProps) {
     useEffect(() => {
         const handleEscape = (e: KeyboardEvent) => {
@@ -49,14 +58,14 @@ export function Modal({
 
             {/* Modal Content */}
             <div
-                className="
+                className={`
           relative z-10
-          w-[90%] max-w-md
+          w-[90%] ${sizeClasses[size]}
           bg-card text-card-foreground
           border border-border
           rounded-xl shadow-2xl
           animate-in fade-in-0 zoom-in-95 duration-200
-        "
+        `}
             >
                 {/* Header */}
                 <div className="flex items-start justify-between p-4 border-b border-border">

@@ -1,0 +1,87 @@
+{
+    "nav": {
+        "features": "Fonctionnalités",
+        "about": "À propos",
+        "login": "Connexion",
+        "getStarted": "Commencer",
+        "goToChat": "Aller au Chat"
+    },
+    "hero": {
+        "badge": "Assistant Juridique IA",
+        "badgeEn": "AI-Powered Legal Assistant",
+        "title1": "Votre Assistant",
+        "title2": "Juridique Marocain Intelligent",
+        "description": "Obtenez des réponses instantanées sur le droit marocain, les procédures légales et vos droits.",
+        "descriptionEn": "Disponible en arabe, français, anglais et darija.",
+        "ctaPrimary": "Commencer Gratuitement",
+        "ctaSecondary": "En Savoir Plus",
+        "free": "Entièrement Gratuit",
+        "noRegistration": "Sans Inscription",
+        "available247": "Disponible 24/7"
+    },
+    "chat": {
+        "userQuestion": "Quelle est la peine pour le vol au Maroc?",
+        "aiResponse": "Selon le Code Pénal Marocain (Articles 505-534), le vol simple est puni d'un emprisonnement de 1 à 5 ans. En cas d'effraction ou de violence, la peine peut atteindre 10-20 ans...",
+        "sources": "3 Sources Juridiques",
+        "placeholder": "Posez votre question juridique..."
+    },
+    "stats": {
+        "activeUsers": "Utilisateurs Actifs",
+        "activeUsersValue": "+10 000",
+        "questionsAnswered": "Questions Répondues",
+        "questionsAnsweredValue": "+50 000",
+        "accuracy": "Taux de Précision",
+        "accuracyValue": "99,9%",
+        "languages": "Langues",
+        "languagesValue": "4"
+    },
+    "features": {
+        "sectionTag": "Fonctionnalités",
+        "sectionTitle": "Pourquoi Choisir",
+        "brand": "9anon",
+        "sectionDescription": "Un assistant juridique spécialisé dans le droit marocain avec des capacités d'IA avancées",
+        "expertTitle": "Expert en Droit Marocain",
+        "expertDesc": "Formé sur des milliers de documents juridiques marocains, codes et procédures.",
+        "multilingualTitle": "Multilingue",
+        "multilingualDesc": "Parle couramment l'arabe, le français, l'anglais et le darija.",
+        "instantTitle": "Réponses Instantanées",
+        "instantDesc": "Obtenez des informations juridiques en secondes, pas en jours.",
+        "sourcesTitle": "Sources Documentées",
+        "sourcesDesc": "Chaque réponse est soutenue par des sources juridiques et des articles de loi spécifiques.",
+        "secureTitle": "Sécurisé & Privé",
+        "secureDesc": "Vos conversations sont cryptées et ne sont jamais partagées avec des tiers.",
+        "freeTitle": "Gratuit pour Tous",
+        "freeDesc": "L'accès de base est gratuit pour toujours. Aucune carte de crédit requise."
+    },
+    "howItWorks": {
+        "sectionTag": "Comment ça Marche",
+        "sectionTitle": "Trois Étapes",
+        "simple": "Simples",
+        "step1Title": "Posez Votre Question",
+        "step1Desc": "Tapez votre question juridique dans la langue de votre choix.",
+        "step2Title": "L'IA Recherche",
+        "step2Desc": "Nous analysons votre question et recherchons dans des milliers de documents juridiques.",
+        "step3Title": "Obtenez Votre Réponse",
+        "step3Desc": "Recevez une réponse précise avec des sources juridiques à l'appui."
+    },
+    "cta": {
+        "title": "Prêt à Obtenir des",
+        "titleHighlight": "Réponses Juridiques?",
+        "description": "Rejoignez des milliers d'utilisateurs qui obtiennent des conseils juridiques instantanés sur le droit marocain.",
+        "button": "Commencer Gratuitement"
+    },
+    "footer": {
+        "description": "Votre assistant juridique marocain alimenté par l'IA. Obtenez des réponses instantanées sur les questions juridiques, les procédures et les droits en arabe, français, anglais et darija.",
+        "product": "Produit",
+        "features": "Fonctionnalités",
+        "howItWorks": "Comment ça Marche",
+        "startChat": "Démarrer le Chat",
+        "legal": "Légal",
+        "privacy": "Politique de Confidentialité",
+        "terms": "Conditions d'Utilisation",
+        "contact": "Nous Contacter",
+        "copyright": "© 2026 9anon AI. Tous droits réservés.",
+        "madeWith": "Fait avec",
+        "inMorocco": "au Maroc"
+    }
+}

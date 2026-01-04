@@ -25,6 +25,7 @@ import { ChatInput } from "@/components/interaction/chat-input";
 import { AttachButton } from "@/components/interaction/attach-button";
 import { ScrollToBottom } from "@/components/utility/scroll-to-bottom";
 import { ConfirmModal } from "@/components/utility/modal";
+import { SettingsModal } from "@/components/settings/settings-modal";
 
 // UI Components
 import { Textarea } from "@/components/ui/textarea";
@@ -76,6 +77,7 @@ export default function NewChatPage() {
     const [chatToDelete, setChatToDelete] = useState<string | null>(null);
     const [attachedFiles, setAttachedFiles] = useState<File[]>([]);
     const [showWelcome, setShowWelcome] = useState(true);
+    const [settingsOpen, setSettingsOpen] = useState(false);
 
     const messageContainerRef = useRef<HTMLDivElement>(null);
 
@@ -544,21 +546,22 @@ export default function NewChatPage() {
                     {/* User Footer */}
                     <div className="p-3 border-t border-border mt-auto">
                         <div className="flex items-center gap-3 px-2">
-                            <Avatar fallback={user?.name?.[0] || user?.email?.[0] || "U"} size="md" isOnline />
+                            <button
+                                onClick={() => setSettingsOpen(true)}
+                                className="focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-full"
+                                title="Open settings"
+                            >
+                                <Avatar fallback={user?.name?.[0] || user?.email?.[0] || "U"} size="md" isOnline />
+                            </button>
                             <div className="flex-1 min-w-0">
                                 <p className="text-sm font-medium truncate">{user?.name || user?.email}</p>
                                 <p className="text-xs text-muted-foreground">Free Plan</p>
                             </div>
-                            <button onClick={logout} className="p-1.5 rounded-lg hover:bg-accent" title="Logout">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                                    <polyline points="16 17 21 12 16 7" />
-                                    <line x1="21" y1="12" x2="9" y2="12" />
-                                </svg>
-                            </button>
                             <ThemeToggle />
                         </div>
                     </div>
+
+
                 </Sidebar>
 
                 {/* Main Content */}
@@ -788,16 +791,25 @@ export default function NewChatPage() {
                         </ChatInput>
                     )}
                 </main>
-
-                {/* Delete Modal */}
-                <ConfirmModal
-                    isOpen={deleteModalOpen}
-                    onClose={() => setDeleteModalOpen(false)}
-                    onConfirm={handleDeleteChat}
-                    title="Delete Chat"
-                    description="Are you sure you want to delete this chat? This action cannot be undone."
-                />
             </div>
+
+            {/* Settings Modal - Placed outside of Sidebar to prevent containment */}
+            <SettingsModal
+                isOpen={settingsOpen}
+                onClose={() => setSettingsOpen(false)}
+                user={user}
+                onLogout={logout}
+            />
+
+            <ConfirmModal
+                isOpen={deleteModalOpen}
+                onClose={() => setDeleteModalOpen(false)}
+                onConfirm={handleDeleteChat}
+                title="Delete chat?"
+                description="This will permanently delete this chat history."
+                confirmText="Delete"
+                variant="destructive"
+            />
         </SidebarProvider>
     );
 }

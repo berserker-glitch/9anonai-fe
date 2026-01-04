@@ -3,6 +3,7 @@
 import { ReactNode } from "react";
 import { ThemeProvider } from "./theme-provider";
 import { AuthProvider } from "@/lib/auth-context";
+import { LanguageProvider } from "@/lib/language-context";
 
 interface ProvidersProps {
     children: ReactNode;
@@ -11,9 +12,12 @@ interface ProvidersProps {
 export function Providers({ children }: ProvidersProps) {
     return (
         <AuthProvider>
-            <ThemeProvider defaultTheme="dark">
-                {children}
-            </ThemeProvider>
+            <LanguageProvider defaultNamespaces={["landing", "tos", "privacy"]}>
+                <ThemeProvider defaultTheme="dark">
+                    {children}
+                </ThemeProvider>
+            </LanguageProvider>
         </AuthProvider>
     );
 }
+

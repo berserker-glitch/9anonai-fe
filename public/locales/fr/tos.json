@@ -1,0 +1,57 @@
+{
+    "title": "Conditions d'Utilisation",
+    "lastUpdated": "Dernière mise à jour: Janvier 2026",
+    "intro": "Bienvenue sur 9anon AI. En utilisant nos services, vous acceptez ces conditions. Veuillez les lire attentivement.",
+    "sections": {
+        "acceptance": {
+            "title": "1. Acceptation des Conditions",
+            "content": "En utilisant la plateforme 9anon AI, vous acceptez d'être lié par ces termes et conditions. Si vous n'acceptez pas une partie de ces conditions, veuillez ne pas utiliser nos services."
+        },
+        "description": {
+            "title": "2. Description du Service",
+            "content": "9anon AI est un assistant juridique alimenté par l'IA qui fournit des informations générales sur le droit marocain. Nos services comprennent:",
+            "items": [
+                "Répondre aux questions juridiques générales",
+                "Fournir des informations sur les procédures juridiques marocaines",
+                "Générer des modèles de contrats et documents juridiques",
+                "Référencer les sources et articles juridiques pertinents"
+            ]
+        },
+        "disclaimer": {
+            "title": "3. Avertissement Juridique",
+            "content": "Les informations fournies par 9anon AI sont à des fins éducatives et informatives uniquement et ne constituent pas un conseil juridique professionnel. Pour des conseils juridiques spécifiques, veuillez consulter un avocat agréé.",
+            "important": "Important: 9anon AI n'assume aucune responsabilité pour les décisions prises sur la base des informations fournies."
+        },
+        "userObligations": {
+            "title": "4. Obligations de l'Utilisateur",
+            "content": "En tant qu'utilisateur de nos services, vous acceptez de:",
+            "items": [
+                "Fournir des informations exactes et véridiques",
+                "Ne pas utiliser le service à des fins illégales",
+                "Ne pas tenter d'abuser ou de pirater le système",
+                "Respecter les droits de propriété intellectuelle"
+            ]
+        },
+        "intellectualProperty": {
+            "title": "5. Propriété Intellectuelle",
+            "content": "Tout le contenu, les marques et les logiciels liés à 9anon AI sont notre propriété. La copie ou la distribution de tout contenu sans autorisation écrite préalable est interdite."
+        },
+        "privacy": {
+            "title": "6. Confidentialité",
+            "content": "Nous respectons votre vie privée. Veuillez consulter notre Politique de Confidentialité pour savoir comment nous collectons et utilisons vos informations."
+        },
+        "modifications": {
+            "title": "7. Modifications",
+            "content": "Nous nous réservons le droit de modifier ces conditions à tout moment. Vous serez informé de tout changement important. Votre utilisation continue du service après les modifications signifie que vous acceptez les nouvelles conditions."
+        },
+        "governing": {
+            "title": "8. Loi Applicable",
+            "content": "Ces conditions sont régies par le droit marocain. Tout litige résultant de l'utilisation de nos services sera soumis à la juridiction des tribunaux marocains."
+        },
+        "contact": {
+            "title": "9. Nous Contacter",
+            "content": "Si vous avez des questions concernant ces conditions, veuillez nous contacter à:",
+            "email": "contact@9anonai.com"
+        }
+    }
+}

@@ -1,12 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Alata } from "next/font/google";
+import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers/providers";
 
-const alata = Alata({
-  variable: "--font-alata",
+const playfair = Playfair_Display({
+  variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["400", "500", "600", "700", "800"],
+});
+
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-sans",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
 export const viewport: Viewport = {
@@ -158,7 +164,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${alata.variable} font-sans antialiased`}>
+      <body className={`${playfair.variable} ${jakarta.variable} font-sans antialiased`}>
         <Providers>{children}</Providers>
       </body>
     </html>
