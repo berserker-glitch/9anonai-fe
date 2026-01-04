@@ -48,6 +48,7 @@ interface Message {
     parentId?: string;
     images?: string[];
     files?: { name: string; type: string }[];
+    contract?: { title: string; path: string; type: string };
 }
 
 interface ChatHistory {
@@ -358,7 +359,10 @@ export default function ChatWithIdPage() {
         try {
             const response = await fetch(`${API_URL}/chat`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
                 body: JSON.stringify({
                     message: content,
                     history: messages,
@@ -401,6 +405,16 @@ export default function ChatWithIdPage() {
                                 setMessages(prev =>
                                     prev.map(m =>
                                         m.id === assistantId ? { ...m, sources: finalSources } : m
+                                    )
+                                );
+                            } else if (event.type === "contract_generated") {
+                                // Handle generated contract - add download link
+                                const doc = event.document;
+                                setMessages(prev =>
+                                    prev.map(m =>
+                                        m.id === assistantId
+                                            ? { ...m, contract: { title: doc.title, path: doc.path, type: doc.type } }
+                                            : m
                                     )
                                 );
                             }
@@ -708,9 +722,43 @@ export default function ChatWithIdPage() {
                                                         {message.sources && message.sources.length > 0 && (
                                                             <SourcesAccordion sources={message.sources} />
                                                         )}
+                                                        {message.contract && (
+                                                            <div className="mt-4 p-4 bg-primary/10 rounded-lg border border-primary/20">
+                                                                <div className="flex items-center gap-3">
+                                                                    <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+                                                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-primary">
+                                                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                                                            <polyline points="14 2 14 8 20 8" />
+                                                                            <line x1="16" y1="13" x2="8" y2="13" />
+                                                                            <line x1="16" y1="17" x2="8" y2="17" />
+                                                                        </svg>
+                                                                    </div>
+                                                                    <div className="flex-1">
+                                                                        <p className="font-medium text-sm">{message.contract.title}</p>
+                                                                        <p className="text-xs text-muted-foreground">PDF Document</p>
+                                                                    </div>
+                                                                    <a
+                                                                        href={`${API_URL.replace('/api', '')}${message.contract.path}`}
+                                                                        download
+                                                                        target="_blank"
+                                                                        rel="noopener noreferrer"
+                                                                        className="px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors flex items-center gap-2"
+                                                                    >
+                                                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                                                            <polyline points="7 10 12 15 17 10" />
+                                                                            <line x1="12" y1="15" x2="12" y2="3" />
+                                                                        </svg>
+                                                                        Download
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        )}
                                                     </AssistantMessage>
-                                                    <div className="flex items-center justify-between mt-2">
+                                                    {/* Actions aligned with message bubble (after avatar space) */}
+                                                    <div className="flex items-center gap-2 mt-1 ml-[52px] text-xs text-muted-foreground">
                                                         <MessageTimestamp date={message.timestamp} />
+                                                        <span className="text-muted-foreground/30">•</span>
                                                         <MessageActions
                                                             messageId={message.id}
                                                             content={message.content}
