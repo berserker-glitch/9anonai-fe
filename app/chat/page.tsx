@@ -715,7 +715,7 @@ export default function NewChatPage() {
                                                                         <p className="text-xs text-muted-foreground">PDF Document</p>
                                                                     </div>
                                                                     <a
-                                                                        href={`${API_URL.replace('/api', '')}${message.contract.path}?token=${token}`}
+                                                                        href={`${API_URL}/pdf/download/${message.contract.path.split('/').pop()}?token=${token}`}
                                                                         download
                                                                         target="_blank"
                                                                         rel="noopener noreferrer"
