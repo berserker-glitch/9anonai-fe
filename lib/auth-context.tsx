@@ -131,7 +131,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
             console.log("[updateProfile] Response status:", res.status, res.statusText);
 
-            const data = await res.json();
+            // Get raw text first to debug
+            const rawText = await res.text();
+            console.log("[updateProfile] Raw response:", rawText.substring(0, 500));
+
+            // Try to parse as JSON
+            let data;
+            try {
+                data = JSON.parse(rawText);
+            } catch (parseError) {
+                console.error("[updateProfile] JSON parse failed, raw response:", rawText);
+                return { success: false, error: `Server error (${res.status}): Response is not JSON` };
+            }
+
             console.log("[updateProfile] Response data:", data);
 
             if (!res.ok) {
