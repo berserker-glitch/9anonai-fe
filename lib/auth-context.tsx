@@ -114,14 +114,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     const updateProfile = async (updates: { name?: string; personalization?: string; isOnboarded?: boolean; marketingSource?: string }) => {
-        const url = `${API_URL}/auth/profile`;
+        const url = `${API_URL}/auth/update-profile`;
         console.log("[updateProfile] Calling:", url);
         console.log("[updateProfile] Token exists:", !!token);
         console.log("[updateProfile] Updates:", updates);
 
         try {
             const res = await fetch(url, {
-                method: "PATCH",
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
