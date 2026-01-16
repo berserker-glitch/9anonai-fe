@@ -366,10 +366,10 @@ export default function NewChatPage() {
                             } else if (event.type === "contract_generated") {
                                 // Handle generated contract - add to message
                                 const doc = event.document;
-                                // Save for DB persistence
+                                // Save for DB persistence - just store the doc ID
                                 finalContract = {
                                     title: doc.title,
-                                    path: `/api/pdf/download/${doc.id}`, // Use API download link
+                                    path: doc.id, // Just store the ID
                                     type: doc.type
                                 };
 

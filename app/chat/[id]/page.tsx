@@ -420,10 +420,10 @@ export default function ChatWithIdPage() {
                             } else if (event.type === "contract_generated") {
                                 // Handle generated contract - add download link
                                 const doc = event.document;
-                                // Save for DB persistence
+                                // Save for DB persistence - just store the doc ID
                                 finalContract = {
                                     title: doc.title,
-                                    path: `/api/pdf/download/${doc.id}`, // Use API download link
+                                    path: doc.id, // Just store the ID
                                     type: doc.type
                                 };
 
@@ -761,7 +761,7 @@ export default function ChatWithIdPage() {
                                                                         <p className="text-xs text-muted-foreground">PDF Document</p>
                                                                     </div>
                                                                     <a
-                                                                        href={`https://api.9anonai.com/api/pdf/download/${message.contract.path.split('/').pop()}?token=${token}`}
+                                                                        href={`https://api.9anonai.com/api/pdf/download/${message.contract.path.includes('/') ? message.contract.path.split('/').filter(Boolean).pop() : message.contract.path}?token=${token}`}
                                                                         download
                                                                         target="_blank"
                                                                         rel="noopener noreferrer"
