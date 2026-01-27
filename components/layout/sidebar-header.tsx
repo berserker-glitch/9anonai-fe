@@ -100,8 +100,8 @@ export function SidebarHeader({ onNewChat, searchQuery, onSearchChange, onOpenFi
                 />
             </div>
 
-            {/* Files Item */}
-            <button
+            {/* Files Item - HIDDEN */}
+            {/* <button
                 onClick={onOpenFiles}
                 className="
                     flex items-center gap-3 w-full
@@ -124,7 +124,7 @@ export function SidebarHeader({ onNewChat, searchQuery, onSearchChange, onOpenFi
                 </div>
                 <span>PDFs Generated</span>
                 <span className="ml-auto text-[10px] font-bold bg-primary text-primary-foreground px-1.5 py-0.5 rounded-sm">NEW</span>
-            </button>
+            </button> */}
         </div>
     );
 }
