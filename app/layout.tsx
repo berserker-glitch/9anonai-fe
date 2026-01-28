@@ -157,7 +157,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const lang = cookieStore.get("NEXT_LOCALE")?.value || "ar";
   const dir = lang === "ar" ? "rtl" : "ltr";
 
