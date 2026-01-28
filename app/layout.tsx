@@ -27,12 +27,14 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://9anonai.com"),
   title: {
-    default: "9anon AI - قانون | مساعد قانوني مغربي ذكي",
+    default: "9anon AI - The Fastest Virtual Lawyer in Morocco (Istichara Gratuit)",
     template: "%s | 9anon AI",
   },
   description:
     "9anon AI (قانون / 9anoun) - المساعد القانوني الذكي للقانون المغربي. احصل على إجابات فورية حول القانون المغربي، الإجراءات القانونية، وحقوقك. متاح بالعربية والفرنسية والإنجليزية والدارجة. 9anon AI - Your intelligent Moroccan law assistant.",
   keywords: [
+    "AI Mohami Maroc",
+    "Istichara 9anounia AI",
     "9anon",
     "9anon ai",
     "9anon AI",
