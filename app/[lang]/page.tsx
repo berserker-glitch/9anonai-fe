@@ -34,8 +34,10 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background overflow-hidden" dir={dir}>
-      <Header />
+    <div className="min-h-screen bg-background overflow-hidden">
+      <div dir={dir}>
+        <Header />
+      </div>
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 lg:pt-48 lg:pb-36 overflow-hidden">
@@ -398,7 +400,9 @@ export default function LandingPage() {
       </section>
 
       <ExpandedLandingSections />
-      <Footer />
+      <div dir={dir}>
+        <Footer />
+      </div>
     </div>
   );
 }
