@@ -27,7 +27,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://9anonai.com"),
   title: {
-    default: "9anon AI - The Fastest Virtual Lawyer in Morocco (Istichara Gratuit)",
+    default: "9anon AI | The Faster 9anoun Alternative (Free Access)",
     template: "%s | 9anon AI",
   },
   description:
