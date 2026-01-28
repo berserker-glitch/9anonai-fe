@@ -23,6 +23,7 @@ export const SendButton = forwardRef<HTMLButtonElement, SendButtonProps>(
                     }
           ${className}
         `}
+                aria-label="Send message"
                 {...props}
             >
                 <svg

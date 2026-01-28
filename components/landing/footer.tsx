@@ -68,9 +68,9 @@ export function Footer() {
 
                     {/* Links */}
                     <div className="md:col-span-3 lg:col-span-3">
-                        <h4 className="font-display font-semibold mb-6 text-sm uppercase tracking-wider text-foreground">
+                        <h3 className="font-display font-semibold mb-6 text-sm uppercase tracking-wider text-foreground">
                             {t("footer.product")}
-                        </h4>
+                        </h3>
                         <nav className="flex flex-col gap-4">
                             <Link
                                 href="#features"
@@ -94,9 +94,9 @@ export function Footer() {
                     </div>
 
                     <div className="md:col-span-3 lg:col-span-3">
-                        <h4 className="font-display font-semibold mb-6 text-sm uppercase tracking-wider text-foreground">
+                        <h3 className="font-display font-semibold mb-6 text-sm uppercase tracking-wider text-foreground">
                             {t("footer.legal")}
-                        </h4>
+                        </h3>
                         <nav className="flex flex-col gap-4">
                             <Link
                                 href="/privacy"
