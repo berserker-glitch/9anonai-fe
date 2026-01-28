@@ -5,13 +5,13 @@ import { Providers } from "@/components/providers/providers";
 import { FontSwitcher } from "@/components/debug/font-switcher";
 
 const playfair = Playfair_Display({
-  variable: "--font-display",
+  variable: "--font-playfair",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
 });
 
 const jakarta = Plus_Jakarta_Sans({
-  variable: "--font-sans",
+  variable: "--font-jakarta",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800"],
 });

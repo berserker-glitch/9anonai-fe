@@ -108,8 +108,8 @@
   --sidebar-accent-foreground: oklch(0.25 0.03 160);
   --sidebar-border: oklch(0.90 0.01 85);
   --sidebar-ring: oklch(0.45 0.14 160);
-  --font-sans: "Plus Jakarta Sans", "Cairo", ui-sans-serif, sans-serif, system-ui;
-  --font-display: "Playfair Display", "Cairo", ui-serif, Georgia, serif;
+  --font-sans: var(--font-jakarta), var(--font-cairo), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-playfair), var(--font-cairo), ui-serif, Georgia, serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --shadow-color: oklch(0.25 0.03 160);
   --shadow-opacity: 0.08;
@@ -166,8 +166,8 @@
   --sidebar-accent-foreground: oklch(0.95 0.01 85);
   --sidebar-border: oklch(0.25 0.02 160);
   --sidebar-ring: oklch(0.50 0.10 160);
-  --font-sans: "Plus Jakarta Sans", "Cairo", ui-sans-serif, sans-serif, system-ui;
-  --font-display: "Playfair Display", "Cairo", ui-serif, Georgia, serif;
+  --font-sans: var(--font-jakarta), var(--font-cairo), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-playfair), var(--font-cairo), ui-serif, Georgia, serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --shadow-color: oklch(0.08 0.02 160);
   --shadow-opacity: 0.40;

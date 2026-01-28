@@ -72,7 +72,7 @@ export function FontSwitcher() {
                             }`}
                     >
                         <span>{f.name}</span>
-                        <span className="text-[10px] text-gray-400">مثال للنص العربي</span>
+                        <span className="text-[14px] text-gray-400" style={{ fontFamily: `var(${f.var})` }}>مثال للنص العربي</span>
                     </button>
                 ))}
             </div>
