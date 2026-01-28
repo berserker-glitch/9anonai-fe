@@ -774,7 +774,7 @@ export default function NewChatPage() {
                     {/* Input Area when not in welcome mode */}
                     {!showWelcome && (
                         <ChatInput onSubmit={handleSendMessage} isLoading={isGenerating}>
-                            <AttachButton onFilesSelected={handleFileUpload} />
+
                             <div className="relative flex-1">
                                 {attachedFiles.length > 0 && (
                                     <div className="flex gap-2 mb-2 flex-wrap">
