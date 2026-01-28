@@ -22,7 +22,6 @@ import { SourcesAccordion } from "@/components/chat/sources-accordion";
 
 // Interaction Components
 import { ChatInput } from "@/components/interaction/chat-input";
-import { AttachButton } from "@/components/interaction/attach-button";
 import { ScrollToBottom } from "@/components/utility/scroll-to-bottom";
 import { ConfirmModal } from "@/components/utility/modal";
 import { SettingsModal } from "@/components/settings/settings-modal";
