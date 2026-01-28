@@ -13,3 +13,9 @@ The 2026 Finance Law brings good news for foreigners and MREs owning property in
 - **Calculation Clarity**: Precise criteria for TPI (Real Estate Profit Tax), reducing the administration's discretionary power.
 
 These measures aim to boost the market and reassure investors about the ease of "exit strategy".
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

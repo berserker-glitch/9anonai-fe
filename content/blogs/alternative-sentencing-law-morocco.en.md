@@ -20,3 +20,9 @@ The judge can now pronounce, instead of prison time:
 - Consent of the convict (except for the fine).
 
 This is a major step forward for human rights in Morocco, aligning the country with international standards.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

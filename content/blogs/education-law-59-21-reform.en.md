@@ -13,3 +13,9 @@ This is the flagship initiative of this reform. Model schools are equipped with 
 
 ## Fighting School Dropout
 The new law criminalizes school dropout and makes education mandatory until age 16, holding the State and parents responsible for schooling, especially in rural areas.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

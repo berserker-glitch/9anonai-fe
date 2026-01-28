@@ -14,3 +14,9 @@ Its attributions are transferred to the University to:
 - Reduce administrative costs (director salaries, HQs...).
 
 An "intelligent austerity" policy to improve public sector improved performance.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

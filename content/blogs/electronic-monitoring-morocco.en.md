@@ -15,3 +15,9 @@ The convict wears a bracelet connected via GPS, allowing authorities to track th
 
 ## Who Benefits?
 This sentence is generally granted to people convicted of short sentences, who have a fixed abode and do not pose a direct danger to society. It allows them to keep their jobs and family ties, facilitating their reintegration.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

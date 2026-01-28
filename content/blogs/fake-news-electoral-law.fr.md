@@ -13,3 +13,9 @@ Est puni de prison et d'amende quiconque diffuse, de mauvaise foi, de fausses no
 
 ## Liberté vs Responsabilité
 Les défenseurs des droits craignent un usage abusif pour faire taire la critique. Le législateur assure que le but est de "protéger la sincérité du scrutin" et non d'empêcher la critique politique factuelle.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

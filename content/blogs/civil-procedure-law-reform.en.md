@@ -14,3 +14,9 @@ The Code of Civil Procedure is the "litigant's constitution". Its new amendments
 3. **Strict Deadlines**: Setting rigorous deadlines for pronouncing judgments.
 
 This law is a decisive step towards a "court of tomorrow", fast and efficient.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

@@ -13,3 +13,9 @@ It does not recognize Bitcoin as "legal tender" for daily payments, but regulate
 
 ## Role of Bank Al-Maghrib
 The Central Bank and AMMC will supervise platforms and issue licenses. Investors will finally be able to use official banking channels instead of the black market (P2P).
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

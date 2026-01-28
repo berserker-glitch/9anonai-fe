@@ -14,3 +14,9 @@ Law 59.24 on higher education has sparked widespread controversy. The ministry a
 - **Governance**: Reducing teacher representation in councils in favor of the socio-economic sector.
 
 The government insists on improving international rankings, while teachers defend university democratization.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

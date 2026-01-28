@@ -15,3 +15,9 @@ The current rule poses a problem for families with only daughters, where distant
 
 ## Ijtihad and Objectives
 Reformers rely on the "Jurisprudence of Objectives" (Maqasid) to affirm that justice is the essence of Sharia, and that the current economic context where women contribute to household expenses requires reviewing the distribution system.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

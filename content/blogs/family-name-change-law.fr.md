@@ -17,3 +17,9 @@ Auparavant, un décret du Chef du gouvernement était nécessaire. La nouvelle l
 - Nom objet de moquerie.
 
 Cette loi accompagne la digitalisation de l'état civil, permettant prochainement aux citoyens de demander ces changements via un portail centralisé.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

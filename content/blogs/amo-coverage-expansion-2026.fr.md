@@ -13,3 +13,9 @@ Cette année voit l'intégration de nouvelles pathologies et médicaments coûte
 
 ## Le défi du financement
 Pour durer, le système nécessite l'adhésion régulière des professionnels et indépendants. L'État mise sur la digitalisation pour encourager le paiement spontané et atteindre une couverture sanitaire universelle réelle.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

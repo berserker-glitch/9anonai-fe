@@ -14,3 +14,9 @@ La loi 59.24 sur l'enseignement supérieur a suscité une vive controverse. Le m
 - **Gouvernance** : Réduction de la représentation des enseignants dans les conseils au profit du secteur socio-économique.
 
 Le gouvernement insiste sur l'amélioration des classements internationaux, tandis que les enseignants défendent la démocratisation de l'université.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

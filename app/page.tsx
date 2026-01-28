@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
+import { ExpandedLandingSections } from "@/components/landing/expanded-sections";
 import { useTranslation, useLanguage } from "@/lib/language-context";
 
 export default function LandingPage() {
@@ -396,6 +397,7 @@ export default function LandingPage() {
         </div>
       </section>
 
+      <ExpandedLandingSections />
       <Footer />
     </div>
   );

@@ -14,3 +14,9 @@ L'année 2026 marque une étape décisive dans la mise en œuvre de la "Loi-Cadr
 
 ## Dématérialisation
 Désormais, **toutes** les déclarations fiscales doivent être effectuées de manière électronique. La Direction Générale des Impôts (DGI) n'accepte plus les dépôts physiques, sous peine de majorations.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

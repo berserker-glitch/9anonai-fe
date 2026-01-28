@@ -13,3 +13,9 @@ La Loi de Finances 2026 apporte de bonnes nouvelles pour les étrangers et MRE p
 - **Clarté du calcul** : Critères précis pour la TPI (Taxe sur les Profits Immobiliers), réduisant le pouvoir discrétionnaire de l'administration.
 
 Ces mesures visent à dynamiser le marché et rassurer les investisseurs sur la facilité de "sortie" (Exit Strategy).
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

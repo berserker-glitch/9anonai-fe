@@ -21,3 +21,9 @@ The amount is set according to the convict's financial capabilities, ensuring a 
 - Preserve the convict's professional life.
 
 Note that this alternative is excluded in cases of recidivism or serious crimes.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

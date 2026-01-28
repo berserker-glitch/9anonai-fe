@@ -17,3 +17,9 @@ Value Added Tax (VAT) is one of the most complex taxes in the Moroccan fiscal sy
 
 ## VAT Refund
 The VAT refund procedure for companies has been accelerated, with a commitment from the State to reduce processing times to less than 3 months for "compliant" companies.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

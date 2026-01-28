@@ -15,3 +15,9 @@ Le Code du travail intégrera des dispositions sur :
 - La reconnaissance des accidents survenant au domicile pendant les heures de travail comme "accidents du travail".
 
 Cet encadrement encouragera l'emploi des talents indépendamment de leur géographie et offrira plus de flexibilité.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

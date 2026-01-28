@@ -15,3 +15,9 @@ The Labor Code will integrate provisions on:
 - Recognition of accidents occurring at home during work hours as "work accidents".
 
 This regulation will encourage hiring talent regardless of geography and offer more flexibility.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

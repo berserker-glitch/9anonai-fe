@@ -18,3 +18,9 @@ Le Travail d'Intérêt Général (TIG) est la mesure phare de la nouvelle loi su
 - Le travail doit être effectué pendant les heures libres du condamné pour ne pas entraver son activité professionnelle ou ses études.
 
 C'est une opportunité, notamment pour les jeunes délinquants primaires, d'éviter "l'école du crime" qu'est parfois la prison.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

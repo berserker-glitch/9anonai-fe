@@ -15,3 +15,9 @@ Le gouvernement discute avec les syndicats de plusieurs options :
 3. **Calcul** : Baser la pension sur la moyenne de carrière et non plus sur les dernières années.
 
 Le défi est d'assurer la pérennité du système tout en préservant le pouvoir d'achat des retraités.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

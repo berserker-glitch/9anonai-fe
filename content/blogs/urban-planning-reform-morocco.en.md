@@ -13,3 +13,9 @@ Major novelty: "silence means consent" for certain administrative authorizations
 
 ## Smart Specifications
 Adoption of flexible rules depending on the zone (tourist, industrial), with stricter sanctions against violations disfiguring the urban landscape.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

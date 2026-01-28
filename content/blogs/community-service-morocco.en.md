@@ -18,3 +18,9 @@ Community Service (TIG) is the flagship measure of the new law on alternative se
 - The work must be done during the convict's free time so as not to hinder their professional activity or studies.
 
 This is an opportunity, especially for young first-time offenders, to avoid "the school of crime" that prison can be.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

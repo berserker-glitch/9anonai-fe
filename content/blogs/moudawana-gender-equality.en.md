@@ -13,3 +13,9 @@ One of the major points is granting the mother "legal guardianship" over her chi
 
 ## Asset Sharing
 The law also tends towards institutionalizing the "sharing of acquired assets" during marriage, to protect the party (often the wife) who contributed to family wealth without documented income.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

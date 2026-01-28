@@ -15,3 +15,9 @@ La règle actuelle pose problème pour les familles n'ayant que des filles, où 
 
 ## L'Ijtihad et les finalités
 Les réformateurs s'appuient sur le "fiqh des finalités" (Maqasid) pour affirmer que la justice est l'essence de la Charia, et que le contexte économique actuel où la femme contribue aux charges du foyer impose de revoir le système de distribution.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

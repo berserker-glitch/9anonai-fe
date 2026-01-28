@@ -21,3 +21,9 @@ The VAT reform aims for fiscal neutrality.
 
 ## Self-Entrepreneurs
 The turnover ceiling for service provision has been revised to encourage transition to the CPU (Single Professional Contribution) regime, with stricter controls on fake invoicing.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

@@ -21,3 +21,9 @@ La réforme de la TVA vise la neutralité fiscale.
 
 ## Auto-entrepreneurs
 Le plafond du chiffre d'affaires pour les prestations de services a été revu pour encourager la transition vers le régime de la CPU (Contribution Professionnelle Unique), avec un renforcement des contrôles sur les fausses facturations.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

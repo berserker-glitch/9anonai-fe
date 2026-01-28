@@ -14,3 +14,9 @@ Moroccan courts experienced near-paralysis due to lawyer strikes rejecting the d
 3. **Discipline**: Increasing prosecutor powers in disciplinary proceedings against lawyers, seen as interference.
 
 Lawyers demand a text that immunizes the defense, not one that places it under guardianship.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

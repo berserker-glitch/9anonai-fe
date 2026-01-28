@@ -13,3 +13,9 @@ These symbolic fees aim to cover platform maintenance. Remote service saves the 
 
 ## Free Justice
 The principle of free justice remains for the indigent and access to the judge. These fees concern only complementary administrative comfort services.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

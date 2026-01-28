@@ -13,3 +13,9 @@ C'est l'initiative phare de cette réforme. Des écoles modèles sont équipées
 
 ## Lutte contre l'abandon scolaire
 La nouvelle loi criminalise l'abandon scolaire et rend l'enseignement obligatoire jusqu'à 16 ans, tenant l'État et les parents responsables de la scolarisation, en particulier en milieu rural.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

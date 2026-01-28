@@ -14,3 +14,9 @@ The year 2026 marks a decisive step in the implementation of the "Framework Law 
 
 ## Digitalization
 From now on, **all** tax declarations must be made electronically. The General Directorate of Taxes (DGI) no longer accepts physical filings, under penalty of surcharges.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

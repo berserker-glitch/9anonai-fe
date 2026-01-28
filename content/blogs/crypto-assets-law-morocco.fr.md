@@ -13,3 +13,9 @@ Elle ne reconnait pas le Bitcoin comme "monnaie légale" pour les paiements quot
 
 ## Rôle de Bank Al-Maghrib
 La Banque Centrale et l'AMMC superviseront les plateformes et délivreront les agréments. Les investisseurs pourront désorm ais passer par des canaux bancaires officiels au lieu du marché noir (P2P).
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

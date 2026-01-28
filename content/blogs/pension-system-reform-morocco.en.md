@@ -15,3 +15,9 @@ The government is discussing several options with unions:
 3. **Calculation**: Basing pension on career average rather than just the last few years.
 
 The challenge is ensuring system sustainability while preserving retirees' purchasing power.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

@@ -16,3 +16,9 @@ The real gain for employees in 2026 is the revision of Income Tax brackets.
 - Raising the total exemption threshold.
 - Lowering rates for the middle class.
 This will result in a direct increase in the "net salary" at the end of the month.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

@@ -14,3 +14,9 @@ Les tribunaux marocains ont connu une paralysie due aux grèves des avocats reje
 3. **Discipline** : Augmentation des pouvoirs du parquet dans les poursuites disciplinaires contre les avocats, vue comme une ingérence.
 
 Les avocats réclament un texte qui immunise la défense, et non qui la place sous tutelle.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

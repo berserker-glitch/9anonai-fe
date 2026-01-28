@@ -17,3 +17,9 @@ Previously, a decree from the Head of Government was required. The new law deleg
 - Name subject to ridicule.
 
 This law accompanies the digitization of civil status, soon allowing citizens to request these changes via a centralized portal.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

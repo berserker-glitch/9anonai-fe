@@ -13,3 +13,9 @@ L'un des points majeurs est l'octroi à la mère de la "tutelle légale" sur ses
 
 ## Partage des biens
 La loi s'oriente aussi vers l'institutionnalisation du "partage des biens acquis" pendant le mariage, pour protéger la partie (souvent l'épouse) qui a contribué à la richesse familiale sans revenu documenté.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai

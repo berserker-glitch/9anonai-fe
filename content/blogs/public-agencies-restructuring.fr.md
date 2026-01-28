@@ -14,3 +14,9 @@ Ses attributions sont transférées à l'Université pour :
 - Réduire les coûts administratifs (salaires directeurs, sièges...).
 
 Une politique d'"austérité intelligente" pour améliorer le rendement du secteur public.
+
+
+---
+
+### Related Search Terms
+9anoun ai, 9anon ai, kanon ai, kanoun ai, qanon ai, qanoun ai
