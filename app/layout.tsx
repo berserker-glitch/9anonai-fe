@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Plus_Jakarta_Sans, Cairo } from "next/font/google";
+import { cookies } from "next/headers";
 import "./globals.css";
 import { Providers } from "@/components/providers/providers";
 
@@ -151,13 +152,17 @@ const jsonLd = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = cookies();
+  const lang = cookieStore.get("NEXT_LOCALE")?.value || "ar";
+  const dir = lang === "ar" ? "rtl" : "ltr";
+
   return (
-    <html lang="ar" dir="ltr" suppressHydrationWarning>
+    <html lang={lang} dir={dir} suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <script
@@ -166,7 +171,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${playfair.variable} ${jakarta.variable} ${cairo.variable} font-sans antialiased`}>
-        <Providers>
+        <Providers lang={lang}>
           {children}
         </Providers>
       </body>
