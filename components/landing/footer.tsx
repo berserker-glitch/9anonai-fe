@@ -38,7 +38,7 @@ export function Footer() {
                         <div className="flex items-center gap-3 mt-8">
                             <a
                                 href="#"
-                                className="w-10 h-10 rounded-xl glass-premium flex items-center justify-center text-muted-foreground hover:text-gold hover:border-gold/30 transition-all duration-300"
+                                className="w-10 h-10 rounded-xl glass-premium flex items-center justify-center text-muted-foreground hover:text-gold hover:border-gold/30 transition-colors duration-300"
                                 aria-label="Twitter"
                             >
                                 <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
@@ -47,7 +47,7 @@ export function Footer() {
                             </a>
                             <a
                                 href="#"
-                                className="w-10 h-10 rounded-xl glass-premium flex items-center justify-center text-muted-foreground hover:text-gold hover:border-gold/30 transition-all duration-300"
+                                className="w-10 h-10 rounded-xl glass-premium flex items-center justify-center text-muted-foreground hover:text-gold hover:border-gold/30 transition-colors duration-300"
                                 aria-label="GitHub"
                             >
                                 <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
@@ -56,7 +56,7 @@ export function Footer() {
                             </a>
                             <a
                                 href="#"
-                                className="w-10 h-10 rounded-xl glass-premium flex items-center justify-center text-muted-foreground hover:text-gold hover:border-gold/30 transition-all duration-300"
+                                className="w-10 h-10 rounded-xl glass-premium flex items-center justify-center text-muted-foreground hover:text-gold hover:border-gold/30 transition-colors duration-300"
                                 aria-label="LinkedIn"
                             >
                                 <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">

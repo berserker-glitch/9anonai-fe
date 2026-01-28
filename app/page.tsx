@@ -102,7 +102,7 @@ export default function LandingPage() {
               </Link>
               <Link
                 href="#features"
-                className="w-full sm:w-auto px-10 py-5 text-lg font-medium glass-premium rounded-2xl hover:border-primary/30 hover:scale-105 hover:bg-primary/5 transition-all duration-300 border border-border/50 flex items-center gap-2"
+                className="w-full sm:w-auto px-10 py-5 text-lg font-medium glass-premium rounded-2xl hover:border-primary/30 hover:scale-105 hover:bg-primary/5 transition-[transform,colors,border-color,background-color] duration-300 border border-border/50 flex items-center gap-2"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -222,7 +222,7 @@ export default function LandingPage() {
               { valueKey: "stats.accuracyValue", labelKey: "stats.accuracy" },
               { valueKey: "stats.languagesValue", labelKey: "stats.languages" },
             ].map((stat, i) => (
-              <div key={i} className="text-center group scroll-animate opacity-0 transform translate-y-8 transition-all duration-700">
+              <div key={i} className="text-center group scroll-animate opacity-0 transform translate-y-8 transition-[opacity,transform] duration-700">
                 <p className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-gradient-emerald mb-2 group-hover:scale-105 transition-transform duration-300 drop-shadow-sm">
                   {t(stat.valueKey)}
                 </p>
@@ -316,7 +316,7 @@ export default function LandingPage() {
             ].map((feature, i) => (
               <div
                 key={i}
-                className="scroll-animate opacity-0 transform translate-y-8 group relative glass-premium rounded-2xl p-8 hover:border-primary/40 transition-all duration-500 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-2 hover:scale-[1.02]"
+                className="scroll-animate opacity-0 transform translate-y-8 group relative glass-premium rounded-2xl p-8 hover:border-primary/40 transition-[opacity,transform,border-color,box-shadow] duration-500 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-2 hover:scale-[1.02]"
               >
                 <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110 ${feature.color === 'gold'
                   ? 'bg-gradient-to-br from-gold/20 to-gold/5 text-gold border border-gold/20 group-hover:shadow-lg group-hover:shadow-gold/20'
@@ -353,7 +353,7 @@ export default function LandingPage() {
               { step: "٢", titleKey: "howItWorks.step2Title", descKey: "howItWorks.step2Desc" },
               { step: "٣", titleKey: "howItWorks.step3Title", descKey: "howItWorks.step3Desc" },
             ].map((item, i) => (
-              <div key={i} className="relative text-center group scroll-animate opacity-0 transform translate-y-8 transition-all duration-700">
+              <div key={i} className="relative text-center group scroll-animate opacity-0 transform translate-y-8 transition-[opacity,transform] duration-700">
                 <div className="relative z-10">
                   <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary via-primary/90 to-gold/80 text-primary-foreground font-display text-3xl font-bold flex items-center justify-center mx-auto mb-8 shadow-xl shadow-primary/25 group-hover:shadow-primary/40 group-hover:scale-110 transition-all duration-300 cursor-default">
                     {item.step}
@@ -376,7 +376,7 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-zellige opacity-5" />
         <div className="absolute top-0 left-1/2 w-[800px] h-[800px] bg-gradient-to-br from-primary/20 to-gold/10 rounded-full blur-[200px] -translate-y-1/2 -translate-x-1/2 opacity-60 animate-morph" />
 
-        <div className="relative max-w-4xl mx-auto px-6 sm:px-8 text-center scroll-animate opacity-0 transform translate-y-8 transition-all duration-700">
+        <div className="relative max-w-4xl mx-auto px-6 sm:px-8 text-center scroll-animate opacity-0 transform translate-y-8 transition-[opacity,transform] duration-700">
           <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 tracking-tight drop-shadow-sm">
             {t("cta.title")}
             <span className="block text-gradient-emerald mt-2 drop-shadow-glow">{t("cta.titleHighlight")}</span>
@@ -386,7 +386,7 @@ export default function LandingPage() {
           </p>
           <Link
             href="/register"
-            className="inline-flex items-center gap-3 btn-premium px-12 py-6 text-lg font-semibold bg-gradient-to-r from-primary via-primary to-gold/90 text-primary-foreground rounded-2xl shadow-2xl shadow-primary/30 hover:shadow-primary/50 hover:shadow-gold/30 hover:scale-105 transition-all duration-300 group"
+            className="inline-flex items-center gap-3 btn-premium px-12 py-6 text-lg font-semibold bg-gradient-to-r from-primary via-primary to-gold/90 text-primary-foreground rounded-2xl shadow-2xl shadow-primary/30 hover:shadow-primary/50 hover:shadow-gold/30 hover:scale-105 transition-[transform,box-shadow] duration-300 group"
           >
             <span>{t("cta.button")}</span>
             <svg className="w-5 h-5 rtl:rotate-180 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">

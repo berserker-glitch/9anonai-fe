@@ -45,12 +45,12 @@ export function Header() {
                 <div className="flex items-center justify-between h-20">
                     {/* Logo - Enhanced */}
                     <Link href="/" className="flex items-center gap-3 group">
-                        <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-primary via-primary to-primary/80 flex items-center justify-center shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-all duration-300 group-hover:scale-105">
+                        <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-primary via-primary to-primary/80 flex items-center justify-center shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-[box-shadow,transform] duration-300 group-hover:scale-105">
                             <span className="text-primary-foreground font-display font-bold text-xl group-hover:animate-icon-bounce">٩</span>
                             <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-gold/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         </div>
                         <div className="flex flex-col">
-                            <span className="text-xl font-display font-semibold tracking-tight group-hover:text-gradient-emerald transition-all duration-300">
+                            <span className="text-xl font-display font-semibold tracking-tight group-hover:text-gradient-emerald transition-colors duration-300">
                                 9anon
                             </span>
                             <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-medium -mt-0.5 group-hover:text-gold transition-colors duration-300">
@@ -71,7 +71,7 @@ export function Header() {
                                 className="relative text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-300 py-2 group"
                             >
                                 {t(item.key)}
-                                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-gold group-hover:w-full transition-all duration-300" />
+                                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-gold group-hover:w-full transition-[width] duration-300" />
                             </Link>
                         ))}
                     </nav>
@@ -82,7 +82,7 @@ export function Header() {
                         {!isLoading && user ? (
                             <Link
                                 href="/chat"
-                                className="btn-premium px-6 py-2.5 text-sm font-semibold bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-xl hover:shadow-xl hover:shadow-primary/30 hover:scale-105 transition-all duration-300"
+                                className="btn-premium px-6 py-2.5 text-sm font-semibold bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-xl hover:shadow-xl hover:shadow-primary/30 hover:scale-105 transition-[transform,box-shadow] duration-300"
                             >
                                 {t("nav.goToChat")}
                             </Link>
@@ -96,7 +96,7 @@ export function Header() {
                                 </Link>
                                 <Link
                                     href="/register"
-                                    className="btn-premium px-6 py-2.5 text-sm font-semibold bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-xl shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:scale-105 transition-all duration-300"
+                                    className="btn-premium px-6 py-2.5 text-sm font-semibold bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-xl shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:scale-105 transition-[transform,box-shadow] duration-300"
                                 >
                                     {t("nav.getStarted")}
                                 </Link>
