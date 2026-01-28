@@ -119,8 +119,8 @@ export default function SetupPage() {
                                             key={opt.id}
                                             onClick={() => setSpokenLanguage(opt.id)}
                                             className={`p-4 rounded-xl border text-left transition-all ${spokenLanguage === opt.id
-                                                    ? "border-primary bg-primary/5 ring-2 ring-primary/20"
-                                                    : "border-border hover:border-primary/50 hover:bg-muted/50"
+                                                ? "border-primary bg-primary/5 ring-2 ring-primary/20"
+                                                : "border-border hover:border-primary/50 hover:bg-muted/50"
                                                 }`}
                                         >
                                             <div className="text-2xl mb-1">{opt.icon}</div>
@@ -158,8 +158,8 @@ export default function SetupPage() {
                                                     }
                                                 }}
                                                 className={`p-3 rounded-lg border text-left transition-all ${isSelected
-                                                        ? "bg-primary text-primary-foreground border-primary"
-                                                        : "bg-muted/30 border-border hover:bg-muted"
+                                                    ? "bg-primary text-primary-foreground border-primary"
+                                                    : "bg-muted/30 border-border hover:bg-muted"
                                                     }`}
                                             >
                                                 <div className="text-sm font-medium">{tone.label}</div>
@@ -197,8 +197,8 @@ export default function SetupPage() {
                                         key={opt}
                                         onClick={() => setMarketingSource(opt)}
                                         className={`w-full p-4 rounded-xl border text-left transition-all flex items-center justify-between ${marketingSource === opt
-                                                ? "border-primary bg-primary/5 ring-2 ring-primary/20 font-medium"
-                                                : "border-border hover:border-primary/50 hover:bg-muted/50"
+                                            ? "border-primary bg-primary/5 ring-2 ring-primary/20 font-medium"
+                                            : "border-border hover:border-primary/50 hover:bg-muted/50"
                                             }`}
                                     >
                                         {opt}
@@ -214,14 +214,27 @@ export default function SetupPage() {
 
                 {/* Footer */}
                 <div className="flex justify-between items-center mt-8 pt-4 border-t border-border">
-                    <button
-                        onClick={() => setStep(step - 1)}
-                        disabled={step === 1 || loading}
-                        className={`text-sm font-medium text-muted-foreground hover:text-foreground ${step === 1 ? "invisible" : ""
-                            }`}
-                    >
-                        Back
-                    </button>
+                    <div className="flex gap-2">
+                        <button
+                            onClick={() => setStep(step - 1)}
+                            disabled={step === 1 || loading}
+                            className={`text-sm font-medium text-muted-foreground hover:text-foreground ${step === 1 ? "invisible" : ""
+                                }`}
+                        >
+                            Back
+                        </button>
+
+                        {/* Skip button for Arabic users */}
+                        {spokenLanguage === "ar" && (
+                            <button
+                                onClick={handleFinish}
+                                disabled={loading}
+                                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                            >
+                                تخطي
+                            </button>
+                        )}
+                    </div>
 
                     {error && (
                         <span className="text-sm text-red-500">{error}</span>
@@ -240,7 +253,7 @@ export default function SetupPage() {
                         ) : step === 3 ? (
                             "Get Started 🚀"
                         ) : (
-                            "Continue"
+                            spokenLanguage === "ar" ? "تابع" : "Continue"
                         )}
                     </button>
                 </div>
