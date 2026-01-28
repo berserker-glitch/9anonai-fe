@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
+import { Playfair_Display, Plus_Jakarta_Sans, Cairo } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers/providers";
 
@@ -12,6 +12,12 @@ const playfair = Playfair_Display({
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-sans",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+});
+
+const cairo = Cairo({
+  variable: "--font-cairo",
+  subsets: ["arabic"],
   weight: ["300", "400", "500", "600", "700", "800"],
 });
 
@@ -158,7 +164,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${playfair.variable} ${jakarta.variable} font-sans antialiased`}>
+      <body className={`${playfair.variable} ${jakarta.variable} ${cairo.variable} font-sans antialiased`}>
         <Providers>{children}</Providers>
       </body>
     </html>

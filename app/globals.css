@@ -5,8 +5,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans), ui-sans-serif, sans-serif, system-ui;
-  --font-display: var(--font-display), ui-serif, Georgia, serif;
+  --font-sans: var(--font-sans), var(--font-cairo), ui-sans-serif, sans-serif, system-ui;
+  --font-display: var(--font-display), var(--font-cairo), ui-serif, Georgia, serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --radius: 0.625rem;
   --tracking-tighter: calc(var(--tracking-normal) - 0.05em);
@@ -108,8 +108,8 @@
   --sidebar-accent-foreground: oklch(0.25 0.03 160);
   --sidebar-border: oklch(0.90 0.01 85);
   --sidebar-ring: oklch(0.45 0.14 160);
-  --font-sans: "Plus Jakarta Sans", ui-sans-serif, sans-serif, system-ui;
-  --font-display: "Playfair Display", ui-serif, Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", "Cairo", ui-sans-serif, sans-serif, system-ui;
+  --font-display: "Playfair Display", "Cairo", ui-serif, Georgia, serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --shadow-color: oklch(0.25 0.03 160);
   --shadow-opacity: 0.08;
@@ -166,8 +166,8 @@
   --sidebar-accent-foreground: oklch(0.95 0.01 85);
   --sidebar-border: oklch(0.25 0.02 160);
   --sidebar-ring: oklch(0.50 0.10 160);
-  --font-sans: "Plus Jakarta Sans", ui-sans-serif, sans-serif, system-ui;
-  --font-display: "Playfair Display", ui-serif, Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", "Cairo", ui-sans-serif, sans-serif, system-ui;
+  --font-display: "Playfair Display", "Cairo", ui-serif, Georgia, serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --shadow-color: oklch(0.08 0.02 160);
   --shadow-opacity: 0.40;
@@ -736,15 +736,20 @@
 }
 
 @keyframes float-orb {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translate(0, 0) scale(1);
   }
+
   25% {
     transform: translate(20px, -20px) scale(1.1);
   }
+
   50% {
     transform: translate(-10px, 20px) scale(0.95);
   }
+
   75% {
     transform: translate(-20px, -10px) scale(1.05);
   }
@@ -782,6 +787,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -794,9 +800,12 @@
 
 /* Parallax-like effect for background elements */
 @keyframes parallax-float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0) translateX(0);
   }
+
   50% {
     transform: translateY(-10px) translateX(5px);
   }
@@ -811,15 +820,19 @@
   0% {
     transform: translate(0, 0);
   }
+
   25% {
     transform: translate(2px, 1px);
   }
+
   50% {
     transform: translate(-1px, 2px);
   }
+
   75% {
     transform: translate(-2px, -1px);
   }
+
   100% {
     transform: translate(0, 0);
   }
@@ -834,6 +847,7 @@
   0% {
     background-position: -200% 0;
   }
+
   100% {
     background-position: 200% 0;
   }
@@ -862,9 +876,12 @@
 
 /* Text gradient animation */
 @keyframes gradient-text-shift {
-  0%, 100% {
+
+  0%,
+  100% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
@@ -877,9 +894,12 @@
 
 /* Icon bounce effect */
 @keyframes icon-bounce {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-5px);
   }
