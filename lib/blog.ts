@@ -1,64 +1,95 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
 
-// Adjusted path to point to content/blogs at the root or specific location
-// Since this is running in Next.js, process.cwd() is usually the root of the implementation (FE)
-const contentDirectory = path.join(process.cwd(), 'content/blogs');
+// Supported languages
+export type BlogLanguage = "ar" | "fr" | "en";
 
 export interface BlogPost {
     slug: string;
     title: string;
-    date: string;
     description: string;
+    date: string;
     content: string;
+    language: BlogLanguage;
 }
 
-export function getAllPosts(): BlogPost[] {
-    // Ensure directory exists to prevent crash on first load if empty
-    if (!fs.existsSync(contentDirectory)) {
+const blogsDirectory = path.join(process.cwd(), "content/blogs");
+
+export function getAllPosts(lang: BlogLanguage = "ar"): BlogPost[] {
+    // Ensure directory exists
+    if (!fs.existsSync(blogsDirectory)) {
         return [];
     }
 
-    const fileNames = fs.readdirSync(contentDirectory);
-    const allPosts = fileNames
-        .filter((fileName) => fileName.endsWith('.md'))
-        .map((fileName) => {
-            const slug = fileName.replace(/\.md$/, '');
-            const fullPath = path.join(contentDirectory, fileName);
-            const fileContents = fs.readFileSync(fullPath, 'utf8');
-            const { data, content } = matter(fileContents);
+    const fileNames = fs.readdirSync(blogsDirectory);
 
-            return {
-                slug,
-                title: data.title || slug,
-                date: data.date || new Date().toISOString(),
-                description: data.description || '',
-                content,
-            };
-        });
-
-    return allPosts.sort((a, b) => (new Date(a.date) > new Date(b.date) ? -1 : 1));
-}
-
-export function getPostBySlug(slug: string): BlogPost | null {
-    try {
-        const fullPath = path.join(contentDirectory, `${slug}.md`);
-        if (!fs.existsSync(fullPath)) {
-            return null;
+    // Filter files based on language suffix
+    // ar: no suffix (or .ar.md if we wanted, but sticking to legacy for now)
+    // fr: .fr.md
+    // en: .en.md
+    const targetFiles = fileNames.filter(fileName => {
+        if (lang === "ar") {
+            // Match .md files that DO NOT have .fr.md or .en.md
+            return fileName.endsWith(".md") && !fileName.endsWith(".fr.md") && !fileName.endsWith(".en.md");
         }
-        const fileContents = fs.readFileSync(fullPath, 'utf8');
+        return fileName.endsWith(`.${lang}.md`);
+    });
+
+    const allPostsData = targetFiles.map((fileName) => {
+        // Remove ".md" and language suffix from file name to get slug
+        const slug = fileName.replace(/\.(fr|en)?\.md$/, "");
+
+        const fullPath = path.join(blogsDirectory, fileName);
+        const fileContents = fs.readFileSync(fullPath, "utf8");
         const { data, content } = matter(fileContents);
 
         return {
             slug,
             title: data.title || slug,
+            description: data.description || "",
             date: data.date || new Date().toISOString(),
-            description: data.description || '',
             content,
+            language: lang,
+        };
+    });
+
+    // Sort posts by date
+    return allPostsData.sort((a, b) => {
+        if (a.date < b.date) {
+            return 1;
+        } else {
+            return -1;
+        }
+    });
+}
+
+export function getPostBySlug(slug: string, lang: BlogLanguage = "ar"): BlogPost | null {
+    try {
+        let fileName = `${slug}.md`;
+        if (lang !== "ar") {
+            fileName = `${slug}.${lang}.md`;
+        }
+
+        const fullPath = path.join(blogsDirectory, fileName);
+
+        if (!fs.existsSync(fullPath)) {
+            return null;
+        }
+
+        const fileContents = fs.readFileSync(fullPath, "utf8");
+        const { data, content } = matter(fileContents);
+
+        return {
+            slug,
+            title: data.title || slug,
+            description: data.description || "",
+            date: data.date || new Date().toISOString(),
+            content,
+            language: lang,
         };
     } catch (error) {
-        console.error(`Error reading blog post ${slug}:`, error);
+        console.error(`Error reading blog post ${slug} (${lang}):`, error);
         return null;
     }
 }
