@@ -9,10 +9,11 @@ interface ProvidersProps {
     children: ReactNode;
 }
 
-export function Providers({ children }: ProvidersProps) {
+// @ts-ignore
+export function Providers({ children, lang }: ProvidersProps & { lang?: string }) {
     return (
         <AuthProvider>
-            <LanguageProvider defaultNamespaces={["landing", "tos", "privacy"]}>
+            <LanguageProvider defaultNamespaces={["landing", "tos", "privacy"]} initialLanguage={lang as any}>
                 <ThemeProvider defaultTheme="dark">
                     {children}
                 </ThemeProvider>

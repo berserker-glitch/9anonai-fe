@@ -12,14 +12,17 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@formatjs/intl-localematcher": "^0.8.0",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.11.1",
+    "negotiator": "^1.0.0",
     "next": "16.1.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-markdown": "^10.1.0",
     "rehype-highlight": "^7.0.2",
-    "remark-gfm": "^4.0.1"
+    "remark-gfm": "^4.0.1",
+    "user-agent-data-types": "^0.4.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

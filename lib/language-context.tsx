@@ -56,13 +56,15 @@ interface LanguageProviderProps {
     defaultNamespaces?: string[];
 }
 
-export function LanguageProvider({ children, defaultNamespaces = ["landing"] }: LanguageProviderProps) {
-    const [language, setLanguageState] = useState<Language>("ar");
+export function LanguageProvider({ children, defaultNamespaces = ["landing"], initialLanguage }: LanguageProviderProps & { initialLanguage?: Language }) {
+    const [language, setLanguageState] = useState<Language>(initialLanguage || "ar");
     const [translations, setTranslations] = useState<TranslationCache>({});
     const [isLoading, setIsLoading] = useState(true);
 
-    // Initialize language from localStorage or browser
+    // Initialize language from localStorage or browser if not provided initially
     useEffect(() => {
+        if (initialLanguage) return; // Skip if provided from server
+
         const stored = localStorage.getItem("9anon-language") as Language | null;
         if (stored && languages[stored]) {
             setLanguageState(stored);
@@ -73,7 +75,7 @@ export function LanguageProvider({ children, defaultNamespaces = ["landing"] }: 
                 setLanguageState(browserLang);
             }
         }
-    }, []);
+    }, [initialLanguage]);
 
     // Load translations when language changes
     useEffect(() => {
