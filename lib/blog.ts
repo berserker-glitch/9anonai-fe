@@ -38,7 +38,7 @@ export function getAllPosts(lang: BlogLanguage = "ar"): BlogPost[] {
 
     const allPostsData = targetFiles.map((fileName) => {
         // Remove ".md" and language suffix from file name to get slug
-        const slug = fileName.replace(/\.(fr|en)?\.md$/, "");
+        const slug = fileName.replace(/\.(?:[a-z]{2}\.)?md$/, "");
 
         const fullPath = path.join(blogsDirectory, fileName);
         const fileContents = fs.readFileSync(fullPath, "utf8");
