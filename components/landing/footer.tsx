@@ -17,9 +17,8 @@ export function Footer() {
                     {/* Brand */}
                     <div className="md:col-span-5 lg:col-span-6">
                         <Link href="/" className="inline-flex items-center gap-3 mb-6 group">
-                            <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-primary via-primary to-primary/80 flex items-center justify-center shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-shadow duration-300">
-                                <span className="text-primary-foreground font-display font-bold text-xl">٩</span>
-                                <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-gold/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-shadow duration-300">
+                                <img src="/9anon-logo.png" alt="9anon Logo" className="w-full h-full object-cover" />
                             </div>
                             <div className="flex flex-col">
                                 <span className="text-xl font-display font-semibold tracking-tight">

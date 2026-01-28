@@ -54,9 +54,8 @@ export function Header() {
                 <div className="flex items-center justify-between h-20">
                     {/* Logo - Enhanced */}
                     <Link href="/" className="flex items-center gap-3 group">
-                        <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-primary via-primary to-primary/80 flex items-center justify-center shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-[box-shadow,transform] duration-300 group-hover:scale-105">
-                            <span className="text-primary-foreground font-display font-bold text-xl group-hover:animate-icon-bounce">٩</span>
-                            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-gold/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-[box-shadow,transform] duration-300 group-hover:scale-105">
+                            <img src="/9anon-logo.png" alt="9anon Logo" className="w-full h-full object-cover" />
                         </div>
                         <div className="flex flex-col">
                             <span className="text-xl font-display font-semibold tracking-tight group-hover:text-gradient-emerald transition-colors duration-300">

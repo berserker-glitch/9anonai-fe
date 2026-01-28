@@ -585,8 +585,8 @@ export default function NewChatPage() {
                 <main className="flex-1 flex flex-col min-w-0">
                     {showWelcome ? (
                         <div className="flex-1 flex flex-col items-center justify-center p-8">
-                            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center mb-6 shadow-xl">
-                                <span className="text-white text-2xl font-bold">9</span>
+                            <div className="w-20 h-20 mb-6 shadow-xl rounded-2xl overflow-hidden bg-white">
+                                <img src="/9anon-logo.png" alt="9anon Logo" className="w-full h-full object-cover" />
                             </div>
                             <h1 className="text-3xl font-bold mb-2">Welcome to 9anon</h1>
                             <p className="text-muted-foreground mb-8 text-center max-w-md">

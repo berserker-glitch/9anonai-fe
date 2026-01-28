@@ -82,6 +82,15 @@ export const metadata: Metadata = {
       "en-US": "https://9anonai.com/en",
     },
   },
+  icons: {
+    icon: "/9anon-logo.png",
+    shortcut: "/9anon-logo.png",
+    apple: "/9anon-logo.png",
+    other: {
+      rel: "apple-touch-icon-precomposed",
+      url: "/9anon-logo.png",
+    },
+  },
   openGraph: {
     type: "website",
     locale: "ar_MA",
@@ -93,7 +102,7 @@ export const metadata: Metadata = {
       "المساعد القانوني الذكي للقانون المغربي. احصل على إجابات فورية حول حقوقك والإجراءات القانونية.",
     images: [
       {
-        url: "/og-image.png",
+        url: "/9anon-logo.png",
         width: 1200,
         height: 630,
         alt: "9anon AI - مساعد قانوني مغربي ذكي",
@@ -107,7 +116,7 @@ export const metadata: Metadata = {
     title: "9anon AI - قانون | Moroccan Law AI Assistant",
     description:
       "Your intelligent Moroccan law assistant. Get instant legal answers in Arabic, French, English & Darija.",
-    images: ["/og-image.png"],
+    images: ["/9anon-logo.png"],
   },
   verification: {
     google: "google-site-verification-code",
@@ -160,9 +169,8 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="ltr" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="icon" href="/9anon-logo.png" sizes="any" />
+        <link rel="apple-touch-icon" href="/9anon-logo.png" />
         <link rel="manifest" href="/manifest.json" />
         <script
           type="application/ld+json"
