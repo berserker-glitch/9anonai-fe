@@ -594,7 +594,7 @@ export default function NewChatPage() {
                             </p>
                             <div className="w-full max-w-2xl">
                                 <ChatInput onSubmit={handleSendMessage}>
-                                    <AttachButton onFilesSelected={handleFileUpload} />
+
                                     <div className="relative flex-1">
                                         {attachedFiles.length > 0 && (
                                             <div className="flex gap-2 mb-2 flex-wrap pb-2 border-b border-border">
