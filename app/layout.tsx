@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Plus_Jakarta_Sans, Cairo } from "next/font/google";
+import { Playfair_Display, Plus_Jakarta_Sans, Cairo, Tajawal, IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers/providers";
+import { FontSwitcher } from "@/components/debug/font-switcher";
 
 const playfair = Playfair_Display({
   variable: "--font-display",
@@ -19,6 +20,18 @@ const cairo = Cairo({
   variable: "--font-cairo",
   subsets: ["arabic"],
   weight: ["300", "400", "500", "600", "700", "800"],
+});
+
+const tajawal = Tajawal({
+  variable: "--font-tajawal",
+  subsets: ["arabic"],
+  weight: ["300", "400", "500", "700", "800"],
+});
+
+const ibmArabic = IBM_Plex_Sans_Arabic({
+  variable: "--font-ibm-arabic",
+  subsets: ["arabic"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const viewport: Viewport = {
@@ -134,6 +147,7 @@ const jsonLd = {
     "@type": "Offer",
     price: "0",
     priceCurrency: "MAD",
+    priceValidUntil: "2024-12-31",
   },
   provider: {
     "@type": "Organization",
@@ -164,8 +178,11 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${playfair.variable} ${jakarta.variable} ${cairo.variable} font-sans antialiased`}>
-        <Providers>{children}</Providers>
+      <body className={`${playfair.variable} ${jakarta.variable} ${cairo.variable} ${tajawal.variable} ${ibmArabic.variable} font-sans antialiased`}>
+        <Providers>
+          {children}
+          <FontSwitcher />
+        </Providers>
       </body>
     </html>
   );
