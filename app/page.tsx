@@ -45,7 +45,7 @@ export default function LandingPage() {
         {/* Floating Orbs - Enhanced */}
         <div className="absolute top-20 right-[10%] w-[500px] h-[500px] bg-gradient-to-br from-primary/25 to-gold/15 rounded-full blur-[120px] animate-morph opacity-60 animate-orb-1" />
         <div className="absolute bottom-20 left-[5%] w-[400px] h-[400px] bg-gradient-to-br from-gold/20 to-primary/10 rounded-full blur-[100px] animate-morph opacity-50 animate-orb-2" style={{ animationDelay: '-4s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-[150px] animate-pulse-gentle" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-[150px] animate-pulse-gentle will-change-transform" />
 
         {/* Decorative Elements - Enhanced */}
         <div className="absolute top-32 left-[15%] w-16 h-16 border border-gold/30 rounded-2xl rotate-12 animate-float-gentle opacity-40 backdrop-blur-sm" style={{ '--float-rotate': '12deg' } as React.CSSProperties} />

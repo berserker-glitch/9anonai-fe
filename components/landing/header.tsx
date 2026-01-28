@@ -15,8 +15,9 @@ export function Header() {
 
     useEffect(() => {
         let lastScrollY = window.scrollY;
+        let ticking = false;
 
-        const handleScroll = () => {
+        const updateHeader = () => {
             const currentScrollY = window.scrollY;
 
             // Header visibility based on scroll direction
@@ -30,6 +31,14 @@ export function Header() {
             setScrolled(currentScrollY > 20);
 
             lastScrollY = currentScrollY;
+            ticking = false;
+        };
+
+        const handleScroll = () => {
+            if (!ticking) {
+                window.requestAnimationFrame(updateHeader);
+                ticking = true;
+            }
         };
 
         window.addEventListener('scroll', handleScroll, { passive: true });
