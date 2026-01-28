@@ -56,14 +56,27 @@ interface LanguageProviderProps {
     defaultNamespaces?: string[];
 }
 
+import { useParams } from "next/navigation";
+
 export function LanguageProvider({ children, defaultNamespaces = ["landing"], initialLanguage }: LanguageProviderProps & { initialLanguage?: Language }) {
-    const [language, setLanguageState] = useState<Language>(initialLanguage || "ar");
+    const params = useParams();
+    const urlLang = params?.lang as Language | undefined;
+
+    // Prioritize: explicit initial -> URL param -> state default
+    const [language, setLanguageState] = useState<Language>(initialLanguage || (urlLang && languages[urlLang] ? urlLang : "ar"));
     const [translations, setTranslations] = useState<TranslationCache>({});
     const [isLoading, setIsLoading] = useState(true);
 
-    // Initialize language from localStorage or browser if not provided initially
+    // Sync with URL params
     useEffect(() => {
-        if (initialLanguage) return; // Skip if provided from server
+        if (urlLang && languages[urlLang] && urlLang !== language) {
+            setLanguageState(urlLang);
+        }
+    }, [urlLang]);
+
+    // Initialize language from localStorage or browser if not provided initially and no URL lang
+    useEffect(() => {
+        if (initialLanguage || urlLang) return; // Skip if provided from server or URL
 
         const stored = localStorage.getItem("9anon-language") as Language | null;
         if (stored && languages[stored]) {
