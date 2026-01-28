@@ -31,11 +31,14 @@ export const metadata: Metadata = {
     template: "%s | 9anon AI",
   },
   description:
-    "9anon AI (قانون) - المساعد القانوني الذكي للقانون المغربي. احصل على إجابات فورية حول القانون المغربي، الإجراءات القانونية، وحقوقك. متاح بالعربية والفرنسية والإنجليزية والدارجة. 9anon AI - Your intelligent Moroccan law assistant.",
+    "9anon AI (قانون / 9anoun) - المساعد القانوني الذكي للقانون المغربي. احصل على إجابات فورية حول القانون المغربي، الإجراءات القانونية، وحقوقك. متاح بالعربية والفرنسية والإنجليزية والدارجة. 9anon AI - Your intelligent Moroccan law assistant.",
   keywords: [
     "9anon",
     "9anon ai",
     "9anon AI",
+    "9anoun",
+    "9anoun ai",
+    "kanoun ai",
     "قانون",
     "قانون ai",
     "qanon ai",
@@ -121,7 +124,7 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   name: "9anon AI",
-  alternateName: ["قانون", "Qanon AI", "9anon", "Qanun AI"],
+  alternateName: ["قانون", "Qanon AI", "9anon", "Qanun AI", "9anoun", "9anoun AI", "Kanoun AI"],
   description:
     "AI-powered Moroccan law assistant providing instant legal guidance in Arabic, French, English, and Darija.",
   url: "https://9anonai.com",
