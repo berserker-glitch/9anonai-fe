@@ -57,7 +57,7 @@ export function Header() {
                     <Link href="/" className="flex items-center gap-3 group">
                         <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-[box-shadow,transform] duration-300 group-hover:scale-105">
                             <Image
-                                src="/9anon-logo.png"
+                                src="/9anon-logo.webp"
                                 alt="9anon Logo"
                                 className="object-cover"
                                 fill
