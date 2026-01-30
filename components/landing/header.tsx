@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { useTranslation } from "@/lib/language-context";
@@ -55,7 +56,14 @@ export function Header() {
                     {/* Logo - Enhanced */}
                     <Link href="/" className="flex items-center gap-3 group">
                         <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-[box-shadow,transform] duration-300 group-hover:scale-105">
-                            <img src="/9anon-logo.png" alt="9anon Logo" className="w-full h-full object-cover" />
+                            <Image
+                                src="/9anon-logo.png"
+                                alt="9anon Logo"
+                                className="object-cover"
+                                fill
+                                priority
+                                sizes="40px"
+                            />
                         </div>
                         <div className="flex flex-col">
                             <span className="text-xl font-display font-semibold tracking-tight group-hover:text-gradient-emerald transition-colors duration-300">
