@@ -86,6 +86,9 @@ export default function ChatWithIdPage() {
     const [showWelcome, setShowWelcome] = useState(true);
     const [filesModalOpen, setFilesModalOpen] = useState(false);
     const [pendingMessage, setPendingMessage] = useState<string | null>(initialMessage || null);
+    // Message editing state
+    const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
+    const [editValue, setEditValue] = useState("");
 
     const messageContainerRef = useRef<HTMLDivElement>(null);
 
@@ -551,6 +554,144 @@ export default function ChatWithIdPage() {
         }
     };
 
+    /**
+     * Handle editing a user message.
+     * Removes all subsequent messages and regenerates the AI response.
+     * @param messageId - The ID of the message being edited
+     * @param newContent - The new content for the message
+     */
+    const handleEditMessage = async (messageId: string, newContent: string) => {
+        if (!newContent.trim() || isGenerating) return;
+
+        // Find the message index
+        const messageIndex = messages.findIndex(m => m.id === messageId);
+        if (messageIndex === -1) return;
+
+        // Keep only messages up to and including the edited message
+        const messagesUpToEdit = messages.slice(0, messageIndex);
+
+        // Update the edited message content
+        const editedMessage: Message = {
+            ...messages[messageIndex],
+            content: newContent.trim(),
+        };
+
+        // Set the new messages state (removes all subsequent messages)
+        setMessages([...messagesUpToEdit, editedMessage]);
+        setEditingMessageId(null);
+        setEditValue("");
+
+        // Now regenerate the AI response
+        setIsTyping(true);
+        setIsGenerating(true);
+
+        const assistantId = Date.now().toString();
+        const assistantMsg: Message = {
+            id: assistantId,
+            role: "assistant",
+            content: "",
+            timestamp: new Date(),
+            steps: [],
+            sources: [],
+            isThinking: true,
+        };
+        setMessages(prev => [...prev, assistantMsg]);
+
+        let fullContent = "";
+        let finalSources: any[] = [];
+
+        try {
+            const response = await fetch(`${API_URL}/chat`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    message: newContent.trim(),
+                    history: messagesUpToEdit,
+                    images: [],
+                }),
+            });
+
+            if (!response.body) throw new Error("No response body");
+
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            let buffer = "";
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                buffer += decoder.decode(value, { stream: true });
+                const lines = buffer.split("\n");
+                buffer = lines.pop() || "";
+
+                for (const line of lines) {
+                    if (line.startsWith("data: ")) {
+                        try {
+                            const event = JSON.parse(line.slice(6));
+                            if (event.type === "token") {
+                                fullContent += event.content;
+                                setMessages(prev =>
+                                    prev.map(m =>
+                                        m.id === assistantId
+                                            ? { ...m, content: fullContent, isThinking: false }
+                                            : m
+                                    )
+                                );
+                                setTimeout(scrollToBottom, 50);
+                            } else if (event.type === "citation") {
+                                finalSources = event.sources || [];
+                                setMessages(prev =>
+                                    prev.map(m =>
+                                        m.id === assistantId ? { ...m, sources: finalSources } : m
+                                    )
+                                );
+                            }
+                        } catch (e) {
+                            console.error("Parse error", e);
+                        }
+                    }
+                }
+            }
+
+            // Save messages to DB
+            if (activeChatId) {
+                try {
+                    await fetch(`${API_URL}/chats/${activeChatId}/messages`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`,
+                        },
+                        body: JSON.stringify({
+                            role: "assistant",
+                            content: fullContent,
+                            sources: JSON.stringify(finalSources),
+                        }),
+                    });
+                } catch (e) {
+                    console.error("Failed to save assistant message", e);
+                }
+            }
+        } catch (error) {
+            console.error("Edit regenerate error:", error);
+            setMessages(prev =>
+                prev.map(m =>
+                    m.id === assistantId
+                        ? { ...m, content: "Sorry, there was an error. Please try again.", isThinking: false }
+                        : m
+                )
+            );
+        } finally {
+            setIsTyping(false);
+            setIsGenerating(false);
+            scrollToBottom();
+        }
+    };
+
     // Filter chats by search
     const filteredChats = chatHistory.filter(chat =>
         chat.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -644,7 +785,7 @@ export default function ChatWithIdPage() {
                             </p>
                             <div className="w-full max-w-2xl">
                                 <ChatInput onSubmit={handleSendMessage}>
-                                    <AttachButton onFilesSelected={handleFileUpload} />
+                                    {/* AttachButton hidden */}
                                     <div className="relative flex-1">
                                         {attachedFiles.length > 0 && (
                                             <div className="flex gap-2 mb-2 flex-wrap pb-2 border-b border-border">
@@ -712,10 +853,60 @@ export default function ChatWithIdPage() {
                                                             ))}
                                                         </div>
                                                     )}
-                                                    <UserMessage>
-                                                        <MessageContent content={message.content} />
-                                                    </UserMessage>
-                                                    <MessageTimestamp date={message.timestamp} align="right" />
+                                                    {/* Edit mode for user messages */}
+                                                    {editingMessageId === message.id ? (
+                                                        <div className="w-full max-w-md">
+                                                            <textarea
+                                                                value={editValue}
+                                                                onChange={(e) => setEditValue(e.target.value)}
+                                                                className="w-full p-3 rounded-xl border border-border bg-background resize-none min-h-[80px] focus:outline-none focus:ring-2 focus:ring-primary"
+                                                                autoFocus
+                                                            />
+                                                            <div className="flex justify-end gap-2 mt-2">
+                                                                <button
+                                                                    onClick={() => {
+                                                                        setEditingMessageId(null);
+                                                                        setEditValue("");
+                                                                    }}
+                                                                    className="px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                                                                >
+                                                                    Cancel
+                                                                </button>
+                                                                <button
+                                                                    onClick={() => handleEditMessage(message.id, editValue)}
+                                                                    disabled={!editValue.trim() || isGenerating}
+                                                                    className="px-3 py-1.5 text-sm bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 disabled:opacity-50 transition-colors"
+                                                                >
+                                                                    Save & Regenerate
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    ) : (
+                                                        <>
+                                                            <UserMessage>
+                                                                <MessageContent content={message.content} />
+                                                            </UserMessage>
+                                                            <div className="flex items-center gap-2 mt-1">
+                                                                <MessageTimestamp date={message.timestamp} align="right" />
+                                                                {/* Edit button - only show for the last user message */}
+                                                                {messages.indexOf(message) === messages.length - 2 && !isGenerating && (
+                                                                    <button
+                                                                        onClick={() => {
+                                                                            setEditingMessageId(message.id);
+                                                                            setEditValue(message.content);
+                                                                        }}
+                                                                        className="text-muted-foreground hover:text-foreground transition-colors"
+                                                                        title="Edit message"
+                                                                    >
+                                                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                                                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                                                                        </svg>
+                                                                    </button>
+                                                                )}
+                                                            </div>
+                                                        </>
+                                                    )}
                                                 </div>
                                             ) : (
                                                 <div className="w-full">
@@ -775,7 +966,7 @@ export default function ChatWithIdPage() {
                     {/* Input Area when not in welcome mode */}
                     {!showWelcome && (
                         <ChatInput onSubmit={handleSendMessage}>
-                            <AttachButton onFilesSelected={handleFileUpload} />
+                            {/* AttachButton hidden */}
                             <div className="relative flex-1">
                                 {attachedFiles.length > 0 && (
                                     <div className="flex gap-2 mb-2 flex-wrap">

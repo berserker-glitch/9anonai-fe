@@ -41,24 +41,29 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 lg:pt-48 lg:pb-36 overflow-hidden">
-        {/* Background Layers */}
-        <div className="absolute inset-0 bg-dots opacity-30" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-muted/30" />
+        {/* Background Layers - Enhanced */}
+        <div className="absolute inset-0 bg-dots opacity-20" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-muted/40" />
 
-        {/* Floating Orbs - Enhanced */}
-        <div className="absolute top-20 right-[10%] w-[500px] h-[500px] bg-gradient-to-br from-primary/25 to-gold/15 rounded-full blur-[120px] animate-morph opacity-60 animate-orb-1" />
-        <div className="absolute bottom-20 left-[5%] w-[400px] h-[400px] bg-gradient-to-br from-gold/20 to-primary/10 rounded-full blur-[100px] animate-morph opacity-50 animate-orb-2" style={{ animationDelay: '-4s' }} />
-        <div className="absolute top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-[150px] will-change-transform" />
+        {/* Radial gradient overlay for depth */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent" />
 
-        {/* Decorative Elements - Enhanced */}
-        <div className="absolute top-32 left-[15%] w-16 h-16 border border-gold/30 rounded-2xl rotate-12 animate-float-gentle opacity-40 backdrop-blur-sm" style={{ '--float-rotate': '12deg' } as React.CSSProperties} />
-        <div className="absolute top-60 right-[20%] w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/5 rounded-xl -rotate-12 animate-float-gentle opacity-50 backdrop-blur-sm shadow-lg" style={{ animationDelay: '-2s', '--float-rotate': '-12deg' } as React.CSSProperties} />
-        <div className="absolute bottom-40 left-[25%] w-8 h-8 border border-primary/30 rounded-lg rotate-45 animate-float-gentle opacity-30 backdrop-blur-sm" style={{ animationDelay: '-3s', '--float-rotate': '45deg' } as React.CSSProperties} />
+        {/* Floating Orbs - More dramatic */}
+        <div className="absolute top-10 right-[5%] w-[600px] h-[600px] bg-gradient-to-br from-primary/30 via-primary/15 to-gold/20 rounded-full blur-[150px] animate-morph opacity-70 animate-orb-1" />
+        <div className="absolute bottom-0 left-[0%] w-[500px] h-[500px] bg-gradient-to-br from-gold/25 via-gold/10 to-primary/15 rounded-full blur-[120px] animate-morph opacity-60 animate-orb-2" style={{ animationDelay: '-4s' }} />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-gradient-to-br from-primary/15 via-gold/5 to-transparent rounded-full blur-[180px] will-change-transform opacity-50" />
 
-        {/* Additional floating particles */}
-        <div className="absolute top-1/4 left-[20%] w-2 h-2 bg-primary/40 rounded-full animate-pulse-subtle" />
-        <div className="absolute top-1/3 right-[30%] w-3 h-3 bg-gold/30 rounded-full animate-pulse-subtle" style={{ animationDelay: '0.5s' }} />
-        <div className="absolute bottom-1/4 left-[40%] w-2 h-2 bg-primary/50 rounded-full animate-pulse-subtle" style={{ animationDelay: '1s' }} />
+        {/* Decorative Elements - Geometric shapes */}
+        <div className="absolute top-28 left-[12%] w-20 h-20 border-2 border-gold/20 rounded-2xl rotate-12 animate-float-gentle opacity-30 backdrop-blur-sm bg-gold/5" style={{ '--float-rotate': '12deg' } as React.CSSProperties} />
+        <div className="absolute top-48 right-[15%] w-14 h-14 bg-gradient-to-br from-primary/25 to-primary/5 rounded-xl -rotate-12 animate-float-gentle opacity-40 backdrop-blur-sm shadow-xl shadow-primary/10" style={{ animationDelay: '-2s', '--float-rotate': '-12deg' } as React.CSSProperties} />
+        <div className="absolute bottom-32 left-[22%] w-10 h-10 border border-primary/25 rounded-lg rotate-45 animate-float-gentle opacity-25 backdrop-blur-sm bg-primary/5" style={{ animationDelay: '-3s', '--float-rotate': '45deg' } as React.CSSProperties} />
+        <div className="absolute top-[60%] right-[8%] w-6 h-6 bg-gold/20 rounded rotate-12 animate-float-gentle opacity-35" style={{ animationDelay: '-1.5s', '--float-rotate': '12deg' } as React.CSSProperties} />
+
+        {/* Floating particles */}
+        <div className="absolute top-1/4 left-[18%] w-2 h-2 bg-primary/50 rounded-full animate-pulse-subtle" />
+        <div className="absolute top-1/3 right-[25%] w-3 h-3 bg-gold/40 rounded-full animate-pulse-subtle" style={{ animationDelay: '0.5s' }} />
+        <div className="absolute bottom-1/4 left-[35%] w-2 h-2 bg-primary/60 rounded-full animate-pulse-subtle" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-[45%] left-[45%] w-1.5 h-1.5 bg-gold/50 rounded-full animate-pulse-subtle" style={{ animationDelay: '1.5s' }} />
 
         <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="text-center max-w-5xl mx-auto" ref={heroRef}>
@@ -214,22 +219,26 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Stats Section - Enhanced */}
-      <section className="py-16 border-y border-border/30 bg-muted/20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-dots opacity-20" />
+      {/* Stats Section - Enhanced with animated counters */}
+      <section className="py-20 border-y border-border/20 bg-gradient-to-r from-muted/30 via-muted/50 to-muted/30 relative overflow-hidden">
+        <div className="absolute inset-0 bg-dots opacity-15" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
         <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-16">
             {[
-              { valueKey: "stats.activeUsersValue", labelKey: "stats.activeUsers" },
-              { valueKey: "stats.questionsAnsweredValue", labelKey: "stats.questionsAnswered" },
-              { valueKey: "stats.accuracyValue", labelKey: "stats.accuracy" },
-              { valueKey: "stats.languagesValue", labelKey: "stats.languages" },
+              { valueKey: "stats.activeUsersValue", labelKey: "stats.activeUsers", color: "primary" },
+              { valueKey: "stats.questionsAnsweredValue", labelKey: "stats.questionsAnswered", color: "gold" },
+              { valueKey: "stats.accuracyValue", labelKey: "stats.accuracy", color: "primary" },
+              { valueKey: "stats.languagesValue", labelKey: "stats.languages", color: "gold" },
             ].map((stat, i) => (
-              <div key={i} className="text-center group scroll-animate opacity-0 transform translate-y-8 transition-[opacity,transform] duration-700">
-                <p className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-gradient-emerald mb-2 group-hover:scale-105 transition-transform duration-300 drop-shadow-sm">
-                  {t(stat.valueKey)}
-                </p>
-                <p className="text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-300">{t(stat.labelKey)}</p>
+              <div key={i} className="text-center group scroll-animate opacity-0 transform translate-y-8 transition-[opacity,transform] duration-700 hover:scale-105">
+                <div className="relative inline-block">
+                  <p className={`text-5xl sm:text-6xl lg:text-7xl font-display font-bold mb-3 ${stat.color === 'gold' ? 'text-gradient-gold' : 'text-gradient-emerald'} drop-shadow-sm`}>
+                    {t(stat.valueKey)}
+                  </p>
+                  <div className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-12 h-1 rounded-full ${stat.color === 'gold' ? 'bg-gold/50' : 'bg-primary/50'} group-hover:w-20 transition-all duration-300`} />
+                </div>
+                <p className="text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-300 mt-2">{t(stat.labelKey)}</p>
               </div>
             ))}
           </div>

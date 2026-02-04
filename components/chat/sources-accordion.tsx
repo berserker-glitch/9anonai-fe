@@ -30,7 +30,7 @@ export function SourcesAccordion({ sources }: SourcesAccordionProps) {
     if (!parsedSources || parsedSources.length === 0) return null;
 
     return (
-        <div className="mt-3 border-t border-border/50 pt-3">
+        <div className="hidden mt-3 border-t border-border/50 pt-3">
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors group"
