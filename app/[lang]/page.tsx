@@ -343,7 +343,7 @@ export default function LandingPage() {
                     <Card
                       key={i}
                       className={`
-                        !bg-white/10 !backdrop-blur-xl !border-white/20 shadow-2xl // Glass effect override
+                        !bg-black/90 !backdrop-blur-xl !border-white/10 shadow-2xl // Reduced transparency
                         flex flex-col items-center justify-center p-8 text-center
                         group cursor-pointer hover:!border-${feature.color}/50 transition-colors
                       `}
