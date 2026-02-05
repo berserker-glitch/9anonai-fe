@@ -255,10 +255,10 @@ export default function LandingPage() {
               </p>
               <div className="flex flex-wrap gap-4 justify-end">
                 <button className="btn-premium px-8 py-3 text-base font-medium bg-primary text-primary-foreground rounded-xl shadow-lg hover:shadow-primary/25 hover:scale-105 transition-all">
-                  Example Button 1
+                  {t("hero.ctaPrimary")}
                 </button>
                 <button className="px-8 py-3 text-base font-medium glass-premium rounded-xl hover:bg-primary/5 transition-all">
-                  Example Button 2
+                  {t("hero.ctaSecondary")}
                 </button>
               </div>
             </div>
