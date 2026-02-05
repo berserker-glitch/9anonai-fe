@@ -236,7 +236,7 @@ export default function LandingPage() {
       </section>
 
       {/* Features Section - Enhanced with CardSwap */}
-      <section id="features" className="py-24 lg:py-32 relative overflow-visible">
+      <section id="features" className="py-24 lg:py-32 relative overflow-visible z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-muted/20 via-transparent to-muted/20 pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
@@ -343,7 +343,7 @@ export default function LandingPage() {
                     <Card
                       key={i}
                       className={`
-                        !bg-black/90 !backdrop-blur-xl !border-white/10 shadow-2xl // Reduced transparency
+                        !bg-[#050B07] !backdrop-blur-xl !border-white/10 shadow-2xl // Custom dark bg
                         flex flex-col items-center justify-center p-8 text-center
                         group cursor-pointer hover:!border-${feature.color}/50 transition-colors
                       `}
@@ -382,7 +382,7 @@ export default function LandingPage() {
       </section>
 
       {/* How It Works - Enhanced */}
-      <section id="about" className="py-24 lg:py-32 bg-muted/30 relative overflow-hidden">
+      <section id="about" className="py-24 lg:py-32 bg-muted/30 relative overflow-hidden z-0">
         <div className="absolute inset-0 bg-zellige opacity-5" />
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gold/10 rounded-full blur-[150px] opacity-40 animate-pulse-gentle" />
 
