@@ -6,6 +6,7 @@ import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
 import { ExpandedLandingSections } from "@/components/landing/expanded-sections";
 import { useTranslation, useLanguage } from "@/lib/language-context";
+import LiquidEther from "@/components/landing/liquid-ether";
 
 export default function LandingPage() {
   const { t } = useTranslation("landing");
@@ -41,24 +42,21 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 lg:pt-48 lg:pb-36 overflow-hidden">
-        {/* Background Layers */}
-        <div className="absolute inset-0 bg-dots opacity-30" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-muted/30" />
-
-        {/* Floating Orbs - Enhanced */}
-        <div className="absolute top-20 right-[10%] w-[500px] h-[500px] bg-gradient-to-br from-primary/25 to-gold/15 rounded-full blur-[120px] animate-morph opacity-60 animate-orb-1" />
-        <div className="absolute bottom-20 left-[5%] w-[400px] h-[400px] bg-gradient-to-br from-gold/20 to-primary/10 rounded-full blur-[100px] animate-morph opacity-50 animate-orb-2" style={{ animationDelay: '-4s' }} />
-        <div className="absolute top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-[150px] will-change-transform" />
-
-        {/* Decorative Elements - Enhanced */}
-        <div className="absolute top-32 left-[15%] w-16 h-16 border border-gold/30 rounded-2xl rotate-12 animate-float-gentle opacity-40 backdrop-blur-sm" style={{ '--float-rotate': '12deg' } as React.CSSProperties} />
-        <div className="absolute top-60 right-[20%] w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/5 rounded-xl -rotate-12 animate-float-gentle opacity-50 backdrop-blur-sm shadow-lg" style={{ animationDelay: '-2s', '--float-rotate': '-12deg' } as React.CSSProperties} />
-        <div className="absolute bottom-40 left-[25%] w-8 h-8 border border-primary/30 rounded-lg rotate-45 animate-float-gentle opacity-30 backdrop-blur-sm" style={{ animationDelay: '-3s', '--float-rotate': '45deg' } as React.CSSProperties} />
-
-        {/* Additional floating particles */}
-        <div className="absolute top-1/4 left-[20%] w-2 h-2 bg-primary/40 rounded-full animate-pulse-subtle" />
-        <div className="absolute top-1/3 right-[30%] w-3 h-3 bg-gold/30 rounded-full animate-pulse-subtle" style={{ animationDelay: '0.5s' }} />
-        <div className="absolute bottom-1/4 left-[40%] w-2 h-2 bg-primary/50 rounded-full animate-pulse-subtle" style={{ animationDelay: '1s' }} />
+        {/* Liquid Ether Background */}
+        <div className="absolute inset-0 z-0">
+          <LiquidEther
+            colors={['#10B981', '#FFD700', '#059669']} // Emerald and Gold colors
+            mouseForce={30}
+            cursorSize={80}
+            isViscous={true}
+            viscous={20}
+            autoDemo={true}
+            autoIntensity={2.5}
+          // style={{ opacity: 0.7 }}
+          />
+          {/* subtle overlay to ensure text readability */}
+          <div className="absolute inset-0 bg-background/30 backdrop-blur-[1px]" />
+        </div>
 
         <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="text-center max-w-5xl mx-auto" ref={heroRef}>
