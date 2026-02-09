@@ -1,6 +1,22 @@
 import { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/blog";
 
+/**
+ * Safely parse a date string to a valid Date object.
+ * Falls back to current date if parsing fails.
+ * @param dateString - The date string to parse (e.g., "2026-02-07")
+ * @returns A valid Date object
+ */
+function parseDate(dateString: string): Date {
+    const parsed = new Date(dateString);
+    // Check for invalid date (NaN timestamp = 1970-01-01 issue)
+    if (isNaN(parsed.getTime())) {
+        console.warn(`[Sitemap] Invalid date "${dateString}", using current date`);
+        return new Date();
+    }
+    return parsed;
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = "https://9anonai.com";
 
@@ -33,7 +49,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         languages.forEach((lang) => {
             blogUrls.push({
                 url: `${baseUrl}/${lang}/blog/${post.slug}`,
-                lastModified: new Date(post.date),
+                lastModified: parseDate(post.date),
                 changeFrequency: "weekly" as const,
                 priority: 0.7,
                 alternates: {
