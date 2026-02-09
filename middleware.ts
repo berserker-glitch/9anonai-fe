@@ -20,7 +20,14 @@ function getLocale(request: NextRequest): string {
 }
 
 export function middleware(request: NextRequest) {
-    const { pathname } = request.nextUrl;
+    const { pathname, hostname } = request.nextUrl;
+
+    // SEO: Redirect www to non-www (canonical domain)
+    if (hostname === "www.9anonai.com") {
+        const url = request.nextUrl.clone();
+        url.hostname = "9anonai.com";
+        return NextResponse.redirect(url, 301);
+    }
 
     // Check if there is any supported locale in the pathname
     const pathnameHasLocale = locales.some(
