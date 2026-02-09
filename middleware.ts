@@ -28,15 +28,16 @@ export function middleware(request: NextRequest) {
     );
 
     if (pathnameHasLocale) {
-        // Extract the locale and the rest of the path
+        // Extract the locale from the URL
         const locale = locales.find(
             (l) => pathname.startsWith(`/${l}/`) || pathname === `/${l}`
         );
-        const newPath = pathname.replace(`/${locale}`, "") || "/";
 
-        // Redirect to the path without locale, setting the cookie
-        const response = NextResponse.redirect(new URL(newPath, request.url));
+        // SEO FIX: Use rewrite instead of redirect to keep localized URLs indexable
+        // The URL stays as /en/blog/xyz in the browser, but we serve /[lang]/blog/xyz content
+        const response = NextResponse.rewrite(new URL(pathname, request.url));
         if (locale) {
+            // Still set the cookie so client-side context knows the language
             response.cookies.set("NEXT_LOCALE", locale);
         }
         return response;

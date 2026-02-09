@@ -45,14 +45,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
                 }
             });
         });
-
-        // 3. Keep Legacy URLs (pointing to Arabic implies canonical is /ar)
-        blogUrls.push({
-            url: `${baseUrl}/blog/${post.slug}`,
-            lastModified: new Date(post.date),
-            changeFrequency: "weekly" as const,
-            priority: 0.7,
-        });
+        // NOTE: Legacy /blog/{slug} URLs removed - they now redirect to /ar/blog/{slug}
     });
 
     return [
@@ -117,12 +110,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: 'weekly',
             priority: 0.85,
         },
-        {
-            url: `${baseUrl}/blog`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.8,
-        },
+        // NOTE: Legacy /blog index removed - localized /ar/blog, /en/blog, /fr/blog are in blogUrls
         ...blogUrls,
     ];
 }
