@@ -12,6 +12,8 @@ export const metadata: Metadata = {
     description: "Free AI assistant for Moroccan Labor Law (مدونة الشغل / Code du Travail). Get instant answers about CDI/CDD contracts, wrongful termination, vacation rights, and employee protections.",
     keywords: [
         "مدونة الشغل",
+        "Moroccan Legal AI",
+        "IA Juridique Marocaine",
         "مدونة الشغل المغربية",
         "code du travail maroc",
         "moroccan labor law",

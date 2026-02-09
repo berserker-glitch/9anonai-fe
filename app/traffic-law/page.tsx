@@ -12,6 +12,8 @@ export const metadata: Metadata = {
     description: "Free AI for Moroccan Traffic Law (مدونة السير / Code de la Route). Get help with traffic fines, accidents, driver's license issues, and road violation penalties.",
     keywords: [
         "مدونة السير",
+        "Moroccan Legal AI",
+        "IA Juridique Marocaine",
         "مدونة السير المغربية",
         "code de la route maroc",
         "moroccan traffic law",

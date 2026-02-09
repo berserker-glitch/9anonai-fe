@@ -12,6 +12,8 @@ export const metadata: Metadata = {
     description: "Free private AI for Moroccan Family Law (Moudawana / مدونة الأسرة). Get anonymous help with marriage, divorce, child custody, and inheritance questions.",
     keywords: [
         "مدونة الأسرة",
+        "Moroccan Legal AI",
+        "IA Juridique Marocaine",
         "مدونة الأسرة المغربية",
         "moudawana",
         "moudawana maroc",

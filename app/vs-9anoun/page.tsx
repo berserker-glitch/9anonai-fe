@@ -14,6 +14,8 @@ export const metadata: Metadata = {
         "9anon vs 9anoun",
         "9anoun alternative",
         "9anoun ai alternative",
+        "Moroccan Legal AI",
+        "IA Juridique Marocaine",
         "kanon ai",
         "kanoun ai",
         "qanon ai",

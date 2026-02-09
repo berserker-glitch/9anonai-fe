@@ -34,13 +34,18 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://9anonai.com"),
   title: {
-    default: "9anon AI | The Faster 9anoun Alternative (Free Access)",
-    template: "%s | 9anon AI",
+    default: "9anon AI | Moroccan Legal AI Assistant (Free Access)",
+    template: "%s | 9anon AI - Moroccan Legal AI",
   },
   description:
-    "9anon AI (قانون / 9anoun) - المساعد القانوني الذكي للقانون المغربي. احصل على إجابات فورية حول القانون المغربي، الإجراءات القانونية، وحقوقك. متاح بالعربية والفرنسية والإنجليزية والدارجة. 9anon AI - Your intelligent Moroccan law assistant.",
+    "9anon AI (قانون / 9anoun) - The First Moroccan Legal AI. Your intelligent legal assistant for Moroccan law. Get instant answers about Moudawana, Labor Law, Penal Code, and more. Available in Arabic, French, English, and Darija.",
   keywords: [
-    // Primary brand keywords
+    // Primary Target Keyword
+    "Moroccan Legal AI",
+    "IA Juridique Marocaine",
+    "الذكاء الاصطناعي القانوني المغربي",
+
+    // Brand keywords
     "9anon ai",
     "9anon AI",
     "9anoun ai",
@@ -51,10 +56,12 @@ export const metadata: Metadata = {
     "qanoun ai",
     "9anonai",
     "9anounai",
+
     // Arabic brand keywords
     "قانون",
     "قانون ai",
     "قانون الذكاء الاصطناعي",
+
     // Moroccan law terms
     "istichara ai",
     "استشارة قانونية ai",
@@ -71,7 +78,8 @@ export const metadata: Metadata = {
     "استشارة قانونية",
     "legal advice Morocco",
     "conseil juridique Maroc",
-    // Alternative spellings people might search
+
+    // Alternative spellings
     "canoun ai",
     "kanon morocco",
     "9anoun maroc",
@@ -107,18 +115,18 @@ export const metadata: Metadata = {
     locale: "ar_MA",
     alternateLocale: ["fr_MA", "en_US"],
     url: "https://9anonai.com",
-    siteName: "9anon AI - قانون",
-    title: "9anon AI - قانون | مساعد قانوني مغربي ذكي",
+    siteName: "9anon AI - Moroccan Legal AI",
+    title: "9anon AI - Moroccan Legal AI | مساعد قانوني مغربي ذكي",
     description:
-      "المساعد القانوني الذكي للقانون المغربي. احصل على إجابات فورية حول حقوقك والإجراءات القانونية.",
+      "The First AI Legal Assistant for Moroccan Law. Instant answers for your legal questions in Arabic, French, and English.",
   },
   twitter: {
     card: "summary_large_image",
     site: "@9anonai",
     creator: "@9anonai",
-    title: "9anon AI - قانون | Moroccan Law AI Assistant",
+    title: "9anon AI | Moroccan Legal AI Assistant",
     description:
-      "Your intelligent Moroccan law assistant. Get instant legal answers in Arabic, French, English & Darija.",
+      "Your intelligent Moroccan Legal AI assistant. Get instant legal answers in Arabic, French, English & Darija.",
   },
   // Verification handled via DNS (Namecheap)
   category: "Legal Technology",
@@ -133,11 +141,11 @@ export const metadata: Metadata = {
 // JSON-LD Structured Data
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
+  "@type": "SoftwareApplication",
   name: "9anon AI",
-  alternateName: ["قانون", "Qanon AI", "9anon", "Qanun AI", "9anoun", "9anoun AI", "Kanoun AI"],
+  alternateName: ["Moroccan Legal AI", "IA Juridique Marocaine", "الذكاء الاصطناعي القانوني المغربي", "قانون", "9anoun AI"],
   description:
-    "AI-powered Moroccan law assistant providing instant legal guidance in Arabic, French, English, and Darija.",
+    "AI-powered Moroccan Legal AI assistant providing instant legal guidance in Arabic, French, English, and Darija.",
   url: "https://9anonai.com",
   applicationCategory: "LegalService",
   operatingSystem: "Web Browser",
