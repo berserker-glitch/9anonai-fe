@@ -1,8 +1,44 @@
-"use client";
-
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
+
+/**
+ * SEO Metadata for the comparison page
+ * Targets keywords: 9anon vs 9anoun, kanon ai alternative, qanon ai, etc.
+ */
+export const metadata: Metadata = {
+    title: "9anon AI vs 9anoun AI | The Faster Free Alternative - قانون",
+    description: "Compare 9anon AI (قانون) with 9anoun AI. Faster responses, no login required, free access to Moroccan law. Better than kanon ai, qanon ai alternatives.",
+    keywords: [
+        "9anon vs 9anoun",
+        "9anoun alternative",
+        "9anoun ai alternative",
+        "kanon ai",
+        "kanoun ai",
+        "qanon ai",
+        "qanoun ai",
+        "9anonai vs 9anounai",
+        "moroccan law ai comparison",
+        "istichara ai",
+        "استشارة قانونية مجانية"
+    ],
+    alternates: {
+        canonical: "https://9anonai.com/vs-9anoun",
+    },
+    openGraph: {
+        title: "9anon AI vs 9anoun AI | Faster & Free",
+        description: "The faster, login-free alternative to 9anoun AI for Moroccan law. Compare features and see why users prefer 9anon AI.",
+        type: "website",
+        url: "https://9anonai.com/vs-9anoun",
+        siteName: "9anon AI - قانون",
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "9anon AI vs 9anoun AI",
+        description: "Faster, free alternative for Moroccan law AI assistance.",
+    },
+};
 
 export default function ComparisonPage() {
     return (

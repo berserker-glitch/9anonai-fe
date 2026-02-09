@@ -1,7 +1,38 @@
-"use client";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
+
+/**
+ * SEO Metadata for the Labor Law page
+ * Targets: مدونة الشغل, code du travail, moroccan labor law AI
+ */
+export const metadata: Metadata = {
+    title: "Moroccan Labor Law AI | مدونة الشغل - 9anon AI قانون",
+    description: "Free AI assistant for Moroccan Labor Law (مدونة الشغل / Code du Travail). Get instant answers about CDI/CDD contracts, wrongful termination, vacation rights, and employee protections.",
+    keywords: [
+        "مدونة الشغل",
+        "مدونة الشغل المغربية",
+        "code du travail maroc",
+        "moroccan labor law",
+        "قانون العمل المغربي",
+        "CDI CDD maroc",
+        "عقد الشغل",
+        "9anon ai labor",
+        "kanoun ai travail",
+        "droits des salariés maroc"
+    ],
+    alternates: {
+        canonical: "https://9anonai.com/labor-law",
+    },
+    openGraph: {
+        title: "Moroccan Labor Law AI | مدونة الشغل",
+        description: "Free AI assistant for Code du Travail. Ask about contracts, termination, and worker rights.",
+        type: "website",
+        url: "https://9anonai.com/labor-law",
+        siteName: "9anon AI - قانون",
+    },
+};
 
 export default function LaborLawPage() {
     return (
