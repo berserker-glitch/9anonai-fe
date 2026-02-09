@@ -908,3 +908,75 @@
 .animate-icon-bounce:hover {
   animation: icon-bounce 0.6s ease-in-out;
 }
+
+/* Contract Builder Styles */
+
+.contract-paper {
+  background-color: white;
+  color: black;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  margin: 0 auto;
+  min-height: 297mm;
+  width: 210mm;
+  padding: 20mm;
+  transform-origin: top center;
+}
+
+/* Force contract styling to be consistent regardless of theme */
+.contract-preview-container .prose {
+  color: black;
+  max-width: none;
+}
+
+.contract-preview-container .prose h1, 
+.contract-preview-container .prose h2, 
+.contract-preview-container .prose h3 {
+  color: black;
+  font-family: var(--font-display);
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.contract-preview-container .prose p, 
+.contract-preview-container .prose li {
+  color: black;
+  line-height: 1.6;
+}
+
+.contract-preview-container .prose strong {
+  color: black;
+  font-weight: 600;
+}
+
+/* Clause highlighting for review */
+.contract-clause-warning {
+  background-color: rgba(253, 224, 71, 0.3);
+  border-bottom: 2px solid #eab308;
+  position: relative;
+}
+
+.contract-clause-critical {
+  background-color: rgba(252, 165, 165, 0.3);
+  border-bottom: 2px solid #ef4444;
+  position: relative;
+}
+
+.contract-clause-warning::after,
+.contract-clause-critical::after {
+  content: "⚠";
+  position: absolute;
+  right: -20px;
+  top: 0;
+  font-size: 12px;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  .contract-paper {
+    box-shadow: none;
+    margin: 0;
+    width: 100%;
+  }
+}
