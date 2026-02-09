@@ -40,18 +40,26 @@ export const metadata: Metadata = {
   description:
     "9anon AI (قانون / 9anoun) - المساعد القانوني الذكي للقانون المغربي. احصل على إجابات فورية حول القانون المغربي، الإجراءات القانونية، وحقوقك. متاح بالعربية والفرنسية والإنجليزية والدارجة. 9anon AI - Your intelligent Moroccan law assistant.",
   keywords: [
-    "AI Mohami Maroc",
-    "Istichara 9anounia AI",
-    "9anon",
+    // Primary brand keywords
     "9anon ai",
     "9anon AI",
-    "9anoun",
     "9anoun ai",
+    "9anoun AI",
+    "kanon ai",
     "kanoun ai",
+    "qanon ai",
+    "qanoun ai",
+    "9anonai",
+    "9anounai",
+    // Arabic brand keywords
     "قانون",
     "قانون ai",
-    "qanon ai",
-    "qanun ai",
+    "قانون الذكاء الاصطناعي",
+    // Moroccan law terms
+    "istichara ai",
+    "استشارة قانونية ai",
+    "AI Mohami Maroc",
+    "Istichara 9anounia AI",
     "Moroccan law",
     "القانون المغربي",
     "مساعد قانوني",
@@ -63,6 +71,10 @@ export const metadata: Metadata = {
     "استشارة قانونية",
     "legal advice Morocco",
     "conseil juridique Maroc",
+    // Alternative spellings people might search
+    "canoun ai",
+    "kanon morocco",
+    "9anoun maroc",
   ],
   authors: [{ name: "9anon AI Team" }],
   creator: "9anon AI",
@@ -108,9 +120,7 @@ export const metadata: Metadata = {
     description:
       "Your intelligent Moroccan law assistant. Get instant legal answers in Arabic, French, English & Darija.",
   },
-  verification: {
-    google: "google-site-verification-code",
-  },
+  // Verification handled via DNS (Namecheap)
   category: "Legal Technology",
   classification: "AI Legal Assistant",
   other: {
@@ -135,7 +145,7 @@ const jsonLd = {
     "@type": "Offer",
     price: "0",
     priceCurrency: "MAD",
-    priceValidUntil: "2024-12-31",
+    priceValidUntil: "2027-12-31",
   },
   provider: {
     "@type": "Organization",

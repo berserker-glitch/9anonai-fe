@@ -1,7 +1,40 @@
-"use client";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
+
+/**
+ * SEO Metadata for the Family Law page
+ * Targets: Moudawana, مدونة الأسرة, marriage, divorce, inheritance
+ */
+export const metadata: Metadata = {
+    title: "Moroccan Family Law AI | Moudawana مدونة الأسرة - 9anon AI قانون",
+    description: "Free private AI for Moroccan Family Law (Moudawana / مدونة الأسرة). Get anonymous help with marriage, divorce, child custody, and inheritance questions.",
+    keywords: [
+        "مدونة الأسرة",
+        "مدونة الأسرة المغربية",
+        "moudawana",
+        "moudawana maroc",
+        "moroccan family law",
+        "قانون الأسرة المغربي",
+        "الطلاق في المغرب",
+        "الزواج المغرب",
+        "الإرث المغرب",
+        "divorce maroc",
+        "9anon ai family",
+        "حضانة الأطفال"
+    ],
+    alternates: {
+        canonical: "https://9anonai.com/family-law",
+    },
+    openGraph: {
+        title: "Moroccan Family Law AI | Moudawana مدونة الأسرة",
+        description: "Private AI for Moudawana. Ask anonymously about marriage, divorce, custody, and inheritance.",
+        type: "website",
+        url: "https://9anonai.com/family-law",
+        siteName: "9anon AI - قانون",
+    },
+};
 
 export default function FamilyLawPage() {
     return (

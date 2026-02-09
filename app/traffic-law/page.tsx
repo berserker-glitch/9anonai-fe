@@ -1,7 +1,38 @@
-"use client";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
+
+/**
+ * SEO Metadata for the Traffic Law page
+ * Targets: مدونة السير, code de la route, traffic fines morocco
+ */
+export const metadata: Metadata = {
+    title: "Moroccan Traffic Law AI | مدونة السير - 9anon AI قانون",
+    description: "Free AI for Moroccan Traffic Law (مدونة السير / Code de la Route). Get help with traffic fines, accidents, driver's license issues, and road violation penalties.",
+    keywords: [
+        "مدونة السير",
+        "مدونة السير المغربية",
+        "code de la route maroc",
+        "moroccan traffic law",
+        "قانون السير المغربي",
+        "مخالفات السير",
+        "traffic fines morocco",
+        "permis de conduire maroc",
+        "9anon ai traffic",
+        "حوادث السير المغرب"
+    ],
+    alternates: {
+        canonical: "https://9anonai.com/traffic-law",
+    },
+    openGraph: {
+        title: "Moroccan Traffic Law AI | مدونة السير",
+        description: "Free AI for Code de la Route. Ask about fines, accidents, and driving regulations.",
+        type: "website",
+        url: "https://9anonai.com/traffic-law",
+        siteName: "9anon AI - قانون",
+    },
+};
 
 export default function TrafficLawPage() {
     return (

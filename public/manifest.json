@@ -1,0 +1,28 @@
+{
+    "name": "9anon AI - قانون | Moroccan Law Assistant",
+    "short_name": "9anon AI",
+    "description": "AI-powered Moroccan law assistant. Get instant legal answers in Arabic, French, English & Darija.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0a0a0a",
+    "theme_color": "#10B981",
+    "icons": [
+        {
+            "src": "/9anon-logo.webp",
+            "sizes": "192x192",
+            "type": "image/webp"
+        },
+        {
+            "src": "/9anon-logo.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "categories": [
+        "legal",
+        "utilities",
+        "education"
+    ],
+    "lang": "ar",
+    "dir": "rtl"
+}
