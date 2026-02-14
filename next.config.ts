@@ -2,13 +2,6 @@ import type { NextConfig } from "next";
 import path from "path";
 
 const nextConfig: NextConfig = {
-  /* Fix Turbopack module resolution for tailwindcss */
-  turbopack: {
-    resolveAlias: {
-      tailwindcss: path.resolve(__dirname, "node_modules/tailwindcss"),
-    },
-  },
-
   /* Block access to test landing pages 1-11 */
   async redirects() {
     return [

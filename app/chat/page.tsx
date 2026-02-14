@@ -437,6 +437,7 @@ export default function NewChatPage() {
                     message: userContent,
                     history: messages.filter(m => m.id !== assistantMsgId),
                     images: [],
+                    chatId: activeChatId, // Pass chatId for backend persistence
                 }),
             });
 
