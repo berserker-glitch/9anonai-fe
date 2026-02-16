@@ -17,6 +17,21 @@ function parseDate(dateString: string): Date {
     return parsed;
 }
 
+/**
+ * SEO landing page slugs — each served under /[lang]/[slug]
+ * with trilingual hreflang alternates
+ */
+const SEO_PAGE_SLUGS = [
+    "legal-ai",
+    "legal-chatbot",
+    "business-legal",
+    "startup-legal",
+    "divorce-law",
+    "employee-rights",
+    "tenant-rights",
+    "contract-review",
+];
+
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = "https://9anonai.com";
 
@@ -62,6 +77,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
             });
         });
         // NOTE: Legacy /blog/{slug} URLs removed - they now redirect to /ar/blog/{slug}
+    });
+
+    // 3. Add Trilingual SEO Landing Pages with hreflang alternates
+    const seoPageUrls: MetadataRoute.Sitemap = [];
+    SEO_PAGE_SLUGS.forEach((slug) => {
+        languages.forEach((lang) => {
+            seoPageUrls.push({
+                url: `${baseUrl}/${lang}/${slug}`,
+                lastModified: new Date(),
+                changeFrequency: "weekly" as const,
+                priority: 0.85,
+                alternates: {
+                    languages: {
+                        ar: `${baseUrl}/ar/${slug}`,
+                        fr: `${baseUrl}/fr/${slug}`,
+                        en: `${baseUrl}/en/${slug}`,
+                    },
+                },
+            });
+        });
     });
 
     return [
@@ -121,7 +156,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: 'weekly',
             priority: 0.85,
         },
-        // NOTE: Legacy /blog index removed - localized /ar/blog, /en/blog, /fr/blog are in blogUrls
+        // SEO landing pages (trilingual, 8 pages × 3 langs = 24 URLs)
+        ...seoPageUrls,
+        // Blog posts (trilingual)
         ...blogUrls,
     ];
 }
