@@ -473,7 +473,10 @@ export default function ChatWithIdPage() {
         try {
             const response = await fetch(`${API_URL}/chat`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`, // Auth required for backend persistence
+                },
                 body: JSON.stringify({
                     message: userContent,
                     history: messages.filter(m => m.id !== assistantMsgId),
