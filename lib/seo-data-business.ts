@@ -99,9 +99,6 @@ export const businessLegalPage: SEOPageConfig = {
         { href: "/employee-rights", label: "Employee Rights" },
         { href: "/legal-ai", label: "AI Legal Assistant" },
     ],
-    gradientFrom: "from-violet-600",
-    gradientTo: "to-purple-500",
-    glowColor: "bg-violet-500/20",
 };
 
 /** Startup Legal page — targets company registration + startup keywords */
@@ -195,9 +192,6 @@ export const startupLegalPage: SEOPageConfig = {
         { href: "/tax-legal", label: "Tax Compliance" },
         { href: "/legal-ai", label: "AI Legal Assistant" },
     ],
-    gradientFrom: "from-cyan-600",
-    gradientTo: "to-sky-500",
-    glowColor: "bg-cyan-500/20",
 };
 
 /** Contract Review page — targets "contract review AI Morocco" */
@@ -291,7 +285,4 @@ export const contractReviewPage: SEOPageConfig = {
         { href: "/employee-rights", label: "Employee Rights" },
         { href: "/legal-ai", label: "AI Legal Assistant" },
     ],
-    gradientFrom: "from-green-600",
-    gradientTo: "to-emerald-500",
-    glowColor: "bg-green-500/20",
 };

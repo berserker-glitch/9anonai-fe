@@ -80,7 +80,7 @@ export default function LaborLawPage() {
 
                     <Link
                         href="/chat"
-                        className="inline-flex items-center gap-3 btn-premium px-10 py-5 text-lg font-semibold bg-gradient-to-r from-primary via-primary to-primary/90 text-primary-foreground rounded-2xl shadow-xl shadow-primary/25 hover:shadow-2xl hover:scale-105 transition-all"
+                        className="inline-flex items-center gap-3 btn-premium px-10 py-5 text-lg font-semibold bg-gradient-to-r from-primary via-emerald-600 to-teal-500 text-white rounded-2xl shadow-xl shadow-primary/25 hover:shadow-2xl hover:scale-105 transition-all"
                     >
                         <span>Ask about Labor Law Free</span>
                         <svg className="w-5 h-5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">

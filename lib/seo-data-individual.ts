@@ -101,9 +101,6 @@ export const divorceLawPage: SEOPageConfig = {
         { href: "/legal-ai", label: "AI Legal Assistant" },
         { href: "/legal-chatbot", label: "Legal Chatbot" },
     ],
-    gradientFrom: "from-rose-600",
-    gradientTo: "to-pink-500",
-    glowColor: "bg-rose-500/20",
 };
 
 /** Employee Rights page — targets labor law + employee protection keywords */
@@ -200,9 +197,6 @@ export const employeeRightsPage: SEOPageConfig = {
         { href: "/legal-ai", label: "AI Legal Assistant" },
         { href: "/contract-review", label: "Contract Review" },
     ],
-    gradientFrom: "from-blue-600",
-    gradientTo: "to-indigo-500",
-    glowColor: "bg-blue-500/20",
 };
 
 /** Tenant Rights page — targets tenant/landlord dispute keywords */
@@ -299,7 +293,4 @@ export const tenantRightsPage: SEOPageConfig = {
         { href: "/legal-ai", label: "AI Legal Assistant" },
         { href: "/family-law", label: "Family Law" },
     ],
-    gradientFrom: "from-amber-600",
-    gradientTo: "to-orange-500",
-    glowColor: "bg-amber-500/20",
 };

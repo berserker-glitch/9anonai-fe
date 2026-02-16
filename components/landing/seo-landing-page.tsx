@@ -101,8 +101,8 @@ export function SEOLandingPage({
 
                 <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
                     {/* Badge */}
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-premium border border-border/40 mb-8">
-                        <span className="text-sm font-medium text-primary">{badge}</span>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-premium border-glow-emerald mb-8">
+                        <span className="text-sm font-medium text-gradient-emerald">{badge}</span>
                     </div>
 
                     {/* H1 — THE most important on-page SEO element */}
@@ -118,7 +118,7 @@ export function SEOLandingPage({
                     {/* Primary CTA */}
                     <Link
                         href={ctaHref}
-                        className={`inline-flex items-center gap-3 btn-premium px-10 py-5 text-lg font-semibold bg-gradient-to-r ${gradientFrom} ${gradientTo} text-primary-foreground rounded-2xl shadow-xl shadow-primary/25 hover:shadow-2xl hover:scale-105 transition-all`}
+                        className={`inline-flex items-center gap-3 btn-premium px-10 py-5 text-lg font-semibold bg-gradient-to-r ${gradientFrom} ${gradientTo} text-white rounded-2xl shadow-xl shadow-primary/25 hover:shadow-2xl hover:scale-105 transition-all`}
                     >
                         <span>{ctaText}</span>
                         <svg className={`w-5 h-5 ${dir === "rtl" ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">

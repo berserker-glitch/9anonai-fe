@@ -212,7 +212,4 @@ export const legalChatbotPage: SEOPageConfig = {
         { href: "/employee-rights", label: "Employee Rights" },
         { href: "/tenant-rights", label: "Tenant Rights" },
     ],
-    gradientFrom: "from-emerald-600",
-    gradientTo: "to-teal-500",
-    glowColor: "bg-emerald-500/20",
 };
