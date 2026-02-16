@@ -21,7 +21,7 @@ export const businessLegalPage: SEOPageConfig = {
         ar: "مساعدة قانونية مجانية بالذكاء الاصطناعي للشركات في المغرب. الامتثال القانوني والقانون التجاري ومراجعة العقود وخدمات الشركات الصغيرة والمتوسطة.",
     },
     keywords: {
-        en: ["business legal help Morocco", "corporate legal compliance Morocco", "SME legal services Morocco", "business contract review Morocco"],
+        en: ["business legal help Morocco", "corporate legal compliance Morocco", "SME legal services Morocco", "business contract review Morocco", "tax compliance legal help Morocco", "Moroccan commercial law advice"],
         fr: ["aide juridique entreprise Maroc", "conformité légale entreprise Maroc", "droit commercial Maroc conseil"],
         ar: ["استشارة قانونية للشركات المغرب", "الامتثال القانوني للشركات المغرب", "القانون التجاري المغربي"],
     },
@@ -120,7 +120,7 @@ export const startupLegalPage: SEOPageConfig = {
     keywords: {
         en: ["startup legal advice Morocco", "company registration legal help Morocco", "legal support for startups Morocco"],
         fr: ["conseil juridique startup Maroc", "création société Maroc assistance juridique"],
-        ar: ["تسجيل شركة في المغرب مساعدة", "استشارة قانونية للشركات الناشئة"],
+        ar: ["تسجيل شركة في المغرب مساعدة", "استشارة قانونية للشركات الناشئة", "مساعدة قانونية للشركات الناشئة"],
     },
     h1: { en: "Startup & Company Registration Legal Help", fr: "Aide Juridique Startup et Création de Société", ar: "مساعدة قانونية لتسجيل الشركات والمقاولات الناشئة" },
     badge: { en: "Startup Law", fr: "Droit des Startups", ar: "قانون الشركات الناشئة" },
