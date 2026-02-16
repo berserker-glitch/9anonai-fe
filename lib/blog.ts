@@ -12,9 +12,26 @@ export interface BlogPost {
     date: string;
     content: string;
     language: BlogLanguage;
+    /** Estimated reading time in minutes */
+    readingTime: number;
+    /** Category tag for grouping (from frontmatter, defaults to "law") */
+    category: string;
 }
 
 const blogsDirectory = path.join(process.cwd(), "content/blogs");
+
+/**
+ * Calculate estimated reading time from content
+ * @param content - Markdown content
+ * @param wordsPerMinute - Average reading speed (lower for Arabic)
+ * @returns Reading time in minutes (minimum 1)
+ */
+function calculateReadingTime(content: string, lang: BlogLanguage): number {
+    // Arabic readers average ~180 WPM, French/English ~220 WPM
+    const wpm = lang === "ar" ? 180 : 220;
+    const wordCount = content.trim().split(/\s+/).length;
+    return Math.max(1, Math.ceil(wordCount / wpm));
+}
 
 export function getAllPosts(lang: BlogLanguage = "ar"): BlogPost[] {
     // Ensure directory exists
@@ -51,6 +68,8 @@ export function getAllPosts(lang: BlogLanguage = "ar"): BlogPost[] {
             date: data.date || new Date().toISOString(),
             content,
             language: lang,
+            readingTime: calculateReadingTime(content, lang),
+            category: data.category || "law",
         };
     });
 
@@ -87,6 +106,8 @@ export function getPostBySlug(slug: string, lang: BlogLanguage = "ar"): BlogPost
             date: data.date || new Date().toISOString(),
             content,
             language: lang,
+            readingTime: calculateReadingTime(content, lang),
+            category: data.category || "law",
         };
     } catch (error) {
         console.error(`Error reading blog post ${slug} (${lang}):`, error);
