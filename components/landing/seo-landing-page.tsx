@@ -63,6 +63,8 @@ interface SEOLandingPageProps {
     gradientTo?: string;
     glowColor?: string;
     dir?: "ltr" | "rtl";
+    /** Pre-fetched blog posts for cross-linking (provided by server component parents) */
+    blogPosts?: { slug: string; title: string; description: string; date: string; readingTime: number }[];
 }
 
 /**
@@ -90,6 +92,7 @@ export function SEOLandingPage({
     gradientTo = "to-primary/90",
     glowColor = "bg-primary/20",
     dir = "ltr",
+    blogPosts = [],
 }: SEOLandingPageProps) {
     return (
         <div className="min-h-screen bg-background overflow-hidden" dir={dir}>
@@ -187,11 +190,14 @@ export function SEOLandingPage({
             </section>
 
             {/* === BLOG CROSS-LINKS (topical cluster ecosystem) === */}
-            <BlogCrossLinks
-                lang={dir === "rtl" ? "ar" : "en"}
-                limit={3}
-                dir={dir}
-            />
+            {blogPosts.length > 0 && (
+                <BlogCrossLinks
+                    posts={blogPosts}
+                    lang={dir === "rtl" ? "ar" : "en"}
+                    blogBasePath={dir === "rtl" ? "/blog" : `/en/blog`}
+                    dir={dir}
+                />
+            )}
 
             {/* === FINAL CTA === */}
             <section className="py-16 sm:py-20">

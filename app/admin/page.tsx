@@ -10,6 +10,8 @@ interface UserStats {
     name: string | null;
     role: string;
     createdAt: string;
+    createdAt: string;
+    marketingSource: string | null;
     conversationCount: number;
     messageCount: number;
 }
@@ -343,6 +345,9 @@ export default function AdminDashboard() {
                                         </div>
                                     </th>
                                     <th className="text-left px-6 py-4 text-sm font-medium text-muted-foreground">
+                                        Marketing
+                                    </th>
+                                    <th className="text-left px-6 py-4 text-sm font-medium text-muted-foreground">
                                         Actions
                                     </th>
                                 </tr>
@@ -378,6 +383,18 @@ export default function AdminDashboard() {
                                         <td className="px-6 py-4 text-muted-foreground">
                                             {formatDate(u.createdAt)}
                                         </td>
+                                        <td className="px-6 py-4 text-muted-foreground">
+                                            {formatDate(u.createdAt)}
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            {u.marketingSource ? (
+                                                <span className="inline-flex px-2.5 py-1 rounded-full text-xs font-medium bg-secondary text-secondary-foreground border border-border">
+                                                    {u.marketingSource}
+                                                </span>
+                                            ) : (
+                                                <span className="text-muted-foreground text-sm">—</span>
+                                            )}
+                                        </td>
                                         <td className="px-6 py-4">
                                             <button
                                                 onClick={() => handleViewConversations(u)}
@@ -390,7 +407,7 @@ export default function AdminDashboard() {
                                 ))}
                                 {filteredUsers.length === 0 && (
                                     <tr>
-                                        <td colSpan={6} className="px-6 py-12 text-center text-muted-foreground">
+                                        <td colSpan={7} className="px-6 py-12 text-center text-muted-foreground">
                                             No users found
                                         </td>
                                     </tr>
@@ -460,8 +477,8 @@ export default function AdminDashboard() {
                                             >
                                                 <div
                                                     className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${msg.role === "user"
-                                                            ? "bg-primary text-primary-foreground"
-                                                            : "bg-muted"
+                                                        ? "bg-primary text-primary-foreground"
+                                                        : "bg-muted"
                                                         }`}
                                                 >
                                                     <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
