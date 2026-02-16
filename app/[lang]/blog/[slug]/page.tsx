@@ -2,10 +2,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
-import { getPostBySlug, getAllPosts, BlogLanguage } from "@/lib/blog";
+import { getPostBySlug, getAllPosts, BlogLanguage, getRelatedPosts } from "@/lib/blog";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Metadata } from "next";
+import { BlogPromotion } from "@/components/blog/blog-promotion";
+import { RelatedPosts } from "@/components/blog/related-posts";
 
 export async function generateStaticParams() {
     const supportedLangs: BlogLanguage[] = ["ar", "fr", "en"];
@@ -71,6 +73,7 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: Blo
         notFound();
     }
 
+    const relatedPosts = getRelatedPosts(slug, lang);
     const dir = lang === "ar" ? "rtl" : "ltr";
 
     const labels = {
@@ -164,6 +167,14 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: Blo
                             {post.content}
                         </ReactMarkdown>
                     </div>
+
+                    {/* Promotion Section */}
+                    <div className="mt-16 pt-8 border-t border-border/40">
+                        <BlogPromotion lang={lang} />
+                    </div>
+
+                    {/* Related Articles for internal linking */}
+                    <RelatedPosts posts={relatedPosts} lang={lang} />
                 </article>
 
                 <div className="mt-16 pt-8 border-t border-border/40 flex justify-center">
