@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
 import { FAQSection, FAQItem } from "@/components/landing/faq-section";
+import { BlogCrossLinks } from "@/components/blog/blog-cross-links";
 
 /**
  * @description Shape for a related page link shown in the "Related Topics" section
@@ -184,6 +185,13 @@ export function SEOLandingPage({
                     </div>
                 </div>
             </section>
+
+            {/* === BLOG CROSS-LINKS (topical cluster ecosystem) === */}
+            <BlogCrossLinks
+                lang={dir === "rtl" ? "ar" : "en"}
+                limit={3}
+                dir={dir}
+            />
 
             {/* === FINAL CTA === */}
             <section className="py-16 sm:py-20">
