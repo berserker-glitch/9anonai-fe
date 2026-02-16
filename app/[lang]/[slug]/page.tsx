@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { SEOLandingPage } from "@/components/landing/seo-landing-page";
 import { getPageBySlug, getAllSlugs } from "@/lib/seo-pages-registry";
 import { t } from "@/lib/seo-page-types";
+import { getAllPosts, BlogLanguage } from "@/lib/blog";
 
 /**
  * @description Dynamic SEO landing page route.
@@ -126,6 +127,9 @@ export default async function SEOPage({
         ],
     };
 
+    /** Fetch recent blog posts for the cross-linking ecosystem */
+    const recentPosts = getAllPosts(langKey).slice(0, 3);
+
     return (
         <>
             {/* Structured data for search engines */}
@@ -151,6 +155,7 @@ export default async function SEOPage({
                 gradientTo={page.gradientTo}
                 glowColor={page.glowColor}
                 dir={dir}
+                blogPosts={recentPosts}
             />
         </>
     );
