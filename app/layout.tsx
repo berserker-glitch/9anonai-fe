@@ -38,51 +38,72 @@ export const metadata: Metadata = {
     template: "%s | 9anon AI - Moroccan Legal AI",
   },
   description:
-    "9anon AI (قانون / 9anoun) - The First Moroccan Legal AI. Your intelligent legal assistant for Moroccan law. Get instant answers about Moudawana, Labor Law, Penal Code, and more. Available in Arabic, French, English, and Darija.",
+    "9anon AI (قانون / 9anoun) - The First Moroccan Legal AI Assistant. Your intelligent AI lawyer for Moroccan law. Get instant legal advice online about Moudawana, Labor Law, Commercial Law, Penal Code, tenant rights, employee rights, divorce, inheritance, and company registration. Free legal chatbot available in Arabic, French, English, and Darija. Assistant juridique IA Maroc. مساعد قانوني ذكي المغرب.",
   keywords: [
-    // Primary Target Keyword
+    // === PRIMARY TARGET ===
     "Moroccan Legal AI",
     "IA Juridique Marocaine",
     "الذكاء الاصطناعي القانوني المغربي",
 
-    // Brand keywords
-    "9anon ai",
-    "9anon AI",
-    "9anoun ai",
-    "9anoun AI",
-    "kanon ai",
-    "kanoun ai",
-    "qanon ai",
-    "qanoun ai",
-    "9anonai",
-    "9anounai",
+    // === BRAND ===
+    "9anon ai", "9anon AI", "9anoun ai", "9anoun AI",
+    "kanon ai", "kanoun ai", "qanon ai", "qanoun ai",
+    "9anonai", "9anounai", "canoun ai", "kanon morocco", "9anoun maroc",
+    "قانون", "قانون ai", "قانون الذكاء الاصطناعي",
 
-    // Arabic brand keywords
-    "قانون",
-    "قانون ai",
-    "قانون الذكاء الاصطناعي",
+    // === ENGLISH HIGH-INTENT (CONVERSION) ===
+    "legal AI assistant Morocco", "online legal advice Morocco",
+    "business legal help Morocco", "AI lawyer Morocco",
+    "legal chatbot Morocco", "contract review AI Morocco",
+    "Moroccan legal consultation online", "startup legal advice Morocco",
+    "company registration legal help Morocco",
 
-    // Moroccan law terms
-    "istichara ai",
-    "استشارة قانونية ai",
-    "AI Mohami Maroc",
-    "Istichara 9anounia AI",
-    "Moroccan law",
-    "القانون المغربي",
-    "مساعد قانوني",
-    "legal assistant Morocco",
-    "AI legal",
-    "droit marocain",
-    "avocat maroc",
-    "محامي",
-    "استشارة قانونية",
-    "legal advice Morocco",
-    "conseil juridique Maroc",
+    // === ENGLISH PROBLEM-BASED (INDIVIDUALS) ===
+    "divorce lawyer Morocco online", "inheritance law Morocco help",
+    "labor law advice Morocco", "tenant rights Morocco",
+    "employee rights Morocco", "how to file complaint in Morocco",
 
-    // Alternative spellings
-    "canoun ai",
-    "kanon morocco",
-    "9anoun maroc",
+    // === ENGLISH BUSINESS-FOCUSED ===
+    "corporate legal compliance Morocco", "business contract review Morocco",
+    "Moroccan commercial law advice", "legal support for startups Morocco",
+    "SME legal services Morocco", "tax compliance legal help Morocco",
+
+    // === FRENCH HIGH-INTENT ===
+    "assistant juridique IA Maroc", "conseil juridique en ligne Maroc",
+    "avocat en ligne Maroc", "aide juridique entreprise Maroc",
+    "chatbot juridique Maroc", "consultation juridique digitale Maroc",
+
+    // === FRENCH INDIVIDUALS ===
+    "droit du travail Maroc conseil", "divorce Maroc procédure",
+    "droit successoral Maroc", "litige locatif Maroc",
+    "droits des employés Maroc",
+
+    // === FRENCH BUSINESS ===
+    "conformité légale entreprise Maroc", "droit commercial Maroc conseil",
+    "rédaction contrat Maroc", "création société Maroc assistance juridique",
+    "conseil juridique startup Maroc",
+
+    // === ARABIC HIGH-INTENT ===
+    "مساعد قانوني ذكي المغرب", "استشارة قانونية اونلاين المغرب",
+    "محامي اونلاين المغرب", "شات بوت قانوني المغرب",
+    "ذكاء اصطناعي قانوني المغرب",
+
+    // === ARABIC INDIVIDUALS ===
+    "قانون الشغل المغرب استشارة", "الطلاق في المغرب إجراءات",
+    "الإرث في القانون المغربي", "حقوق الموظف في المغرب",
+    "حقوق المستأجر في المغرب",
+
+    // === ARABIC BUSINESS ===
+    "استشارة قانونية للشركات المغرب", "القانون التجاري المغربي",
+    "صياغة عقد شركة المغرب", "تسجيل شركة في المغرب مساعدة",
+    "الامتثال القانوني للشركات المغرب",
+
+    // === LEGACY MOROCCAN LAW TERMS ===
+    "istichara ai", "استشارة قانونية ai", "AI Mohami Maroc",
+    "Istichara 9anounia AI", "Moroccan law", "القانون المغربي",
+    "مساعد قانوني", "legal assistant Morocco", "AI legal",
+    "droit marocain", "avocat maroc", "محامي", "استشارة قانونية",
+    "legal advice Morocco", "conseil juridique Maroc",
   ],
   authors: [{ name: "9anon AI Team" }],
   creator: "9anon AI",
@@ -138,37 +159,96 @@ export const metadata: Metadata = {
   },
 };
 
-// JSON-LD Structured Data
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: "9anon AI",
-  alternateName: ["Moroccan Legal AI", "IA Juridique Marocaine", "الذكاء الاصطناعي القانوني المغربي", "قانون", "9anoun AI"],
-  description:
-    "AI-powered Moroccan Legal AI assistant providing instant legal guidance in Arabic, French, English, and Darija.",
-  url: "https://9anonai.com",
-  applicationCategory: "LegalService",
-  operatingSystem: "Web Browser",
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "MAD",
-    priceValidUntil: "2027-12-31",
+// JSON-LD Structured Data — multiple schemas for maximum search visibility
+const jsonLdSchemas = [
+  // 1. Software Application schema
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "9anon AI",
+    alternateName: ["Moroccan Legal AI", "IA Juridique Marocaine", "الذكاء الاصطناعي القانوني المغربي", "قانون", "9anoun AI"],
+    description:
+      "AI-powered Moroccan Legal AI assistant providing instant legal guidance in Arabic, French, English, and Darija.",
+    url: "https://9anonai.com",
+    applicationCategory: "LegalService",
+    operatingSystem: "Web Browser",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "MAD",
+      priceValidUntil: "2027-12-31",
+    },
+    provider: {
+      "@type": "Organization",
+      name: "9anon AI",
+      url: "https://9anonai.com",
+    },
+    inLanguage: ["ar", "fr", "en"],
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      ratingCount: "1200",
+      bestRating: "5",
+      worstRating: "1",
+    },
   },
-  provider: {
+  // 2. LegalService schema — tells Google we are a legal service provider
+  {
+    "@context": "https://schema.org",
+    "@type": "LegalService",
+    name: "9anon AI - Moroccan Legal AI Assistant",
+    alternateName: ["Assistant Juridique IA Maroc", "مساعد قانوني ذكي المغرب"],
+    description:
+      "Free AI-powered legal consultation for Moroccan law. Covers family law (Moudawana), labor law, commercial law, tenant rights, employee rights, divorce, inheritance, and company registration.",
+    url: "https://9anonai.com",
+    serviceType: ["Legal Advice", "AI Legal Chatbot", "Contract Review", "Legal Consultation"],
+    areaServed: {
+      "@type": "Country",
+      name: "Morocco",
+      alternateName: ["Maroc", "المغرب"],
+    },
+    availableLanguage: [
+      { "@type": "Language", name: "Arabic", alternateName: "العربية" },
+      { "@type": "Language", name: "French", alternateName: "Français" },
+      { "@type": "Language", name: "English" },
+    ],
+    provider: {
+      "@type": "Organization",
+      name: "9anon AI",
+      url: "https://9anonai.com",
+    },
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Legal AI Services",
+      itemListElement: [
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Family Law Consultation (Moudawana)" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Labor Law Advice (Code du Travail)" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Commercial Law Consultation" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI Contract Review" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Company Registration Help" } },
+      ],
+    },
+  },
+  // 3. Organization schema — credibility and brand signals
+  {
+    "@context": "https://schema.org",
     "@type": "Organization",
     name: "9anon AI",
+    alternateName: ["9anoun AI", "قانون"],
     url: "https://9anonai.com",
+    logo: "https://9anonai.com/icon.png",
+    description:
+      "The first AI-powered legal assistant for Moroccan law. Provides free legal consultation in Arabic, French, and English.",
+    foundingDate: "2024",
+    areaServed: "Morocco",
+    knowsLanguage: ["ar", "fr", "en"],
+    knowsAbout: [
+      "Moroccan Law", "Moudawana", "Code du Travail", "Commercial Law",
+      "Family Law", "Labor Law", "Tenant Rights", "Employee Rights",
+      "القانون المغربي", "مدونة الأسرة", "مدونة الشغل",
+    ],
   },
-  inLanguage: ["ar", "fr", "en"],
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.9",
-    ratingCount: "1200",
-    bestRating: "5",
-    worstRating: "1",
-  },
-};
+];
 
 export default async function RootLayout({
   children,
@@ -183,10 +263,14 @@ export default async function RootLayout({
     <html lang={lang} dir="ltr" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        {/* Render all JSON-LD schemas for rich search results */}
+        {jsonLdSchemas.map((schema, i) => (
+          <script
+            key={`jsonld-${i}`}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          />
+        ))}
       </head>
       <body className={`${playfair.variable} ${jakarta.variable} ${cairo.variable} font-sans antialiased`}>
         <Providers lang={lang}>
