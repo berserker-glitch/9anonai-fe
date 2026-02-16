@@ -10,7 +10,6 @@ interface UserStats {
     name: string | null;
     role: string;
     createdAt: string;
-    createdAt: string;
     marketingSource: string | null;
     conversationCount: number;
     messageCount: number;
@@ -379,9 +378,6 @@ export default function AdminDashboard() {
                                         </td>
                                         <td className="px-6 py-4">
                                             <span className="font-medium">{u.messageCount.toLocaleString()}</span>
-                                        </td>
-                                        <td className="px-6 py-4 text-muted-foreground">
-                                            {formatDate(u.createdAt)}
                                         </td>
                                         <td className="px-6 py-4 text-muted-foreground">
                                             {formatDate(u.createdAt)}
