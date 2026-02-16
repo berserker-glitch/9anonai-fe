@@ -50,9 +50,21 @@ export function middleware(request: NextRequest) {
         return response;
     }
 
+    // === SEO page slugs that live under app/[lang]/[slug]/ ===
+    // These base paths get rewritten to /[lang]/[slug] for locale detection
+    const seoPageSlugs = [
+        "legal-ai", "legal-chatbot", "business-legal", "startup-legal",
+        "divorce-law", "employee-rights", "tenant-rights", "contract-review",
+    ];
+
+    // Check if the pathname matches a SEO page slug
+    const isSeoPage = seoPageSlugs.some(
+        (slug) => pathname === `/${slug}` || pathname === `/${slug}/`
+    );
+
     // Identify paths that NEED rewriting to /[lang] structure (routes inside app/[lang])
-    // Based on directory structure: scheme is / -> /[lang]/... and /blog -> /[lang]/blog
-    if (pathname === "/" || pathname.startsWith("/blog")) {
+    // Includes: /, /blog/*, and all SEO landing pages
+    if (pathname === "/" || pathname.startsWith("/blog") || isSeoPage) {
         const locale = getLocale(request);
         return NextResponse.rewrite(new URL(`/${locale}${pathname}`, request.url));
     }
