@@ -93,3 +93,17 @@ export function getPostBySlug(slug: string, lang: BlogLanguage = "ar"): BlogPost
         return null;
     }
 }
+
+/**
+ * Get related posts for internal linking
+ * @param currentSlug The slug of the post to exclude
+ * @param lang The language of posts to search for
+ * @param limit Number of related posts to return
+ * @returns Array of BlogPost objects
+ */
+export function getRelatedPosts(currentSlug: string, lang: BlogLanguage = "ar", limit: number = 3): BlogPost[] {
+    const allPosts = getAllPosts(lang);
+    return allPosts
+        .filter(post => post.slug !== currentSlug)
+        .slice(0, limit);
+}
