@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       // Test landing page redirects
-      { source: '/1', destination: '/', permanent: false },
+      /*{ source: '/1', destination: '/', permanent: false },
       { source: '/2', destination: '/', permanent: false },
       { source: '/3', destination: '/', permanent: false },
       { source: '/4', destination: '/', permanent: false },
@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
       { source: '/8', destination: '/', permanent: false },
       { source: '/9', destination: '/', permanent: false },
       { source: '/10', destination: '/', permanent: false },
-      { source: '/11', destination: '/', permanent: false },
+      { source: '/11', destination: '/', permanent: false },*/
 
       // SEO: Redirect legacy non-localized blog URLs to Arabic (default) versions
       { source: '/blog', destination: '/ar/blog', permanent: true },

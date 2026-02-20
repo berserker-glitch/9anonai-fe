@@ -63,8 +63,13 @@ export function middleware(request: NextRequest) {
     );
 
     // Identify paths that NEED rewriting to /[lang] structure (routes inside app/[lang])
-    // Includes: /, /blog/*, and all SEO landing pages
-    if (pathname === "/" || pathname.startsWith("/blog") || isSeoPage) {
+    // Includes: /, /blog/*, all SEO landing pages, and the new test landing pages /1 to /11
+    if (
+        pathname === "/" ||
+        pathname.startsWith("/blog") ||
+        isSeoPage ||
+        /^\/([1-9]|10|11)(\/|$)/.test(pathname)
+    ) {
         const locale = getLocale(request);
         return NextResponse.rewrite(new URL(`/${locale}${pathname}`, request.url));
     }
