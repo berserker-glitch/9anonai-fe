@@ -13,6 +13,7 @@ interface UserStats {
     marketingSource: string | null;
     conversationCount: number;
     messageCount: number;
+    lastActive: string;
 }
 
 interface SystemStats {
@@ -46,7 +47,7 @@ export default function AdminDashboard() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState("");
-    const [sortField, setSortField] = useState<"conversationCount" | "messageCount" | "createdAt">("createdAt");
+    const [sortField, setSortField] = useState<"conversationCount" | "messageCount" | "createdAt" | "lastActive">("lastActive");
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
     // Drawer state
@@ -100,8 +101,8 @@ export default function AdminDashboard() {
         )
         .sort((a, b) => {
             let comparison = 0;
-            if (sortField === "createdAt") {
-                comparison = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+            if (sortField === "createdAt" || sortField === "lastActive") {
+                comparison = new Date(a[sortField]).getTime() - new Date(b[sortField]).getTime();
             } else {
                 comparison = a[sortField] - b[sortField];
             }
@@ -168,7 +169,8 @@ export default function AdminDashboard() {
                 new Date(u.createdAt).toISOString(),
                 u.marketingSource || "",
                 u.conversationCount,
-                u.messageCount
+                u.messageCount,
+                new Date(u.lastActive).toISOString()
             ].join(","))
         ].join("\n");
 
@@ -419,6 +421,16 @@ export default function AdminDashboard() {
                                             )}
                                         </div>
                                     </th>
+                                    <th className="text-left px-6 py-4 text-sm font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
+                                        onClick={() => handleSort("lastActive")}
+                                    >
+                                        <div className="flex items-center gap-1">
+                                            Last Active
+                                            {sortField === "lastActive" && (
+                                                <span>{sortOrder === "asc" ? "↑" : "↓"}</span>
+                                            )}
+                                        </div>
+                                    </th>
                                     <th className="text-left px-6 py-4 text-sm font-medium text-muted-foreground">
                                         Marketing
                                     </th>
@@ -457,6 +469,9 @@ export default function AdminDashboard() {
                                         </td>
                                         <td className="px-6 py-4 text-muted-foreground">
                                             {formatDate(u.createdAt)}
+                                        </td>
+                                        <td className="px-6 py-4 text-muted-foreground">
+                                            {formatTime(u.lastActive)}
                                         </td>
                                         <td className="px-6 py-4">
                                             {u.marketingSource ? (
