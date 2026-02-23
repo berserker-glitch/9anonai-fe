@@ -1,12 +1,15 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { useLanguage, languages, Language } from "@/lib/language-context";
 
 export function LanguageSwitcher() {
     const { language, setLanguage } = useLanguage();
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const pathname = usePathname();
+    const router = useRouter();
 
     // Close dropdown when clicking outside
     useEffect(() => {
@@ -53,10 +56,28 @@ export function LanguageSwitcher() {
                             onClick={() => {
                                 setLanguage(lang);
                                 setIsOpen(false);
+
+                                // If we are on a route that uses the [lang] parameter (e.g. /en/blog or /fr/blog/slug)
+                                // We need to visually route the user to the new translated URL.
+                                if (pathname) {
+                                    const segments = pathname.split('/').filter(Boolean);
+
+                                    // Check if the first segment is an existing language code
+                                    const firstSegmentIsLang = segments.length > 0 && Object.keys(languages).includes(segments[0]);
+
+                                    if (firstSegmentIsLang) {
+                                        // Replace the language segment
+                                        segments[0] = lang;
+                                        router.push(`/${segments.join('/')}`);
+                                    } else if (pathname === '/') {
+                                        // Optional: if landing page handles root paths differently, or you want to force prefix
+                                        // For now we just update state since Landing might be client-side translated
+                                    }
+                                }
                             }}
                             className={`w-full flex items-center gap-3 px-4 py-3 text-sm hover:bg-accent/50 transition-colors duration-200 ${language === lang
-                                    ? "bg-primary/10 text-primary font-semibold"
-                                    : "text-foreground"
+                                ? "bg-primary/10 text-primary font-semibold"
+                                : "text-foreground"
                                 }`}
                         >
                             <span className="text-lg">{langIcons[lang]}</span>
