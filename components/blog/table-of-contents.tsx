@@ -1,10 +1,12 @@
+import { ScrollSpyToc } from "./scroll-spy-toc";
+
 interface TableOfContentsProps {
     /** Raw markdown content to extract headings from */
     content: string;
     lang: string;
 }
 
-interface TocItem {
+export interface TocItem {
     id: string;
     text: string;
     level: number;
@@ -12,9 +14,7 @@ interface TocItem {
 
 /**
  * TableOfContents Component
- * Auto-generates a clickable TOC from markdown headings.
- * WHY: Boosts dwell time, improves content discoverability,
- * and helps Google understand content structure.
+ * Parses markdown on the server and passes headings to the client-side scroll spy TOC.
  */
 export function TableOfContents({ content, lang }: TableOfContentsProps) {
     // Extract headings from markdown (## and ### only)
@@ -31,43 +31,13 @@ export function TableOfContents({ content, lang }: TableOfContentsProps) {
             .replace(/\s+/g, "-")
             .substring(0, 60);
 
-        headings.push({ id, text, level });
+        // Add a fallback for empty ids
+        const finalId = id || `heading-${headings.length}`;
+
+        headings.push({ id: finalId, text, level });
     }
 
-    // Don't render if fewer than 3 headings
     if (headings.length < 3) return null;
 
-    const labels = {
-        ar: "محتويات المقال",
-        en: "Table of Contents",
-        fr: "Sommaire",
-    };
-
-    const label = labels[lang as keyof typeof labels] || labels.ar;
-
-    return (
-        <nav
-            aria-label="Table of Contents"
-            className="my-8 p-6 rounded-2xl glass-premium border border-border/40"
-        >
-            <h2 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-4">
-                {label}
-            </h2>
-            <ul className="space-y-2">
-                {headings.map((heading, index) => (
-                    <li
-                        key={index}
-                        className={heading.level === 3 ? "pl-4" : ""}
-                    >
-                        <a
-                            href={`#${heading.id}`}
-                            className="text-sm text-muted-foreground hover:text-primary transition-colors block py-1 leading-relaxed"
-                        >
-                            {heading.text}
-                        </a>
-                    </li>
-                ))}
-            </ul>
-        </nav>
-    );
+    return <ScrollSpyToc headings={headings} lang={lang} />;
 }

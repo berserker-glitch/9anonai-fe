@@ -37,7 +37,7 @@ export function RelatedPosts({ posts, lang }: RelatedPostsProps) {
                 {posts.map((post) => (
                     <Link
                         key={post.slug}
-                        href={`/blog/${post.slug}`}
+                        href={`/${lang}/blog/${post.slug}`}
                         className="group block glass-premium p-6 rounded-2xl hover:shadow-lg transition-all border border-border/40 hover:-translate-y-1"
                     >
                         <h3 className="font-display font-bold text-lg mb-2 group-hover:text-primary transition-colors line-clamp-2">
