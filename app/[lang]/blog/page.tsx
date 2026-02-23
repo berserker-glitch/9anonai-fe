@@ -3,7 +3,7 @@ import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
 import { getAllPosts, BlogLanguage } from "@/lib/blog";
 import { Breadcrumbs } from "@/components/blog/breadcrumbs";
-import { BlogPromotion } from "@/components/blog/blog-promotion";
+import { BlogGrid } from "@/components/blog/blog-grid";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: BlogLanguage }> }) {
     const { lang } = await params;
@@ -71,7 +71,6 @@ export default async function BlogIndex({ params }: { params: Promise<{ lang: Bl
     };
 
     const t = labels[lang] || labels.ar;
-    const [featuredPost, ...restPosts] = posts;
 
     // JSON-LD for Blog listing page
     const jsonLd = {
@@ -122,106 +121,8 @@ export default async function BlogIndex({ params }: { params: Promise<{ lang: Bl
                     </p>
                 </div>
 
-                {/* Featured Post Hero */}
-                {featuredPost && (
-                    <Link
-                        href={`/${lang}/blog/${featuredPost.slug}`}
-                        className="group relative block glass-premium rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-border/40 mb-12"
-                    >
-                        <div className="p-8 md:p-12 flex flex-col h-full">
-                            <div className="flex items-center gap-3 text-sm text-muted-foreground mb-4">
-                                <span className="px-3 py-1 rounded-full bg-primary/10 text-primary font-semibold text-xs uppercase tracking-wider">
-                                    {t.featured}
-                                </span>
-                                <time dateTime={featuredPost.date}>
-                                    {new Date(featuredPost.date).toLocaleDateString(lang === "ar" ? "ar-MA" : lang === "fr" ? "fr-FR" : "en-US", {
-                                        year: "numeric",
-                                        month: "long",
-                                        day: "numeric",
-                                    })}
-                                </time>
-                                <span>•</span>
-                                <span className="inline-flex items-center gap-1">
-                                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    {t.readTime(featuredPost.readingTime)}
-                                </span>
-                            </div>
-
-                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-4 group-hover:text-primary transition-colors leading-tight">
-                                {featuredPost.title}
-                            </h2>
-
-                            <p className="text-muted-foreground text-lg mb-6 max-w-3xl leading-relaxed">
-                                {featuredPost.description}
-                            </p>
-
-                            <div className="mt-auto flex items-center text-primary font-medium">
-                                <span>{t.readMore}</span>
-                                <svg className={`w-5 h-5 mx-2 ${dir === "rtl" ? "rotate-180" : ""} transition-transform group-hover:translate-x-1`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                </svg>
-                            </div>
-                        </div>
-
-                        {/* Background gradient effect */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                    </Link>
-                )}
-
-                {/* CTA between featured and grid */}
-                <div className="mb-12">
-                    <BlogPromotion lang={lang} />
-                </div>
-
-                {/* Posts Grid */}
-                <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    {restPosts.map((post) => (
-                        <Link
-                            key={post.slug}
-                            href={`/${lang}/blog/${post.slug}`}
-                            className="group relative flex flex-col glass-premium rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-border/40"
-                        >
-                            <div className="p-6 md:p-8 flex flex-col h-full">
-                                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-                                    <time dateTime={post.date}>
-                                        {new Date(post.date).toLocaleDateString(lang === "ar" ? "ar-MA" : lang === "fr" ? "fr-FR" : "en-US", {
-                                            year: "numeric",
-                                            month: "long",
-                                            day: "numeric",
-                                        })}
-                                    </time>
-                                    <span>•</span>
-                                    <span className="inline-flex items-center gap-1">
-                                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        {t.readTime(post.readingTime)}
-                                    </span>
-                                </div>
-
-                                <h2 className="text-xl font-display font-bold mb-3 group-hover:text-primary transition-colors line-clamp-2 leading-tight">
-                                    {post.title}
-                                </h2>
-
-                                <p className="text-muted-foreground line-clamp-3 mb-6 flex-1 text-sm leading-relaxed">
-                                    {post.description}
-                                </p>
-
-                                <div className="mt-auto flex items-center text-primary font-medium text-sm">
-                                    <span>{t.readMore}</span>
-                                    <svg className={`w-4 h-4 mx-2 ${dir === "rtl" ? "rotate-180" : ""} transition-transform group-hover:translate-x-1`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                    </svg>
-                                </div>
-                            </div>
-
-                            {/* Hover Glow Effect */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-gold/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                        </Link>
-                    ))}
-                </div>
+                {/* Interactive Blog Grid with Categories */}
+                <BlogGrid posts={posts} lang={lang} dir={dir} />
             </main>
 
             <Footer />
