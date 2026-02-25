@@ -13,6 +13,7 @@ import { TableOfContents } from "@/components/blog/table-of-contents";
 import { ShareButtons } from "@/components/blog/share-buttons";
 import { ReadingProgress } from "@/components/blog/reading-progress";
 import { getMarkdownComponents } from "@/components/blog/markdown-components";
+import Image from "next/image";
 export async function generateStaticParams() {
     const supportedLangs: BlogLanguage[] = ["ar", "fr", "en"];
     const params: { lang: string; slug: string }[] = [];
@@ -161,6 +162,19 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: Blo
                 <div className="flex flex-col lg:flex-row gap-12 mt-8 items-start relative">
                     <article className="flex-1 min-w-0 prose prose-lg dark:prose-invert prose-headings:font-display prose-headings:font-bold prose-h1:text-4xl prose-h2:text-2xl prose-a:text-primary prose-a:no-underline hover:prose-a:underline max-w-none">
                         <header className="mb-10 not-prose border-b border-border/40 pb-10">
+                            {post.image && (
+                                <div className="w-full relative h-[300px] sm:h-[450px] rounded-2xl overflow-hidden mb-10 shadow-lg border border-border/40">
+                                    <Image
+                                        src={post.image}
+                                        alt={post.title}
+                                        fill
+                                        className="object-cover"
+                                        priority
+                                    />
+                                    {/* Subtle gradient overlay to match aesthetic */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent pointer-events-none"></div>
+                                </div>
+                            )}
                             <h1 className="text-4xl sm:text-5xl font-display font-bold mb-6 text-foreground leading-tight">
                                 {post.title}
                             </h1>
