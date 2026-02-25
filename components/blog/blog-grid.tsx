@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { BlogPost } from "@/lib/blog";
 import { BlogPromotion } from "@/components/blog/blog-promotion";
 
@@ -78,8 +79,8 @@ export function BlogGrid({ posts, lang, dir }: BlogGridProps) {
                             key={category}
                             onClick={() => setActiveCategory(category)}
                             className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 border ${activeCategory === category
-                                    ? "bg-primary text-primary-foreground border-primary shadow-md shadow-primary/10"
-                                    : "glass-premium text-muted-foreground border-border/40 hover:text-foreground hover:border-primary/40"
+                                ? "bg-primary text-primary-foreground border-primary shadow-md shadow-primary/10"
+                                : "glass-premium text-muted-foreground border-border/40 hover:text-foreground hover:border-primary/40"
                                 }`}
                         >
                             {category === "All" ? allLabel : category}
@@ -95,24 +96,38 @@ export function BlogGrid({ posts, lang, dir }: BlogGridProps) {
                     className="group relative block glass-premium rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-500 border border-border/40"
                 >
                     <div className="flex flex-col md:flex-row h-full">
-                        {/* Elegant Tech Banner */}
+                        {/* Elegant Tech Banner / Generated Image */}
                         <div
                             className="h-48 md:h-auto md:w-[45%] flex-shrink-0 relative overflow-hidden flex items-center justify-center p-8 border-b md:border-b-0 md:rtl:border-l md:ltr:border-r border-border/40"
-                            style={getTechBackground(featuredPost.slug)}
+                            style={!featuredPost.image ? getTechBackground(featuredPost.slug) : {}}
                         >
-                            {/* Abstract overlay to give it a "code/tech" texture */}
-                            <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.03] mix-blend-overlay"></div>
+                            {featuredPost.image ? (
+                                <Image
+                                    src={featuredPost.image}
+                                    alt={featuredPost.title}
+                                    fill
+                                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                    sizes="(max-width: 768px) 100vw, 45vw"
+                                />
+                            ) : (
+                                <>
+                                    {/* Abstract overlay to give it a "code/tech" texture */}
+                                    <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.03] mix-blend-overlay"></div>
 
-                            {/* Grid pattern overlay */}
-                            <div className="absolute inset-0" style={{
-                                backgroundImage: `linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px)`,
-                                backgroundSize: '40px 40px'
-                            }}></div>
+                                    {/* Grid pattern overlay */}
+                                    <div className="absolute inset-0" style={{
+                                        backgroundImage: `linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px)`,
+                                        backgroundSize: '40px 40px'
+                                    }}></div>
+                                </>
+                            )}
 
-                            <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent"></div>
-                            <h3 className="relative text-foreground/90 font-display font-medium text-2xl lg:text-3xl text-center leading-tight [text-wrap:balance] opacity-80 group-hover:opacity-100 transition-opacity duration-500">
-                                {featuredPost.title}
-                            </h3>
+                            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent"></div>
+                            {!featuredPost.image && (
+                                <h3 className="relative text-foreground/90 font-display font-medium text-2xl lg:text-3xl text-center leading-tight [text-wrap:balance] opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                                    {featuredPost.title}
+                                </h3>
+                            )}
                         </div>
 
                         <div className="p-8 md:p-12 flex flex-col flex-1 bg-background/50 backdrop-blur-sm relative overflow-hidden">
@@ -170,21 +185,32 @@ export function BlogGrid({ posts, lang, dir }: BlogGridProps) {
                         href={`/${lang}/blog/${post.slug}`}
                         className="group flex flex-col glass-premium rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-300 border border-border/40 bg-background/40 hover:bg-background/60 hover:-translate-y-0.5"
                     >
-                        {/* Tech Cover Header */}
+                        {/* Tech Cover Header / Image */}
                         <div
-                            className="h-36 flex-shrink-0 relative overflow-hidden flex items-center justify-center p-6 border-b border-border/40"
-                            style={getTechBackground(post.slug)}
+                            className="h-48 sm:h-56 flex-shrink-0 relative overflow-hidden flex items-center justify-center border-b border-border/40"
+                            style={!post.image ? getTechBackground(post.slug) : {}}
                         >
-                            <span className="absolute top-4 left-4 rtl:left-auto rtl:right-4 px-3 py-1 rounded bg-background/80 backdrop-blur-md text-muted-foreground text-[10px] font-medium uppercase tracking-widest z-10 border border-white/5">
+                            {post.image ? (
+                                <Image
+                                    src={post.image}
+                                    alt={post.title}
+                                    fill
+                                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                />
+                            ) : (
+                                <>
+                                    <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.03] mix-blend-overlay"></div>
+                                    <div className="absolute inset-0" style={{
+                                        backgroundImage: `linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px)`,
+                                        backgroundSize: '30px 30px'
+                                    }}></div>
+                                </>
+                            )}
+                            <span className="absolute top-4 left-4 rtl:left-auto rtl:right-4 px-3 py-1 rounded bg-background/80 backdrop-blur-md text-foreground text-[10px] font-medium uppercase tracking-widest z-10 border border-border/50 shadow-sm">
                                 {post.category || t.category}
                             </span>
-
-                            <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.03] mix-blend-overlay"></div>
-                            <div className="absolute inset-0" style={{
-                                backgroundImage: `linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px)`,
-                                backgroundSize: '30px 30px'
-                            }}></div>
-                            <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent z-0"></div>
                         </div>
 
                         <div className="p-6 flex flex-col flex-1 relative overflow-hidden">

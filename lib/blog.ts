@@ -11,6 +11,7 @@ export interface BlogPost {
     description: string;
     date: string;
     content: string;
+    image?: string;
     language: BlogLanguage;
     /** Estimated reading time in minutes */
     readingTime: number;
@@ -67,6 +68,7 @@ export function getAllPosts(lang: BlogLanguage = "ar"): BlogPost[] {
             description: data.description || "",
             date: data.date || new Date().toISOString(),
             content,
+            image: data.image || "",
             language: lang,
             readingTime: calculateReadingTime(content, lang),
             category: data.category || "law",
@@ -105,6 +107,7 @@ export function getPostBySlug(slug: string, lang: BlogLanguage = "ar"): BlogPost
             description: data.description || "",
             date: data.date || new Date().toISOString(),
             content,
+            image: data.image || "",
             language: lang,
             readingTime: calculateReadingTime(content, lang),
             category: data.category || "law",
