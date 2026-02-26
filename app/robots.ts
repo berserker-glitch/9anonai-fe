@@ -17,7 +17,11 @@ export default function robots(): MetadataRoute.Robots {
                 allow: "/",
             },
         ],
-        sitemap: "https://9anonai.com/sitemap.xml",
+        // Main sitemap + dedicated image sitemap for Google Image indexing
+        sitemap: [
+            "https://9anonai.com/sitemap.xml",
+            "https://9anonai.com/image-sitemap.xml",
+        ],
         host: "https://9anonai.com",
     };
 }
