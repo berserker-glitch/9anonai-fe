@@ -600,6 +600,25 @@
   opacity: 0;
 }
 
+/**
+ * LCP Fix: on mobile the hero h1 uses .animate-reveal-up.
+ * Starting at opacity:0 means the LCP candidate is invisible until the animation
+ * kicks in, which CrUX counts as "not painted yet". On mobile we let it render
+ * visibly immediately and only animate transforms (not opacity) to keep the visual
+ * while allowing Lighthouse to measure the correct LCP timestamp.
+ */
+@media (max-width: 767px) {
+  .animate-reveal-up {
+    opacity: 1;
+    animation: none;
+  }
+
+  .animate-reveal-scale {
+    opacity: 1;
+    animation: none;
+  }
+}
+
 .animate-reveal-scale {
   animation: reveal-scale 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   opacity: 0;
@@ -704,10 +723,24 @@
 
 /* Enhanced landing page animations */
 
-/* Scroll reveal animation */
+/* Scroll reveal animation — JS adds this class when element enters viewport */
 .animate-scroll-reveal {
   opacity: 1;
   transform: translateY(0);
+}
+
+/**
+ * CLS Fix: on mobile, .scroll-animate elements start at opacity-0 + translateY(8).
+ * When the IntersectionObserver fires after hydration and adds .animate-scroll-reveal,
+ * the layout recalculates causing Cumulative Layout Shift.
+ * On mobile we bypass the animation entirely — elements are visible from the start.
+ */
+@media (max-width: 767px) {
+  .scroll-animate {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 /* Drop shadow glow for text */

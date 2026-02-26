@@ -78,8 +78,39 @@ export function BlogHighlights({ lang }: BlogHighlightsProps) {
             .catch(() => setLoading(false)); // Fail silently — section just won't render
     }, [lang]); // re-fetch when language changes
 
-    // Don't render anything while loading or if no image posts exist
-    if (loading || posts.length === 0) return null;
+    // While loading: render a skeleton at the same fixed height as the real grid.
+    // Returning null would create CLS when the section appears — content below shifts up/down.
+    if (loading) {
+        return (
+            <section className="py-24 lg:py-32" aria-hidden="true">
+                <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+                    {/* Header skeleton */}
+                    <div className="text-center mb-14 space-y-4">
+                        <div className="skeleton h-6 w-32 rounded-full mx-auto" />
+                        <div className="skeleton h-10 w-64 rounded-lg mx-auto" />
+                        <div className="skeleton h-4 w-80 rounded mx-auto" />
+                    </div>
+                    {/* Card skeletons — 3 cols matching real grid */}
+                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                        {Array.from({ length: 3 }).map((_, i) => (
+                            <div key={i} className="rounded-2xl border border-border/40 overflow-hidden">
+                                <div className="skeleton h-48 sm:h-56 w-full" />
+                                <div className="p-6 space-y-3">
+                                    <div className="skeleton h-3 w-24 rounded" />
+                                    <div className="skeleton h-5 w-full rounded" />
+                                    <div className="skeleton h-4 w-3/4 rounded" />
+                                    <div className="skeleton h-4 w-1/2 rounded" />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
+    // After loading: if no image posts, nothing to show
+    if (posts.length === 0) return null;
 
     return (
         <section
