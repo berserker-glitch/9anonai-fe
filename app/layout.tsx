@@ -37,8 +37,10 @@ export const metadata: Metadata = {
     default: "9anon AI | Moroccan Legal AI Assistant (Free Access)",
     template: "%s | 9anon AI - Moroccan Legal AI",
   },
+  // Default description is French — the primary SERP-facing audience.
+  // Arabic and English descriptions are served on their respective /ar and /en routes.
   description:
-    "9anon AI (قانون / 9anoun) - The First Moroccan Legal AI Assistant. Your intelligent AI lawyer for Moroccan law. Get instant legal advice online about Moudawana, Labor Law, Commercial Law, Penal Code, tenant rights, employee rights, divorce, inheritance, and company registration. Free legal chatbot available in Arabic, French, English, and Darija. Assistant juridique IA Maroc. مساعد قانوني ذكي المغرب.",
+    "9anon AI — Premier assistant juridique IA du Maroc. Obtenez des conseils juridiques gratuits instantanés sur la Moudawana, le Code du Travail, le droit commercial, les droits des employés et locataires, le divorce, la succession et la création de société. Chatbot juridique disponible 24/7 en arabe, français et anglais.",
   keywords: [
     // === PRIMARY TARGET ===
     "Moroccan Legal AI",
@@ -134,13 +136,14 @@ export const metadata: Metadata = {
   // icons and openGraph images removed to use file-based convention (icon.png)
   openGraph: {
     type: "website",
-    locale: "ar_MA",
-    alternateLocale: ["fr_MA", "en_US"],
+    // fr_MA as default locale — matches the default description language
+    locale: "fr_MA",
+    alternateLocale: ["ar_MA", "en_US"],
     url: "https://9anonai.com",
-    siteName: "9anon AI - Moroccan Legal AI",
-    title: "9anon AI - Moroccan Legal AI | مساعد قانوني مغربي ذكي",
+    siteName: "9anon AI - Assistant Juridique IA Maroc",
+    title: "9anon AI | Assistant Juridique IA Maroc - Conseil Juridique Gratuit",
     description:
-      "The First AI Legal Assistant for Moroccan Law. Instant answers for your legal questions in Arabic, French, and English.",
+      "Premier assistant juridique IA du Maroc. Conseils juridiques gratuits sur la Moudawana, Code du Travail, droit commercial et plus. Disponible 24/7.",
   },
   twitter: {
     card: "summary_large_image",
