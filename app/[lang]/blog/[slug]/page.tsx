@@ -48,6 +48,11 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Blo
         en: " | 9anon AI",
     };
 
+    /** Absolute OG image URL — used by Facebook, X/Twitter, WhatsApp, LinkedIn */
+    const ogImage = post.image
+        ? `https://9anonai.com${post.image}`
+        : `https://9anonai.com/og-default.png`;
+
     return {
         title: `${post.title}${titles[lang] || titles.ar}`,
         description: post.description,
@@ -66,6 +71,20 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Blo
             publishedTime: post.date,
             authors: ["9anon AI Team"],
             locale: lang === "ar" ? "ar_MA" : lang === "fr" ? "fr_MA" : "en_US",
+            // OG image: enables rich previews on all major platforms
+            images: [{
+                url: ogImage,
+                width: 1200,
+                height: 630,
+                alt: post.title,
+            }],
+        },
+        // Twitter/X large card with image
+        twitter: {
+            card: "summary_large_image",
+            title: post.title,
+            description: post.description,
+            images: [ogImage],
         },
     };
 }
@@ -106,8 +125,12 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: Blo
 
     const t = labels[lang] || labels.ar;
 
-    // JSON-LD Schema for Blog Posting (enhanced with wordCount)
-    const jsonLd = {
+    // JSON-LD Schema for Blog Posting (enhanced with wordCount + image for Google rich results)
+    const absoluteImageUrl = post.image
+        ? `https://9anonai.com${post.image}`
+        : null;
+
+    const jsonLd: Record<string, unknown> = {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "headline": post.title,
@@ -115,6 +138,7 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: Blo
         "dateModified": post.date,
         "description": post.description,
         "wordCount": post.content.trim().split(/\s+/).length,
+        "url": pageUrl,
         "author": {
             "@type": "Organization",
             "name": "9anon AI Team",
@@ -132,8 +156,20 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: Blo
             "@type": "WebPage",
             "@id": pageUrl
         },
-        "inLanguage": lang
+        "inLanguage": lang,
     };
+
+    // Only add image to schema if the post has one — helps Google index article images
+    // and qualifies the post for "article with image" rich results
+    if (absoluteImageUrl) {
+        jsonLd["image"] = {
+            "@type": "ImageObject",
+            "url": absoluteImageUrl,
+            "width": 1200,
+            "height": 630,
+            "caption": post.title,
+        };
+    }
 
     return (
         <div className={`min-h-screen bg-background text-foreground font-sans ${isRtl ? "font-arabic" : ""}`} dir={dir}>
