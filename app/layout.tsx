@@ -8,18 +8,22 @@ const playfair = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
+  // swap = show system font immediately, swap in custom font when ready → eliminates FOIT LCP delay
+  display: "swap",
 });
 
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
 });
 
 const cairo = Cairo({
   variable: "--font-cairo",
   subsets: ["arabic"],
   weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
 });
 
 export const viewport: Viewport = {
