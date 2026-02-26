@@ -22,6 +22,42 @@ export interface BlogPost {
 const blogsDirectory = path.join(process.cwd(), "content/blogs");
 
 /**
+ * Resolves the cover image for a post.
+ * Non-Arabic (fr/en) posts often lack an `image` field in their frontmatter,
+ * so we fall back to reading the Arabic base file for the same slug.
+ * If that also has no image, we check if `/blog-images/<slug>.png` exists
+ * in the public directory, which is our AI-generated image convention.
+ * @param slug - The post slug (no lang suffix)
+ * @param directImage - The image value already found in frontmatter (may be empty)
+ * @param lang - The post language
+ */
+function resolveImage(slug: string, directImage: string | undefined, lang: BlogLanguage): string {
+    // If the frontmatter already has an image, use it directly
+    if (directImage) return directImage;
+
+    // For translated posts, fall back to the base Arabic post's image field
+    if (lang !== "ar") {
+        try {
+            const arPath = path.join(blogsDirectory, `${slug}.md`);
+            if (fs.existsSync(arPath)) {
+                const arFileContents = fs.readFileSync(arPath, "utf8");
+                const { data: arData } = matter(arFileContents);
+                if (arData.image) return arData.image;
+            }
+        } catch {
+            // silently fall through to the convention-based fallback
+        }
+    }
+
+    // Final fallback: check the AI-generated image convention path
+    const conventionPath = `/blog-images/${slug}.png`;
+    const publicPath = path.join(process.cwd(), "public", conventionPath);
+    if (fs.existsSync(publicPath)) return conventionPath;
+
+    return "";
+}
+
+/**
  * Calculate estimated reading time from content
  * @param content - Markdown content
  * @param wordsPerMinute - Average reading speed (lower for Arabic)
@@ -68,7 +104,7 @@ export function getAllPosts(lang: BlogLanguage = "ar"): BlogPost[] {
             description: data.description || "",
             date: data.date || new Date().toISOString(),
             content,
-            image: data.image || "",
+            image: resolveImage(slug, data.image, lang),
             language: lang,
             readingTime: calculateReadingTime(content, lang),
             category: data.category || "law",
@@ -107,7 +143,7 @@ export function getPostBySlug(slug: string, lang: BlogLanguage = "ar"): BlogPost
             description: data.description || "",
             date: data.date || new Date().toISOString(),
             content,
-            image: data.image || "",
+            image: resolveImage(slug, data.image, lang),
             language: lang,
             readingTime: calculateReadingTime(content, lang),
             category: data.category || "law",

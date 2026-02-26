@@ -13,7 +13,7 @@ import { TableOfContents } from "@/components/blog/table-of-contents";
 import { ShareButtons } from "@/components/blog/share-buttons";
 import { ReadingProgress } from "@/components/blog/reading-progress";
 import { getMarkdownComponents } from "@/components/blog/markdown-components";
-import Image from "next/image";
+
 export async function generateStaticParams() {
     const supportedLangs: BlogLanguage[] = ["ar", "fr", "en"];
     const params: { lang: string; slug: string }[] = [];
@@ -164,16 +164,19 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: Blo
                         <header className="mb-10 not-prose border-b border-border/40 pb-10">
                             {post.image && (
                                 <div className="mb-10">
-                                    <div className="w-full relative h-[300px] sm:h-[450px] rounded-2xl overflow-hidden shadow-lg border border-border/40">
-                                        <Image
+                                    {/* Using plain img to avoid next/image fill conflicts inside prose context */}
+                                    <div
+                                        className="w-full rounded-2xl overflow-hidden shadow-lg border border-border/40"
+                                        style={{ position: "relative", height: "clamp(240px, 40vw, 450px)" }}
+                                    >
+                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                        <img
                                             src={post.image}
                                             alt={post.title}
-                                            fill
-                                            className="object-cover"
-                                            priority
+                                            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
                                         />
-                                        {/* Subtle gradient overlay to match aesthetic */}
-                                        <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent pointer-events-none"></div>
+                                        {/* Subtle gradient overlay */}
+                                        <div style={{ position: "absolute", inset: 0 }} className="bg-gradient-to-t from-background/40 to-transparent pointer-events-none" />
                                     </div>
                                     {/* AI-generated image disclaimer */}
                                     <p className="mt-2 text-xs text-muted-foreground/60 flex items-center gap-1.5">
