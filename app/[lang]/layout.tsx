@@ -1,5 +1,51 @@
 import type { Metadata } from "next";
 
+const BASE_URL = "https://9anonai.com";
+
+/**
+ * Organization and WebSite JSON-LD schemas — injected server-side on every
+ * landing page. These signal the brand entity to Google:
+ * - Organization: logo, contact, social profiles → Knowledge Panel eligibility
+ * - WebSite: sitelink search box support
+ */
+const siteJsonLd = [
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "9anon AI",
+        "url": BASE_URL,
+        "logo": {
+            "@type": "ImageObject",
+            "url": `${BASE_URL}/og-default.png`,
+            "width": 1200,
+            "height": 630,
+        },
+        "description": "The first AI-powered legal assistant for Moroccan law. Free online legal advice available 24/7.",
+        "foundingDate": "2024",
+        "areaServed": "MA",
+        "availableLanguage": ["ar", "fr", "en"],
+        "sameAs": [
+            "https://www.linkedin.com/company/9anon-ai",
+            "https://twitter.com/9anonai",
+        ],
+    },
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "9anon AI",
+        "url": BASE_URL,
+        // Enables Google Sitelinks Search Box
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": `${BASE_URL}/chat?q={search_term_string}`,
+            },
+            "query-input": "required name=search_term_string",
+        },
+    },
+];
+
 type Props = {
     params: Promise<{ lang: string }>;
     children: React.ReactNode;
@@ -75,5 +121,16 @@ export default function LandingLayout({
 }: {
     children: React.ReactNode;
 }) {
-    return <>{children}</>;
+    return (
+        <>
+            {/* Organization + WebSite JSON-LD for Google Knowledge Panel & site entity */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(siteJsonLd),
+                }}
+            />
+            {children}
+        </>
+    );
 }

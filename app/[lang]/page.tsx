@@ -8,10 +8,11 @@ import { ExpandedLandingSections } from "@/components/landing/expanded-sections"
 import { useTranslation, useLanguage } from "@/lib/language-context";
 import LiquidEther from "@/components/landing/liquid-ether";
 import CardSwap, { Card } from "@/components/landing/card-swap";
+import { BlogHighlights } from "@/components/landing/blog-highlights";
 
 export default function LandingPage() {
   const { t } = useTranslation("landing");
-  const { dir } = useLanguage();
+  const { dir, language: lang } = useLanguage();
 
   const heroRef = useRef<HTMLDivElement>(null);
   const chatPreviewRef = useRef<HTMLDivElement>(null);
@@ -418,6 +419,9 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+
+      {/* Blog Highlights — image-rich posts for homepage SEO internal linking */}
+      <BlogHighlights lang={lang} />
 
       {/* CTA Section - Enhanced */}
       <section className="py-24 lg:py-32 relative overflow-hidden">
