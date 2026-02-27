@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 export interface LiquidEtherProps {
@@ -83,8 +83,32 @@ export default function LiquidEther({
     const isVisibleRef = useRef<boolean>(true);
     const resizeRafRef = useRef<number | null>(null);
 
+    /**
+     * Tracks whether WebGL context creation failed.
+     * When true the component renders an empty placeholder div instead of
+     * crashing the entire page (e.g. ANGLE / driver failures).
+     */
+    const [webglFailed, setWebglFailed] = useState(false);
+
     useEffect(() => {
         if (!mountRef.current) return;
+
+        /**
+         * Pre-flight WebGL capability check — probe for a throwaway context
+         * before handing off to Three.js.  This catches most driver-level
+         * failures (ANGLE, exhausted drivers) without triggering console
+         * noise from THREE.WebGLRenderer.
+         */
+        const probeCanvas = document.createElement('canvas');
+        const probeCtx =
+            probeCanvas.getContext('webgl2') ||
+            probeCanvas.getContext('webgl') ||
+            probeCanvas.getContext('experimental-webgl');
+        if (!probeCtx) {
+            console.warn('[LiquidEther] WebGL is not available on this device — skipping fluid sim.');
+            setWebglFailed(true);
+            return;
+        }
 
         function makePaletteTexture(stops: string[]): THREE.DataTexture {
             let arr: string[];
@@ -134,7 +158,21 @@ export default function LiquidEther({
                 this.container = container;
                 this.pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
                 this.resize();
-                this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+                /**
+                 * Wrap renderer creation in try/catch — secondary safety net
+                 * in case the pre-flight probe passed but Three.js still
+                 * fails (e.g. context limits, GPU process crash).
+                 */
+                try {
+                    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+                } catch (err) {
+                    console.warn('[LiquidEther] THREE.WebGLRenderer creation failed:', err);
+                    setWebglFailed(true);
+                    this.renderer = null;
+                    return;
+                }
+
                 // Always transparent
                 this.renderer.autoClear = false;
                 this.renderer.setClearColor(new THREE.Color(0x000000), 0);
@@ -1237,6 +1275,20 @@ export default function LiquidEther({
         autoResumeDelay,
         autoRampDuration
     ]);
+
+    /**
+     * When WebGL is unavailable render an empty placeholder so the layout
+     * is preserved but no GPU work (or uncaught errors) occur.
+     */
+    if (webglFailed) {
+        return (
+            <div
+                className={`w-full h-full relative overflow-hidden pointer-events-none touch-none ${className || ''}`}
+                style={style}
+                aria-hidden="true"
+            />
+        );
+    }
 
     return (
         <div
