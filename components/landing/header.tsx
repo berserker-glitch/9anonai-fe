@@ -79,7 +79,7 @@ export function Header() {
                     <nav className="hidden md:flex items-center gap-10">
                         {[
                             { href: "#features", key: "nav.features" },
-                            { href: "#about", key: "nav.about" },
+                            { href: "/about", key: "nav.about" },
                             { href: "/vs-9anoun", key: "nav.compare" },
                         ].map((item) => (
                             <Link
@@ -155,7 +155,7 @@ export function Header() {
                                 {t("nav.features")}
                             </Link>
                             <Link
-                                href="#about"
+                                href="/about"
                                 className="py-3 px-4 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-xl transition-all duration-300"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
