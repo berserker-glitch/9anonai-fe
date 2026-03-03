@@ -131,7 +131,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: "monthly",
             priority: 0.5,
         },
-        // NOTE: /about removed - page doesn't exist in app directory
+        {
+            url: `${baseUrl}/about`,
+            lastModified: new Date(),
+            changeFrequency: "monthly",
+            priority: 0.8,
+        },
         {
             url: `${baseUrl}/vs-9anoun`,
             lastModified: new Date(),
