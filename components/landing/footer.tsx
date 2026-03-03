@@ -13,9 +13,9 @@ export function Footer() {
             <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[150px]" />
 
             <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16 lg:py-20">
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12">
                     {/* Brand */}
-                    <div className="md:col-span-5 lg:col-span-6">
+                    <div className="md:col-span-12 lg:col-span-4 lg:pr-8">
                         <Link href="/" className="inline-flex items-center gap-3 mb-6 group">
                             <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-shadow duration-300">
                                 <img src="/9anon-logo.png" alt="9anon Logo" className="w-full h-full object-cover" />
@@ -83,7 +83,7 @@ export function Footer() {
                     </div>
 
                     {/* Links */}
-                    <div className="md:col-span-3 lg:col-span-3">
+                    <div className="md:col-span-4 lg:col-span-2">
                         <h3 className="font-display font-semibold mb-6 text-sm uppercase tracking-wider text-foreground">
                             {t("footer.product")}
                         </h3>
@@ -112,10 +112,30 @@ export function Footer() {
                             >
                                 {t("footer.startChat")}
                             </Link>
+                            <Link
+                                href="/vs-9anoun"
+                                className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm font-medium"
+                            >
+                                {t("footer.compare")}
+                            </Link>
                         </nav>
                     </div>
 
-                    <div className="md:col-span-3 lg:col-span-3">
+                    <div className="md:col-span-4 lg:col-span-3">
+                        <h3 className="font-display font-semibold mb-6 text-sm uppercase tracking-wider text-foreground">
+                            {t("footer.topLegalTopics")}
+                        </h3>
+                        <nav className="flex flex-col gap-4">
+                            <Link href="/divorce-law" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.divorceLaw")}</Link>
+                            <Link href="/family-law" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.familyLaw")}</Link>
+                            <Link href="/labor-law" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.laborLaw")}</Link>
+                            <Link href="/traffic-law" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.trafficLaw")}</Link>
+                            <Link href="/employee-rights" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.employeeRights")}</Link>
+                            <Link href="/business-legal" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.businessLegal")}</Link>
+                        </nav>
+                    </div>
+
+                    <div className="md:col-span-4 lg:col-span-3">
                         <h3 className="font-display font-semibold mb-6 text-sm uppercase tracking-wider text-foreground">
                             {t("footer.legal")}
                         </h3>

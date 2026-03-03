@@ -80,6 +80,7 @@ export function Header() {
                         {[
                             { href: "#features", key: "nav.features" },
                             { href: "#about", key: "nav.about" },
+                            { href: "/vs-9anoun", key: "nav.compare" },
                         ].map((item) => (
                             <Link
                                 key={item.href}
@@ -159,6 +160,13 @@ export function Header() {
                                 onClick={() => setMobileMenuOpen(false)}
                             >
                                 {t("nav.about")}
+                            </Link>
+                            <Link
+                                href="/vs-9anoun"
+                                className="py-3 px-4 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-xl transition-all duration-300"
+                                onClick={() => setMobileMenuOpen(false)}
+                            >
+                                {t("nav.compare")}
                             </Link>
                             <div className="flex flex-col gap-2 pt-4 mt-4 border-t border-border/30">
                                 {!isLoading && user ? (
