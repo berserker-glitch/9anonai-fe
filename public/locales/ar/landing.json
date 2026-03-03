@@ -4,7 +4,8 @@
         "about": "حول",
         "login": "تسجيل الدخول",
         "getStarted": "ابدأ الآن",
-        "goToChat": "الذهاب للمحادثة"
+        "goToChat": "الذهاب للمحادثة",
+        "compare": "مقارنة مع 9anoun"
     },
     "hero": {
         "badge": "مساعد قانوني ذكي",
@@ -78,6 +79,14 @@
         "startChat": "ابدأ المحادثة",
         "blog": "المدونة",
         "legal": "قانوني",
+        "topLegalTopics": "أهم المواضيع القانونية",
+        "divorceLaw": "الطلاق بالمغرب",
+        "familyLaw": "مدونة الأسرة",
+        "laborLaw": "قانون الشغل",
+        "trafficLaw": "قانون السير",
+        "employeeRights": "حقوق الموظف",
+        "businessLegal": "الشركات والمقاولات",
+        "compare": "9anon ضد 9anoun AI",
         "privacy": "سياسة الخصوصية",
         "terms": "شروط الخدمة",
         "contact": "اتصل بنا",

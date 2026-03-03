@@ -4,7 +4,8 @@
         "about": "About",
         "login": "Login",
         "getStarted": "Get Started",
-        "goToChat": "Go to Chat"
+        "goToChat": "Go to Chat",
+        "compare": "Compare 9anoun"
     },
     "hero": {
         "badge": "AI-Powered Legal Assistant",
@@ -78,6 +79,14 @@
         "startChat": "Start Chat",
         "blog": "Blog",
         "legal": "Legal",
+        "topLegalTopics": "Top Legal Topics",
+        "divorceLaw": "Divorce in Morocco",
+        "familyLaw": "Family Law (Moudawana)",
+        "laborLaw": "Labor Law",
+        "trafficLaw": "Traffic Law",
+        "employeeRights": "Employee Rights",
+        "businessLegal": "Business & Startups",
+        "compare": "9anon vs 9anoun AI",
         "privacy": "Privacy Policy",
         "terms": "Terms of Service",
         "contact": "Contact Us",

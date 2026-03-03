@@ -4,7 +4,8 @@
         "about": "À propos",
         "login": "Connexion",
         "getStarted": "Commencer",
-        "goToChat": "Aller au Chat"
+        "goToChat": "Aller au Chat",
+        "compare": "Comparer 9anoun"
     },
     "hero": {
         "badge": "Assistant Juridique IA",
@@ -78,6 +79,14 @@
         "startChat": "Démarrer le Chat",
         "blog": "Blog",
         "legal": "Légal",
+        "topLegalTopics": "Sujets Juridiques Principaux",
+        "divorceLaw": "Divorce au Maroc",
+        "familyLaw": "Droit de la Famille (Moudawana)",
+        "laborLaw": "Droit du Travail",
+        "trafficLaw": "Code de la Route",
+        "employeeRights": "Droits des Employés",
+        "businessLegal": "Entreprises et Startups",
+        "compare": "9anon vs 9anoun AI",
         "privacy": "Politique de Confidentialité",
         "terms": "Conditions d'Utilisation",
         "contact": "Nous Contacter",
