@@ -445,6 +445,27 @@ export default function LandingPage() {
       {/* Blog Highlights — image-rich posts for homepage SEO internal linking */}
       <BlogHighlights lang={lang} />
 
+      {/* 9anoun Comparison Banner - SEO Injection */}
+      <section className="py-12 border-y border-border/30 bg-muted/10 relative overflow-hidden">
+        <div className="absolute inset-0 bg-dots opacity-20" />
+        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-6 scroll-animate opacity-0 transform translate-y-8 transition-all duration-700">
+          <div>
+            <h3 className="text-xl md:text-2xl font-display font-bold mb-2 text-foreground">
+              {lang === 'ar' ? 'البديل الأسرع والأفضل لـ 9anoun AI' : lang === 'fr' ? "L'alternative plus rapide à 9anoun AI" : 'The faster alternative to 9anoun AI'}
+            </h3>
+            <p className="text-muted-foreground text-sm md:text-base">
+              {lang === 'ar' ? 'بدون تسجيل دخول، مجاني، وإجابات فورية.' : lang === 'fr' ? 'Sans inscription, gratuit et réponses instantanées.' : 'No login required, free, and instant answers.'}
+            </p>
+          </div>
+          <Link
+            href="/vs-9anoun"
+            className="whitespace-nowrap btn-premium px-8 py-3 text-sm font-semibold bg-background text-foreground border border-border/50 rounded-xl hover:bg-muted/50 hover:scale-105 transition-all shadow-sm"
+          >
+            {t("nav.compare")}
+          </Link>
+        </div>
+      </section>
+
       {/* CTA Section - Enhanced */}
       <section className="py-24 lg:py-32 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-gold/5 to-primary/10" />
