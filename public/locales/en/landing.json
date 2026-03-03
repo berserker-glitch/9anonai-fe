@@ -93,5 +93,32 @@
         "copyright": "© 2026 9anon AI. All rights reserved.",
         "madeWith": "Made with",
         "inMorocco": "in Morocco"
+    },
+    "aboutUs": {
+        "title": "Democratizing",
+        "titleHighlight": "Moroccan Law",
+        "subtitle": "We built 9anon AI because legal knowledge should not be a privilege. It is a fundamental right. Our mission is to make the entire corpus of Moroccan law instantly accessible, perfectly accurate, and completely free.",
+        "philosophyTag": "Our Philosophy",
+        "philosophyOld": "The Old Way",
+        "philosophyOldDesc": "Finding legal answers meant paying expensive consultation fees, digging through dense Dahirs, or trusting unreliable online forums.",
+        "philosophyNew": "The 9anon Way",
+        "philosophyNewDesc": "Instant, accurate legal intelligence. Powered by an AI engine trained exclusively on official Moroccan jurisprudence.",
+        "techTag": "The Engine",
+        "techTitle": "Built for Absolute Precision",
+        "techDesc": "General AI hallucinates. 9anon AI does not. Our proprietary architecture isolates Moroccan legal data to guarantee absolute precision.",
+        "techFeature1": "Official Bulletins",
+        "techFeature1Desc": "Ingesting every single article from the Official Bulletin of the Kingdom of Morocco.",
+        "techFeature2": "Cassation Rulings",
+        "techFeature2Desc": "Trained on decades of precedence and rulings from the highest courts.",
+        "techFeature3": "Zero Data Retention",
+        "techFeature3Desc": "We do not store or read your legal queries. Your privacy is structurally guaranteed.",
+        "statsAccuracy": "99.9%",
+        "statsAccuracyLabel": "Citation Accuracy",
+        "statsLatency": "< 0.8s",
+        "statsLatencyLabel": "Query Response",
+        "statsSources": "5M+",
+        "statsSourcesLabel": "Tokens Indexed",
+        "statsUptime": "99.99%",
+        "statsUptimeLabel": "System Uptime"
     }
 }

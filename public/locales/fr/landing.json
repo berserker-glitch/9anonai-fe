@@ -93,5 +93,32 @@
         "copyright": "© 2026 9anon AI. Tous droits réservés.",
         "madeWith": "Fait avec",
         "inMorocco": "au Maroc"
+    },
+    "aboutUs": {
+        "title": "Démocratiser le",
+        "titleHighlight": "Droit Marocain",
+        "subtitle": "Nous avons créé 9anon AI car la connaissance juridique ne devrait pas être un privilège. C'est un droit fondamental. Notre mission est de rendre l'ensemble du corpus du droit marocain instantanément accessible, parfaitement précis et totalement gratuit.",
+        "philosophyTag": "Notre Philosophie",
+        "philosophyOld": "L'Ancienne Méthode",
+        "philosophyOldDesc": "Trouver des réponses juridiques signifiait payer des frais de consultation coûteux, fouiller dans des Dahirs denses ou faire confiance à des forums en ligne peu fiables.",
+        "philosophyNew": "La Méthode 9anon",
+        "philosophyNewDesc": "Intelligence juridique instantanée et précise. Propulsée par un moteur d'IA formé exclusivement sur la jurisprudence marocaine officielle.",
+        "techTag": "Le Moteur",
+        "techTitle": "Conçu pour une Précision Absolue",
+        "techDesc": "L'IA générale hallucine. 9anon AI non. Notre architecture propriétaire isole les données juridiques marocaines pour garantir une précision absolue.",
+        "techFeature1": "Bulletins Officiels",
+        "techFeature1Desc": "Intégration de chaque article du Bulletin Officiel du Royaume du Maroc.",
+        "techFeature2": "Décisions de Cassation",
+        "techFeature2Desc": "Formé sur des décennies de jurisprudence et de décisions des plus hautes cours.",
+        "techFeature3": "Zéro Rétention de Données",
+        "techFeature3Desc": "Nous ne stockons ni ne lisons vos requêtes juridiques. Votre vie privée est structurellement garantie.",
+        "statsAccuracy": "99,9%",
+        "statsAccuracyLabel": "Précision des Citations",
+        "statsLatency": "< 0.8s",
+        "statsLatencyLabel": "Temps de Réponse",
+        "statsSources": "+5M",
+        "statsSourcesLabel": "Tokens Indexés",
+        "statsUptime": "99,99%",
+        "statsUptimeLabel": "Disponibilité Système"
     }
 }
