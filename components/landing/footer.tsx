@@ -101,7 +101,7 @@ export function Footer() {
                                 {t("footer.blog")}
                             </Link>
                             <Link
-                                href="#about"
+                                href="/about"
                                 className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm"
                             >
                                 {t("footer.howItWorks")}
