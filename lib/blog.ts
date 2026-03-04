@@ -33,6 +33,8 @@ export interface BlogPost {
     lastModified?: string;
     /** Key takeaways for rich snippet display */
     keyTakeaways?: string[];
+    /** SEO-optimized alt text for the cover image (from frontmatter) */
+    imageAlt?: string;
 }
 
 const blogsDirectory = path.join(process.cwd(), "content/blogs");
@@ -131,6 +133,7 @@ export function getAllPosts(lang: BlogLanguage = "ar"): BlogPost[] {
             ...(data.author ? { author: data.author } : {}),
             ...(data.lastModified ? { lastModified: data.lastModified } : {}),
             ...(Array.isArray(data.keyTakeaways) && data.keyTakeaways.length > 0 ? { keyTakeaways: data.keyTakeaways } : {}),
+            ...(data.imageAlt ? { imageAlt: data.imageAlt } : {}),
         };
     });
 
@@ -177,6 +180,7 @@ export function getPostBySlug(slug: string, lang: BlogLanguage = "ar"): BlogPost
             ...(data.author ? { author: data.author } : {}),
             ...(data.lastModified ? { lastModified: data.lastModified } : {}),
             ...(Array.isArray(data.keyTakeaways) && data.keyTakeaways.length > 0 ? { keyTakeaways: data.keyTakeaways } : {}),
+            ...(data.imageAlt ? { imageAlt: data.imageAlt } : {}),
         };
     } catch (error) {
         console.error(`Error reading blog post ${slug} (${lang}):`, error);
