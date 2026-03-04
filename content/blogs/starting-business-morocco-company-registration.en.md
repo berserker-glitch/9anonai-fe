@@ -1,7 +1,16 @@
 ---
-title: "Starting a Business in Morocco: Legal Guide to Company Registration"
+title: "How to Register a Company in Morocco: Step-by-Step Legal Guide (2026)"
 date: "2026-02-16"
-description: "Step-by-step legal guide to registering a company in Morocco. Everything new entrepreneurs need"
+description: "Register a SARL or Auto-Entrepreneur in Morocco in 2026. Covers the CRI e-platform, Certificat Négatif, CNSS, and tax filing — step by step in plain English."
+faq:
+  - question: "What is the cheapest way to start a business in Morocco?"
+    answer: "The Auto-Entrepreneur (Mokawel Dati) status under Law 114.13 is the most affordable option. Registration is free, done electronically through the National Register, and offers simplified tax and social security benefits."
+  - question: "What is a Certificat Négatif and do I need one?"
+    answer: "A Certificat Négatif is a certificate proving your company name is unique and not already in use. It is obtained from OMPIC and is mandatory before registering any company (SARL, SA, etc.) in the Commercial Register."
+  - question: "Can a foreigner register a company in Morocco?"
+    answer: "Yes. Under Article 15 of the Commercial Code, foreigners aged 18 or older have full legal capacity to engage in business in Morocco. The electronic CRI platform supports foreign applications with translated documents."
+  - question: "How long does company registration take in Morocco?"
+    answer: "With the new electronic CRI platform under Decree 2.22.92, the process takes approximately 3-5 business days. This includes the Certificat Négatif, Commercial Register filing, tax registration, and CNSS enrollment."
 ---
 
 # Starting a Business in Morocco: Legal Guide to Company Registration
