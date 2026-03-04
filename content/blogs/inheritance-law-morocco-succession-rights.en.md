@@ -1,7 +1,16 @@
 ---
-title: "Inheritance Law in Morocco: Your Rights to Succession and Estate"
+title: "Moroccan Inheritance Law 2026: A Simple Guide for Heirs & Expats"
 date: "2026-02-16"
-description: "Comprehensive guide to inheritance law in Morocco and heirs' rights under the Moudawana"
+description: "Who inherits what under Moroccan law? Learn the Moudawana shares, foreigner rules, and estate steps — written in plain English for heirs and expats."
+faq:
+  - question: "Who inherits under Moroccan law?"
+    answer: "Under the Moudawana (Family Code), legal heirs include children, the surviving spouse, and parents. Inheritance is triggered by kinship, marriage, or a will (Wasiya) limited to one-third of the estate for non-heirs."
+  - question: "Can foreigners inherit property in Morocco?"
+    answer: "Yes, foreigners can inherit property in Morocco. However, if the deceased was Muslim, Islamic succession rules apply. Foreign court rulings on inheritance must undergo the Exequatur process to be enforceable in Moroccan courts."
+  - question: "What is the mandatory will (Al-Wasiya al-Wajiba) in Morocco?"
+    answer: "The mandatory will protects grandchildren whose parent died before the grandparent. They receive a share equivalent to what their deceased parent would have inherited, capped at one-third of the total estate."
+  - question: "What documents are required to settle an estate in Morocco?"
+    answer: "You need an official death certificate, a document from the civil status officer, identification of all heirs (Iradat), and a notarized inventory of the deceased's assets. For deaths abroad, the declaration must be made at a Moroccan consulate."
 ---
 
 # Inheritance Law in Morocco: Your Rights to Succession and Estate
