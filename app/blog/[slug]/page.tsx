@@ -10,6 +10,7 @@ import { RelatedPosts } from "@/components/blog/related-posts";
 import { Breadcrumbs } from "@/components/blog/breadcrumbs";
 import { TableOfContents } from "@/components/blog/table-of-contents";
 import { ShareButtons } from "@/components/blog/share-buttons";
+import { BlogJsonLd } from "@/components/blog/blog-json-ld";
 import Image from "next/image";
 
 export async function generateStaticParams() {
@@ -32,12 +33,37 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return {
         title: `${post.title} | 9anon AI`,
         description: post.description,
+        // Canonical URL prevents duplicate content issues
+        alternates: {
+            canonical: `https://9anonai.com/blog/${slug}`,
+        },
+        // Keywords meta tag from frontmatter
+        ...(post.keywords && post.keywords.length > 0 ? {
+            keywords: post.keywords.join(", "),
+        } : {}),
         openGraph: {
             title: post.title,
             description: post.description,
             type: "article",
             publishedTime: post.date,
-            authors: ["9anon AI Team"],
+            modifiedTime: post.lastModified || post.date,
+            authors: [post.author || "9anon AI Team"],
+            // og:image for rich social previews
+            ...(post.image ? {
+                images: [{
+                    url: post.image.startsWith("http") ? post.image : `https://9anonai.com${post.image}`,
+                    alt: post.title,
+                }],
+            } : {}),
+        },
+        // Twitter card for rich Twitter previews
+        twitter: {
+            card: "summary_large_image",
+            title: post.title,
+            description: post.description,
+            ...(post.image ? {
+                images: [post.image.startsWith("http") ? post.image : `https://9anonai.com${post.image}`],
+            } : {}),
         },
     };
 }
@@ -52,13 +78,28 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         notFound();
     }
 
-    const relatedPosts = getRelatedPosts(slug, lang);
+    const relatedPosts = getRelatedPosts(slug, lang, 3, post.keywords);
     const isRtl = lang === "ar";
     const pageUrl = `https://9anonai.com/blog/${slug}`;
 
     return (
         <div className={`min-h-screen bg-background text-foreground font-sans ${isRtl ? "font-arabic" : ""}`} dir={isRtl ? "rtl" : "ltr"}>
             <Header />
+
+            {/* Article + FAQ + Breadcrumb JSON-LD for Google rich results */}
+            <BlogJsonLd
+                title={post.title}
+                description={post.description}
+                date={post.date}
+                lastModified={post.lastModified}
+                author={post.author}
+                image={post.image}
+                url={pageUrl}
+                slug={slug}
+                lang={lang}
+                faq={post.faq}
+                keyTakeaways={post.keyTakeaways}
+            />
 
             <main className="pt-32 pb-20 px-6 sm:px-8 lg:px-12 max-w-4xl mx-auto">
                 {/* Breadcrumbs with JSON-LD for Google rich snippets */}
