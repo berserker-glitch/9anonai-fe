@@ -1,7 +1,7 @@
 ---
-title: "Moroccan Nationality Law"
+title: "Moroccan Citizenship & Nationality Law: Guide for Expats & Dual Nationals"
 date: "2026-02-13"
-description: "A comprehensive explanation of the Moroccan nationality law, including ways to obtain and lose citizenship."
+description: "How to get Moroccan citizenship by descent, marriage, or naturalization. Dual nationality rules, loss of citizenship, and recovery procedures explained."
 ---
 
 # Moroccan Nationality Law: A Comprehensive Guide to Citizenship and Naturalization
