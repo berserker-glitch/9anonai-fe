@@ -20,7 +20,7 @@ const siteJsonLd = [
             "width": 1200,
             "height": 630,
         },
-        "description": "Intelligence artificielle du droit marocain. The first AI-powered legal assistant for Moroccan law.",
+        "description": "Intelligence artificielle du droit marocain. The best and fastest AI-powered legal assistant for Moroccan law.",
         "foundingDate": "2024",
         "areaServed": "MA",
         "availableLanguage": ["ar", "fr", "en"],
@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (isArabic) {
         return {
             title: "9anon AI | مساعد قانوني ذكي المغرب - استشارة قانونية مجانية",
-            description: "أول مساعد قانوني ذكي في المغرب. استشارة قانونية اونلاين مجانية. احصل على إجابات فورية حول مدونة الأسرة، قانون الشغل، القانون التجاري، حقوق الموظف، حقوق المستأجر، الطلاق، الإرث، وتسجيل الشركات. شات بوت قانوني متاح 24/7.",
+            description: "أفضل وأسرع مساعد قانوني ذكي في المغرب. استشارة قانونية اونلاين مجانية. احصل على إجابات فورية حول مدونة الأسرة، قانون الشغل، القانون التجاري، حقوق الموظف، حقوق المستأجر، الطلاق، الإرث، وتسجيل الشركات. شات بوت قانوني متاح 24/7.",
             keywords: [
                 "مساعد قانوني ذكي المغرب", "استشارة قانونية اونلاين المغرب",
                 "محامي اونلاين المغرب", "شات بوت قانوني المغرب",
@@ -79,7 +79,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (isFrench) {
         return {
             title: "9anon AI | Intelligence artificielle du droit marocain",
-            description: "Intelligence artificielle du droit marocain - 9anon AI est le premier assistant juridique au Maroc. Obtenez des réponses instantanées pour la Moudawana, le Code du Travail, et plus.",
+            description: "Intelligence artificielle du droit marocain - 9anon AI est le meilleur et le plus rapide assistant juridique au Maroc. Obtenez des réponses instantanées pour la Moudawana, le Code du Travail, et plus.",
             keywords: [
                 "Intelligence artificielle du droit marocain",
                 "assistant juridique IA Maroc", "conseil juridique en ligne Maroc",
@@ -99,7 +99,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     // English (Default)
     return {
         title: "9anon AI | Free AI Legal Assistant Morocco - Legal Chatbot",
-        description: "The #1 AI Legal Assistant for Moroccan Law. Free online legal advice, AI lawyer, legal chatbot for Morocco. Get instant answers about family law, labor law, commercial law, employee rights, tenant rights, divorce, inheritance, contracts, and company registration. Available 24/7.",
+        description: "The best and fastest AI Legal Assistant for Moroccan Law. Free online legal advice, AI lawyer, legal chatbot for Morocco. Get instant answers about family law, labor law, commercial law, employee rights, tenant rights, divorce, inheritance, contracts, and company registration. Available 24/7.",
         keywords: [
             "legal AI assistant Morocco", "online legal advice Morocco",
             "business legal help Morocco", "AI lawyer Morocco",
