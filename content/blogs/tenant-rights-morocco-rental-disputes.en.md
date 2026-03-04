@@ -1,7 +1,16 @@
 ---
-title: "Tenant Rights in Morocco: How to Protect Yourself from Rental Disputes"
+title: "Tenant vs Landlord Rights in Morocco: How to Resolve Disputes (2026)"
 date: "2026-02-16"
-description: "Comprehensive guide to tenant rights in Morocco and how to file complaints for rental disputes"
+description: "Unfair rent increase? Illegal eviction? Learn your rights under Law 67-12, the legal complaint process, and commercial vs residential lease protections."
+faq:
+  - question: "Can my landlord increase rent whenever they want in Morocco?"
+    answer: "No. Under Law 07-03, rent cannot be increased before 3 years from the lease start or last increase. Increases are capped at 8% for residential and 10% for commercial properties unless otherwise agreed in the contract."
+  - question: "What are valid reasons for eviction in Morocco?"
+    answer: "A landlord can only evict for: non-payment of rent, using the property for illegal or unauthorized purposes, the landlord's personal need to occupy, or demolition and rebuilding. A formal notice through a judicial bailiff is required."
+  - question: "How do I file a rental complaint in Morocco?"
+    answer: "First, send a formal notice (Mise en Demeure) via a judicial bailiff. If unresolved, file a written petition at the First Instance Court with your lease, rent receipts, the formal notice, and evidence of the dispute."
+  - question: "Do commercial tenants have special protections in Morocco?"
+    answer: "Yes. After 2 years of continuous occupation, commercial tenants gain the Right to Lease (Droit au bail), allowing indefinite lease renewal. The landlord can only refuse by paying a significant eviction indemnity."
 ---
 
 # Tenant Rights in Morocco: How to Protect Yourself from Rental Disputes
