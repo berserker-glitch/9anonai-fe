@@ -20,7 +20,7 @@ const siteJsonLd = [
             "width": 1200,
             "height": 630,
         },
-        "description": "The first AI-powered legal assistant for Moroccan law. Free online legal advice available 24/7.",
+        "description": "Intelligence artificielle du droit marocain. The first AI-powered legal assistant for Moroccan law.",
         "foundingDate": "2024",
         "areaServed": "MA",
         "availableLanguage": ["ar", "fr", "en"],
@@ -78,9 +78,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     if (isFrench) {
         return {
-            title: "9anon AI | Assistant Juridique IA Maroc - Conseil Juridique Gratuit",
-            description: "Le premier assistant juridique IA au Maroc. Conseil juridique en ligne gratuit. Obtenez des réponses instantanées sur la Moudawana, le Code du Travail, le droit commercial, les droits des employés, le divorce, la succession, et la création de société. Chatbot juridique disponible 24/7.",
+            title: "9anon AI | Intelligence artificielle du droit marocain",
+            description: "Intelligence artificielle du droit marocain - 9anon AI est le premier assistant juridique au Maroc. Obtenez des réponses instantanées pour la Moudawana, le Code du Travail, et plus.",
             keywords: [
+                "Intelligence artificielle du droit marocain",
                 "assistant juridique IA Maroc", "conseil juridique en ligne Maroc",
                 "avocat en ligne Maroc", "aide juridique entreprise Maroc",
                 "chatbot juridique Maroc", "consultation juridique digitale Maroc",
