@@ -44,9 +44,10 @@ export const metadata: Metadata = {
   // Default description is French — the primary SERP-facing audience.
   // Arabic and English descriptions are served on their respective /ar and /en routes.
   description:
-    "9anon AI — Premier assistant juridique IA du Maroc. Obtenez des conseils juridiques gratuits instantanés sur la Moudawana, le Code du Travail, le droit commercial, les droits des employés et locataires, le divorce, la succession et la création de société. Chatbot juridique disponible 24/7 en arabe, français et anglais.",
+    "Intelligence artificielle du droit marocain — 9anon AI est le premier assistant juridique IA du Maroc. Obtenez des conseils juridiques gratuits instantanés sur la Moudawana, le Code du Travail, et plus. Chatbot juridique disponible 24/7.",
   keywords: [
     // === PRIMARY TARGET ===
+    "Intelligence artificielle du droit marocain",
     "Moroccan Legal AI",
     "IA Juridique Marocaine",
     "الذكاء الاصطناعي القانوني المغربي",
@@ -144,10 +145,10 @@ export const metadata: Metadata = {
     locale: "fr_MA",
     alternateLocale: ["ar_MA", "en_US"],
     url: "https://9anonai.com",
-    siteName: "9anon AI - Assistant Juridique IA Maroc",
-    title: "9anon AI | Assistant Juridique IA Maroc - Conseil Juridique Gratuit",
+    siteName: "9anon AI - Intelligence artificielle du droit marocain",
+    title: "9anon AI | Intelligence artificielle du droit marocain",
     description:
-      "Premier assistant juridique IA du Maroc. Conseils juridiques gratuits sur la Moudawana, Code du Travail, droit commercial et plus. Disponible 24/7.",
+      "Intelligence artificielle du droit marocain. 9anon AI offre des conseils juridiques gratuits sur la Moudawana, le Code du Travail, le droit commercial et plus.",
   },
   twitter: {
     card: "summary_large_image",
@@ -174,9 +175,9 @@ const jsonLdSchemas = [
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     name: "9anon AI",
-    alternateName: ["Moroccan Legal AI", "IA Juridique Marocaine", "الذكاء الاصطناعي القانوني المغربي", "قانون", "9anoun AI"],
+    alternateName: ["Intelligence artificielle du droit marocain", "Moroccan Legal AI", "IA Juridique Marocaine", "الذكاء الاصطناعي القانوني المغربي", "قانون", "9anoun AI"],
     description:
-      "AI-powered Moroccan Legal AI assistant providing instant legal guidance in Arabic, French, English, and Darija.",
+      "Intelligence artificielle du droit marocain. AI-powered Moroccan Legal AI assistant providing instant legal guidance.",
     url: "https://9anonai.com",
     applicationCategory: "LegalService",
     operatingSystem: "Web Browser",
@@ -204,10 +205,10 @@ const jsonLdSchemas = [
   {
     "@context": "https://schema.org",
     "@type": "LegalService",
-    name: "9anon AI - Moroccan Legal AI Assistant",
-    alternateName: ["Assistant Juridique IA Maroc", "مساعد قانوني ذكي المغرب"],
+    name: "9anon AI - Intelligence artificielle du droit marocain",
+    alternateName: ["Assistant Juridique IA Maroc", "Intelligence artificielle du droit marocain", "مساعد قانوني ذكي المغرب"],
     description:
-      "Free AI-powered legal consultation for Moroccan law. Covers family law (Moudawana), labor law, commercial law, tenant rights, employee rights, divorce, inheritance, and company registration.",
+      "Intelligence artificielle du droit marocain. Free AI-powered legal consultation for Moroccan law.",
     url: "https://9anonai.com",
     serviceType: ["Legal Advice", "AI Legal Chatbot", "Contract Review", "Legal Consultation"],
     areaServed: {
