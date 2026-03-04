@@ -5,6 +5,12 @@ import matter from "gray-matter";
 // Supported languages
 export type BlogLanguage = "ar" | "fr" | "en";
 
+/** Single FAQ item for Google FAQ rich snippets */
+export interface FaqItem {
+    question: string;
+    answer: string;
+}
+
 export interface BlogPost {
     slug: string;
     title: string;
@@ -17,6 +23,8 @@ export interface BlogPost {
     readingTime: number;
     /** Category tag for grouping (from frontmatter, defaults to "law") */
     category: string;
+    /** Optional FAQ items — used for FAQPage JSON-LD rich snippets */
+    faq?: FaqItem[];
 }
 
 const blogsDirectory = path.join(process.cwd(), "content/blogs");
@@ -108,6 +116,8 @@ export function getAllPosts(lang: BlogLanguage = "ar"): BlogPost[] {
             language: lang,
             readingTime: calculateReadingTime(content, lang),
             category: data.category || "law",
+            // Parse optional FAQ items from frontmatter for Google rich snippets
+            ...(Array.isArray(data.faq) && data.faq.length > 0 ? { faq: data.faq } : {}),
         };
     });
 
@@ -147,6 +157,8 @@ export function getPostBySlug(slug: string, lang: BlogLanguage = "ar"): BlogPost
             language: lang,
             readingTime: calculateReadingTime(content, lang),
             category: data.category || "law",
+            // Parse optional FAQ items from frontmatter for Google rich snippets
+            ...(Array.isArray(data.faq) && data.faq.length > 0 ? { faq: data.faq } : {}),
         };
     } catch (error) {
         console.error(`Error reading blog post ${slug} (${lang}):`, error);
