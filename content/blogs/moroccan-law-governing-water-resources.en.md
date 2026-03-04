@@ -1,7 +1,7 @@
 ---
-title: "Moroccan Law Governing Water Resources"
+title: "Moroccan Water Law 10-95: Full Text Summary & Legal Analysis"
 date: "2026-02-19"
-description: "Analysis of the laws and regulations related to the management of water resources in Morocco, including water rights, water distribution, and water quality preservation."
+description: "Full summary of Morocco's Law 10-95 on water resources. Covers public domain rights, wastewater reuse, drinking water standards, and ONEE governance."
 ---
 
 # Moroccan Law Governing Water Resources
