@@ -177,7 +177,7 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: Blo
                                         {/* eslint-disable-next-line @next/next/no-img-element */}
                                         <img
                                             src={post.image}
-                                            alt={post.title}
+                                            alt={post.imageAlt || post.title}
                                             style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
                                         />
                                         {/* Subtle gradient overlay */}
