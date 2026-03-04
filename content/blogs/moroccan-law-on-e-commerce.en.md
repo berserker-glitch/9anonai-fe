@@ -1,7 +1,7 @@
 ---
-title: "Moroccan Law on E-commerce"
+title: "Morocco E-Commerce Law: Full Regulation Guide for Online Businesses"
 date: "2026-02-20"
-description: "A detailed look at the legal framework governing e-commerce in Morocco, consumer rights, and merchant responsibilities."
+description: "Selling online in Morocco? Understand your legal obligations — from OMPIC registration and IP protection to competition law and consumer rights."
 ---
 
 # Moroccan Law on E-commerce: Navigating the Digital Economy
