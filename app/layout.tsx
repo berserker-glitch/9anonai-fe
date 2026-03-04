@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   // Default description is French — the primary SERP-facing audience.
   // Arabic and English descriptions are served on their respective /ar and /en routes.
   description:
-    "Intelligence artificielle du droit marocain — 9anon AI est le premier assistant juridique IA du Maroc. Obtenez des conseils juridiques gratuits instantanés sur la Moudawana, le Code du Travail, et plus. Chatbot juridique disponible 24/7.",
+    "Intelligence artificielle du droit marocain — 9anon AI est le meilleur et le plus rapide assistant juridique IA du Maroc. Obtenez des conseils juridiques gratuits instantanés sur la Moudawana, le Code du Travail, et plus. Chatbot juridique disponible 24/7.",
   keywords: [
     // === PRIMARY TARGET ===
     "Intelligence artificielle du droit marocain",
