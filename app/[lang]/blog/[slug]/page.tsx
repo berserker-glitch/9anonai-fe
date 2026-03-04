@@ -179,6 +179,27 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: Blo
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
 
+            {/* FAQPage JSON-LD — only injected when the post has FAQ items in frontmatter */}
+            {post.faq && post.faq.length > 0 && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify({
+                            "@context": "https://schema.org",
+                            "@type": "FAQPage",
+                            mainEntity: post.faq.map((item) => ({
+                                "@type": "Question",
+                                name: item.question,
+                                acceptedAnswer: {
+                                    "@type": "Answer",
+                                    text: item.answer,
+                                },
+                            })),
+                        }),
+                    }}
+                />
+            )}
+
             <Header />
 
             <ReadingProgress lang={lang} />
