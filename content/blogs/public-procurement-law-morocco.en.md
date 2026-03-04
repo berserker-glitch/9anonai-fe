@@ -1,7 +1,16 @@
 ---
-title: "Public Procurement Law in Morocco"
+title: "Winning Public Tenders in Morocco: Law & Procedure Guide (2026)"
 date: "2026-02-13"
-description: "An in-depth analysis of the public procurement law in Morocco and how to participate in government tenders."
+description: "How to bid on Moroccan government contracts. Learn the 30% SME quota, the 15% national preference margin, and qualification requirements under Decree 2.22.431."
+faq:
+  - question: "What percentage of public contracts is reserved for SMEs in Morocco?"
+    answer: "Under Article 148 of Decree 2.22.431, public entities must reserve 30% of their annual procurement budget for Moroccan SMEs, startups, cooperatives, and auto-entrepreneurs."
+  - question: "Is there a preference for Moroccan firms in public tenders?"
+    answer: "Yes. For study-related services, foreign bidders face a 15% price increase for comparison purposes. This penalty does not apply if the foreign firm partners with a Moroccan firm holding at least 30% of the consortium."
+  - question: "Do construction companies need special qualifications to bid?"
+    answer: "Yes. The Ministry of Equipment and Transport requires construction firms to be classified and qualified based on technical capabilities, financial health, and past experience before bidding on projects above certain thresholds."
+  - question: "How does intellectual property work in Moroccan public contracts?"
+    answer: "When a public entity commissions creative work or software, the contract must define intellectual property transfer under Law 25.19 and Law 2.00 on copyright. The Moroccan Office of Copyright (BMDA) oversees compliance."
 ---
 
 # Public Procurement Law in Morocco
