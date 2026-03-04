@@ -1,7 +1,7 @@
 ---
-title: "Moroccan Regulations on Import and Export"
+title: "Import & Export in Morocco: Customs, Duties, and Trade Regulations (2026)"
 date: "2026-02-20"
-description: "A comprehensive guide to import and export regulations in Morocco, including customs duties, required documentation, and trade restrictions."
+description: "Navigate Moroccan customs: anti-dumping rules, temporary admission, exemptions for individuals, and the role of AMDIE in promoting Moroccan trade."
 ---
 
 # Moroccan Regulations on Import and Export: A Comprehensive Legal Guide
