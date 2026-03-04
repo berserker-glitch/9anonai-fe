@@ -13,6 +13,7 @@ import { TableOfContents } from "@/components/blog/table-of-contents";
 import { ShareButtons } from "@/components/blog/share-buttons";
 import { ReadingProgress } from "@/components/blog/reading-progress";
 import { getMarkdownComponents } from "@/components/blog/markdown-components";
+import { BlogJsonLd } from "@/components/blog/blog-json-ld";
 
 export async function generateStaticParams() {
     const supportedLangs: BlogLanguage[] = ["ar", "fr", "en"];
@@ -56,6 +57,10 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Blo
     return {
         title: `${post.title}${titles[lang] || titles.ar}`,
         description: post.description,
+        // Keywords meta tag for SEO
+        ...(post.keywords && post.keywords.length > 0 ? {
+            keywords: post.keywords.join(", "),
+        } : {}),
         alternates: {
             canonical: `https://9anonai.com/${lang}/blog/${slug}`,
             languages: {
@@ -69,7 +74,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Blo
             description: post.description,
             type: "article",
             publishedTime: post.date,
-            authors: ["9anon AI Team"],
+            modifiedTime: post.lastModified || post.date,
+            authors: [post.author || "9anon AI Team"],
             locale: lang === "ar" ? "ar_MA" : lang === "fr" ? "fr_MA" : "en_US",
             // OG image: enables rich previews on all major platforms
             images: [{
@@ -97,7 +103,7 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: Blo
         notFound();
     }
 
-    const relatedPosts = getRelatedPosts(slug, lang);
+    const relatedPosts = getRelatedPosts(slug, lang, 3, post.keywords);
     const dir = lang === "ar" ? "rtl" : "ltr";
     const isRtl = lang === "ar";
     const pageUrl = `https://9anonai.com/${lang}/blog/${slug}`;
@@ -125,80 +131,22 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: Blo
 
     const t = labels[lang] || labels.ar;
 
-    // JSON-LD Schema for Blog Posting (enhanced with wordCount + image for Google rich results)
-    const absoluteImageUrl = post.image
-        ? `https://9anonai.com${post.image}`
-        : null;
-
-    const jsonLd: Record<string, unknown> = {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": post.title,
-        "datePublished": post.date,
-        "dateModified": post.date,
-        "description": post.description,
-        "wordCount": post.content.trim().split(/\s+/).length,
-        "url": pageUrl,
-        "author": {
-            "@type": "Organization",
-            "name": "9anon AI Team",
-            "url": "https://9anonai.com"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "9anon AI",
-            "logo": {
-                "@type": "ImageObject",
-                "url": "https://9anonai.com/logo.png"
-            }
-        },
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": pageUrl
-        },
-        "inLanguage": lang,
-    };
-
-    // Only add image to schema if the post has one — helps Google index article images
-    // and qualifies the post for "article with image" rich results
-    if (absoluteImageUrl) {
-        jsonLd["image"] = {
-            "@type": "ImageObject",
-            "url": absoluteImageUrl,
-            "width": 1200,
-            "height": 630,
-            "caption": post.title,
-        };
-    }
-
     return (
         <div className={`min-h-screen bg-background text-foreground font-sans ${isRtl ? "font-arabic" : ""}`} dir={dir}>
-            {/* BlogPosting JSON-LD */}
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            {/* Article + FAQ + Breadcrumb JSON-LD via reusable BlogJsonLd component */}
+            <BlogJsonLd
+                title={post.title}
+                description={post.description}
+                date={post.date}
+                lastModified={post.lastModified}
+                author={post.author}
+                image={post.image}
+                url={pageUrl}
+                slug={slug}
+                lang={lang}
+                faq={post.faq}
+                keyTakeaways={post.keyTakeaways}
             />
-
-            {/* FAQPage JSON-LD — only injected when the post has FAQ items in frontmatter */}
-            {post.faq && post.faq.length > 0 && (
-                <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{
-                        __html: JSON.stringify({
-                            "@context": "https://schema.org",
-                            "@type": "FAQPage",
-                            mainEntity: post.faq.map((item) => ({
-                                "@type": "Question",
-                                name: item.question,
-                                acceptedAnswer: {
-                                    "@type": "Answer",
-                                    text: item.answer,
-                                },
-                            })),
-                        }),
-                    }}
-                />
-            )}
 
             <Header />
 
