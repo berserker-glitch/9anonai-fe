@@ -25,6 +25,14 @@ export interface BlogPost {
     category: string;
     /** Optional FAQ items — used for FAQPage JSON-LD rich snippets */
     faq?: FaqItem[];
+    /** SEO keywords from frontmatter — used for meta tags and related posts scoring */
+    keywords?: string[];
+    /** Author name for Article JSON-LD */
+    author?: string;
+    /** Last modified date for Article JSON-LD dateModified */
+    lastModified?: string;
+    /** Key takeaways for rich snippet display */
+    keyTakeaways?: string[];
 }
 
 const blogsDirectory = path.join(process.cwd(), "content/blogs");
@@ -118,6 +126,11 @@ export function getAllPosts(lang: BlogLanguage = "ar"): BlogPost[] {
             category: data.category || "law",
             // Parse optional FAQ items from frontmatter for Google rich snippets
             ...(Array.isArray(data.faq) && data.faq.length > 0 ? { faq: data.faq } : {}),
+            // Parse new SEO-related frontmatter fields
+            ...(Array.isArray(data.keywords) && data.keywords.length > 0 ? { keywords: data.keywords } : {}),
+            ...(data.author ? { author: data.author } : {}),
+            ...(data.lastModified ? { lastModified: data.lastModified } : {}),
+            ...(Array.isArray(data.keyTakeaways) && data.keyTakeaways.length > 0 ? { keyTakeaways: data.keyTakeaways } : {}),
         };
     });
 
@@ -159,6 +172,11 @@ export function getPostBySlug(slug: string, lang: BlogLanguage = "ar"): BlogPost
             category: data.category || "law",
             // Parse optional FAQ items from frontmatter for Google rich snippets
             ...(Array.isArray(data.faq) && data.faq.length > 0 ? { faq: data.faq } : {}),
+            // Parse new SEO-related frontmatter fields
+            ...(Array.isArray(data.keywords) && data.keywords.length > 0 ? { keywords: data.keywords } : {}),
+            ...(data.author ? { author: data.author } : {}),
+            ...(data.lastModified ? { lastModified: data.lastModified } : {}),
+            ...(Array.isArray(data.keyTakeaways) && data.keyTakeaways.length > 0 ? { keyTakeaways: data.keyTakeaways } : {}),
         };
     } catch (error) {
         console.error(`Error reading blog post ${slug} (${lang}):`, error);
@@ -167,15 +185,80 @@ export function getPostBySlug(slug: string, lang: BlogLanguage = "ar"): BlogPost
 }
 
 /**
- * Get related posts for internal linking
+ * Get related posts using keyword overlap scoring for semantic relevance.
+ * Falls back to most recent posts if no keyword overlap exists.
+ *
  * @param currentSlug The slug of the post to exclude
  * @param lang The language of posts to search for
  * @param limit Number of related posts to return
- * @returns Array of BlogPost objects
+ * @param currentKeywords Optional keywords of the current post for scoring
+ * @returns Array of BlogPost objects sorted by relevance
  */
-export function getRelatedPosts(currentSlug: string, lang: BlogLanguage = "ar", limit: number = 3): BlogPost[] {
+export function getRelatedPosts(
+    currentSlug: string,
+    lang: BlogLanguage = "ar",
+    limit: number = 3,
+    currentKeywords?: string[]
+): BlogPost[] {
     const allPosts = getAllPosts(lang);
-    return allPosts
-        .filter(post => post.slug !== currentSlug)
-        .slice(0, limit);
+    const candidates = allPosts.filter(post => post.slug !== currentSlug);
+
+    // If no keywords to score against, fall back to most recent
+    if (!currentKeywords || currentKeywords.length === 0) {
+        return candidates.slice(0, limit);
+    }
+
+    // Score each candidate by keyword overlap + category match
+    const currentKwSet = new Set(currentKeywords.map(k => k.toLowerCase()));
+    const currentPost = allPosts.find(p => p.slug === currentSlug);
+
+    const scored = candidates.map(post => {
+        let score = 0;
+
+        // Keyword overlap scoring (primary signal)
+        if (post.keywords && post.keywords.length > 0) {
+            for (const kw of post.keywords) {
+                if (currentKwSet.has(kw.toLowerCase())) {
+                    score += 3; // Strong match
+                }
+            }
+        }
+
+        // Category match bonus
+        if (currentPost && post.category === currentPost.category) {
+            score += 2;
+        }
+
+        // Title keyword overlap (weaker signal)
+        const titleWords = post.title.toLowerCase().split(/\s+/);
+        for (const tw of titleWords) {
+            if (currentKwSet.has(tw) && tw.length > 3) {
+                score += 1;
+            }
+        }
+
+        return { post, score };
+    });
+
+    // Sort by score descending, then by date for ties
+    scored.sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        return b.post.date.localeCompare(a.post.date);
+    });
+
+    return scored.slice(0, limit).map(s => s.post);
+}
+
+/**
+ * Get all unique categories from published blog posts.
+ * Used for category filter chips on the blog index page.
+ *
+ * @param lang Language to scan posts for
+ * @returns Array of unique category strings
+ */
+export function getAllCategories(lang: BlogLanguage = "ar"): string[] {
+    const posts = getAllPosts(lang);
+    const categories = new Set<string>();
+    posts.forEach(p => categories.add(p.category));
+    return Array.from(categories).sort();
 }
