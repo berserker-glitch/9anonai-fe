@@ -1,7 +1,16 @@
 ---
-title: "Divorce Procedure in Morocco: Complete Legal Guide to Your Rights"
+title: "Divorce in Morocco: A Complete Legal Guide on Procedures & Rights (2026)"
 date: "2026-02-16"
-description: "Everything you need to know about divorce proceedings in Morocco and your legal rights under the Moudawana"
+description: "Consensual divorce, Tatliq, or Talaq — learn every step of the Moroccan divorce procedure, custody rules, and financial obligations under the Moudawana."
+faq:
+  - question: "What types of divorce exist in Morocco?"
+    answer: "Morocco recognizes three types: Consensual Divorce (both parties agree), Divorce for Harm (Tatliq, where one party suffered harm like abandonment or violence), and Divorce by Repudiation (Talaq, initiated by the husband under strict court supervision)."
+  - question: "Who gets custody of children after divorce in Morocco?"
+    answer: "Under the Moudawana, custody is generally granted to the mother first, then the father, then the maternal grandmother. The court always prioritizes the best interests of the child and must rule on maintenance within one month."
+  - question: "Can I get a Moroccan divorce from abroad?"
+    answer: "Yes. Moroccans living abroad can file through a divorce lawyer in Morocco without being physically present for every hearing. The divorce must then be registered at the Moroccan consulate within three months."
+  - question: "Does the husband have to pay before the divorce is final?"
+    answer: "Yes. A divorce cannot be registered until the husband has paid all financial dues — including the remaining dowry, maintenance during the waiting period (Idda), and a consolation gift. This protects the wife from immediate financial hardship."
 ---
 
 # Divorce Procedure in Morocco: Complete Legal Guide to Your Rights
