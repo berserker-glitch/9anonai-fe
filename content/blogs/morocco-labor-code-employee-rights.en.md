@@ -1,7 +1,7 @@
 ---
-title: "Morocco's Labor Code: Employee Rights and Employer Obligations"
+title: "Morocco Labor Code (Law 65.99): Employee Rights & Employer Duties Explained"
 date: "2026-02-09"
-description: "Everything you need to know about your rights as an employee in Morocco"
+description: "Understand your rights under Morocco's Labor Code: contracts, minimum age, health & safety, dismissal rules, and the 2-year statute of limitations."
 ---
 
 # Morocco's Labor Code: Employee Rights and Employer Obligations
