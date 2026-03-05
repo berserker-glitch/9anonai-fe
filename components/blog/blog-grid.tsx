@@ -104,7 +104,8 @@ export function BlogGrid({ posts, lang, dir }: BlogGridProps) {
                             {featuredPost.image ? (
                                 <Image
                                     src={featuredPost.image}
-                                    alt={featuredPost.title}
+                                    alt={featuredPost.imageAlt || featuredPost.title}
+                                    title={featuredPost.imageAlt || featuredPost.title}
                                     fill
                                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                                     sizes="(max-width: 768px) 100vw, 45vw"
@@ -193,7 +194,8 @@ export function BlogGrid({ posts, lang, dir }: BlogGridProps) {
                             {post.image ? (
                                 <Image
                                     src={post.image}
-                                    alt={post.title}
+                                    alt={post.imageAlt || post.title}
+                                    title={post.imageAlt || post.title}
                                     fill
                                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
