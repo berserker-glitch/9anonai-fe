@@ -76,6 +76,49 @@ function resolveImage(slug: string, directImage: string | undefined, lang: BlogL
 }
 
 /**
+ * Resolves SEO-optimized alt text for a post's cover image.
+ * Falls back through: direct imageAlt → Arabic base post imageAlt → description → title.
+ * Google Images relies heavily on alt text for indexing and ranking, so a descriptive
+ * alt that includes keywords performs far better than just repeating the title.
+ *
+ * @param slug - The post slug (no lang suffix)
+ * @param directAlt - The imageAlt value from frontmatter (may be empty)
+ * @param description - The post description (secondary fallback)
+ * @param title - The post title (last-resort fallback)
+ * @param lang - The post language
+ */
+function resolveImageAlt(
+    slug: string,
+    directAlt: string | undefined,
+    description: string,
+    title: string,
+    lang: BlogLanguage
+): string {
+    // If the frontmatter already has an imageAlt, use it directly
+    if (directAlt) return directAlt;
+
+    // For translated posts, fall back to the base Arabic post's imageAlt
+    if (lang !== "ar") {
+        try {
+            const arPath = path.join(blogsDirectory, `${slug}.md`);
+            if (fs.existsSync(arPath)) {
+                const arFileContents = fs.readFileSync(arPath, "utf8");
+                const { data: arData } = matter(arFileContents);
+                if (arData.imageAlt) return arData.imageAlt;
+            }
+        } catch {
+            // silently fall through to description fallback
+        }
+    }
+
+    // Use the description as alt text (usually more descriptive than title)
+    if (description) return description;
+
+    // Final fallback: post title
+    return title;
+}
+
+/**
  * Calculate estimated reading time from content
  * @param content - Markdown content
  * @param wordsPerMinute - Average reading speed (lower for Arabic)
@@ -116,10 +159,13 @@ export function getAllPosts(lang: BlogLanguage = "ar"): BlogPost[] {
         const fileContents = fs.readFileSync(fullPath, "utf8");
         const { data, content } = matter(fileContents);
 
+        const postTitle = data.title || slug;
+        const postDescription = data.description || "";
+
         return {
             slug,
-            title: data.title || slug,
-            description: data.description || "",
+            title: postTitle,
+            description: postDescription,
             date: data.date || new Date().toISOString(),
             content,
             image: resolveImage(slug, data.image, lang),
@@ -133,7 +179,8 @@ export function getAllPosts(lang: BlogLanguage = "ar"): BlogPost[] {
             ...(data.author ? { author: data.author } : {}),
             ...(data.lastModified ? { lastModified: data.lastModified } : {}),
             ...(Array.isArray(data.keyTakeaways) && data.keyTakeaways.length > 0 ? { keyTakeaways: data.keyTakeaways } : {}),
-            ...(data.imageAlt ? { imageAlt: data.imageAlt } : {}),
+            // Always resolve imageAlt with fallback chain for Google Images SEO
+            imageAlt: resolveImageAlt(slug, data.imageAlt, postDescription, postTitle, lang),
         };
     });
 
@@ -163,10 +210,13 @@ export function getPostBySlug(slug: string, lang: BlogLanguage = "ar"): BlogPost
         const fileContents = fs.readFileSync(fullPath, "utf8");
         const { data, content } = matter(fileContents);
 
+        const postTitle = data.title || slug;
+        const postDescription = data.description || "";
+
         return {
             slug,
-            title: data.title || slug,
-            description: data.description || "",
+            title: postTitle,
+            description: postDescription,
             date: data.date || new Date().toISOString(),
             content,
             image: resolveImage(slug, data.image, lang),
@@ -180,7 +230,8 @@ export function getPostBySlug(slug: string, lang: BlogLanguage = "ar"): BlogPost
             ...(data.author ? { author: data.author } : {}),
             ...(data.lastModified ? { lastModified: data.lastModified } : {}),
             ...(Array.isArray(data.keyTakeaways) && data.keyTakeaways.length > 0 ? { keyTakeaways: data.keyTakeaways } : {}),
-            ...(data.imageAlt ? { imageAlt: data.imageAlt } : {}),
+            // Always resolve imageAlt with fallback chain for Google Images SEO
+            imageAlt: resolveImageAlt(slug, data.imageAlt, postDescription, postTitle, lang),
         };
     } catch (error) {
         console.error(`Error reading blog post ${slug} (${lang}):`, error);
