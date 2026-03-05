@@ -27,6 +27,7 @@ import { ScrollToBottom } from "@/components/utility/scroll-to-bottom";
 import { ConfirmModal } from "@/components/utility/modal";
 import { SettingsModal } from "@/components/settings/settings-modal";
 import { FilesModal } from "@/components/chat/files-modal";
+import { FeedbackModal } from "@/components/chat/feedback-modal";
 
 // UI Components
 import { Textarea } from "@/components/ui/textarea";
@@ -85,6 +86,7 @@ export default function ChatWithIdPage() {
     const [attachedFiles, setAttachedFiles] = useState<File[]>([]);
     const [showWelcome, setShowWelcome] = useState(true);
     const [filesModalOpen, setFilesModalOpen] = useState(false);
+    const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
     const [pendingMessage, setPendingMessage] = useState<string | null>(initialMessage || null);
     // Message editing state
     const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
@@ -98,6 +100,22 @@ export default function ChatWithIdPage() {
             router.push("/login");
         }
     }, [user, authLoading, router]);
+
+    // Check if user qualifies for feedback modal (20+ total messages, not yet dismissed)
+    useEffect(() => {
+        if (!token || !user || user.feedbackDismissed) return;
+
+        fetch(`${API_URL}/chats/message-count`, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.count >= 20) {
+                    setFeedbackModalOpen(true);
+                }
+            })
+            .catch(err => console.error("Failed to check message count", err));
+    }, [token, user]);
 
     // Load chat history
     useEffect(() => {
@@ -993,6 +1011,12 @@ export default function ChatWithIdPage() {
                 <FilesModal
                     isOpen={filesModalOpen}
                     onClose={() => setFilesModalOpen(false)}
+                />
+
+                {/* Feedback Modal - shown to active users with 20+ messages */}
+                <FeedbackModal
+                    isOpen={feedbackModalOpen}
+                    onClose={() => setFeedbackModalOpen(false)}
                 />
             </div>
         </SidebarProvider>
