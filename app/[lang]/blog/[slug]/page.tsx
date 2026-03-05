@@ -82,7 +82,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Blo
                 url: ogImage,
                 width: 1200,
                 height: 630,
-                alt: post.title,
+                alt: post.imageAlt || post.title,
             }],
         },
         // Twitter/X large card with image
@@ -141,6 +141,7 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: Blo
                 lastModified={post.lastModified}
                 author={post.author}
                 image={post.image}
+                imageAlt={post.imageAlt}
                 url={pageUrl}
                 slug={slug}
                 lang={lang}
@@ -168,7 +169,7 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: Blo
                     <article className="flex-1 min-w-0 prose prose-lg dark:prose-invert prose-headings:font-display prose-headings:font-bold prose-h1:text-4xl prose-h2:text-2xl prose-a:text-primary prose-a:no-underline hover:prose-a:underline max-w-none">
                         <header className="mb-10 not-prose border-b border-border/40 pb-10">
                             {post.image && (
-                                <div className="mb-10">
+                                <figure className="mb-10">
                                     {/* Using plain img to avoid next/image fill conflicts inside prose context */}
                                     <div
                                         className="w-full rounded-2xl overflow-hidden shadow-lg border border-border/40"
@@ -178,13 +179,15 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: Blo
                                         <img
                                             src={post.image}
                                             alt={post.imageAlt || post.title}
+                                            title={post.imageAlt || post.title}
+                                            loading="eager"
                                             style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
                                         />
                                         {/* Subtle gradient overlay */}
                                         <div style={{ position: "absolute", inset: 0 }} className="bg-gradient-to-t from-background/40 to-transparent pointer-events-none" />
                                     </div>
-                                    {/* AI-generated image disclaimer */}
-                                    <p className="mt-2 text-xs text-muted-foreground/60 flex items-center gap-1.5">
+                                    {/* AI-generated image disclaimer as figcaption — Google uses this for image context */}
+                                    <figcaption className="mt-2 text-xs text-muted-foreground/60 flex items-center gap-1.5">
                                         <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
@@ -195,8 +198,8 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: Blo
                                                     ? "Cette image a été générée par intelligence artificielle à des fins illustratives. Les personnes et scènes représentées ne sont pas réelles."
                                                     : "This image was AI-generated for illustrative purposes. Any people or scenes depicted are not real."}
                                         </span>
-                                    </p>
-                                </div>
+                                    </figcaption>
+                                </figure>
                             )}
                             <h1 className="text-4xl sm:text-5xl font-display font-bold mb-6 text-foreground leading-tight">
                                 {post.title}
