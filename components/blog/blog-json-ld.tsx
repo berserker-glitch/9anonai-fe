@@ -28,6 +28,8 @@ interface BlogJsonLdProps {
     author?: string;
     /** Absolute URL of the cover image */
     image?: string;
+    /** SEO-optimized alt text for the cover image (for ImageObject caption) */
+    imageAlt?: string;
     /** Full canonical URL of the blog post */
     url: string;
     /** Post slug for breadcrumb URL construction */
@@ -54,6 +56,7 @@ export function BlogJsonLd({
     lastModified,
     author = "9anon AI",
     image,
+    imageAlt,
     url,
     slug,
     lang = "ar",
@@ -61,6 +64,40 @@ export function BlogJsonLd({
     keyTakeaways,
 }: BlogJsonLdProps) {
     const baseUrl = "https://9anonai.com";
+
+    /**
+     * Build a full ImageObject with all properties Google Images uses for ranking.
+     * WHY: A bare `url` string gives Google minimal info. A full ImageObject with
+     * dimensions, caption, and credit tells Google exactly what the image shows,
+     * who created it, and how large it is — all ranking signals for Google Images.
+     */
+    const imageUrl = image
+        ? (image.startsWith("http") ? image : `${baseUrl}${image}`)
+        : null;
+
+    const imageObject = imageUrl ? {
+        "@type": "ImageObject",
+        url: imageUrl,
+        contentUrl: imageUrl,
+        // Standard OG dimensions — Google uses these for thumbnail generation
+        width: 1200,
+        height: 630,
+        // Caption is a key ranking signal for Google Images
+        caption: imageAlt || title,
+        // Tells Google this is THE primary image for this page
+        representativeOfPage: true,
+        // Credit and copyright — helps with image attribution in Google Images
+        creditText: "9anon AI",
+        creator: {
+            "@type": "Organization",
+            name: "9anon AI",
+            url: baseUrl,
+        },
+        copyrightHolder: {
+            "@type": "Organization",
+            name: "9anon AI",
+        },
+    } : null;
 
     // --- Article JSON-LD schema ---
     const articleSchema = {
@@ -88,12 +125,8 @@ export function BlogJsonLd({
             "@type": "WebPage",
             "@id": url,
         },
-        ...(image ? {
-            image: {
-                "@type": "ImageObject",
-                url: image.startsWith("http") ? image : `${baseUrl}${image}`,
-            },
-        } : {}),
+        // Full ImageObject with dimensions, caption, and credit for Google Images
+        ...(imageObject ? { image: imageObject } : {}),
         // Add key takeaways as article body summary if available
         ...(keyTakeaways && keyTakeaways.length > 0 ? {
             articleBody: keyTakeaways.join(". "),
