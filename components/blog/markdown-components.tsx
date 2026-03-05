@@ -88,4 +88,27 @@ export const getMarkdownComponents = (isRtl: boolean): Components => ({
             {children}
         </strong>
     ),
+
+    // Images — SEO-optimized with semantic <figure>/<figcaption> and lazy loading.
+    // Google Images uses <figcaption> as a strong ranking signal for image context.
+    img: ({ node, src, alt, title, ...props }: any) => (
+        <figure className="my-8">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+                src={src}
+                alt={alt || ""}
+                title={title || alt || ""}
+                loading="lazy"
+                decoding="async"
+                className="rounded-xl w-full h-auto border border-border/40 shadow-sm"
+                {...props}
+            />
+            {/* figcaption provides context to Google Images for better ranking */}
+            {(alt || title) && (
+                <figcaption className="mt-2 text-center text-sm text-muted-foreground/70 italic">
+                    {alt || title}
+                </figcaption>
+            )}
+        </figure>
+    ),
 });
