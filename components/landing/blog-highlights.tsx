@@ -12,6 +12,8 @@ interface FeaturedPost {
     image: string;
     readingTime: number;
     category: string;
+    /** SEO-optimized alt text for the cover image */
+    imageAlt?: string;
 }
 
 interface BlogHighlightsProps {
@@ -153,7 +155,8 @@ export function BlogHighlights({ lang }: BlogHighlightsProps) {
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img
                                     src={post.image}
-                                    alt={post.title}
+                                    alt={post.imageAlt || post.title}
+                                    title={post.imageAlt || post.title}
                                     loading="lazy"
                                     style={{
                                         position: "absolute",
