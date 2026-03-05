@@ -10,6 +10,7 @@ interface User {
     personalization?: string;
     isOnboarded?: boolean;
     marketingSource?: string;
+    feedbackDismissed?: boolean;
 }
 
 interface AuthContextType {
