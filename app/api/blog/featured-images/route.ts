@@ -17,8 +17,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         .filter((p) => Boolean(p.image))
         .sort(() => Math.random() - 0.5)
         .slice(0, 6)
-        .map(({ slug, title, description, date, image, readingTime, category }) => ({
-            slug, title, description, date, image, readingTime, category,
+        .map(({ slug, title, description, date, image, readingTime, category, imageAlt }) => ({
+            slug, title, description, date, image, readingTime, category, imageAlt,
         }));
 
     return NextResponse.json(withImages, {
