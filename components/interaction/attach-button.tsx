@@ -11,7 +11,7 @@ interface AttachButtonProps {
 
 export function AttachButton({
     onFilesSelected,
-    accept = "image/*,.pdf,.doc,.docx,.txt,.md",
+    accept = "image/*,.pdf,.doc,.docx,.txt,.md,.csv",
     className = ""
 }: AttachButtonProps) {
     const fileInputRef = useRef<HTMLInputElement>(null);
