@@ -82,7 +82,7 @@ interface FeedbackModalProps {
  */
 export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
     const { token } = useAuth();
-    const [lang, setLang] = useState<Lang>("en");
+    const [lang, setLang] = useState<Lang>("fr");
 
     /** Current translation strings */
     const t = translations[lang];
@@ -141,8 +141,8 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                             key={l}
                             onClick={() => setLang(l)}
                             className={`px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${lang === l
-                                    ? "bg-primary text-primary-foreground"
-                                    : "bg-muted text-muted-foreground hover:bg-muted/80"
+                                ? "bg-primary text-primary-foreground"
+                                : "bg-muted text-muted-foreground hover:bg-muted/80"
                                 }`}
                         >
                             {langLabels[l]}
