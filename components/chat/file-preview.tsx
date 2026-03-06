@@ -32,11 +32,19 @@ const formatSize = (bytes: number) => {
 export function FilePreview({ file, onRemove, mode = 'input' }: FilePreviewProps) {
     const isImage = file.mimetype.startsWith('image/');
 
+    const modeContainerClasses = mode === 'input'
+        ? 'border-border/40 bg-card/50 hover:border-border/80 pr-10 max-w-full'
+        : 'border-white/20 bg-black/10 hover:bg-black/20 pr-4 w-fit max-w-sm text-white';
+
+    const modeIconBgClasses = mode === 'input'
+        ? 'border-border/40 bg-[var(--background)]/50'
+        : 'border-white/10 bg-white/10 text-white fill-white';
+
     return (
-        <div className={`relative flex items-center gap-3 p-2 rounded-xl border border-border/40 bg-card/50 backdrop-blur-md shadow-sm overflow-hidden group transition-all duration-200 hover:border-border/80 ${mode === 'input' ? 'pr-10 max-w-full' : 'pr-4 w-fit max-w-sm'}`}>
+        <div className={`relative flex items-center gap-3 p-2 rounded-xl border backdrop-blur-md shadow-sm overflow-hidden group transition-all duration-200 ${modeContainerClasses}`}>
 
             {/* Thumbnail or Icon */}
-            <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-[var(--background)]/50 flex items-center justify-center overflow-hidden border border-[var(--glass-border)]">
+            <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden border ${modeIconBgClasses}`}>
                 {isImage && file.url ? (
                     <img src={file.url} alt={file.name} className="w-full h-full object-cover" />
                 ) : (
@@ -46,10 +54,10 @@ export function FilePreview({ file, onRemove, mode = 'input' }: FilePreviewProps
 
             {/* File Info */}
             <div className="flex flex-col min-w-0 flex-1">
-                <span className="text-sm font-medium text-[var(--foreground)] truncate pr-2">
+                <span className={`text-sm font-medium truncate pr-2 ${mode === 'display' ? 'text-white' : 'text-[var(--foreground)]'}`}>
                     {file.name}
                 </span>
-                <span className="text-xs text-[var(--muted-foreground)]">
+                <span className={`text-xs ${mode === 'display' ? 'text-white/80' : 'text-[var(--muted-foreground)]'}`}>
                     {formatSize(file.size)}
                 </span>
             </div>
@@ -74,7 +82,7 @@ export function FilePreview({ file, onRemove, mode = 'input' }: FilePreviewProps
                     download={file.name}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-shrink-0 ml-2 p-1.5 rounded-full text-[var(--muted-foreground)] hover:text-[var(--primary)] hover:bg-[var(--primary)]/10 transition-colors opacity-0 group-hover:opacity-100"
+                    className="flex-shrink-0 ml-2 p-1.5 rounded-full text-white/70 hover:text-white hover:bg-white/20 transition-colors opacity-0 group-hover:opacity-100"
                     title="Download file"
                 >
                     <Download className="w-4 h-4" />
