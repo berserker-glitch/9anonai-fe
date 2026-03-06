@@ -21,6 +21,7 @@ interface AuthContextType {
     logout: () => void;
     updateProfile: (data: { name?: string; personalization?: string; isOnboarded?: boolean; marketingSource?: string }) => Promise<{ success: boolean; error?: string }>;
     changePassword: (current: string, newPass: string) => Promise<{ success: boolean; error?: string }>;
+    dismissFeedback: () => Promise<void>;
     isLoading: boolean;
 }
 
@@ -177,8 +178,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     };
 
+    const dismissFeedback = async () => {
+        if (!token) return;
+        try {
+            await fetch(`${API_URL}/auth/dismiss-feedback`, {
+                method: "PATCH",
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            setUser(prev => prev ? { ...prev, feedbackDismissed: true } : null);
+        } catch (e) {
+            console.error("Failed to dismiss feedback modal", e);
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ user, token, login, register, logout, updateProfile, changePassword, isLoading }}>
+        <AuthContext.Provider value={{ user, token, login, register, logout, updateProfile, changePassword, dismissFeedback, isLoading }}>
             {children}
         </AuthContext.Provider>
     );
