@@ -663,10 +663,9 @@ export default function NewChatPage() {
                             <p className="text-muted-foreground mb-8 text-center max-w-md">
                                 Your AI-powered Moroccan law assistant. Ask me anything about legal matters.
                             </p>
-                            <div className="w-full max-w-2xl">
+                            <div className="flex-1 w-full max-w-2xl">
                                 <ChatInput onSubmit={handleSendMessage}>
-
-                                    <div className="flex items-end gap-2">
+                                    <div className="flex-1 flex items-end gap-2 w-full">
                                         <AttachButton onFilesSelected={handleFileUpload} />
                                         <div className="relative flex-1">
                                             {attachedFiles.length > 0 && (
@@ -852,10 +851,9 @@ export default function NewChatPage() {
                     {/* Input Area when not in welcome mode */}
                     {!showWelcome && (
                         <ChatInput onSubmit={handleSendMessage} isLoading={isGenerating}>
-
-                            <div className="flex items-end gap-2">
+                            <div className="flex-1 flex items-end gap-2 w-full">
                                 <AttachButton onFilesSelected={handleFileUpload} />
-                                <div className="relative flex-1">
+                                <div className="relative flex-1 w-full">
                                     {attachedFiles.length > 0 && (
                                         <div className="flex gap-2 mb-2 flex-wrap">
                                             {attachedFiles.map((file, idx) => (
