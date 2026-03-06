@@ -756,31 +756,31 @@ export default function NewChatPage() {
                                         <MessageBubble key={message.id} variant={message.role}>
                                             {message.role === "user" ? (
                                                 <div className="flex flex-col items-end">
-                                                    {message.images && message.images.length > 0 && (
-                                                        <div className="flex gap-2 mb-2 justify-end flex-wrap">
-                                                            {message.images.map((img, idx) => (
-                                                                <AuthenticatedImage key={idx} src={img} alt={`Attached ${idx + 1}`} className="h-24 w-24 object-cover rounded-xl border border-white/20 shadow-sm" />
-                                                            ))}
-                                                        </div>
-                                                    )}
-                                                    {message.files && message.files.length > 0 && (
-                                                        <div className="flex gap-2 mb-2 justify-end flex-wrap">
-                                                            {message.files.map((file, idx) => (
-                                                                <FilePreview
-                                                                    key={idx}
-                                                                    file={{
-                                                                        id: (file as any).id || idx.toString(),
-                                                                        name: file.name,
-                                                                        url: (file as any).url || "",
-                                                                        mimetype: (file as any).mimetype || file.type,
-                                                                        size: (file as any).size || 0
-                                                                    }}
-                                                                    mode="display"
-                                                                />
-                                                            ))}
-                                                        </div>
-                                                    )}
                                                     <UserMessage>
+                                                        {message.images && message.images.length > 0 && (
+                                                            <div className="flex gap-2 mb-2 flex-wrap">
+                                                                {message.images.map((img, idx) => (
+                                                                    <AuthenticatedImage key={idx} src={img} alt={`Attached ${idx + 1}`} className="h-24 w-24 object-cover rounded-xl border border-white/20 shadow-sm" />
+                                                                ))}
+                                                            </div>
+                                                        )}
+                                                        {message.files && message.files.length > 0 && (
+                                                            <div className="flex gap-2 mb-2 flex-wrap">
+                                                                {message.files.map((file, idx) => (
+                                                                    <FilePreview
+                                                                        key={idx}
+                                                                        file={{
+                                                                            id: (file as any).id || idx.toString(),
+                                                                            name: file.name,
+                                                                            url: (file as any).url || "",
+                                                                            mimetype: (file as any).mimetype || file.type,
+                                                                            size: (file as any).size || 0
+                                                                        }}
+                                                                        mode="display"
+                                                                    />
+                                                                ))}
+                                                            </div>
+                                                        )}
                                                         <MessageContent content={message.content} />
                                                     </UserMessage>
                                                     <MessageTimestamp date={message.timestamp} align="right" />
