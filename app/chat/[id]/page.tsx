@@ -473,6 +473,11 @@ export default function ChatWithIdPage() {
 
             setAttachedFiles([]);
 
+            if (!response.ok) {
+                const errData = await response.json().catch(() => ({}));
+                throw new Error(errData.error || `HTTP error! status: ${response.status}`);
+            }
+
             if (!response.body) throw new Error("No response body");
 
             const reader = response.body.getReader();
@@ -520,13 +525,20 @@ export default function ChatWithIdPage() {
                 }
             }
 
+            // Ensure thinking state is cleared
+            setMessages(prev => prev.map(m => m.id === assistantId ? { ...m, isThinking: false } : m));
+
             // Assistant message is now saved by the backend
         } catch (error) {
             console.error("Stream error:", error);
             setMessages(prev =>
                 prev.map(m =>
                     m.id === assistantId
-                        ? { ...m, content: "Sorry, there was an error. Please try again.", isThinking: false }
+                        ? {
+                            ...m,
+                            content: m.content ? m.content + "\n\n*[Connection interrupted]*" : "Sorry, there was an error. Please try again.",
+                            isThinking: false
+                        }
                         : m
                 )
             );
@@ -572,6 +584,11 @@ export default function ChatWithIdPage() {
                 }),
             });
 
+            if (!response.ok) {
+                const errData = await response.json().catch(() => ({}));
+                throw new Error(errData.error || `HTTP error! status: ${response.status}`);
+            }
+
             if (!response.body) throw new Error("No response body");
 
             const reader = response.body.getReader();
@@ -614,12 +631,19 @@ export default function ChatWithIdPage() {
                     }
                 }
             }
+
+            // Ensure thinking state is cleared
+            setMessages(prev => prev.map(m => m.id === newAssistantId ? { ...m, isThinking: false } : m));
         } catch (error) {
             console.error("Regenerate error:", error);
             setMessages(prev =>
                 prev.map(m =>
                     m.id === newAssistantId
-                        ? { ...m, content: "Sorry, there was an error. Please try again.", isThinking: false }
+                        ? {
+                            ...m,
+                            content: m.content ? m.content + "\n\n*[Connection interrupted]*" : "Sorry, there was an error. Please try again.",
+                            isThinking: false
+                        }
                         : m
                 )
             );
