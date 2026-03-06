@@ -842,7 +842,7 @@ export default function ChatWithIdPage() {
                             <p className="text-muted-foreground mb-8 text-center max-w-md">
                                 Your AI-powered Moroccan law assistant. Ask me anything about legal matters.
                             </p>
-                            <div className="flex-1 w-full max-w-2xl">
+                            <div className="w-full max-w-2xl">
                                 <ChatInput onSubmit={handleSendMessage}>
                                     <div className="flex-1 flex items-end gap-2 w-full">
                                         <AttachButton onFilesSelected={handleFileUpload} />
