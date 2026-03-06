@@ -415,6 +415,11 @@ export default function NewChatPage() {
 
             setAttachedFiles([]);
 
+            if (!response.ok) {
+                const errData = await response.json().catch(() => ({}));
+                throw new Error(errData.error || `HTTP error! status: ${response.status}`);
+            }
+
             if (!response.body) throw new Error("No response body");
 
             const reader = response.body.getReader();
