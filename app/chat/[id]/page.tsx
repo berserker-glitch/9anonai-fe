@@ -146,20 +146,37 @@ export default function ChatWithIdPage() {
                 .then(res => res.json())
                 .then(data => {
                     if (Array.isArray(data)) {
-                        const formattedMessages: Message[] = data.map((msg: any) => ({
-                            id: msg.id,
-                            dbId: msg.id,
-                            role: msg.role,
-                            content: msg.content,
-                            timestamp: new Date(msg.createdAt),
-                            sources: msg.sources ? JSON.parse(msg.sources) : [],
-                            files: msg.files ? (typeof msg.files === 'string' ? JSON.parse(msg.files) : msg.files) : undefined,
-                            contract: msg.attachmentUrl ? {
-                                title: msg.attachmentName || "Generated Document",
-                                path: msg.attachmentUrl,
-                                type: "pdf"
-                            } : undefined,
-                        }));
+                        const formattedMessages: Message[] = data.map((msg: any) => {
+                            const parsedFiles = msg.files ? (typeof msg.files === 'string' ? JSON.parse(msg.files) : msg.files) : [];
+
+                            // Split files into images and other files for proper display
+                            const images = parsedFiles
+                                .filter((f: any) => f.mimetype?.startsWith('image/'))
+                                .map((f: any) => f.url || `${API_URL}/upload/files/${f.id}/download`);
+
+                            const otherFiles = parsedFiles
+                                .filter((f: any) => !f.mimetype?.startsWith('image/'))
+                                .map((f: any) => ({
+                                    ...f,
+                                    url: f.url || `${API_URL}/upload/files/${f.id}/download`
+                                }));
+
+                            return {
+                                id: msg.id,
+                                dbId: msg.id,
+                                role: msg.role,
+                                content: msg.content,
+                                timestamp: new Date(msg.createdAt),
+                                sources: msg.sources ? JSON.parse(msg.sources) : [],
+                                images: images.length > 0 ? images : undefined,
+                                files: otherFiles.length > 0 ? otherFiles : undefined,
+                                contract: msg.attachmentUrl ? {
+                                    title: msg.attachmentName || "Generated Document",
+                                    path: msg.attachmentUrl,
+                                    type: "pdf"
+                                } : undefined,
+                            };
+                        });
                         setMessages(formattedMessages);
                         setShowWelcome(formattedMessages.length === 0);
                     }
