@@ -35,6 +35,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Avatar } from "@/components/ui/avatar";
 import { IconButton } from "@/components/ui/icon-button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { AuthenticatedImage } from "@/components/ui/authenticated-image";
 
 // Types
 interface Message {
@@ -968,7 +969,7 @@ export default function ChatWithIdPage() {
                                                                 {message.images && message.images.length > 0 && (
                                                                     <div className="flex gap-2 mb-2 flex-wrap">
                                                                         {message.images.map((img, idx) => (
-                                                                            <img key={idx} src={img} alt={`Attached ${idx + 1}`} className="h-24 w-24 object-cover rounded-xl border border-white/20 shadow-sm" />
+                                                                            <AuthenticatedImage key={idx} src={img} alt={`Attached ${idx + 1}`} className="h-24 w-24 object-cover rounded-xl border border-white/20 shadow-sm" />
                                                                         ))}
                                                                     </div>
                                                                 )}
