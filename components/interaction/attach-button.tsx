@@ -39,6 +39,7 @@ export function AttachButton({
                 className="hidden"
             />
             <IconButton
+                type="button"
                 label="Attach file"
                 onClick={handleClick}
                 variant="secondary"
