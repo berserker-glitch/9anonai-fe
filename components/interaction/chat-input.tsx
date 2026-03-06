@@ -20,7 +20,7 @@ export function ChatInput({ children, onSubmit, className = "", isLoading }: Cha
             <form
                 onSubmit={handleSubmit}
                 className="
-          flex items-center gap-2
+          flex items-end gap-2
           w-full max-w-4xl mx-auto
           px-3 sm:px-6 lg:px-8
           py-2
