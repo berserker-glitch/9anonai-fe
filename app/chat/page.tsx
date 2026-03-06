@@ -665,9 +665,9 @@ export default function NewChatPage() {
                             </p>
                             <div className="w-full max-w-2xl">
                                 <ChatInput onSubmit={handleSendMessage}>
-                                    <div className="flex-1 flex items-end gap-2 w-full">
+                                    <div className="flex-1 flex items-end gap-2 w-full min-w-0">
                                         <AttachButton onFilesSelected={handleFileUpload} />
-                                        <div className="relative flex-1 w-full">
+                                        <div className="relative flex-1 w-full min-w-0">
                                             {attachedFiles.length > 0 && (
                                                 <div className="flex gap-2 mb-2 flex-wrap pb-2 border-b border-border">
                                                     {attachedFiles.map((file, idx) => (
@@ -851,9 +851,9 @@ export default function NewChatPage() {
                     {/* Input Area when not in welcome mode */}
                     {!showWelcome && (
                         <ChatInput onSubmit={handleSendMessage} isLoading={isGenerating}>
-                            <div className="flex-1 flex items-end gap-2 w-full">
+                            <div className="flex-1 flex items-end gap-2 w-full min-w-0">
                                 <AttachButton onFilesSelected={handleFileUpload} />
-                                <div className="relative flex-1 w-full">
+                                <div className="relative flex-1 w-full min-w-0">
                                     {attachedFiles.length > 0 && (
                                         <div className="flex gap-2 mb-2 flex-wrap">
                                             {attachedFiles.map((file, idx) => (
