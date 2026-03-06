@@ -34,6 +34,7 @@ import { FilePreview } from "@/components/chat/file-preview";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar } from "@/components/ui/avatar";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { AuthenticatedImage } from "@/components/ui/authenticated-image";
 
 // Types
 interface Message {
@@ -758,7 +759,7 @@ export default function NewChatPage() {
                                                     {message.images && message.images.length > 0 && (
                                                         <div className="flex gap-2 mb-2 justify-end flex-wrap">
                                                             {message.images.map((img, idx) => (
-                                                                <img key={idx} src={img} alt={`Attached ${idx + 1}`} className="h-20 w-20 object-cover rounded-lg border border-border" />
+                                                                <AuthenticatedImage key={idx} src={img} alt={`Attached ${idx + 1}`} className="h-24 w-24 object-cover rounded-xl border border-white/20 shadow-sm" />
                                                             ))}
                                                         </div>
                                                     )}
