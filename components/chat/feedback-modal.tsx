@@ -81,7 +81,7 @@ interface FeedbackModalProps {
  * @param {FeedbackModalProps} props - isOpen and onClose handlers
  */
 export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
-    const { token } = useAuth();
+    const { token, dismissFeedback } = useAuth();
     const [lang, setLang] = useState<Lang>("fr");
 
     /** Current translation strings */
@@ -95,15 +95,7 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
      * Called on both CTA click and modal close to ensure the flag is always set.
      */
     const handleDismiss = async () => {
-        try {
-            await fetch(`${API_URL}/auth/dismiss-feedback`, {
-                method: "PATCH",
-                headers: { Authorization: `Bearer ${token}` },
-            });
-        } catch (e) {
-            // Silently fail — worst case the modal shows again next session
-            console.error("Failed to dismiss feedback modal", e);
-        }
+        await dismissFeedback();
         onClose();
     };
 
