@@ -33,7 +33,7 @@ export function FilePreview({ file, onRemove, mode = 'input' }: FilePreviewProps
     const isImage = file.mimetype.startsWith('image/');
 
     return (
-        <div className={`relative flex items-center gap-3 p-2 rounded-xl border border-[var(--glass-border)] bg-[var(--glass-bg)] backdrop-blur-md shadow-sm overflow-hidden group transition-all duration-200 hover:border-[var(--glass-border-hover)] ${mode === 'input' ? 'pr-10' : 'pr-4 w-fit max-w-sm'}`}>
+        <div className={`relative flex items-center gap-3 p-2 rounded-xl border border-border/40 bg-card/50 backdrop-blur-md shadow-sm overflow-hidden group transition-all duration-200 hover:border-border/80 ${mode === 'input' ? 'pr-10 max-w-full' : 'pr-4 w-fit max-w-sm'}`}>
 
             {/* Thumbnail or Icon */}
             <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-[var(--background)]/50 flex items-center justify-center overflow-hidden border border-[var(--glass-border)]">
