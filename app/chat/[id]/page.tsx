@@ -103,20 +103,10 @@ export default function ChatWithIdPage() {
         }
     }, [user, authLoading, router]);
 
-    // Check if user qualifies for feedback modal (20+ total messages, not yet dismissed)
+    // Show feedback modal immediately if not dismissed
     useEffect(() => {
         if (!token || !user || user.feedbackDismissed) return;
-
-        fetch(`${API_URL}/chats/message-count`, {
-            headers: { Authorization: `Bearer ${token}` },
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.count >= 20) {
-                    setFeedbackModalOpen(true);
-                }
-            })
-            .catch(err => console.error("Failed to check message count", err));
+        setFeedbackModalOpen(true);
     }, [token, user]);
 
     // Load chat history
