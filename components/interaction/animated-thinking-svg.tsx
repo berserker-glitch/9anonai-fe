@@ -3,7 +3,7 @@
 import React, { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 
-export function AnimatedThinkingSvg({ className = "w-12 h-12 text-white" }: { className?: string }) {
+export function AnimatedThinkingSvg({ className = "w-12 h-12 text-black dark:text-white" }: { className?: string }) {
     const containerRef = useRef<SVGSVGElement>(null);
     const p1 = useRef<SVGPolygonElement>(null);
     const p2 = useRef<SVGPolygonElement>(null);
