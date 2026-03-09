@@ -773,8 +773,8 @@ export default function NewChatPage() {
                             <p className="text-center text-[11px] text-muted-foreground py-2">
                                 9anon AI may produce inaccurate information
                             </p>
-                            <div ref={messageContainerRef} onScroll={handleScroll} className="flex-1 overflow-y-auto py-4">
-                                <div className="flex flex-col gap-6">
+                            <div ref={messageContainerRef} onScroll={handleScroll} className="flex-1 overflow-y-auto w-full px-4 sm:px-6 lg:px-8 py-4">
+                                <div className="flex flex-col gap-6 w-full max-w-4xl mx-auto">
                                     {messages.map(message => (
                                         <MessageBubble key={message.id} variant={message.role}>
                                             {message.role === "user" ? (
