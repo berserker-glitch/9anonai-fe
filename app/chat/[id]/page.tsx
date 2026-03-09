@@ -904,14 +904,14 @@ export default function ChatWithIdPage() {
                     {showWelcome ? (
                         <div className="flex-1 flex flex-col items-center justify-center p-6 sm:p-12 animate-in fade-in duration-1000">
                             <div className="w-full max-w-3xl flex flex-col items-center mb-8">
-                                <div className="w-16 h-16 mb-8 rounded-full overflow-hidden shadow-sm border border-border/40 bg-white">
+                                <div className="w-20 h-20 mb-6 rounded-2xl overflow-hidden shadow-lg border border-border/50 bg-white transition-transform duration-500 hover:scale-105">
                                     <img src="/9anon-logo.png" alt="9anon Logo" className="w-full h-full object-cover" />
                                 </div>
-                                <h1 className="text-3xl sm:text-4xl font-medium tracking-tight mb-3 text-foreground text-center">
-                                    How can I help you today?
+                                <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4 text-foreground bg-clip-text text-center">
+                                    Welcome to <span className="text-primary">9anon</span>
                                 </h1>
-                                <p className="text-muted-foreground text-center text-lg md:text-xl font-light max-w-lg mb-12">
-                                    I am 9anon, your intelligent legal assistant for navigating Moroccan law.
+                                <p className="text-lg text-muted-foreground mb-12 text-center max-w-xl font-light">
+                                    Your AI-powered Moroccan law assistant. Ask me anything about legal matters, procedures, or rights.
                                 </p>
 
                                 <div className="w-full relative z-10 mb-12">
