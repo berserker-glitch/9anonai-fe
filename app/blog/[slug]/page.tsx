@@ -11,6 +11,7 @@ import { Breadcrumbs } from "@/components/blog/breadcrumbs";
 import { TableOfContents } from "@/components/blog/table-of-contents";
 import { ShareButtons } from "@/components/blog/share-buttons";
 import { BlogJsonLd } from "@/components/blog/blog-json-ld";
+import { FAQSection } from "@/components/landing/faq-section";
 import Image from "next/image";
 
 export async function generateStaticParams() {
@@ -177,6 +178,17 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                             {post.content}
                         </ReactMarkdown>
                     </div>
+
+                    {/* FAQ Section */}
+                    {post.faq && post.faq.length > 0 && (
+                        <div className="not-prose -mx-6 sm:-mx-8">
+                            <FAQSection
+                                items={post.faq}
+                                title={isRtl ? "الأسئلة الشائعة" : "Frequently Asked Questions"}
+                                dir={isRtl ? "rtl" : "ltr"}
+                            />
+                        </div>
+                    )}
 
                     {/* Bottom share buttons */}
                     <div className="not-prose border-t border-border/40 mt-12 pt-6">
