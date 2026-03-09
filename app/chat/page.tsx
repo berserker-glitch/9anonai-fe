@@ -236,6 +236,52 @@ export default function NewChatPage() {
 
         let currentChatId = activeChatId;
 
+        // Create image URLs for display
+        const imageUrls = attachedFiles
+            .filter(f => f.type.startsWith("image/"))
+            .map(f => URL.createObjectURL(f));
+
+        const otherFiles = attachedFiles
+            .filter(f => !f.type.startsWith("image/"))
+            .map(f => ({
+                name: f.name,
+                type: f.type,
+                url: URL.createObjectURL(f),
+                size: f.size,
+                mimetype: f.type
+            }));
+
+        // Add user message optimistically
+        const userMessage: Message = {
+            id: currentMessageId,
+            role: "user",
+            content: content,
+            timestamp: new Date(),
+            images: imageUrls,
+            files: otherFiles,
+        };
+
+        // Add assistant message stub optimistically
+        const assistantId = (Date.now() + 1).toString();
+        const assistantMsg: Message = {
+            id: assistantId,
+            role: "assistant",
+            content: "",
+            timestamp: new Date(),
+            steps: [],
+            sources: [],
+            isThinking: true,
+        };
+
+        setMessages(prev => [...prev, userMessage, assistantMsg]);
+
+        // Cache files for processing and clear UI attachment state immediately
+        const filesToProcess = [...attachedFiles];
+        setAttachedFiles([]);
+
+        // Update scroll position early
+        setTimeout(() => scrollToMessage(currentMessageId), 50);
+
         // Create new chat if needed
         if (!currentChatId) {
             try {
@@ -263,13 +309,14 @@ export default function NewChatPage() {
                 console.error("Failed to create chat", e);
                 setIsTyping(false);
                 setIsGenerating(false);
+                setMessages(prev => prev.filter(m => m.id !== currentMessageId && m.id !== assistantId));
                 return;
             }
         }
 
         // Read text/md/csv files to provide context to the AI
         let extractedTextContext = "";
-        const textFiles = attachedFiles.filter(f =>
+        const textFiles = filesToProcess.filter(f =>
             f.type === "text/plain" || f.type === "text/markdown" || f.type === "text/csv" || f.name.endsWith('.md') || f.name.endsWith('.txt') || f.name.endsWith('.csv')
         );
 
@@ -293,10 +340,10 @@ export default function NewChatPage() {
 
         // Upload files to server
         let uploadedFilesData: any[] = [];
-        if (attachedFiles.length > 0) {
+        if (filesToProcess.length > 0) {
             try {
                 const formData = new FormData();
-                attachedFiles.forEach(file => formData.append("files", file));
+                filesToProcess.forEach(file => formData.append("files", file));
 
                 const uploadRes = await fetch(`${API_URL}/upload/multiple`, {
                     method: "POST",
@@ -323,32 +370,6 @@ export default function NewChatPage() {
             }
         }
 
-        // Create image URLs for display
-        const imageUrls = attachedFiles
-            .filter(f => f.type.startsWith("image/"))
-            .map(f => URL.createObjectURL(f));
-
-        const otherFiles = attachedFiles
-            .filter(f => !f.type.startsWith("image/"))
-            .map(f => ({
-                name: f.name,
-                type: f.type,
-                url: URL.createObjectURL(f),
-                size: f.size,
-                mimetype: f.type
-            }));
-
-        // Add user message
-        const userMessage: Message = {
-            id: currentMessageId,
-            role: "user",
-            content: content,
-            timestamp: new Date(),
-            images: imageUrls,
-            files: otherFiles,
-        };
-        setMessages(prev => [...prev, userMessage]);
-
         // Save user message to DB
         try {
             await fetch(`${API_URL}/chats/${currentChatId}/messages`, {
@@ -367,29 +388,13 @@ export default function NewChatPage() {
             console.error("Failed to save user message", e);
         }
 
-        // Add assistant message stub
-        const assistantId = (Date.now() + 1).toString();
-        const assistantMsg: Message = {
-            id: assistantId,
-            role: "assistant",
-            content: "",
-            timestamp: new Date(),
-            steps: [],
-            sources: [],
-            isThinking: true,
-        };
-        setMessages(prev => [...prev, assistantMsg]);
-
         let fullContent = "";
         let finalSources: any[] = [];
         let finalContract: { title: string; path: string; type: string } | null = null;
 
-        // Scroll to the user message we just added
-        scrollToMessage(currentMessageId);
-
         // Compress images
         const imageData: { data: string; mimeType: string }[] = [];
-        for (const file of attachedFiles) {
+        for (const file of filesToProcess) {
             if (file.type.startsWith("image/")) {
                 const compressed = await new Promise<string>(resolve => {
                     const img = new Image();
@@ -700,72 +705,84 @@ export default function NewChatPage() {
                 {/* Main Content */}
                 <main className="flex-1 flex flex-col min-w-0 bg-background md:rounded-[2rem] md:border border-border md:m-2 overflow-hidden relative">
                     {showWelcome ? (
-                        <div className="flex-1 flex flex-col items-center justify-center p-8">
-                            <div className="w-20 h-20 mb-6 shadow-xl rounded-2xl overflow-hidden bg-white">
-                                <img src="/9anon-logo.png" alt="9anon Logo" className="w-full h-full object-cover" />
-                            </div>
-                            <h1 className="text-3xl font-bold mb-2">Welcome to 9anon</h1>
-                            <p className="text-muted-foreground mb-8 text-center max-w-md">
-                                Your AI-powered Moroccan law assistant. Ask me anything about legal matters.
-                            </p>
-                            <div className="w-full max-w-2xl">
-                                <ChatInput onSubmit={handleSendMessage}>
-                                    <div className="flex-1 flex items-end gap-2 w-full min-w-0">
-                                        <AttachButton onFilesSelected={handleFileUpload} />
-                                        <div className="relative flex-1 w-full min-w-0">
-                                            {attachedFiles.length > 0 && (
-                                                <div className="flex gap-2 mb-2 flex-wrap pb-2 border-b border-border">
-                                                    {attachedFiles.map((file, idx) => (
-                                                        <FilePreview
-                                                            key={idx}
-                                                            file={{
-                                                                id: idx.toString(),
-                                                                name: file.name,
-                                                                url: URL.createObjectURL(file),
-                                                                mimetype: file.type,
-                                                                size: file.size
-                                                            }}
-                                                            mode="input"
-                                                            onRemove={() => setAttachedFiles(prev => prev.filter((_, i) => i !== idx))}
-                                                        />
-                                                    ))}
-                                                </div>
-                                            )}
-                                            <Textarea
-                                                placeholder="Message 9anon AI..."
-                                                value={inputValue}
-                                                onChange={(e) => setInputValue(e.target.value)}
-                                                onKeyDown={(e) => {
-                                                    if (e.key === "Enter" && !e.shiftKey) {
-                                                        e.preventDefault();
-                                                        handleSendMessage();
-                                                    }
-                                                }}
-                                                disabled={isGenerating}
-                                                className="resize-none min-h-[48px] max-h-[200px]"
-                                            />
-                                        </div>
+                        <div className="flex-1 flex flex-col items-center justify-center p-4 sm:p-8 animate-in fade-in duration-700">
+                            <div className="flex flex-col items-center max-w-3xl w-full">
+                                <div className="relative w-24 h-24 mb-8">
+                                    <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full" />
+                                    <div className="relative w-full h-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] rounded-3xl overflow-hidden bg-white border border-border/50 transition-transform duration-500 hover:scale-105">
+                                        <img src="/9anon-logo.png" alt="9anon Logo" className="w-full h-full object-cover" />
                                     </div>
-                                </ChatInput>
-                            </div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6 max-w-2xl">
-                                {[
-                                    { title: "ما هي حقوقي", desc: "في حالة توقيفي؟" },
-                                    { title: "Comment créer", desc: "une société au Maroc?" },
-                                    { title: "What are the", desc: "labor laws in Morocco?" },
-                                    { title: "شرح لي", desc: "قانون الأسرة" },
-                                ].map((s) => (
-                                    <button
-                                        key={s.title}
-                                        onClick={() => setInputValue(s.title + " " + s.desc)}
-                                        className="flex items-center gap-3 p-3 text-left bg-card hover:bg-accent border border-border rounded-xl transition-colors"
-                                    >
-                                        <svg className="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m9 18 6-6-6-6" />
-                                        </svg>
-                                        <span className="text-sm">{s.title} <span className="text-muted-foreground">{s.desc}</span></span>
-                                    </button>
-                                ))}
+                                </div>
+                                <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4 text-foreground bg-clip-text">
+                                    Welcome to <span className="text-primary">9anon</span>
+                                </h1>
+                                <p className="text-lg text-muted-foreground mb-12 text-center max-w-xl font-light">
+                                    Your AI-powered Moroccan law assistant. Ask me anything about legal matters, procedures, or rights.
+                                </p>
+
+                                <div className="w-full relative z-10 mb-12">
+                                    <ChatInput onSubmit={handleSendMessage} className="!sticky-none bg-transparent">
+                                        <div className="flex-1 flex items-end gap-2 w-full min-w-0 bg-card/50 backdrop-blur-md border border-border/50 rounded-2xl p-2 shadow-sm transition-all duration-300 focus-within:shadow-md focus-within:border-primary/50 focus-within:bg-card">
+                                            <AttachButton onFilesSelected={handleFileUpload} />
+                                            <div className="relative flex-1 w-full min-w-0">
+                                                {attachedFiles.length > 0 && (
+                                                    <div className="flex gap-2 mb-2 flex-wrap pb-2 border-b border-border/50">
+                                                        {attachedFiles.map((file, idx) => (
+                                                            <FilePreview
+                                                                key={idx}
+                                                                file={{
+                                                                    id: idx.toString(),
+                                                                    name: file.name,
+                                                                    url: URL.createObjectURL(file),
+                                                                    mimetype: file.type,
+                                                                    size: file.size
+                                                                }}
+                                                                mode="input"
+                                                                onRemove={() => setAttachedFiles(prev => prev.filter((_, i) => i !== idx))}
+                                                            />
+                                                        ))}
+                                                    </div>
+                                                )}
+                                                <Textarea
+                                                    placeholder="Message 9anon AI..."
+                                                    value={inputValue}
+                                                    onChange={(e) => setInputValue(e.target.value)}
+                                                    onKeyDown={(e) => {
+                                                        if (e.key === "Enter" && !e.shiftKey) {
+                                                            e.preventDefault();
+                                                            handleSendMessage();
+                                                        }
+                                                    }}
+                                                    className="resize-none min-h-[48px] max-h-[200px] border-none focus-visible:ring-0 bg-transparent px-2 py-3 text-base"
+                                                />
+                                            </div>
+                                        </div>
+                                    </ChatInput>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                                    {[
+                                        { title: "ما هي حقوقي", desc: "في حالة توقيفي؟", icon: "⚖️" },
+                                        { title: "Comment créer", desc: "une société au Maroc?", icon: "🏢" },
+                                        { title: "What are the", desc: "labor laws in Morocco?", icon: "💼" },
+                                        { title: "شرح لي", desc: "قانون الأسرة", icon: "👨‍👩‍👧‍👦" },
+                                    ].map((s, i) => (
+                                        <button
+                                            key={s.title}
+                                            onClick={() => setInputValue(s.title + " " + s.desc)}
+                                            className="group flex items-start gap-4 p-5 text-left bg-card/30 hover:bg-card border border-border/40 hover:border-primary/30 rounded-2xl transition-all duration-300 hover:shadow-md hover:-translate-y-1"
+                                            style={{ animationDelay: `${i * 100}ms` }}
+                                        >
+                                            <div className="text-2xl opacity-80 group-hover:scale-110 group-hover:opacity-100 transition-all duration-300">
+                                                {s.icon}
+                                            </div>
+                                            <div className="flex flex-col gap-1">
+                                                <span className="text-sm font-semibold text-foreground/90 group-hover:text-primary transition-colors">{s.title}</span>
+                                                <span className="text-sm text-muted-foreground font-medium">{s.desc}</span>
+                                            </div>
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     ) : (
@@ -926,7 +943,6 @@ export default function NewChatPage() {
                                                 handleSendMessage();
                                             }
                                         }}
-                                        disabled={isGenerating}
                                         className="resize-none min-h-[48px] max-h-[200px]"
                                     />
                                 </div>
