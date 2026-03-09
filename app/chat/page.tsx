@@ -29,6 +29,7 @@ import { FilesModal } from "@/components/chat/files-modal";
 import { FeedbackModal } from "@/components/chat/feedback-modal";
 import { AttachButton } from "@/components/interaction/attach-button";
 import { FilePreview } from "@/components/chat/file-preview";
+import { AnimatedThinkingSvg } from "@/components/interaction/animated-thinking-svg";
 
 // UI Components
 import { Textarea } from "@/components/ui/textarea";
@@ -129,6 +130,33 @@ export default function NewChatPage() {
         }
     }, []);
 
+    // Scroll specific message to top
+    const scrollToMessage = useCallback((messageId: string) => {
+        setTimeout(() => {
+            const el = document.getElementById(`message-${messageId}`);
+            if (el) {
+                // Scroll the element into view at the top of the container
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }, 100);
+    }, []);
+
+    // Auto-scroll when a new user message is added
+    useEffect(() => {
+        if (messages.length > 0) {
+            const lastMessage = messages[messages.length - 1];
+            // If the last message is the user's message, or if it's the AI's "thinking" stub right after
+            if (lastMessage.role === "user") {
+                scrollToMessage(lastMessage.id);
+            } else if (lastMessage.role === "assistant" && lastMessage.isThinking && messages.length >= 2) {
+                const prevMessage = messages[messages.length - 2];
+                if (prevMessage.role === "user") {
+                    scrollToMessage(prevMessage.id);
+                }
+            }
+        }
+    }, [messages, scrollToMessage]);
+
     // Handle scroll
     const handleScroll = useCallback(() => {
         if (messageContainerRef.current) {
@@ -203,6 +231,8 @@ export default function NewChatPage() {
         setIsTyping(true);
         setIsGenerating(true);
         setShowWelcome(false);
+
+        const currentMessageId = Date.now().toString();
 
         let currentChatId = activeChatId;
 
@@ -310,7 +340,7 @@ export default function NewChatPage() {
 
         // Add user message
         const userMessage: Message = {
-            id: Date.now().toString(),
+            id: currentMessageId,
             role: "user",
             content: content,
             timestamp: new Date(),
@@ -353,6 +383,9 @@ export default function NewChatPage() {
         let fullContent = "";
         let finalSources: any[] = [];
         let finalContract: { title: string; path: string; type: string } | null = null;
+
+        // Scroll to the user message we just added
+        scrollToMessage(currentMessageId);
 
         // Compress images
         const imageData: { data: string; mimeType: string }[] = [];
@@ -438,7 +471,7 @@ export default function NewChatPage() {
                                             : m
                                     )
                                 );
-                                setTimeout(scrollToBottom, 50);
+                                // Do not force scroll to bottom here, just rely on auto-scroll of the message
                             } else if (event.type === "citation") {
                                 finalSources = event.sources || [];
                                 setMessages(prev =>
@@ -745,7 +778,7 @@ export default function NewChatPage() {
                                     {messages.map(message => (
                                         <MessageBubble key={message.id} variant={message.role}>
                                             {message.role === "user" ? (
-                                                <div className="flex flex-col items-end">
+                                                <div id={`message-${message.id}`} className="flex flex-col items-end w-full">
                                                     <UserMessage>
                                                         {message.images && message.images.length > 0 && (
                                                             <div className="flex gap-2 mb-2 flex-wrap">
@@ -776,12 +809,11 @@ export default function NewChatPage() {
                                                     <MessageTimestamp date={message.timestamp} align="right" />
                                                 </div>
                                             ) : (
-                                                <div className="w-full">
+                                                <div className="w-full group relative">
                                                     <AssistantMessage>
                                                         {message.isThinking && !message.content && (
-                                                            <div className="flex items-center gap-2 text-muted-foreground">
-                                                                <div className="animate-spin h-4 w-4 border-2 border-primary border-t-transparent rounded-full" />
-                                                                <span>Thinking...</span>
+                                                            <div className="flex items-center py-2">
+                                                                <AnimatedThinkingSvg />
                                                             </div>
                                                         )}
                                                         <MessageContent content={message.content} />
@@ -821,8 +853,8 @@ export default function NewChatPage() {
                                                             </div>
                                                         )}
                                                     </AssistantMessage>
-                                                    {/* Actions aligned with message bubble (after avatar space) */}
-                                                    <div className="flex items-center gap-2 mt-1 ml-[52px] text-xs text-muted-foreground">
+                                                    {/* Actions aligned with message bubble */}
+                                                    <div className="flex items-center gap-2 mt-1 ml-4 text-xs text-muted-foreground opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
                                                         <MessageTimestamp date={message.timestamp} />
                                                         <span className="text-muted-foreground/30">•</span>
                                                         <MessageActions
