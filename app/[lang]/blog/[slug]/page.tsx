@@ -14,6 +14,7 @@ import { ShareButtons } from "@/components/blog/share-buttons";
 import { ReadingProgress } from "@/components/blog/reading-progress";
 import { getMarkdownComponents } from "@/components/blog/markdown-components";
 import { BlogJsonLd } from "@/components/blog/blog-json-ld";
+import { FAQSection } from "@/components/landing/faq-section";
 
 export async function generateStaticParams() {
     const supportedLangs: BlogLanguage[] = ["ar", "fr", "en"];
@@ -241,6 +242,17 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: Blo
                                 {post.content}
                             </ReactMarkdown>
                         </div>
+
+                        {/* FAQ Section */}
+                        {post.faq && post.faq.length > 0 && (
+                            <div className="not-prose mt-12 -mx-6 sm:-mx-8">
+                                <FAQSection
+                                    items={post.faq}
+                                    title={lang === "ar" ? "الأسئلة الشائعة" : lang === "fr" ? "Foire Aux Questions" : "Frequently Asked Questions"}
+                                    dir={isRtl ? "rtl" : "ltr"}
+                                />
+                            </div>
+                        )}
 
                         {/* Bottom share buttons */}
                         <div className="not-prose border-t border-border/40 mt-12 pt-6">
