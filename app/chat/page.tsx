@@ -705,19 +705,16 @@ export default function NewChatPage() {
                 {/* Main Content */}
                 <main className="flex-1 flex flex-col min-w-0 bg-background md:rounded-[2rem] md:border border-border md:m-2 overflow-hidden relative">
                     {showWelcome ? (
-                        <div className="flex-1 flex flex-col items-center justify-center p-4 sm:p-8 animate-in fade-in duration-700">
-                            <div className="flex flex-col items-center max-w-3xl w-full">
-                                <div className="relative w-24 h-24 mb-8">
-                                    <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full" />
-                                    <div className="relative w-full h-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] rounded-3xl overflow-hidden bg-white border border-border/50 transition-transform duration-500 hover:scale-105">
-                                        <img src="/9anon-logo.png" alt="9anon Logo" className="w-full h-full object-cover" />
-                                    </div>
+                        <div className="flex-1 flex flex-col items-center justify-center p-6 sm:p-12 animate-in fade-in duration-1000">
+                            <div className="w-full max-w-3xl flex flex-col items-center mb-8">
+                                <div className="w-16 h-16 mb-8 rounded-full overflow-hidden shadow-sm border border-border/40 bg-white">
+                                    <img src="/9anon-logo.png" alt="9anon Logo" className="w-full h-full object-cover" />
                                 </div>
-                                <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4 text-foreground bg-clip-text">
-                                    Welcome to <span className="text-primary">9anon</span>
+                                <h1 className="text-3xl sm:text-4xl font-medium tracking-tight mb-3 text-foreground text-center">
+                                    How can I help you today?
                                 </h1>
-                                <p className="text-lg text-muted-foreground mb-12 text-center max-w-xl font-light">
-                                    Your AI-powered Moroccan law assistant. Ask me anything about legal matters, procedures, or rights.
+                                <p className="text-muted-foreground text-center text-lg md:text-xl font-light max-w-lg mb-12">
+                                    I am 9anon, your intelligent legal assistant for navigating Moroccan law.
                                 </p>
 
                                 <div className="w-full relative z-10 mb-12">
@@ -760,26 +757,20 @@ export default function NewChatPage() {
                                     </ChatInput>
                                 </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                                <div className="flex flex-wrap justify-center gap-2 max-w-2xl mt-4">
                                     {[
-                                        { title: "ما هي حقوقي", desc: "في حالة توقيفي؟", icon: "⚖️" },
-                                        { title: "Comment créer", desc: "une société au Maroc?", icon: "🏢" },
-                                        { title: "What are the", desc: "labor laws in Morocco?", icon: "💼" },
-                                        { title: "شرح لي", desc: "قانون الأسرة", icon: "👨‍👩‍👧‍👦" },
+                                        { title: "ما هي حقوقي في حالة توقيفي؟" },
+                                        { title: "Comment créer une société au Maroc?" },
+                                        { title: "What are the labor laws in Morocco?" },
+                                        { title: "شرح لي قانون الأسرة" },
                                     ].map((s, i) => (
                                         <button
                                             key={s.title}
-                                            onClick={() => setInputValue(s.title + " " + s.desc)}
-                                            className="group flex items-start gap-4 p-5 text-left bg-card/30 hover:bg-card border border-border/40 hover:border-primary/30 rounded-2xl transition-all duration-300 hover:shadow-md hover:-translate-y-1"
+                                            onClick={() => setInputValue(s.title)}
+                                            className="px-4 py-2 text-sm font-medium text-muted-foreground bg-secondary/40 hover:bg-secondary hover:text-foreground border border-transparent hover:border-border/60 rounded-full transition-all duration-300 transform hover:scale-[1.02]"
                                             style={{ animationDelay: `${i * 100}ms` }}
                                         >
-                                            <div className="text-2xl opacity-80 group-hover:scale-110 group-hover:opacity-100 transition-all duration-300">
-                                                {s.icon}
-                                            </div>
-                                            <div className="flex flex-col gap-1">
-                                                <span className="text-sm font-semibold text-foreground/90 group-hover:text-primary transition-colors">{s.title}</span>
-                                                <span className="text-sm text-muted-foreground font-medium">{s.desc}</span>
-                                            </div>
+                                            {s.title}
                                         </button>
                                     ))}
                                 </div>
