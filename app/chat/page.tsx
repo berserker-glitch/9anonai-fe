@@ -648,7 +648,7 @@ export default function NewChatPage() {
 
     return (
         <SidebarProvider>
-            <div className="flex h-screen bg-sidebar">
+            <div className="flex h-screen bg-background">
                 {/* Sidebar */}
                 <Sidebar>
                     <SidebarHeader
@@ -698,7 +698,7 @@ export default function NewChatPage() {
                 </Sidebar>
 
                 {/* Main Content */}
-                <main className="flex-1 flex flex-col min-w-0 bg-background md:rounded-[2rem] md:border border-border shadow-2xl md:m-2 overflow-hidden relative">
+                <main className="flex-1 flex flex-col min-w-0 bg-background relative">
                     {showWelcome ? (
                         <div className="flex-1 flex flex-col items-center justify-center p-8">
                             <div className="w-20 h-20 mb-6 shadow-xl rounded-2xl overflow-hidden bg-white">
@@ -769,7 +769,7 @@ export default function NewChatPage() {
                             </div>
                         </div>
                     ) : (
-                        <ChatContainer className="flex-1 overflow-hidden md:rounded-[2rem]">
+                        <ChatContainer className="flex-1 overflow-hidden">
                             <p className="text-center text-[11px] text-muted-foreground py-2">
                                 9anon AI may produce inaccurate information
                             </p>
