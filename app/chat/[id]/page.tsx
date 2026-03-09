@@ -945,7 +945,7 @@ export default function ChatWithIdPage() {
                             </div>
                         </div>
                     ) : (
-                        <ChatContainer className="flex-1 overflow-hidden">
+                        <ChatContainer className="flex-1 overflow-hidden md:rounded-[2rem]">
                             <p className="text-center text-[11px] text-muted-foreground py-2">
                                 9anon AI may produce inaccurate information
                             </p>
