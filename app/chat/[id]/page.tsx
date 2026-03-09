@@ -830,7 +830,7 @@ export default function ChatWithIdPage() {
 
     return (
         <SidebarProvider>
-            <div className="flex h-screen bg-background">
+            <div className="flex h-screen bg-sidebar">
                 {/* Sidebar */}
                 <Sidebar>
                     <SidebarHeader
@@ -894,7 +894,7 @@ export default function ChatWithIdPage() {
                 </Sidebar>
 
                 {/* Main Content */}
-                <main className="flex-1 flex flex-col min-w-0 bg-background relative">
+                <main className="flex-1 flex flex-col min-w-0 bg-background md:rounded-[2rem] md:border border-border md:m-2 overflow-hidden relative">
                     {showWelcome ? (
                         <div className="flex-1 flex flex-col items-center justify-center p-8">
                             <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center mb-6 shadow-xl">
@@ -945,7 +945,7 @@ export default function ChatWithIdPage() {
                             </div>
                         </div>
                     ) : (
-                        <ChatContainer className="flex-1 overflow-hidden">
+                        <ChatContainer className="flex-1 overflow-hidden md:rounded-[2rem]">
                             <p className="text-center text-[11px] text-muted-foreground py-2">
                                 9anon AI may produce inaccurate information
                             </p>
