@@ -875,11 +875,11 @@ export default function ChatWithIdPage() {
                     </SidebarChatList>
 
                     {/* User Footer */}
-                    <div className="p-3 border-t border-border mt-auto">
+                    <div className="p-3 mt-auto">
                         <div className="flex items-center gap-3 px-2">
                             <button
                                 onClick={() => setSettingsOpen(true)}
-                                className="focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-full"
+                                className="focus:outline-none rounded-full"
                                 title="Open settings"
                             >
                                 <Avatar fallback={user?.name?.[0] || user?.email?.[0] || "U"} size="md" isOnline />
