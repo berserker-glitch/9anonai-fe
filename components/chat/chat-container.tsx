@@ -10,10 +10,7 @@ export function ChatContainer({ children, className = "" }: ChatContainerProps) 
         <div
             className={`
         flex flex-col
-        flex-1
-        w-full max-w-4xl
-        mx-auto
-        px-4 sm:px-6 lg:px-8
+        flex-1 w-full
         ${className}
       `}
         >
