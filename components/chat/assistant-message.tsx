@@ -9,7 +9,7 @@ interface AssistantMessageProps {
 
 export function AssistantMessage({
     children,
-    showAvatar = true,
+    showAvatar = false,
     className = ""
 }: AssistantMessageProps) {
     return (
@@ -25,8 +25,6 @@ export function AssistantMessage({
                 className={`
           flex-1
           px-4 py-3
-          rounded-2xl rounded-bl-md
-          bg-card
           text-card-foreground
         `}
             >
