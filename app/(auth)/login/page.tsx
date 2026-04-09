@@ -178,28 +178,7 @@ export default function LoginPage() {
                                 ) : t("login.submit")}
                             </button>
 
-                            {/* Divider */}
-                            <div className="relative">
-                                <div className="absolute inset-0 flex items-center">
-                                    <div className="w-full border-t border-border/40" />
-                                </div>
-                                <div className="relative flex justify-center">
-                                    <span className="bg-card/80 backdrop-blur-sm px-4 text-sm text-muted-foreground">
-                                        {t("login.or")}
-                                    </span>
-                                </div>
-                            </div>
 
-                            {/* Continue without account */}
-                            <Link
-                                href="/chat"
-                                className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl border border-border/50 text-sm font-medium text-muted-foreground hover:text-foreground hover:border-primary/30 hover:bg-primary/5 transition-all duration-300"
-                            >
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                                </svg>
-                                {t("login.continueWithout")}
-                            </Link>
                         </form>
                     </div>
 
