@@ -90,7 +90,9 @@ export default function PrivacyPolicyPage() {
                             <svg className="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                             </svg>
-                            <span className="text-sm font-medium text-gold">Your Privacy Matters</span>
+                            <span className="text-sm font-medium text-gold">
+                                {language === "ar" ? "خصوصيتك تهمنا" : language === "fr" ? "Votre vie privée compte" : "Your Privacy Matters"}
+                            </span>
                         </div>
                         <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 tracking-tight">
                             {translations.title}
@@ -152,7 +154,7 @@ export default function PrivacyPolicyPage() {
                                             ))}
                                             {section.items.length > 3 && (
                                                 <li className="text-primary text-xs font-medium">
-                                                    +{section.items.length - 3} more
+                                                    +{section.items.length - 3} {language === "ar" ? "المزيد" : language === "fr" ? "de plus" : "more"}
                                                 </li>
                                             )}
                                         </ul>
