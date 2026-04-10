@@ -57,6 +57,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const isArabic = lang === "ar";
     const isFrench = lang === "fr";
 
+    // Shared hreflang alternates — same for every language variant
+    const alternates: Metadata["alternates"] = {
+        canonical: `${BASE_URL}/${lang}`,
+        languages: {
+            "ar-MA": `${BASE_URL}/ar`,
+            "fr-MA": `${BASE_URL}/fr`,
+            "en-US": `${BASE_URL}/en`,
+        },
+    };
+
     if (isArabic) {
         return {
             title: "9anon AI | مساعد قانوني ذكي المغرب - استشارة قانونية مجانية",
@@ -73,6 +83,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
                 "الذكاء الاصطناعي القانوني المغربي", "قانون مغربي",
                 "استشارة قانونية مجانية", "9anon ai",
             ],
+            alternates,
         };
     }
 
@@ -93,6 +104,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
                 "conseil juridique startup Maroc",
                 "IA Juridique Marocaine", "droit marocain", "9anon ai",
             ],
+            alternates,
         };
     }
 
@@ -114,6 +126,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             "SME legal services Morocco", "tax compliance legal help Morocco",
             "Moroccan Legal AI", "9anon ai",
         ],
+        alternates,
     };
 }
 
