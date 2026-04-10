@@ -53,7 +53,7 @@ export async function generateMetadata({
         description: page.descriptions[langKey] || page.descriptions.en,
         keywords: page.keywords[langKey] || page.keywords.en,
         alternates: {
-            canonical: `https://9anonai.com/en/${slug}`,
+            canonical: `https://9anonai.com/${lang}/${slug}`,
             languages: {
                 en: `https://9anonai.com/en/${slug}`,
                 fr: `https://9anonai.com/fr/${slug}`,
