@@ -269,7 +269,7 @@ export default async function RootLayout({
   const dir = lang === "ar" ? "rtl" : "ltr";
 
   return (
-    <html lang={lang} dir="ltr" suppressHydrationWarning>
+    <html lang={lang} dir={dir} suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
         {/* Render all JSON-LD schemas for rich search results */}
