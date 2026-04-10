@@ -76,7 +76,9 @@ export default function TermsOfServicePage() {
                             <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
-                            <span className="text-sm font-medium text-primary">Legal Document</span>
+                            <span className="text-sm font-medium text-primary">
+                                {language === "ar" ? "وثيقة قانونية" : language === "fr" ? "Document juridique" : "Legal Document"}
+                            </span>
                         </div>
                         <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 tracking-tight">
                             {translations.title}
@@ -92,7 +94,7 @@ export default function TermsOfServicePage() {
                     {/* Table of Contents */}
                     <div className="animate-reveal-up delay-100 glass-premium rounded-2xl p-6 mb-8 hidden sm:block">
                         <h3 className="font-display font-semibold mb-4 text-sm uppercase tracking-wider text-muted-foreground">
-                            Table of Contents
+                            {language === "ar" ? "فهرس المحتويات" : language === "fr" ? "Table des matières" : "Table of Contents"}
                         </h3>
                         <nav className="grid grid-cols-2 md:grid-cols-3 gap-2">
                             {sectionOrder.map((key) => {
