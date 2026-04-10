@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { match } from "@formatjs/intl-localematcher";
-import Negotiator from "negotiator";
 
 const locales = ["en", "fr", "ar"];
 const defaultLocale = "ar"; // Default to Arabic as per 9anon
 
+/**
+ * Lightweight Accept-Language parser — replaces @formatjs/intl-localematcher
+ * + negotiator which are incompatible with Turbopack's edge runtime parser.
+ */
 function getLocale(request: NextRequest): string {
     // 1. Check cookie
     const cookieLocale = request.cookies.get("NEXT_LOCALE")?.value;
@@ -13,10 +15,22 @@ function getLocale(request: NextRequest): string {
         return cookieLocale;
     }
 
-    // 2. Check Accept-Language header
-    const headers = { "accept-language": request.headers.get("accept-language") || "" };
-    const languages = new Negotiator({ headers }).languages();
-    return match(languages, locales, defaultLocale);
+    // 2. Parse Accept-Language header (e.g. "fr-FR,fr;q=0.9,en;q=0.8,ar;q=0.7")
+    const acceptLang = request.headers.get("accept-language") || "";
+    const preferred = acceptLang
+        .split(",")
+        .map((part) => {
+            const [lang, qPart] = part.trim().split(";");
+            const q = qPart ? parseFloat(qPart.replace("q=", "")) : 1;
+            return { lang: lang.trim().split("-")[0].toLowerCase(), q };
+        })
+        .sort((a, b) => b.q - a.q);
+
+    for (const { lang } of preferred) {
+        if (locales.includes(lang)) return lang;
+    }
+
+    return defaultLocale;
 }
 
 export function middleware(request: NextRequest) {

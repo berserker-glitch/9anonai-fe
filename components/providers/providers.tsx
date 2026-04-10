@@ -13,7 +13,7 @@ interface ProvidersProps {
 export function Providers({ children, lang }: ProvidersProps & { lang?: string }) {
     return (
         <AuthProvider>
-            <LanguageProvider defaultNamespaces={["landing", "tos", "privacy"]} initialLanguage={lang as any}>
+            <LanguageProvider defaultNamespaces={["landing", "tos", "privacy", "auth"]} initialLanguage={lang as any}>
                 <ThemeProvider defaultTheme="dark">
                     {children}
                 </ThemeProvider>
