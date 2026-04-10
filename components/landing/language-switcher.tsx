@@ -48,7 +48,7 @@ export function LanguageSwitcher() {
             {isOpen && (
                 <div className="absolute top-full mt-2 right-0 min-w-[180px] py-2 glass-premium rounded-xl border border-border/50 shadow-2xl animate-reveal-up z-50">
                     <div className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b border-border/30 mb-1">
-                        Select Language
+                        {language === "ar" ? "اختر اللغة" : language === "fr" ? "Choisir la langue" : "Select Language"}
                     </div>
                     {(Object.keys(languages) as Language[]).map((lang) => (
                         <button
