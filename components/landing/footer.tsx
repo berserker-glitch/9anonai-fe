@@ -13,7 +13,7 @@ export function Footer() {
             <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[150px]" />
 
             <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16 lg:py-20">
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10">
                     {/* Brand */}
                     <div className="md:col-span-12 lg:col-span-4 lg:pr-8">
                         <Link href="/" className="inline-flex items-center gap-3 mb-6 group">
@@ -82,7 +82,7 @@ export function Footer() {
                         </div>
                     </div>
 
-                    {/* Links */}
+                    {/* Product links */}
                     <div className="md:col-span-4 lg:col-span-2">
                         <h3 className="font-display font-semibold mb-6 text-sm uppercase tracking-wider text-foreground">
                             {t("footer.product")}
@@ -121,43 +121,57 @@ export function Footer() {
                         </nav>
                     </div>
 
-                    <div className="md:col-span-4 lg:col-span-3">
+                    {/* Legal Topics column 1 */}
+                    <div className="md:col-span-4 lg:col-span-2">
                         <h3 className="font-display font-semibold mb-6 text-sm uppercase tracking-wider text-foreground">
                             {t("footer.topLegalTopics")}
                         </h3>
-                        <nav className="flex flex-col gap-4">
-                            <Link href="/divorce-law" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.divorceLaw")}</Link>
+                        <nav className="flex flex-col gap-3">
                             <Link href="/family-law" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.familyLaw")}</Link>
                             <Link href="/labor-law" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.laborLaw")}</Link>
+                            <Link href="/divorce-law" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.divorceLaw")}</Link>
                             <Link href="/traffic-law" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.trafficLaw")}</Link>
                             <Link href="/employee-rights" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.employeeRights")}</Link>
-                            <Link href="/business-legal" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.businessLegal")}</Link>
+                            <Link href="/tenant-rights" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.tenantRights")}</Link>
+                            <Link href="/inheritance-law" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.inheritanceLaw")}</Link>
+                            <Link href="/immigration-law" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.immigrationLaw")}</Link>
                         </nav>
                     </div>
 
-                    <div className="md:col-span-4 lg:col-span-3">
+                    {/* Legal Topics column 2 */}
+                    <div className="md:col-span-4 lg:col-span-2">
+                        <h3 className="font-display font-semibold mb-6 text-sm uppercase tracking-wider text-foreground opacity-0 select-none" aria-hidden>
+                            &nbsp;
+                        </h3>
+                        <nav className="flex flex-col gap-3">
+                            <Link href="/business-legal" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.businessLegal")}</Link>
+                            <Link href="/tax-legal" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.taxLaw")}</Link>
+                            <Link href="/rental-law" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.tenantRights")}</Link>
+                            <Link href="/real-estate-law" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.realEstateLaw")}</Link>
+                            <Link href="/crypto-law" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.cryptoLaw")}</Link>
+                            <Link href="/cybersecurity-law" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">Cybersecurity Law</Link>
+                            <Link href="/commercial-law" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.businessLegal")}</Link>
+                        </nav>
+                    </div>
+
+                    {/* Tools + Legal */}
+                    <div className="md:col-span-4 lg:col-span-2">
+                        <h3 className="font-display font-semibold mb-6 text-sm uppercase tracking-wider text-foreground">
+                            {t("footer.tools")}
+                        </h3>
+                        <nav className="flex flex-col gap-3 mb-8">
+                            <Link href="/calculators/inheritance" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.inheritanceCalc")}</Link>
+                            <Link href="/calculators/income-tax" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.incomeTaxCalc")}</Link>
+                            <Link href="/calculators/rent-increase" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.rentCalc")}</Link>
+                        </nav>
+
                         <h3 className="font-display font-semibold mb-6 text-sm uppercase tracking-wider text-foreground">
                             {t("footer.legal")}
                         </h3>
-                        <nav className="flex flex-col gap-4">
-                            <Link
-                                href="/privacy"
-                                className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm"
-                            >
-                                {t("footer.privacy")}
-                            </Link>
-                            <Link
-                                href="/tos"
-                                className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm"
-                            >
-                                {t("footer.terms")}
-                            </Link>
-                            <Link
-                                href="mailto:9anonai@gmail.com"
-                                className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm"
-                            >
-                                {t("footer.contact")}
-                            </Link>
+                        <nav className="flex flex-col gap-3">
+                            <Link href="/privacy" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.privacy")}</Link>
+                            <Link href="/tos" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.terms")}</Link>
+                            <Link href="mailto:9anonai@gmail.com" className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">{t("footer.contact")}</Link>
                         </nav>
                     </div>
                 </div>

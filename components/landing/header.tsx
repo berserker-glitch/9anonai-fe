@@ -2,17 +2,117 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { useTranslation } from "@/lib/language-context";
 import { LanguageSwitcher } from "./language-switcher";
+
+/** Topics shown in the "Legal Topics" dropdown */
+const legalTopics = [
+    { href: "/family-law",       ar: "مدونة الأسرة",       fr: "Droit de la Famille", en: "Family Law" },
+    { href: "/labor-law",        ar: "مدونة الشغل",         fr: "Code du Travail",     en: "Labor Law" },
+    { href: "/traffic-law",      ar: "مدونة السير",         fr: "Code de la Route",    en: "Traffic Law" },
+    { href: "/divorce-law",      ar: "الطلاق",              fr: "Divorce",             en: "Divorce Law" },
+    { href: "/inheritance-law",  ar: "الإرث",               fr: "Droit Successoral",   en: "Inheritance Law" },
+    { href: "/employee-rights",  ar: "حقوق العامل",         fr: "Droits Salariés",     en: "Employee Rights" },
+    { href: "/tenant-rights",    ar: "حقوق المكتري",        fr: "Droits Locataire",    en: "Tenant Rights" },
+    { href: "/immigration-law",  ar: "الإقامة والتأشيرة",   fr: "Immigration",         en: "Immigration Law" },
+    { href: "/rental-law",       ar: "قانون الكراء",        fr: "Bail & Location",     en: "Rental Law" },
+    { href: "/real-estate-law",  ar: "العقار",              fr: "Immobilier",          en: "Real Estate Law" },
+    { href: "/commercial-law",   ar: "القانون التجاري",     fr: "Droit Commercial",    en: "Commercial Law" },
+    { href: "/business-legal",   ar: "قانون الأعمال",       fr: "Droit des Affaires",  en: "Business Legal" },
+    { href: "/tax-legal",        ar: "الضرائب",             fr: "Fiscalité",           en: "Tax Law" },
+    { href: "/crypto-law",       ar: "العملات الرقمية",     fr: "Cryptomonnaies",      en: "Crypto Law" },
+    { href: "/cybersecurity-law",ar: "الأمن السيبراني",     fr: "Cybersécurité",       en: "Cybersecurity Law" },
+];
+
+/** Tools shown in the "Tools" dropdown */
+const tools = [
+    { href: "/calculators/inheritance", ar: "حاسبة الإرث",          fr: "Calculateur d'Héritage", en: "Inheritance Calculator" },
+    { href: "/calculators/income-tax",  ar: "حاسبة الضريبة على الدخل", fr: "Calculateur IR",         en: "Income Tax Calculator" },
+    { href: "/calculators/rent-increase",ar: "حاسبة الزيادة في الكراء", fr: "Calculateur Loyer",      en: "Rent Increase Calculator" },
+];
+
+type Lang = "ar" | "fr" | "en";
+
+function getLabel(item: { ar: string; fr: string; en: string }, lang: string): string {
+    return item[lang as Lang] ?? item.en;
+}
+
+/** Simple dropdown component */
+function NavDropdown({
+    label,
+    items,
+    lang,
+    isRtl,
+}: {
+    label: string;
+    items: { href: string; ar: string; fr: string; en: string }[];
+    lang: string;
+    isRtl: boolean;
+}) {
+    const [open, setOpen] = useState(false);
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handler = (e: MouseEvent) => {
+            if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+        };
+        document.addEventListener("mousedown", handler);
+        return () => document.removeEventListener("mousedown", handler);
+    }, []);
+
+    return (
+        <div ref={ref} className="relative">
+            <button
+                onMouseEnter={() => setOpen(true)}
+                onFocus={() => setOpen(true)}
+                onMouseLeave={() => setOpen(false)}
+                onClick={() => setOpen((o) => !o)}
+                className="relative text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-300 py-2 flex items-center gap-1 group"
+                aria-expanded={open}
+            >
+                {label}
+                <svg
+                    className={`w-3.5 h-3.5 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+                    fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-gold group-hover:w-full transition-[width] duration-300" />
+            </button>
+
+            {open && (
+                <div
+                    onMouseEnter={() => setOpen(true)}
+                    onMouseLeave={() => setOpen(false)}
+                    className={`absolute top-full mt-1 w-56 bg-background/95 backdrop-blur-xl border border-border/50 rounded-2xl shadow-2xl shadow-black/20 p-2 z-50 animate-reveal-up ${isRtl ? "right-0" : "left-0"}`}
+                >
+                    {items.map((item) => (
+                        <Link
+                            key={item.href}
+                            href={item.href}
+                            onClick={() => setOpen(false)}
+                            className="block px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-xl transition-all duration-200"
+                        >
+                            {getLabel(item, lang)}
+                        </Link>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+}
 
 export function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [headerVisible, setHeaderVisible] = useState(true);
+    const [mobileTopicsOpen, setMobileTopicsOpen] = useState(false);
+    const [mobileToolsOpen, setMobileToolsOpen] = useState(false);
     const { user, isLoading } = useAuth();
-    const { t } = useTranslation("landing");
+    const { t, language } = useTranslation("landing");
+    const isRtl = language === "ar";
 
     useEffect(() => {
         let lastScrollY = window.scrollY;
@@ -21,16 +121,13 @@ export function Header() {
         const updateHeader = () => {
             const currentScrollY = window.scrollY;
 
-            // Header visibility based on scroll direction
             if (currentScrollY > lastScrollY && currentScrollY > 100) {
                 setHeaderVisible(false);
             } else {
                 setHeaderVisible(true);
             }
 
-            // Background effect based on scroll position
             setScrolled(currentScrollY > 20);
-
             lastScrollY = currentScrollY;
             ticking = false;
         };
@@ -53,7 +150,7 @@ export function Header() {
             } ${headerVisible ? 'translate-y-0' : '-translate-y-full'}`}>
             <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
                 <div className="flex items-center justify-between h-20">
-                    {/* Logo - Enhanced */}
+                    {/* Logo */}
                     <Link href="/" className="flex items-center gap-3 group">
                         <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-[box-shadow,transform] duration-300 group-hover:scale-105">
                             <Image
@@ -75,12 +172,12 @@ export function Header() {
                         </div>
                     </Link>
 
-                    {/* Desktop Nav - Enhanced */}
-                    <nav className="hidden md:flex items-center gap-10">
+                    {/* Desktop Nav */}
+                    <nav className="hidden md:flex items-center gap-8">
+                        {/* Static links */}
                         {[
                             { href: "#features", key: "nav.features" },
                             { href: "/about", key: "nav.about" },
-                            { href: "/vs-9anoun", key: "nav.compare" },
                         ].map((item) => (
                             <Link
                                 key={item.href}
@@ -91,9 +188,34 @@ export function Header() {
                                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-gold group-hover:w-full transition-[width] duration-300" />
                             </Link>
                         ))}
+
+                        {/* Blog link */}
+                        <Link
+                            href={`/${language}/blog`}
+                            className="relative text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-300 py-2 group"
+                        >
+                            {t("nav.blog")}
+                            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-gold group-hover:w-full transition-[width] duration-300" />
+                        </Link>
+
+                        {/* Legal Topics dropdown */}
+                        <NavDropdown
+                            label={t("nav.legalTopics")}
+                            items={legalTopics}
+                            lang={language}
+                            isRtl={isRtl}
+                        />
+
+                        {/* Tools dropdown */}
+                        <NavDropdown
+                            label={t("nav.tools")}
+                            items={tools}
+                            lang={language}
+                            isRtl={isRtl}
+                        />
                     </nav>
 
-                    {/* Auth Buttons + Language Switcher - Enhanced */}
+                    {/* Auth Buttons + Language Switcher */}
                     <div className="hidden md:flex items-center gap-4">
                         <LanguageSwitcher />
                         {!isLoading && user ? (
@@ -143,9 +265,9 @@ export function Header() {
                     </div>
                 </div>
 
-                {/* Mobile Menu - Enhanced */}
+                {/* Mobile Menu */}
                 {mobileMenuOpen && (
-                    <div className="md:hidden py-6 border-t border-border/30 animate-reveal-up">
+                    <div className="md:hidden py-6 border-t border-border/30 animate-reveal-up max-h-[80vh] overflow-y-auto">
                         <nav className="flex flex-col gap-1">
                             <Link
                                 href="#features"
@@ -162,12 +284,63 @@ export function Header() {
                                 {t("nav.about")}
                             </Link>
                             <Link
-                                href="/vs-9anoun"
+                                href={`/${language}/blog`}
                                 className="py-3 px-4 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-xl transition-all duration-300"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
-                                {t("nav.compare")}
+                                {t("nav.blog")}
                             </Link>
+
+                            {/* Mobile Legal Topics accordion */}
+                            <button
+                                onClick={() => setMobileTopicsOpen((o) => !o)}
+                                className="py-3 px-4 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-xl transition-all duration-300 flex items-center justify-between w-full text-left"
+                            >
+                                {t("nav.legalTopics")}
+                                <svg className={`w-3.5 h-3.5 transition-transform ${mobileTopicsOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                            {mobileTopicsOpen && (
+                                <div className="ml-4 flex flex-col gap-0.5 border-l border-border/40 pl-3">
+                                    {legalTopics.map((item) => (
+                                        <Link
+                                            key={item.href}
+                                            href={item.href}
+                                            className="py-2 px-3 text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-xl transition-all duration-200"
+                                            onClick={() => setMobileMenuOpen(false)}
+                                        >
+                                            {getLabel(item, language)}
+                                        </Link>
+                                    ))}
+                                </div>
+                            )}
+
+                            {/* Mobile Tools accordion */}
+                            <button
+                                onClick={() => setMobileToolsOpen((o) => !o)}
+                                className="py-3 px-4 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-xl transition-all duration-300 flex items-center justify-between w-full text-left"
+                            >
+                                {t("nav.tools")}
+                                <svg className={`w-3.5 h-3.5 transition-transform ${mobileToolsOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                            {mobileToolsOpen && (
+                                <div className="ml-4 flex flex-col gap-0.5 border-l border-border/40 pl-3">
+                                    {tools.map((item) => (
+                                        <Link
+                                            key={item.href}
+                                            href={item.href}
+                                            className="py-2 px-3 text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-xl transition-all duration-200"
+                                            onClick={() => setMobileMenuOpen(false)}
+                                        >
+                                            {getLabel(item, language)}
+                                        </Link>
+                                    ))}
+                                </div>
+                            )}
+
                             <div className="flex flex-col gap-2 pt-4 mt-4 border-t border-border/30">
                                 {!isLoading && user ? (
                                     <Link
