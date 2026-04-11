@@ -294,3 +294,313 @@ export const tenantRightsPage: SEOPageConfig = {
         { href: "/family-law", label: "Family Law" },
     ],
 };
+
+/** Family Law / Moudawana hub page — targets مدونة الأسرة / droit de la famille Maroc */
+export const familyLawPage: SEOPageConfig = {
+    slug: "family-law",
+    titles: {
+        ar: "مدونة الأسرة في المغرب | الزواج والطلاق والحضانة والإرث - 9anon AI",
+        fr: "Moudawana Maroc | Mariage, Divorce, Garde & Succession - 9anon AI",
+        en: "Moroccan Family Law | Moudawana Guide — Marriage, Divorce & Custody - 9anon AI",
+    },
+    descriptions: {
+        ar: "دليل شامل حول مدونة الأسرة المغربية: الزواج، الطلاق، حضانة الأطفال، النفقة، والإرث. احصل على مساعدة قانونية خاصة ومجانية بالذكاء الاصطناعي باللغة العربية والفرنسية والإنجليزية.",
+        fr: "Guide complet sur la Moudawana marocaine: mariage, divorce, garde des enfants, pension alimentaire et succession. Aide juridique privée et gratuite par IA en arabe, français et anglais.",
+        en: "Complete guide to Morocco's Family Code (Moudawana): marriage, divorce, child custody, alimony, and inheritance. Free private AI legal help in Arabic, French, and English.",
+    },
+    keywords: {
+        ar: ["مدونة الأسرة المغربية", "الطلاق في المغرب", "الزواج المغرب", "حضانة الأطفال المغرب", "الإرث المغرب", "النفقة المغرب", "قانون الأسرة المغربي 2026"],
+        fr: ["moudawana Maroc", "divorce Maroc", "mariage Maroc", "garde enfants Maroc", "droit successoral Maroc", "pension alimentaire Maroc", "droit de la famille marocain"],
+        en: ["moroccan family law", "moudawana", "divorce morocco", "marriage morocco", "child custody morocco", "inheritance law morocco", "alimony morocco"],
+    },
+    h1: {
+        ar: "مدونة الأسرة في المغرب: دليلك القانوني الشامل",
+        fr: "La Moudawana au Maroc : Guide Juridique Complet",
+        en: "Moroccan Family Law (Moudawana): Your Complete Legal Guide",
+    },
+    badge: { ar: "مدونة الأسرة", fr: "Moudawana", en: "Family Law" },
+    subtitle: {
+        ar: "مدونة الأسرة (Moudawana) تُنظّم الزواج والطلاق والحضانة والإرث في المغرب. احصل على إجابات قانونية دقيقة وسرية حول وضعك الأسري بالذكاء الاصطناعي — مجاناً.",
+        fr: "La Moudawana régit le mariage, le divorce, la garde et la succession au Maroc. Obtenez des réponses juridiques précises et confidentielles sur votre situation familiale par IA — gratuitement.",
+        en: "The Moudawana governs marriage, divorce, custody, and inheritance in Morocco. Get accurate, confidential AI legal answers about your family situation — for free.",
+    },
+    ctaText: { ar: "اسأل عن مدونة الأسرة مجاناً", fr: "Posez Votre Question Familiale", en: "Ask About Family Law Free" },
+    faqTitle: { ar: "أسئلة شائعة حول مدونة الأسرة في المغرب", fr: "FAQ Moudawana Maroc", en: "Moroccan Family Law FAQ" },
+    faqItems: {
+        ar: [
+            { question: "ما هي مدونة الأسرة (Moudawana)؟", answer: "مدونة الأسرة (Moudawana) هي القانون المغربي الذي يُنظّم علاقات الأسرة: الزواج، الطلاق، الحضانة، الإرث، والنفقة. خضعت لإصلاح جذري سنة 2004 في عهد الملك محمد السادس منحت المرأة حقوقاً أوسع وجعلت المسؤولية الزوجية مشتركة بين الزوجين." },
+            { question: "كيف يتم الطلاق في المغرب؟", answer: "يُجيز القانون المغربي أنواعاً من الطلاق: الطلاق بالاتفاق المتبادل (الخلع)، والطلاق القضائي للشقاق الذي يحق للمرأة المطالبة به، والطلاق لأسباب محددة كالضرر أو الغياب. يستلزم أي طلاق المرور أمام القضاء مع محاولات للصلح." },
+            { question: "من يحق له الحضانة في المغرب؟", answer: "تُعطى الأولوية في الحضانة للأم ثم الأب ثم الجدة لأم. تراعي المحكمة دائماً مصلحة الطفل الفضلى، وقد تُراجع الحضانة عند تغيّر الظروف كزواج الحاضن من جديد أو انتقاله للخارج." },
+            { question: "ما هو سن الزواج القانوني في المغرب؟", answer: "حدد القانون المغربي سن الزواج بـ18 سنة للذكور والإناث على حد سواء. بيد أن القاضي يمكنه الترخيص بزواج القاصر في حالات استثنائية مبررة، وهو مقتضى لا يزال موضع نقاش إصلاحي." },
+            { question: "هل يمكن للمرأة طلب الطلاق في المغرب؟", answer: "نعم. منذ إصلاح 2004، للمرأة الحق في طلب الطلاق القضائي للشقاق دون الحاجة لموافقة الزوج. كما يمكنها طلب الخلع أو الطلاق لأسباب محددة كالضرر أو غياب الزوج أو الإخلال بالإنفاق." },
+        ],
+        fr: [
+            { question: "Qu'est-ce que la Moudawana ?", answer: "La Moudawana est le Code de la Famille marocain qui régit le mariage, le divorce, la garde des enfants, la succession et la pension alimentaire. Elle a été réformée en profondeur en 2004 sous le Roi Mohammed VI, accordant aux femmes de plus grands droits et instituant la responsabilité conjugale partagée." },
+            { question: "Comment se déroule le divorce au Maroc ?", answer: "Le droit marocain reconnaît plusieurs types de divorce: le divorce par consentement mutuel (khol'), le divorce judiciaire pour discorde (shiqaq) que la femme peut demander, et le divorce pour causes spécifiques. Tout divorce nécessite un passage devant le tribunal avec tentative de conciliation." },
+            { question: "Comment est décidée la garde des enfants au Maroc ?", answer: "La priorité de garde revient à la mère, puis au père, puis à la grand-mère maternelle. Le tribunal tient toujours compte de l'intérêt supérieur de l'enfant et peut réviser la garde en cas de changement de situation." },
+            { question: "La femme peut-elle demander le divorce au Maroc ?", answer: "Oui. Depuis la réforme de 2004, la femme peut demander le divorce judiciaire pour discorde (shiqaq) sans le consentement du mari, le khol' ou le divorce pour causes légales spécifiques comme les préjudices ou l'abandon." },
+        ],
+        en: [
+            { question: "What is the Moudawana?", answer: "The Moudawana is Morocco's Family Code governing marriage, divorce, child custody, inheritance, and alimony. It was significantly reformed in 2004 under King Mohammed VI, granting women greater rights and establishing joint marital responsibility." },
+            { question: "How does divorce work in Morocco?", answer: "Moroccan law recognizes several divorce types: mutual consent divorce (khol'), judicial divorce for discord (shiqaq) which women can request, and divorce for specific causes. All divorces require court proceedings with reconciliation attempts." },
+            { question: "How is child custody decided in Morocco?", answer: "Custody priority goes to the mother, then the father, then the maternal grandmother. The court always considers the child's best interest and may revise custody when circumstances change." },
+            { question: "Can women initiate divorce in Morocco?", answer: "Yes. Since the 2004 reform, women can request judicial divorce for discord (shiqaq) without the husband's consent, as well as khol' or divorce for specific legal causes such as harm or non-maintenance." },
+        ],
+    },
+    features: {
+        ar: [
+            { icon: "💍", title: "الزواج في المغرب", description: "الشروط القانونية لعقد الزواج وإجراءاته أمام القضاء المغربي." },
+            { icon: "⚖️", title: "أنواع الطلاق", description: "الطلاق بالاتفاق، الشقاق، الخلع — الفروق والإجراءات القانونية." },
+            { icon: "👶", title: "حضانة الأطفال", description: "معايير الحضانة وحقوق الزيارة وأثر الأحوال الطارئة." },
+            { icon: "💰", title: "النفقة والمؤخر", description: "حق الزوجة والأطفال في النفقة وكيفية المطالبة بها." },
+            { icon: "📜", title: "الإرث في مدونة الأسرة", description: "أسس توزيع التركة وفق أحكام الفرائض في القانون المغربي." },
+            { icon: "🤖", title: "استشارة أسرية مجانية", description: "اسأل 9anon AI عن وضعيتك الأسرية بسرية تامة وأجب على أسئلتك فوراً." },
+        ],
+        fr: [
+            { icon: "💍", title: "Mariage au Maroc", description: "Conditions légales de l'acte de mariage et procédures devant les tribunaux marocains." },
+            { icon: "⚖️", title: "Types de Divorce", description: "Divorce par consentement, shiqaq, khol' — différences et procédures légales." },
+            { icon: "👶", title: "Garde des Enfants", description: "Critères de garde, droits de visite et impact des changements de situation." },
+            { icon: "💰", title: "Pension Alimentaire", description: "Droit à la pension alimentaire pour l'épouse et les enfants et comment la demander." },
+            { icon: "📜", title: "Succession et Héritage", description: "Bases de distribution de l'héritage selon le droit des successions marocain." },
+            { icon: "🤖", title: "Consultation Familiale Gratuite", description: "Posez à 9anon AI vos questions familiales en toute confidentialité." },
+        ],
+        en: [
+            { icon: "💍", title: "Marriage in Morocco", description: "Legal requirements for marriage contracts and court proceedings in Morocco." },
+            { icon: "⚖️", title: "Divorce Types", description: "Mutual consent, shiqaq, khol' divorce — differences and legal procedures." },
+            { icon: "👶", title: "Child Custody", description: "Custody criteria, visitation rights, and the impact of changing circumstances." },
+            { icon: "💰", title: "Alimony & Maintenance", description: "Wife and children's right to financial support and how to claim it." },
+            { icon: "📜", title: "Inheritance Law", description: "Basis for distributing the estate under Moroccan inheritance law (faraid)." },
+            { icon: "🤖", title: "Free Family Law Consultation", description: "Ask 9anon AI about your family situation in complete confidentiality." },
+        ],
+    },
+    contentSections: {
+        ar: [
+            { heading: "مدونة الأسرة 2004: إصلاح تاريخي في القانون المغربي", text: "أحدثت مدونة الأسرة المُعدَّلة عام 2004 تحولاً جذرياً في منظومة القانون الأسري بالمغرب: رُفع سن الزواج إلى 18 سنة، وأُلغي نظام الولاية المطلقة للمرأة البالغة، ومُنحت المرأة الحق في الطلاق القضائي، وباتت المسؤولية الزوجية مشتركة بين الزوجين، كما أُولي اهتمام أكبر بمصلحة الطفل في جميع القرارات القضائية." },
+            { heading: "المجالات الرئيسية لمدونة الأسرة", text: "تُنظّم مدونة الأسرة كل المحطات الكبرى في حياة الأسرة المغربية: من عقد الزواج بشروطه ووثائقه، مروراً بإجراءات الطلاق ومحاولات الصلح الإلزامية، إلى نظام الحضانة الذي يضع مصلحة الطفل أولاً، وانتهاءً بتوزيع التركة وفق أحكام الفرائض الشرعية. 9anon AI يُرشدك في هذه المسارات فوراً وبسرية تامة." },
+        ],
+        fr: [
+            { heading: "La Moudawana 2004 : Une Réforme Historique du Droit Marocain", text: "La réforme de la Moudawana en 2004 a transformé le droit de la famille marocain: âge minimum de mariage porté à 18 ans, suppression de la tutelle obligatoire pour les femmes adultes, droit au divorce judiciaire pour les femmes, responsabilité conjugale partagée et intérêt supérieur de l'enfant au centre des décisions judiciaires." },
+            { heading: "Domaines Clés de la Moudawana", text: "La Moudawana régit toutes les étapes familiales importantes: contrat de mariage et formalités, procédures de divorce avec tentatives de conciliation obligatoires, système de garde plaçant l'intérêt de l'enfant en premier, et distribution successorale selon les règles du droit islamique codifié." },
+        ],
+        en: [
+            { heading: "The 2004 Moudawana Reform: A Historic Milestone in Moroccan Law", text: "The 2004 Moudawana reform transformed Moroccan family law: minimum marriage age raised to 18, mandatory guardianship for adult women abolished, women's right to judicial divorce established, joint marital responsibility introduced, and the child's best interest placed at the center of all judicial decisions." },
+            { heading: "Key Areas of the Moudawana", text: "The Moudawana governs every major family milestone: marriage contracts and formalities, divorce procedures with mandatory reconciliation attempts, a custody system prioritizing the child's welfare, and estate distribution under codified Islamic inheritance rules. 9anon AI guides you through all these processes instantly and confidentially." },
+        ],
+    },
+    relatedLinks: [
+        { href: "/divorce-law", label: "Divorce Law" },
+        { href: "/inheritance-law", label: "Inheritance Law" },
+        { href: "/labor-law", label: "Labor Law" },
+        { href: "/tenant-rights", label: "Tenant Rights" },
+        { href: "/legal-ai", label: "AI Legal Assistant" },
+    ],
+    gradientFrom: "from-emerald-600",
+    gradientTo: "to-teal-600",
+    glowColor: "emerald",
+};
+
+/** Labor Law / Code du Travail hub page — targets مدونة الشغل / code du travail Maroc */
+export const laborLawPage: SEOPageConfig = {
+    slug: "labor-law",
+    titles: {
+        ar: "مدونة الشغل في المغرب | حقوق العامل والطرد والعقود - 9anon AI",
+        fr: "Code du Travail Maroc | CDI/CDD, Licenciement & Droits Salariés - 9anon AI",
+        en: "Morocco Labor Law | Code du Travail — Contracts, Termination & Rights - 9anon AI",
+    },
+    descriptions: {
+        ar: "دليل شامل حول مدونة الشغل المغربية: عقود CDI/CDD، الطرد التعسفي، الحد الأدنى للأجور SMIG، الإجازات السنوية، وحقوق العمال. استشارة قانونية مجانية بالذكاء الاصطناعي.",
+        fr: "Guide complet sur le Code du Travail marocain: contrats CDI/CDD, licenciement abusif, SMIG, congés annuels et droits des travailleurs. Consultation juridique gratuite par IA.",
+        en: "Complete guide to Morocco's Code du Travail: CDI/CDD contracts, wrongful termination, SMIG, annual leave, and worker rights. Free AI legal consultation.",
+    },
+    keywords: {
+        ar: ["مدونة الشغل المغربية", "الطرد التعسفي المغرب", "عقد الشغل CDI CDD", "الحد الأدنى للأجر SMIG", "حقوق العامل المغرب", "الإجازة السنوية المغرب", "قانون العمل المغربي 2026"],
+        fr: ["code du travail Maroc", "licenciement abusif Maroc", "CDI CDD Maroc", "SMIG Maroc", "droits salariés Maroc", "congés annuels Maroc", "droit du travail marocain"],
+        en: ["morocco labor law", "wrongful termination morocco", "CDI CDD morocco", "SMIG morocco", "employee rights morocco", "annual leave morocco", "code du travail morocco"],
+    },
+    h1: {
+        ar: "مدونة الشغل في المغرب: حقوقك كعامل أو مشغّل",
+        fr: "Le Code du Travail au Maroc : Vos Droits en Tant que Salarié ou Employeur",
+        en: "Morocco Labor Law (Code du Travail): Your Rights as Worker or Employer",
+    },
+    badge: { ar: "مدونة الشغل", fr: "Code du Travail", en: "Labor Law" },
+    subtitle: {
+        ar: "مدونة الشغل المغربية تحمي العمال من الطرد التعسفي وتضمن الأجر الدنيا وشروط العمل اللائقة. تعرف على حقوقك وإجراءاتك القانونية بالذكاء الاصطناعي — مجاناً.",
+        fr: "Le Code du Travail marocain protège les salariés contre le licenciement abusif et garantit le salaire minimum et des conditions de travail décentes. Connaissez vos droits par IA — gratuitement.",
+        en: "Morocco's Code du Travail protects workers from wrongful termination and guarantees minimum wages and decent working conditions. Know your rights via AI — for free.",
+    },
+    ctaText: { ar: "اسأل عن مدونة الشغل مجاناً", fr: "Posez Votre Question sur le Travail", en: "Ask About Labor Law Free" },
+    faqTitle: { ar: "أسئلة شائعة حول مدونة الشغل في المغرب", fr: "FAQ Code du Travail Maroc", en: "Morocco Labor Law FAQ" },
+    faqItems: {
+        ar: [
+            { question: "ما الفرق بين عقد CDI وCDD في المغرب؟", answer: "عقد CDI (عقد شغل غير محدد المدة) هو العقد الأساسي الذي يُوفر الاستقرار الوظيفي. عقد CDD (محدد المدة) يُقصر على المهام المؤقتة وتجديدات محدودة، وتحوّل تلقائياً إلى CDI إذا استمر العامل في العمل بعد انتهاء مدته." },
+            { question: "ما هي حقوقي عند الطرد التعسفي في المغرب؟", answer: "في حالة الطرد التعسفي (licenciement abusif)، يحق للعامل الحصول على: تعويض عن فترة الإشعار، التعويض عن الفصل بحسب الأقدمية، وتعويض إضافي يُقدره القضاء. يمكن اللجوء إلى مفتش الشغل أو المحكمة الاجتماعية." },
+            { question: "كم عدد أيام الإجازة السنوية في المغرب؟", answer: "يستحق العامل بعد 6 أشهر من الخدمة المتواصلة 1.5 يوم عمل عن كل شهر خدمة (18 يوماً في السنة). تزيد هذه المدة بيوم ونصف لكل 5 سنوات من الأقدمية. الشباب دون 18 سنة يستحقون يومين في الشهر." },
+            { question: "ما هو الحد الأدنى للأجر (SMIG) في المغرب؟", answer: "الحد الأدنى للأجر (SMIG) يُحدد بمرسوم حكومي ويُراجع دورياً. يسري على جميع القطاعات. العمال الزراعيون لهم حد أدنى خاص (SMAG). أي مشغّل يدفع أقل من SMIG يتعرض للمتابعة القانونية." },
+            { question: "ماذا يحق لي خلال فترة الإشعار بالفصل؟", answer: "خلال فترة الإشعار (préavis)، يحق للعامل بساعتين يومياً (أو 8 ساعات أسبوعياً) للبحث عن عمل جديد. يجب على المشغّل الاستمرار في دفع الأجر الكامل. عدم احترام الإشعار يُلزم المشغّل بدفع التعويض المقابل." },
+        ],
+        fr: [
+            { question: "Quelle est la différence entre CDI et CDD au Maroc ?", answer: "Le CDI (Contrat à Durée Indéterminée) assure la stabilité de l'emploi. Le CDD (Contrat à Durée Déterminée) est limité aux missions temporaires avec renouvellements limités et se transforme automatiquement en CDI si le salarié continue après l'échéance." },
+            { question: "Quels sont mes droits en cas de licenciement abusif au Maroc ?", answer: "En cas de licenciement abusif, le salarié a droit à: une indemnité de préavis, une indemnité de licenciement selon l'ancienneté, et des dommages-intérêts supplémentaires fixés par le tribunal. Recours possible auprès de l'Inspecteur du Travail ou du tribunal social." },
+            { question: "Combien de jours de congés annuels au Maroc ?", answer: "Après 6 mois de service continu: 1,5 jour ouvrable par mois (18 jours/an), augmentant d'1,5 jour par tranche de 5 ans d'ancienneté. Les moins de 18 ans bénéficient de 2 jours par mois." },
+            { question: "Quels sont mes droits pendant le préavis ?", answer: "Pendant le préavis, le salarié a droit à 2 heures par jour (ou 8 heures par semaine) pour chercher un emploi. L'employeur doit continuer à payer le plein salaire. Non-respect du préavis oblige l'employeur à verser l'indemnité correspondante." },
+        ],
+        en: [
+            { question: "What is the difference between CDI and CDD in Morocco?", answer: "CDI (permanent contract) provides job stability. CDD (fixed-term contract) is limited to temporary roles with limited renewals and automatically converts to CDI if the employee continues working after expiry." },
+            { question: "What are my rights if wrongfully terminated in Morocco?", answer: "For wrongful dismissal (licenciement abusif): the employee is entitled to notice period indemnity, severance pay based on seniority, and additional damages set by the court. Appeals can be made to the Labor Inspector or Social Tribunal." },
+            { question: "How many annual leave days am I entitled to in Morocco?", answer: "After 6 months of continuous service: 1.5 working days per month (18 days/year), increasing by 1.5 days per 5 years of seniority. Workers under 18 get 2 days per month." },
+            { question: "What are my rights during the notice period?", answer: "During the notice period (préavis), the employee is entitled to 2 hours off daily (or 8 hours weekly) to seek new employment. The employer must continue paying full salary. Failure to give notice requires the employer to pay the corresponding indemnity." },
+        ],
+    },
+    features: {
+        ar: [
+            { icon: "📄", title: "عقود الشغل CDI/CDD", description: "الفرق بين العقد المحدد وغير المحدد المدة وحالات التحويل التلقائي." },
+            { icon: "🚫", title: "الطرد التعسفي", description: "حقوقك عند الفصل التعسفي: التعويضات والإجراءات القضائية." },
+            { icon: "💵", title: "الحد الأدنى للأجر SMIG", description: "قيمة SMIG الحالية وكيفية المطالبة به عند مخالفته." },
+            { icon: "🏖️", title: "الإجازات والتعويضات", description: "حقوق الإجازة السنوية وتعويضات إنهاء العقد." },
+            { icon: "👷", title: "حقوق الصحة والسلامة", description: "التزامات المشغّل بتوفير بيئة عمل آمنة والتعويض عن حوادث الشغل." },
+            { icon: "🤖", title: "استشارة شغلية مجانية", description: "اسأل 9anon AI عن وضعيتك المهنية واحصل على إجابة قانونية فورية." },
+        ],
+        fr: [
+            { icon: "📄", title: "Contrats CDI/CDD", description: "Différences entre contrats à durée déterminée et indéterminée et cas de conversion automatique." },
+            { icon: "🚫", title: "Licenciement Abusif", description: "Vos droits en cas de licenciement injustifié: indemnités et procédures judiciaires." },
+            { icon: "💵", title: "Salaire Minimum SMIG", description: "Valeur actuelle du SMIG et comment le réclamer en cas de violation." },
+            { icon: "🏖️", title: "Congés et Indemnités", description: "Droits aux congés annuels et indemnités de rupture de contrat." },
+            { icon: "👷", title: "Santé et Sécurité au Travail", description: "Obligations de l'employeur et indemnisation des accidents du travail." },
+            { icon: "🤖", title: "Consultation Travail Gratuite", description: "Posez à 9anon AI votre question professionnelle pour une réponse juridique instantanée." },
+        ],
+        en: [
+            { icon: "📄", title: "CDI/CDD Contracts", description: "Differences between fixed and permanent contracts and automatic conversion cases." },
+            { icon: "🚫", title: "Wrongful Termination", description: "Your rights when unjustly dismissed: indemnities and court procedures." },
+            { icon: "💵", title: "Minimum Wage SMIG", description: "Current SMIG value and how to claim it when violated." },
+            { icon: "🏖️", title: "Leave & Indemnities", description: "Annual leave rights and contract termination indemnities." },
+            { icon: "👷", title: "Occupational Health & Safety", description: "Employer obligations and compensation for workplace accidents." },
+            { icon: "🤖", title: "Free Labor Law Consultation", description: "Ask 9anon AI your professional question and get an instant legal answer." },
+        ],
+    },
+    contentSections: {
+        ar: [
+            { heading: "مدونة الشغل المغربية: حماية شاملة للعمال", text: "صدرت مدونة الشغل المغربية سنة 2003 لتوحيد وتحديث تشريع العمل. تُرسي الحماية من الطرد التعسفي، وتحدد ساعات العمل القصوى (44 ساعة أسبوعياً)، وتضمن الحد الأدنى للأجر، وتُلزم بالتغطية الاجتماعية (CNSS). الشركات ملزمة بتطبيق هذه الأحكام تحت طائلة عقوبات قانونية." },
+            { heading: "التفتيش على الشغل: ضمانة التطبيق", text: "يُشكّل مفتشو الشغل (Inspecteurs du Travail) الذراع التنفيذي لمدونة الشغل. يحق للعامل تقديم شكوى لمفتشية الشغل المحلية عند أي خرق. تُحاول المفتشية أولاً الوساطة بين الطرفين قبل إحالة الملف إلى المحكمة الاجتماعية." },
+        ],
+        fr: [
+            { heading: "Le Code du Travail Marocain : Une Protection Complète pour les Salariés", text: "Promulgué en 2003, le Code du Travail marocain unifie et modernise le droit du travail. Il instaure la protection contre le licenciement abusif, fixe les heures de travail maximales (44h/semaine), garantit le salaire minimum, et impose la couverture sociale (CNSS). Les entreprises sont tenues de respecter ces dispositions sous peine de sanctions." },
+            { heading: "L'Inspection du Travail : Garant de l'Application", text: "Les Inspecteurs du Travail constituent le bras exécutif du Code du Travail. Le salarié peut déposer une plainte auprès de l'inspection du travail locale. L'inspection tente d'abord une médiation avant de transmettre le dossier au tribunal social." },
+        ],
+        en: [
+            { heading: "Morocco's Code du Travail: Comprehensive Worker Protection", text: "Enacted in 2003, Morocco's Code du Travail unifies and modernizes labor law. It establishes protection against wrongful termination, sets maximum working hours (44h/week), guarantees minimum wages, and mandates CNSS social security coverage. Companies must comply or face legal penalties." },
+            { heading: "Labor Inspection: Enforcing the Law", text: "Labor Inspectors (Inspecteurs du Travail) are the enforcement arm of the Code du Travail. Workers can file complaints with the local labor inspectorate. The inspection first attempts mediation before referring cases to the Social Tribunal." },
+        ],
+    },
+    relatedLinks: [
+        { href: "/employee-rights", label: "Employee Rights" },
+        { href: "/family-law", label: "Family Law" },
+        { href: "/contract-review", label: "Contract Review" },
+        { href: "/business-legal", label: "Business Legal" },
+        { href: "/legal-ai", label: "AI Legal Assistant" },
+    ],
+    gradientFrom: "from-blue-600",
+    gradientTo: "to-cyan-600",
+    glowColor: "blue",
+};
+
+/** Traffic Law / Code de la Route hub page — targets مدونة السير / code de la route Maroc */
+export const trafficLawPage: SEOPageConfig = {
+    slug: "traffic-law",
+    titles: {
+        ar: "مدونة السير في المغرب | المخالفات والغرامات وحوادث السير - 9anon AI",
+        fr: "Code de la Route Maroc | Amendes, Accidents & Permis - 9anon AI",
+        en: "Morocco Traffic Law | Code de la Route — Fines, Accidents & Driving Rights - 9anon AI",
+    },
+    descriptions: {
+        ar: "دليل شامل حول مدونة السير المغربية: الغرامات والمخالفات، سحب الرخصة، حوادث السير وإجراءاتها، التأمين الإلزامي، والحالات السكر خلف المقود. استشارة مجانية بالذكاء الاصطناعي.",
+        fr: "Guide complet sur le Code de la Route marocain: amendes, infractions, suspension du permis, accidents de la route, assurance obligatoire et conduite en état d'ivresse. Consultation gratuite.",
+        en: "Complete guide to Morocco's Code de la Route: fines, violations, license suspension, road accidents, mandatory insurance, and drunk driving. Free AI legal consultation.",
+    },
+    keywords: {
+        ar: ["مدونة السير المغربية", "غرامات السير المغرب", "مخالفات المرور المغرب", "حوادث السير المغرب", "رخصة السياقة المغرب", "التأمين على السيارات المغرب", "السياقة في حالة سكر المغرب"],
+        fr: ["code de la route Maroc", "amendes routières Maroc", "infractions Maroc", "accidents de la route Maroc", "permis de conduire Maroc", "assurance auto Maroc", "conduite en état d'ivresse Maroc"],
+        en: ["morocco traffic law", "traffic fines morocco", "road violations morocco", "road accidents morocco", "driving license morocco", "car insurance morocco", "drunk driving morocco"],
+    },
+    h1: {
+        ar: "مدونة السير في المغرب: دليلك القانوني الشامل",
+        fr: "Le Code de la Route au Maroc : Guide Juridique Complet",
+        en: "Morocco Traffic Law (Code de la Route): Your Complete Legal Guide",
+    },
+    badge: { ar: "مدونة السير", fr: "Code de la Route", en: "Traffic Law" },
+    subtitle: {
+        ar: "تلقيت غرامة؟ تعرضت لحادث؟ مشكلة في رخصة السياقة؟ 9anon AI يُجيبك فوراً على أسئلة مدونة السير المغربية باللغة العربية والفرنسية والإنجليزية.",
+        fr: "Reçu une amende? Accident de la route? Problème de permis? 9anon AI répond instantanément à vos questions sur le Code de la Route marocain en arabe, français et anglais.",
+        en: "Got a fine? Had an accident? License problem? 9anon AI answers your Morocco traffic law questions instantly in Arabic, French, and English.",
+    },
+    ctaText: { ar: "اسأل عن مدونة السير مجاناً", fr: "Posez Votre Question sur la Route", en: "Ask About Traffic Law Free" },
+    faqTitle: { ar: "أسئلة شائعة حول مدونة السير في المغرب", fr: "FAQ Code de la Route Maroc", en: "Morocco Traffic Law FAQ" },
+    faqItems: {
+        ar: [
+            { question: "ما هي أشهر غرامات السير في المغرب؟", answer: "أبرز غرامات السير: تجاوز السرعة (300-700 درهم حسب الزيادة)، احمرار الإشارة (700 درهم)، عدم ربط حزام الأمان (300 درهم)، استخدام الهاتف أثناء القيادة (300-700 درهم)، القيادة في حالة سكر (حتى 5000 درهم + سحب الرخصة). تتضاعف الغرامات عند التكرار." },
+            { question: "ماذا يجب أن أفعل بعد حادثة السير في المغرب؟", answer: "بعد الحادثة: تأمين مكان الحادث، تبادل وثائق التأمين، ملء وثيقة الحادثة المتفق عليها (constat amiable)، استدعاء المساعدة عند الإصابات (15 أو 150)، تصوير الأضرار، وجمع بيانات الشهود. التبليغ للتأمين خلال 5 أيام." },
+            { question: "كيف يعمل نظام النقاط في رخصة السياقة المغربية؟", answer: "تنطلق رخصة السياقة المغربية برصيد نقاط يتناقص مع المخالفات. عند استنفاد النقاط تُسحب الرخصة. يمكن استرجاع النقاط بعد فترة سلوك سليم أو إتمام دورات تكوينية في السلامة الطرقية." },
+            { question: "هل يمكنني الطعن في غرامة السير في المغرب؟", answer: "نعم، يحق لك الاعتراض على الغرامة خلال 30 يوماً من التبليغ. تُقدم شكوى مكتوبة للمحكمة المختصة أو الحضور شخصياً. أدلة مثل تسجيلات الكاميرا أو شهادات الشهود تُعزز موقفك." },
+            { question: "ما عقوبة القيادة بدون تأمين في المغرب؟", answer: "القيادة بدون تأمين مخالفة جسيمة: غرامة من 3000 إلى 10000 درهم، حجز السيارة، وقد تصل إلى الحبس. المُتسبب في حادثة بدون تأمين يتحمل تعويض الأضرار شخصياً." },
+        ],
+        fr: [
+            { question: "Quelles sont les amendes les plus fréquentes au Maroc ?", answer: "Les amendes courantes: excès de vitesse (300-700 MAD selon le dépassement), griller un feu rouge (700 MAD), défaut de ceinture (300 MAD), téléphone au volant (300-700 MAD), conduite en état d'ivresse (jusqu'à 5 000 MAD + suspension). Les infractions répétées entraînent le doublement des amendes." },
+            { question: "Que faire après un accident de la route au Maroc ?", answer: "Après l'accident: sécuriser les lieux, échanger les documents d'assurance, remplir le constat amiable, appeler les secours en cas de blessés (15 ou 150), photographier les dégâts, collecter les témoignages. Déclarer à l'assurance dans les 5 jours." },
+            { question: "Puis-je contester une amende au Maroc ?", answer: "Oui, vous pouvez contester dans les 30 jours suivant la notification. Déposez une réclamation écrite au tribunal compétent ou comparaissez en personne. Les preuves (dashcam, témoins) renforcent votre dossier." },
+            { question: "Quelles sont les sanctions pour conduite sans assurance au Maroc ?", answer: "Conduite sans assurance: amendes de 3 000 à 10 000 MAD, mise en fourrière, et risque d'emprisonnement. En cas d'accident, le conducteur non assuré est personnellement responsable de tous les dommages." },
+        ],
+        en: [
+            { question: "What are the most common traffic fines in Morocco?", answer: "Common fines: speeding (300-700 MAD depending on excess), running a red light (700 MAD), no seatbelt (300 MAD), phone while driving (300-700 MAD), drunk driving (up to 5,000 MAD + license suspension). Repeat offenses carry doubled fines." },
+            { question: "What should I do after a traffic accident in Morocco?", answer: "After an accident: secure the scene, exchange insurance documents, complete the accident report (constat amiable), call emergency services for injuries (15 or 150), photograph damage, collect witness information. Report to insurance within 5 days." },
+            { question: "Can I dispute a traffic fine in Morocco?", answer: "Yes, you can contest within 30 days of notification. Submit a written complaint to the relevant tribunal or appear in person. Evidence like dashcam footage or witness statements strengthens your case." },
+            { question: "What are the penalties for driving without insurance in Morocco?", answer: "Driving without insurance: fines of 3,000-10,000 MAD, vehicle impoundment, potential imprisonment. If an uninsured driver causes an accident, they are personally liable for all damages." },
+        ],
+    },
+    features: {
+        ar: [
+            { icon: "🚦", title: "الغرامات والمخالفات", description: "جدول كامل بغرامات السير في المغرب وكيفية الاعتراض عليها." },
+            { icon: "🚗", title: "حوادث السير", description: "إجراءات ما بعد الحادثة: constat amiable، التأمين، والتعويضات." },
+            { icon: "🔑", title: "رخصة السياقة ونقاطها", description: "نظام النقاط وسحب الرخصة وكيفية استعادتها." },
+            { icon: "🛡️", title: "التأمين الإلزامي", description: "شروط التأمين الإلزامي والتبعات القانونية عند غيابه." },
+            { icon: "🍺", title: "القيادة في حالة سكر", description: "عقوبات القيادة في حالة سكر والنفوخ في جهاز الكحول." },
+            { icon: "🤖", title: "استشارة مرورية مجانية", description: "اسأل 9anon AI عن وضعيتك القانونية بعد مخالفة أو حادثة." },
+        ],
+        fr: [
+            { icon: "🚦", title: "Amendes & Infractions", description: "Tableau complet des amendes routières au Maroc et comment les contester." },
+            { icon: "🚗", title: "Accidents de la Route", description: "Procédures après accident: constat amiable, assurance et indemnisations." },
+            { icon: "🔑", title: "Permis & Système de Points", description: "Système de points, suspension du permis et comment le récupérer." },
+            { icon: "🛡️", title: "Assurance Obligatoire", description: "Conditions de l'assurance obligatoire et conséquences légales en son absence." },
+            { icon: "🍺", title: "Conduite en État d'Ivresse", description: "Sanctions pour conduite en état d'ivresse et refus d'alcootest." },
+            { icon: "🤖", title: "Consultation Routière Gratuite", description: "Posez à 9anon AI votre question après une infraction ou un accident." },
+        ],
+        en: [
+            { icon: "🚦", title: "Fines & Violations", description: "Complete table of traffic fines in Morocco and how to contest them." },
+            { icon: "🚗", title: "Road Accidents", description: "Post-accident procedures: constat amiable, insurance, and compensation." },
+            { icon: "🔑", title: "License & Points System", description: "Points system, license suspension, and how to recover it." },
+            { icon: "🛡️", title: "Mandatory Insurance", description: "Mandatory insurance conditions and legal consequences of non-compliance." },
+            { icon: "🍺", title: "Drunk Driving", description: "Penalties for drunk driving and breathalyzer refusal in Morocco." },
+            { icon: "🤖", title: "Free Traffic Law Consultation", description: "Ask 9anon AI about your legal situation after a fine or accident." },
+        ],
+    },
+    contentSections: {
+        ar: [
+            { heading: "مدونة السير المغربية: إصلاح 2010 والسلامة الطرقية", text: "خضعت مدونة السير المغربية لإصلاح جذري عام 2010 لمعالجة ارتفاع حوادث الطرق. أدخل الإصلاح نظام نقاط رخصة السياقة، وشدّد العقوبات على المخالفات المتكررة، وجعل الكشف التقني للمركبات إلزامياً، وأحكم تنظيم قيادة السيارات الثقيلة. يهدف الإطار التشريعي الجديد إلى خفض الحوادث المميتة بنسبة 50% بحلول 2030." },
+            { heading: "ما يجب فعله بعد حادثة السير: دليل عملي", text: "بعد أي حادثة مرورية في المغرب: أولاً تأمين المكان وفحص الإصابات، ثانياً الاتصال بالإسعاف عند الحاجة (الرقم 15 أو 150)، ثالثاً تبادل وثائق التأمين وتعبئة constat amiable مع السائق الآخر، رابعاً تصوير الأضرار وتدوين بيانات الشهود، خامساً التبليغ لشركة التأمين خلال 5 أيام عمل. 9anon AI يُرشدك في كل خطوة." },
+        ],
+        fr: [
+            { heading: "Le Code de la Route 2010 : Une Réforme pour la Sécurité Routière", text: "Le Code de la Route marocain a été réformé en profondeur en 2010 pour faire face à la hausse des accidents. La réforme a introduit le système de points du permis, durci les sanctions pour récidivistes, rendu le contrôle technique obligatoire et renforcé la réglementation des poids lourds. Le nouveau cadre vise à réduire les accidents mortels de 50% d'ici 2030." },
+        ],
+        en: [
+            { heading: "Morocco's 2010 Traffic Law Reform: A Road Safety Overhaul", text: "Morocco's Code de la Route was significantly reformed in 2010 to address rising road accidents. The reform introduced the driving license points system, harsher penalties for repeat offenders, mandatory vehicle technical inspections, and stricter regulation of heavy vehicles. The new framework aims to reduce fatal accidents by 50% by 2030." },
+        ],
+    },
+    relatedLinks: [
+        { href: "/family-law", label: "Family Law" },
+        { href: "/labor-law", label: "Labor Law" },
+        { href: "/legal-ai", label: "AI Legal Assistant" },
+        { href: "/legal-chatbot", label: "Legal Chatbot" },
+        { href: "/tenant-rights", label: "Tenant Rights" },
+    ],
+    gradientFrom: "from-red-600",
+    gradientTo: "to-orange-500",
+    glowColor: "red",
+};

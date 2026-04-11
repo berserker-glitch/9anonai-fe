@@ -67,8 +67,20 @@ export function middleware(request: NextRequest) {
     // === SEO page slugs that live under app/[lang]/[slug]/ ===
     // These base paths get rewritten to /[lang]/[slug] for locale detection
     const seoPageSlugs = [
-        "legal-ai", "legal-chatbot", "business-legal", "startup-legal",
-        "divorce-law", "employee-rights", "tenant-rights", "contract-review",
+        // Core AI / consultation
+        "legal-ai", "legal-chatbot", "online-consultation",
+        // Individual rights
+        "divorce-law", "employee-rights", "tenant-rights",
+        "inheritance-law", "immigration-law",
+        // Business / commercial
+        "business-legal", "startup-legal", "contract-review",
+        "commercial-law", "tax-legal",
+        // Property
+        "rental-law", "real-estate-law",
+        // Digital law
+        "cybersecurity-law", "crypto-law", "digital-law",
+        // Topic hub pages
+        "family-law", "labor-law", "traffic-law",
     ];
 
     // Check if the pathname matches a SEO page slug
