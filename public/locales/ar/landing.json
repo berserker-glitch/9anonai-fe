@@ -5,7 +5,10 @@
         "login": "تسجيل الدخول",
         "getStarted": "ابدأ الآن",
         "goToChat": "الذهاب للمحادثة",
-        "compare": "مقارنة مع 9anoun"
+        "compare": "مقارنة مع 9anoun",
+        "blog": "المدونة",
+        "legalTopics": "مجالات القانون",
+        "tools": "الأدوات"
     },
     "hero": {
         "badge": "مساعد قانوني ذكي",
@@ -87,6 +90,16 @@
         "employeeRights": "حقوق الموظف",
         "businessLegal": "الشركات والمقاولات",
         "compare": "9anon ضد 9anoun AI",
+        "inheritanceLaw": "الإرث والتركات",
+        "tenantRights": "حقوق المكتري",
+        "taxLaw": "الضرائب",
+        "realEstateLaw": "العقار",
+        "cryptoLaw": "العملات الرقمية",
+        "immigrationLaw": "الإقامة والهجرة",
+        "tools": "الأدوات",
+        "inheritanceCalc": "حاسبة الإرث",
+        "incomeTaxCalc": "حاسبة الضريبة على الدخل",
+        "rentCalc": "حاسبة الزيادة في الكراء",
         "privacy": "سياسة الخصوصية",
         "terms": "شروط الخدمة",
         "contact": "اتصل بنا",

@@ -5,7 +5,10 @@
         "login": "Login",
         "getStarted": "Get Started",
         "goToChat": "Go to Chat",
-        "compare": "Compare 9anoun"
+        "compare": "Compare 9anoun",
+        "blog": "Blog",
+        "legalTopics": "Legal Topics",
+        "tools": "Tools"
     },
     "hero": {
         "badge": "AI-Powered Legal Assistant",
@@ -87,6 +90,16 @@
         "employeeRights": "Employee Rights",
         "businessLegal": "Business & Startups",
         "compare": "9anon vs 9anoun AI",
+        "inheritanceLaw": "Inheritance Law",
+        "tenantRights": "Tenant Rights",
+        "taxLaw": "Tax Law",
+        "realEstateLaw": "Real Estate Law",
+        "cryptoLaw": "Crypto Law",
+        "immigrationLaw": "Immigration Law",
+        "tools": "Tools",
+        "inheritanceCalc": "Inheritance Calculator",
+        "incomeTaxCalc": "Income Tax Calculator",
+        "rentCalc": "Rent Increase Calculator",
         "privacy": "Privacy Policy",
         "terms": "Terms of Service",
         "contact": "Contact Us",

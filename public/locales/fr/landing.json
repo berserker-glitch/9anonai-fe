@@ -5,7 +5,10 @@
         "login": "Connexion",
         "getStarted": "Commencer",
         "goToChat": "Aller au Chat",
-        "compare": "Comparer 9anoun"
+        "compare": "Comparer 9anoun",
+        "blog": "Blog",
+        "legalTopics": "Domaines Juridiques",
+        "tools": "Outils"
     },
     "hero": {
         "badge": "Intelligence artificielle du droit marocain",
@@ -87,6 +90,16 @@
         "employeeRights": "Droits des Employés",
         "businessLegal": "Entreprises et Startups",
         "compare": "9anon vs 9anoun AI",
+        "inheritanceLaw": "Droit Successoral",
+        "tenantRights": "Droits du Locataire",
+        "taxLaw": "Fiscalité",
+        "realEstateLaw": "Immobilier",
+        "cryptoLaw": "Cryptomonnaies",
+        "immigrationLaw": "Immigration",
+        "tools": "Outils",
+        "inheritanceCalc": "Calculateur d'Héritage",
+        "incomeTaxCalc": "Calculateur IR",
+        "rentCalc": "Calculateur Loyer",
         "privacy": "Politique de Confidentialité",
         "terms": "Conditions d'Utilisation",
         "contact": "Nous Contacter",
