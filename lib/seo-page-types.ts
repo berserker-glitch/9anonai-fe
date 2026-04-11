@@ -64,20 +64,39 @@ export function t(text: TrilingualText, lang: string): string {
 }
 
 /**
- * All valid SEO page slugs — used by generateStaticParams
+ * All valid SEO page slugs — single source of truth.
+ * Used by: generateStaticParams (app/[lang]/[slug]/page.tsx),
+ *           sitemap (app/sitemap.ts), and middleware (middleware.ts).
+ * Adding a slug here + registering it in seo-pages-registry.ts is all that's needed.
  */
 export const SEO_PAGE_SLUGS = [
+    // Core AI / consultation pages
     "legal-ai",
     "legal-chatbot",
-    "business-legal",
-    "startup-legal",
+    "online-consultation",
+    // Individual rights pages
     "divorce-law",
     "employee-rights",
     "tenant-rights",
+    "inheritance-law",
+    "immigration-law",
+    // Business / commercial pages
+    "business-legal",
+    "startup-legal",
     "contract-review",
     "commercial-law",
     "tax-legal",
-    "online-consultation",
+    // Property / real-estate pages
+    "rental-law",
+    "real-estate-law",
+    // Digital law pages
+    "cybersecurity-law",
+    "crypto-law",
+    "digital-law",
+    // Topic hub pages (migrated from standalone /family-law etc.)
+    "family-law",
+    "labor-law",
+    "traffic-law",
 ] as const;
 
 export type SEOPageSlug = typeof SEO_PAGE_SLUGS[number];
