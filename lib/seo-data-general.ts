@@ -213,3 +213,110 @@ export const legalChatbotPage: SEOPageConfig = {
         { href: "/tenant-rights", label: "Tenant Rights" },
     ],
 };
+
+/**
+ * Online Consultation page — targets استشارة قانونية مجانية (position 1.91!) +
+ * consultation juridique en ligne + online legal advice Morocco.
+ * This is the highest-converting entry point for Moroccans seeking free legal help.
+ */
+export const onlineConsultationPage: SEOPageConfig = {
+    slug: "online-consultation",
+    titles: {
+        ar: "استشارة قانونية مجانية اونلاين بالمغرب | 9anon AI",
+        fr: "Consultation Juridique Gratuite en Ligne au Maroc | 9anon AI",
+        en: "Free Online Legal Consultation Morocco | 9anon AI",
+    },
+    descriptions: {
+        ar: "احصل على استشارة قانونية مجانية اونلاين في المغرب عبر الذكاء الاصطناعي. إجابات فورية ودقيقة حول قانون الأسرة، الشغل، الكراء، الإرث والتجارة. متاح 24/7 بالعربية والفرنسية والدارجة.",
+        fr: "Obtenez une consultation juridique gratuite en ligne au Maroc via IA. Réponses instantanées sur le droit de la famille, du travail, de la location et des affaires. Disponible 24h/24 en arabe et français.",
+        en: "Get free online legal consultation in Morocco via AI. Instant accurate answers on family law, labor law, rental, inheritance, and commercial law. Available 24/7 in Arabic, French, and English.",
+    },
+    keywords: {
+        ar: ["استشارة قانونية مجانية المغرب", "استشارة قانونية اونلاين", "محامي مجاني اونلاين المغرب", "ذكاء اصطناعي قانوني مجاني", "مساعد قانوني مجاني", "سؤال قانوني مجاني المغرب"],
+        fr: ["consultation juridique gratuite Maroc", "avocat gratuit en ligne Maroc", "aide juridique gratuite Maroc", "conseil juridique en ligne Maroc", "consultation juridique IA Maroc"],
+        en: ["free legal consultation morocco", "online legal advice morocco free", "free legal help morocco", "legal question morocco online", "free AI lawyer morocco"],
+    },
+    h1: {
+        ar: "استشارة قانونية مجانية اونلاين في المغرب",
+        fr: "Consultation Juridique Gratuite en Ligne au Maroc",
+        en: "Free Online Legal Consultation in Morocco",
+    },
+    badge: { ar: "مجاناً 100%", fr: "100% Gratuit", en: "100% Free" },
+    subtitle: {
+        ar: "9anon AI هو مساعدك القانوني الذكي المجاني — متاح على مدار الساعة بالعربية والفرنسية والدارجة. اطرح أي سؤال قانوني يخصك وفق القانون المغربي واحصل على إجابة فورية ودقيقة بدون مواعيد ولا رسوم.",
+        fr: "9anon AI est votre assistant juridique IA gratuit — disponible 24h/24 en arabe et français. Posez toute question juridique selon le droit marocain et obtenez une réponse instantanée sans rendez-vous ni frais.",
+        en: "9anon AI is your free AI legal assistant — available 24/7 in Arabic, French, and English. Ask any legal question about Moroccan law and get an instant, accurate answer with no appointments and no fees.",
+    },
+    ctaText: { ar: "ابدأ استشارتك المجانية الآن", fr: "Démarrer Ma Consultation Gratuite", en: "Start My Free Consultation" },
+    faqTitle: { ar: "أسئلة شائعة عن الاستشارة القانونية المجانية", fr: "FAQ Consultation Juridique Gratuite", en: "Free Legal Consultation FAQ" },
+    faqItems: {
+        ar: [
+            { question: "هل الاستشارة القانونية عبر 9anon AI مجانية فعلاً؟", answer: "نعم، تماماً مجانية بدون أي رسوم أو اشتراكات. يمكنك طرح أي عدد من الأسئلة القانونية في أي وقت دون الحاجة لإنشاء حساب." },
+            { question: "ما المجالات القانونية التي يغطيها 9anon AI؟", answer: "يغطي 9anon AI جميع فروع القانون المغربي: مدونة الأسرة (الطلاق، الحضانة، الإرث)، قانون الشغل، القانون التجاري، قانون الكراء، القانون الجنائي، قانون السير، والقانون الإداري." },
+            { question: "هل يمكنني الاستشارة بالدارجة المغربية؟", answer: "نعم! 9anon AI يفهم ويجيب بالدارجة المغربية إضافة إلى العربية الفصحى والفرنسية والإنجليزية. يمكنك الكتابة بأي لغة تريح وتحصل على الإجابة بنفس اللغة." },
+            { question: "هل الاستشارة عبر 9anon AI تُغني عن المحامي؟", answer: "9anon AI يوفر معلومات قانونية تعليمية دقيقة مبنية على النصوص القانونية المغربية. للقضايا المعقدة التي تتطلب تمثيلاً قانونياً أمام المحاكم، يُنصح بالتواصل مع محامٍ مُرخّص. 9anon AI هو خطوتك الأولى الذكية." },
+            { question: "هل معلوماتي القانونية آمنة ومحمية؟", answer: "نعم، جلساتك مشفرة وسرية تماماً. لا نشارك أي معلومات مع أطراف ثالثة. يمكنك الاستشارة بثقة تامة حول أي موضوع قانوني حساس." },
+        ],
+        fr: [
+            { question: "La consultation juridique via 9anon AI est-elle vraiment gratuite ?", answer: "Oui, totalement gratuite sans frais ni abonnements. Posez autant de questions juridiques que vous voulez à tout moment sans créer de compte." },
+            { question: "Quels domaines juridiques 9anon AI couvre-t-il ?", answer: "9anon AI couvre tout le droit marocain: Moudawana (divorce, garde, succession), Code du Travail, droit commercial, droit locatif, Code Pénal, Code de la Route et droit administratif." },
+            { question: "Puis-je consulter en Darija marocain ?", answer: "Oui ! 9anon AI comprend et répond en Darija marocain, en arabe classique, en français et en anglais." },
+            { question: "La consultation IA remplace-t-elle un avocat ?", answer: "9anon AI fournit des informations juridiques précises basées sur les textes de loi marocains. Pour les affaires complexes nécessitant une représentation en justice, consultez un avocat agréé. 9anon AI est votre premier pas intelligent." },
+        ],
+        en: [
+            { question: "Is the legal consultation via 9anon AI really free?", answer: "Yes, completely free with no fees or subscriptions. Ask as many legal questions as you want at any time, no account required." },
+            { question: "What legal areas does 9anon AI cover?", answer: "9anon AI covers all Moroccan law: Family Code (Moudawana), Labor Law, Commercial Law, Rental Law, Penal Code, Traffic Law, and Administrative Law." },
+            { question: "Can I consult in Moroccan Darija?", answer: "Yes! 9anon AI understands and responds in Moroccan Darija as well as standard Arabic, French, and English." },
+            { question: "Does AI consultation replace a lawyer?", answer: "9anon AI provides accurate legal information based on Moroccan legal texts. For complex cases requiring court representation, consult a licensed attorney. 9anon AI is your smart first step." },
+        ],
+    },
+    features: {
+        ar: [
+            { icon: "🆓", title: "مجاناً 100%", description: "لا رسوم، لا اشتراكات، لا حاجة لحساب. استشارة قانونية مجانية حقيقية." },
+            { icon: "⚡", title: "إجابة فورية", description: "احصل على إجابتك القانونية في ثوانٍ، على مدار الساعة 24/7." },
+            { icon: "🌍", title: "عربي، فرنسي، دارجة", description: "اطرح سؤالك بأي لغة تريحك — العربية، الفرنسية، الدارجة أو الإنجليزية." },
+            { icon: "📚", title: "مبني على القانون الفعلي", description: "إجابات مستندة إلى النصوص القانونية المغربية الرسمية: مدونات وقوانين ومراسيم." },
+            { icon: "🔒", title: "سري وخاص", description: "لا أحد يعلم بأسئلتك. استشارتك محمية ومشفرة تماماً." },
+            { icon: "📱", title: "متاح على الهاتف", description: "استشارتك القانونية في جيبك — استعمل 9anon AI من أي هاتف أو حاسوب." },
+        ],
+        fr: [
+            { icon: "🆓", title: "100% Gratuit", description: "Aucun frais, aucun abonnement, aucun compte requis." },
+            { icon: "⚡", title: "Réponse Instantanée", description: "Obtenez votre réponse juridique en secondes, 24h/24 7j/7." },
+            { icon: "🌍", title: "Arabe, Français, Darija", description: "Posez votre question dans la langue qui vous convient." },
+            { icon: "📚", title: "Basé sur le Droit Réel", description: "Réponses fondées sur les textes juridiques marocains officiels." },
+            { icon: "🔒", title: "Confidentiel et Privé", description: "Vos questions restent totalement privées et chiffrées." },
+            { icon: "📱", title: "Disponible sur Mobile", description: "Votre consultation juridique dans votre poche." },
+        ],
+        en: [
+            { icon: "🆓", title: "100% Free", description: "No fees, no subscriptions, no account required." },
+            { icon: "⚡", title: "Instant Answer", description: "Get your legal answer in seconds, 24/7." },
+            { icon: "🌍", title: "Arabic, French, Darija", description: "Ask in whatever language you're comfortable with." },
+            { icon: "📚", title: "Based on Real Law", description: "Answers grounded in official Moroccan legal texts." },
+            { icon: "🔒", title: "Confidential & Private", description: "Your questions stay fully private and encrypted." },
+            { icon: "📱", title: "Mobile-Ready", description: "Your legal consultation in your pocket." },
+        ],
+    },
+    contentSections: {
+        ar: [
+            { heading: "لماذا تختار 9anon AI للاستشارة القانونية المجانية؟", text: "الاستشارة القانونية التقليدية في المغرب قد تكلف ما بين 500 و2000 درهم للجلسة الواحدة. كثير من المواطنين، خاصة في المدن الصغيرة والأرياف، يجدون صعوبة في الوصول إلى محامٍ. 9anon AI يسد هذه الفجوة بتوفير إرشادات قانونية دقيقة ومجانية لكل مغربي في أي مكان." },
+            { heading: "كيف يعمل 9anon AI؟", text: "يعتمد 9anon AI على قاعدة بيانات قانونية شاملة تشمل جميع القوانين والمراسيم والتشريعات المغربية. عند طرح سؤالك، يحلل الذكاء الاصطناعي النصوص القانونية ذات الصلة ويقدم لك إجابة واضحة ومستندة إلى المراجع القانونية الرسمية. يمكنك الاستمرار في طرح أسئلة متابعة للحصول على توضيحات إضافية." },
+            { heading: "ما الذي يميز 9anon AI عن المواقع الإخبارية القانونية؟", text: "المواقع الإخبارية تقدم معلومات عامة، بينما يتعامل 9anon AI مع وضعيتك القانونية الخاصة. يمكنك وصف حالتك بالتفصيل وسيقدم لك الذكاء الاصطناعي تحليلاً مخصصاً مبنياً على القانون المغربي الفعلي، مع الإشارة إلى المواد القانونية والمسطرة المناسبة لوضعيتك." },
+        ],
+        fr: [
+            { heading: "Pourquoi Choisir 9anon AI pour la Consultation Juridique Gratuite ?", text: "La consultation juridique traditionnelle au Maroc peut coûter entre 500 et 2 000 MAD par séance. De nombreux citoyens, surtout dans les petites villes, ont un accès limité aux avocats. 9anon AI comble cette lacune en fournissant des conseils juridiques précis et gratuits à tous les Marocains." },
+            { heading: "Comment Fonctionne 9anon AI ?", text: "9anon AI s'appuie sur une base de données juridique complète incluant toutes les lois, décrets et réglementations marocains. Il analyse les textes pertinents et fournit une réponse claire référencée sur les sources juridiques officielles." },
+        ],
+        en: [
+            { heading: "Why Choose 9anon AI for Free Legal Consultation?", text: "Traditional legal consultation in Morocco costs between 500-2,000 MAD per session. Many citizens, especially in smaller towns, have limited access to lawyers. 9anon AI bridges this gap by providing accurate, free legal guidance to every Moroccan anywhere." },
+            { heading: "How Does 9anon AI Work?", text: "9anon AI relies on a comprehensive legal database covering all Moroccan laws, decrees, and regulations. It analyzes relevant legal texts and provides clear, referenced answers backed by official legal sources." },
+        ],
+    },
+    relatedLinks: [
+        { href: "/legal-ai", label: "AI Legal Assistant" },
+        { href: "/legal-chatbot", label: "Legal Chatbot" },
+        { href: "/family-law", label: "Family Law" },
+        { href: "/labor-law", label: "Labor Law" },
+        { href: "/divorce-law", label: "Divorce Law" },
+        { href: "/tenant-rights", label: "Tenant Rights" },
+    ],
+};
