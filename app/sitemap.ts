@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/blog";
+import { SEO_PAGE_SLUGS } from "@/lib/seo-page-types";
 
 /**
  * Safely parse a date string to a valid Date object.
@@ -17,20 +18,8 @@ function parseDate(dateString: string): Date {
     return parsed;
 }
 
-/**
- * SEO landing page slugs — each served under /[lang]/[slug]
- * with trilingual hreflang alternates
- */
-const SEO_PAGE_SLUGS = [
-    "legal-ai",
-    "legal-chatbot",
-    "business-legal",
-    "startup-legal",
-    "divorce-law",
-    "employee-rights",
-    "tenant-rights",
-    "contract-review",
-];
+// SEO_PAGE_SLUGS is imported from lib/seo-page-types.ts — single source of truth.
+// Adding a new page to the registry automatically includes it in the sitemap.
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = "https://9anonai.com";
@@ -149,25 +138,49 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: 'weekly',
             priority: 0.9,
         },
-        {
-            url: `${baseUrl}/labor-law`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.85,
-        },
-        {
-            url: `${baseUrl}/traffic-law`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.85,
-        },
-        {
-            url: `${baseUrl}/family-law`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.85,
-        },
-        // SEO landing pages (trilingual, 8 pages × 3 langs = 24 URLs)
+        // Calculator pages (trilingual) — high-value tool pages for viral Moroccan traffic
+        ...["ar", "fr", "en"].flatMap((lang) => [
+            {
+                url: `${baseUrl}/${lang}/calculators/inheritance`,
+                lastModified: new Date(),
+                changeFrequency: "monthly" as const,
+                priority: 0.9,
+                alternates: {
+                    languages: {
+                        ar: `${baseUrl}/ar/calculators/inheritance`,
+                        fr: `${baseUrl}/fr/calculators/inheritance`,
+                        en: `${baseUrl}/en/calculators/inheritance`,
+                    },
+                },
+            },
+            {
+                url: `${baseUrl}/${lang}/calculators/income-tax`,
+                lastModified: new Date(),
+                changeFrequency: "monthly" as const,
+                priority: 0.9,
+                alternates: {
+                    languages: {
+                        ar: `${baseUrl}/ar/calculators/income-tax`,
+                        fr: `${baseUrl}/fr/calculators/income-tax`,
+                        en: `${baseUrl}/en/calculators/income-tax`,
+                    },
+                },
+            },
+            {
+                url: `${baseUrl}/${lang}/calculators/rent-increase`,
+                lastModified: new Date(),
+                changeFrequency: "monthly" as const,
+                priority: 0.9,
+                alternates: {
+                    languages: {
+                        ar: `${baseUrl}/ar/calculators/rent-increase`,
+                        fr: `${baseUrl}/fr/calculators/rent-increase`,
+                        en: `${baseUrl}/en/calculators/rent-increase`,
+                    },
+                },
+            },
+        ]),
+        // SEO landing pages — driven by SEO_PAGE_SLUGS (single source of truth in seo-page-types.ts)
         ...seoPageUrls,
         // Blog posts (trilingual)
         ...blogUrls,
