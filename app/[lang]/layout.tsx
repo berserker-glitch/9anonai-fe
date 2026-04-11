@@ -44,6 +44,71 @@ const siteJsonLd = [
             "query-input": "required name=search_term_string",
         },
     },
+    // LegalService schema — tells Google this is a legal service specifically for Morocco.
+    // Critical for local Moroccan search prominence and Knowledge Panel eligibility.
+    {
+        "@context": "https://schema.org",
+        "@type": "LegalService",
+        "name": "9anon AI",
+        "alternateName": ["9anon", "9anoun AI", "قانون AI"],
+        "url": BASE_URL,
+        "description": "مساعد قانوني ذكي مجاني للقانون المغربي. Free AI legal assistant for Moroccan law. Assistant juridique IA gratuit pour le droit marocain.",
+        "serviceType": ["AI Legal Consultation", "Legal Information", "استشارة قانونية", "Consultation Juridique"],
+        "areaServed": {
+            "@type": "Country",
+            "name": "Morocco",
+            "alternateName": "المغرب",
+            "sameAs": "https://en.wikipedia.org/wiki/Morocco",
+        },
+        "availableLanguage": [
+            { "@type": "Language", "name": "Arabic", "alternateName": "العربية" },
+            { "@type": "Language", "name": "French", "alternateName": "Français" },
+            { "@type": "Language", "name": "English" },
+        ],
+        "priceRange": "Free",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "MAD",
+            "description": "Free AI-powered legal consultation for Moroccan law",
+        },
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Moroccan Legal Topics",
+            "itemListElement": [
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "مدونة الأسرة / Family Law (Moudawana)" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "قانون الشغل / Labor Law (Code du Travail)" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "القانون التجاري / Commercial Law" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "قانون الكراء / Rental Law" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "الإرث / Inheritance Law" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "تسجيل الشركات / Company Registration" } },
+            ],
+        },
+    },
+    // SoftwareApplication schema — signals to Google that 9anon AI is a legal app,
+    // enabling rich results in app-related searches and AI tool directories.
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "9anon AI",
+        "applicationCategory": "LegalApplication",
+        "applicationSubCategory": "AI Legal Assistant",
+        "operatingSystem": "Web",
+        "inLanguage": ["ar", "fr", "en"],
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "MAD",
+        },
+        "featureList": [
+            "Free AI legal consultation in Arabic, French and English",
+            "Moroccan Family Law (Moudawana) guidance",
+            "Labor Law and employee rights advice",
+            "AI Contract Builder",
+            "24/7 availability",
+        ],
+        "url": BASE_URL,
+    },
 ];
 
 type Props = {
