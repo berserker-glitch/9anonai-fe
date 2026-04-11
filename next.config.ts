@@ -22,6 +22,12 @@ const nextConfig: NextConfig = {
       { source: '/blog', destination: '/ar/blog', permanent: true },
       { source: '/blog/:slug', destination: '/ar/blog/:slug', permanent: true },
 
+      // SEO: Redirect standalone topic pages to localized versions (middleware handles locale detection)
+      // These were English-only; now they are served trilingual via app/[lang]/[slug]
+      { source: '/family-law', destination: '/ar/family-law', permanent: true },
+      { source: '/labor-law', destination: '/ar/labor-law', permanent: true },
+      { source: '/traffic-law', destination: '/ar/traffic-law', permanent: true },
+
       // SEO: Redirect HTTP non-www to HTTPS www (handled at hosting level, but good to document)
       // SEO: Redirect www.9anonai.com to 9anonai.com (handled at hosting level)
     ];
