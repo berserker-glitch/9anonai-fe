@@ -286,3 +286,105 @@ export const contractReviewPage: SEOPageConfig = {
         { href: "/legal-ai", label: "AI Legal Assistant" },
     ],
 };
+
+/** Commercial Law page — targets القانون التجاري / droit commercial Maroc */
+export const commercialLawPage: SEOPageConfig = {
+    slug: "commercial-law",
+    titles: {
+        ar: "القانون التجاري المغربي | مدونة التجارة - 9anon AI",
+        fr: "Droit Commercial Maroc | Code de Commerce - 9anon AI",
+        en: "Moroccan Commercial Law | Business Code Guide - 9anon AI",
+    },
+    descriptions: {
+        ar: "دليل شامل حول القانون التجاري المغربي: مدونة التجارة، تأسيس الشركات، العقود التجارية، الإفلاس والتصفية. استشارة قانونية مجانية بالذكاء الاصطناعي.",
+        fr: "Guide complet sur le droit commercial marocain: Code de Commerce, création de sociétés, contrats commerciaux, faillite. Consultation juridique gratuite par IA.",
+        en: "Complete guide to Moroccan commercial law: Commercial Code, company formation, business contracts, bankruptcy and liquidation. Free AI legal consultation.",
+    },
+    keywords: {
+        ar: ["القانون التجاري المغربي", "مدونة التجارة", "تأسيس شركة المغرب", "عقود تجارية المغرب", "الإفلاس المغرب", "السجل التجاري المغرب"],
+        fr: ["droit commercial Maroc", "code de commerce Maroc", "création société Maroc", "contrat commercial Maroc", "faillite Maroc", "registre de commerce Maroc"],
+        en: ["moroccan commercial law", "morocco commercial code", "business registration morocco", "commercial contracts morocco", "bankruptcy morocco"],
+    },
+    h1: {
+        ar: "القانون التجاري في المغرب: دليلك الشامل",
+        fr: "Le Droit Commercial au Maroc : Guide Complet",
+        en: "Moroccan Commercial Law: Your Complete Guide",
+    },
+    badge: { ar: "القانون التجاري", fr: "Droit Commercial", en: "Commercial Law" },
+    subtitle: {
+        ar: "افهم مدونة التجارة المغربية بسهولة — من تأسيس الشركات والعقود التجارية إلى الإفلاس والنزاعات. احصل على إرشادات قانونية فورية ومجانية بالذكاء الاصطناعي.",
+        fr: "Comprenez le Code de Commerce marocain — de la création d'entreprises aux contrats commerciaux, faillites et litiges. Guidance juridique gratuite par IA.",
+        en: "Understand the Moroccan Commercial Code easily — from company formation and business contracts to bankruptcy and disputes. Free instant AI legal guidance.",
+    },
+    ctaText: { ar: "اسأل عن القانون التجاري", fr: "Posez Votre Question Commerciale", en: "Ask About Commercial Law" },
+    faqTitle: { ar: "أسئلة شائعة حول القانون التجاري", fr: "FAQ Droit Commercial", en: "Commercial Law FAQ" },
+    faqItems: {
+        ar: [
+            { question: "ما هي أنواع الشركات في القانون التجاري المغربي؟", answer: "يتضمن القانون التجاري المغربي عدة أشكال: الشركة ذات المسؤولية المحدودة (SARL)، شركة المساهمة (SA)، شركة التضامن (SNC). لكل شكل خصائص قانونية ومتطلبات رأسمالية مختلفة وفق مدونة التجارة (القانون 15-95)." },
+            { question: "كيف أسجل شركتي في السجل التجاري بالمغرب؟", answer: "يتم التسجيل عبر المراكز الجهوية للاستثمار (CRI) إلكترونياً. تشمل الخطوات: الحصول على شهادة سلبية من OMPIC، تحرير العقد التأسيسي، التسجيل في الضرائب والضمان الاجتماعي (CNSS). العملية تستغرق 3-5 أيام عمل." },
+            { question: "ما هي شروط إفلاس الشركة في المغرب؟", answer: "وفق مدونة التجارة، يُعلن التوقف عن الدفع أساساً للإفلاس. يجب على الشركة التصريح بالتوقف خلال 15 يوماً. المحكمة التجارية تفتح مسطرة التسوية القضائية أو التصفية حسب الوضعية المالية." },
+            { question: "هل يمكن للأجانب تأسيس شركة في المغرب؟", answer: "نعم، يحق للأجانب تأسيس شركات في المغرب بنفس شروط المواطنين وفق المادة 15 من مدونة التجارة. بعض القطاعات تتطلب شراكة مع مواطن مغربي. منصة CRI الإلكترونية تدعم طلبات الأجانب." },
+            { question: "ما الفرق بين المحكمة التجارية والمحكمة المدنية في المغرب؟", answer: "تختص المحاكم التجارية بالفصل في النزاعات بين التجار والشركات، بينما تختص المحاكم المدنية بالنزاعات بين الأفراد. كل شركة مسجلة تخضع لاختصاص المحكمة التجارية في حالة النزاع." },
+        ],
+        fr: [
+            { question: "Quels sont les types de sociétés en droit commercial marocain ?", answer: "Le Code de Commerce marocain (Loi 15-95) prévoit: la SARL, la SA, la SNC et la SCS. Chaque forme a des caractéristiques et exigences en capital différentes." },
+            { question: "Comment enregistrer une société au Maroc ?", answer: "L'enregistrement se fait via les CRI électroniquement: Certificat Négatif d'OMPIC, statuts, inscription aux impôts et à la CNSS. Le processus prend 3-5 jours ouvrables." },
+            { question: "Les étrangers peuvent-ils créer une entreprise au Maroc ?", answer: "Oui, selon l'article 15 du Code de Commerce. Certains secteurs nécessitent un partenaire marocain." },
+            { question: "Comment résoudre un litige commercial au Maroc ?", answer: "Via les tribunaux commerciaux ou l'arbitrage/médiation. La médiation est encouragée pour sa rapidité et son coût réduit." },
+        ],
+        en: [
+            { question: "What company types exist under Moroccan commercial law?", answer: "The Moroccan Commercial Code (Law 15-95) offers: SARL (limited liability), SA (joint-stock), SNC (general partnership), and SCS. Each has different liability and capital requirements." },
+            { question: "How do I register a company in Morocco?", answer: "Through CRI electronically: obtain a Certificat Négatif from OMPIC, draft articles of association, register with tax authorities and CNSS. Takes 3-5 business days." },
+            { question: "Can foreigners start a business in Morocco?", answer: "Yes, under Article 15 of the Commercial Code. Some sectors may require a Moroccan partner." },
+            { question: "How are commercial disputes resolved in Morocco?", answer: "Through commercial courts or arbitration/mediation. Alternative dispute resolution is encouraged for speed and lower cost." },
+        ],
+    },
+    features: {
+        ar: [
+            { icon: "🏢", title: "تأسيس الشركات", description: "دليل خطوة بخطوة لتأسيس SARL أو SA أو Auto-Entrepreneur في المغرب." },
+            { icon: "📜", title: "العقود التجارية", description: "فهم وصياغة العقود التجارية وفق مدونة التجارة المغربية." },
+            { icon: "⚖️", title: "النزاعات التجارية", description: "إجراءات حل النزاعات أمام المحاكم التجارية في المغرب." },
+            { icon: "💼", title: "الإفلاس والتسوية", description: "إجراءات التوقف عن الدفع والتسوية القضائية والتصفية." },
+            { icon: "🤖", title: "ذكاء اصطناعي مجاني", description: "اسأل 9anon AI أي سؤال تجاري واحصل على إجابة فورية." },
+            { icon: "🔒", title: "سري وآمن", description: "استشارتك القانونية تبقى خاصة ومحمية تماماً." },
+        ],
+        fr: [
+            { icon: "🏢", title: "Création d'Entreprises", description: "Guide étape par étape pour créer une SARL, SA ou Auto-Entrepreneur au Maroc." },
+            { icon: "📜", title: "Contrats Commerciaux", description: "Comprendre et rédiger des contrats conformes au Code de Commerce marocain." },
+            { icon: "⚖️", title: "Litiges Commerciaux", description: "Procédures de résolution devant les tribunaux commerciaux." },
+            { icon: "💼", title: "Faillite et Redressement", description: "Procédures de cessation de paiements, redressement et liquidation." },
+            { icon: "🤖", title: "IA Juridique Gratuite", description: "Posez à 9anon AI toute question commerciale pour une réponse instantanée." },
+            { icon: "🔒", title: "Confidentiel", description: "Votre consultation reste entièrement privée." },
+        ],
+        en: [
+            { icon: "🏢", title: "Company Formation", description: "Step-by-step guide to forming a SARL, SA or Auto-Entrepreneur in Morocco." },
+            { icon: "📜", title: "Business Contracts", description: "Understand and draft contracts compliant with the Moroccan Commercial Code." },
+            { icon: "⚖️", title: "Commercial Disputes", description: "Dispute resolution procedures before Morocco's commercial courts." },
+            { icon: "💼", title: "Bankruptcy & Restructuring", description: "Insolvency, judicial restructuring, and liquidation procedures." },
+            { icon: "🤖", title: "Free AI Help", description: "Ask 9anon AI any commercial law question for an instant answer." },
+            { icon: "🔒", title: "Private & Secure", description: "Your legal consultation remains fully private." },
+        ],
+    },
+    contentSections: {
+        ar: [
+            { heading: "مدونة التجارة المغربية: الإطار القانوني للأعمال", text: "تُشكل مدونة التجارة المغربية (القانون رقم 15-95) الركيزة الأساسية للنشاط الاقتصادي في المملكة. تنظم هذه المدونة العلاقات بين التجار والشركات وتحدد الحقوق والالتزامات في المعاملات التجارية. يُعدّ فهم هذا الإطار ضرورة لكل رائد أعمال أو شركة تنوي العمل في المغرب." },
+            { heading: "تأسيس الشركات في المغرب", text: "يوفر النظام القانوني المغربي مرونة في اختيار الشكل القانوني. فالشركة ذات المسؤولية المحدودة (SARL) هي الأكثر شيوعاً بسبب محدودية المسؤولية وبساطة الإجراءات. أما نظام المقاول الذاتي فيُتيح للأفراد ممارسة نشاط تجاري بإجراءات مبسطة." },
+            { heading: "حل النزاعات التجارية", text: "تختص المحاكم التجارية بالفصل في النزاعات المتعلقة بالأعمال. يُتاح أيضاً اللجوء إلى التحكيم والوساطة كبدائل أسرع وأقل تكلفة. 9anon AI يمكنه تقديم إرشادات فورية حول الخطوات الأولى في أي نزاع تجاري." },
+        ],
+        fr: [
+            { heading: "Le Code de Commerce Marocain: Cadre Juridique des Affaires", text: "Le Code de Commerce marocain (Loi 15-95) est le pilier de l'activité économique. Il régit les relations entre commerçants, définissant droits et obligations dans les transactions commerciales." },
+            { heading: "Création d'Entreprises au Maroc", text: "Le système juridique marocain offre flexibilité et options variées. La SARL est la plus populaire pour sa responsabilité limitée. Le statut Auto-Entrepreneur simplifie l'exercice d'une activité commerciale individuelle." },
+        ],
+        en: [
+            { heading: "The Moroccan Commercial Code: Framework for Business", text: "The Moroccan Commercial Code (Law 15-95) is the cornerstone of business activity in Morocco. It governs relationships between merchants and companies, defining rights and obligations in commercial transactions." },
+            { heading: "Company Formation in Morocco", text: "Morocco offers flexible company structures. The SARL is most popular for its limited liability and simple procedures. The Auto-Entrepreneur scheme suits solo operators with simplified registration and taxation." },
+        ],
+    },
+    relatedLinks: [
+        { href: "/business-legal", label: "Business Legal" },
+        { href: "/startup-legal", label: "Startup Legal" },
+        { href: "/contract-review", label: "Contract Review" },
+        { href: "/tax-legal", label: "Tax Legal" },
+        { href: "/legal-ai", label: "AI Legal Assistant" },
+    ],
+};
