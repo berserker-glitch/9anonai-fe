@@ -261,7 +261,7 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: Blo
 
                         {/* Promotion banner */}
                         <div className="not-prose mt-8">
-                            <BlogPromotion lang={lang} />
+                            <BlogPromotion lang={lang} topic={post.category ?? post.slug} />
                         </div>
 
                         {/* Related Articles for internal linking */}

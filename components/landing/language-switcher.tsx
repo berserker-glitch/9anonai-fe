@@ -66,12 +66,18 @@ export function LanguageSwitcher() {
                                     const firstSegmentIsLang = segments.length > 0 && Object.keys(languages).includes(segments[0]);
 
                                     if (firstSegmentIsLang) {
-                                        // Replace the language segment
+                                        // e.g. /ar/family-law → /fr/family-law
                                         segments[0] = lang;
                                         router.push(`/${segments.join('/')}`);
                                     } else if (pathname === '/') {
-                                        // Optional: if landing page handles root paths differently, or you want to force prefix
-                                        // For now we just update state since Landing might be client-side translated
+                                        // Homepage: rewritten internally by middleware — just update cookie/state.
+                                        // The server will pick up the new locale on next navigation.
+                                    } else {
+                                        // Slug-only URL (e.g. /family-law, /divorce-law, /legal-ai):
+                                        // The middleware rewrites these internally so the browser URL has no
+                                        // lang prefix. Navigate explicitly to the lang-prefixed version so
+                                        // the server renders the correct translation.
+                                        router.push(`/${lang}${pathname}`);
                                     }
                                 }
                             }}
