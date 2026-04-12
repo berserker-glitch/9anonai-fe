@@ -1,0 +1,245 @@
+"use client";
+
+import { useState, useMemo } from "react";
+import { Search, Download, RefreshCw } from "lucide-react";
+import { ConversationDrawer, UserStats } from "./conversation-drawer";
+
+interface UsersTableProps {
+    users: UserStats[];
+    token: string | null;
+    onRefresh: () => void;
+    isLoading?: boolean;
+}
+
+function formatDate(dateString: string) {
+    return new Date(dateString).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+    });
+}
+
+function formatTime(dateString: string) {
+    return new Date(dateString).toLocaleString("en-US", {
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+    });
+}
+
+type SortField = "conversationCount" | "messageCount" | "createdAt" | "lastActive";
+
+export function UsersTable({ users, token, onRefresh, isLoading }: UsersTableProps) {
+    const [searchQuery, setSearchQuery] = useState("");
+    const [sortField, setSortField] = useState<SortField>("lastActive");
+    const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+    const [drawerOpen, setDrawerOpen] = useState(false);
+    const [selectedUser, setSelectedUser] = useState<UserStats | null>(null);
+
+    const filteredUsers = useMemo(() => {
+        return users
+            .filter(
+                (u) =>
+                    u.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    (u.name && u.name.toLowerCase().includes(searchQuery.toLowerCase()))
+            )
+            .sort((a, b) => {
+                let comparison = 0;
+                if (sortField === "createdAt" || sortField === "lastActive") {
+                    comparison = new Date(a[sortField]).getTime() - new Date(b[sortField]).getTime();
+                } else {
+                    comparison = a[sortField] - b[sortField];
+                }
+                return sortOrder === "asc" ? comparison : -comparison;
+            });
+    }, [users, searchQuery, sortField, sortOrder]);
+
+    const handleSort = (field: SortField) => {
+        if (sortField === field) {
+            setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+        } else {
+            setSortField(field);
+            setSortOrder("desc");
+        }
+    };
+
+    const handleExport = () => {
+        const headers = ["ID", "Email", "Name", "Role", "Created At", "Marketing Source", "Conversations", "Messages", "Last Active"];
+        const csvContent = [
+            headers.join(","),
+            ...users.map((u) =>
+                [
+                    u.id,
+                    u.email,
+                    `"${u.name || ""}"`,
+                    u.role,
+                    new Date(u.createdAt).toISOString(),
+                    u.marketingSource || "",
+                    u.conversationCount,
+                    u.messageCount,
+                    new Date(u.lastActive).toISOString(),
+                ].join(",")
+            ),
+        ].join("\n");
+
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", `users_export_${new Date().toISOString().split("T")[0]}.csv`);
+        link.style.visibility = "hidden";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    const SortIcon = ({ field }: { field: SortField }) =>
+        sortField === field ? <span className="text-primary">{sortOrder === "asc" ? "↑" : "↓"}</span> : null;
+
+    return (
+        <>
+            <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden">
+                {/* Table Header Controls */}
+                <div className="p-6 border-b border-border">
+                    <div className="flex flex-wrap items-center justify-between gap-4">
+                        <h2 className="text-lg font-semibold">All Users</h2>
+                        <div className="flex flex-wrap items-center gap-2">
+                            <button
+                                onClick={onRefresh}
+                                disabled={isLoading}
+                                className="p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors disabled:opacity-50"
+                                title="Refresh"
+                            >
+                                <RefreshCw className={`h-5 w-5 ${isLoading ? "animate-spin" : ""}`} />
+                            </button>
+                            <button
+                                onClick={handleExport}
+                                className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-xl hover:bg-primary/90 transition-colors"
+                            >
+                                <Download className="h-4 w-4" />
+                                Export CSV
+                            </button>
+                            <div className="relative">
+                                <input
+                                    type="text"
+                                    placeholder="Search users..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    className="w-56 px-4 py-2 pl-9 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                                />
+                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Table */}
+                <div className="overflow-x-auto">
+                    <table className="w-full">
+                        <thead className="bg-muted/50">
+                            <tr>
+                                <th className="text-left px-6 py-4 text-sm font-medium text-muted-foreground">User</th>
+                                <th className="text-left px-6 py-4 text-sm font-medium text-muted-foreground">Role</th>
+                                <th
+                                    className="text-left px-6 py-4 text-sm font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
+                                    onClick={() => handleSort("conversationCount")}
+                                >
+                                    <div className="flex items-center gap-1">Conversations <SortIcon field="conversationCount" /></div>
+                                </th>
+                                <th
+                                    className="text-left px-6 py-4 text-sm font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
+                                    onClick={() => handleSort("messageCount")}
+                                >
+                                    <div className="flex items-center gap-1">Messages <SortIcon field="messageCount" /></div>
+                                </th>
+                                <th
+                                    className="text-left px-6 py-4 text-sm font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
+                                    onClick={() => handleSort("createdAt")}
+                                >
+                                    <div className="flex items-center gap-1">Joined <SortIcon field="createdAt" /></div>
+                                </th>
+                                <th
+                                    className="text-left px-6 py-4 text-sm font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
+                                    onClick={() => handleSort("lastActive")}
+                                >
+                                    <div className="flex items-center gap-1">Last Active <SortIcon field="lastActive" /></div>
+                                </th>
+                                <th className="text-left px-6 py-4 text-sm font-medium text-muted-foreground">Source</th>
+                                <th className="text-left px-6 py-4 text-sm font-medium text-muted-foreground">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-border">
+                            {filteredUsers.map((u) => (
+                                <tr key={u.id} className="hover:bg-muted/30 transition-colors">
+                                    <td className="px-6 py-4">
+                                        <div className="flex items-center gap-3">
+                                            <div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-medium text-sm shrink-0">
+                                                {u.name?.[0] || u.email[0].toUpperCase()}
+                                            </div>
+                                            <div className="min-w-0">
+                                                <p className="font-medium text-sm truncate">{u.name || "—"}</p>
+                                                <p className="text-xs text-muted-foreground truncate">{u.email}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-medium ${u.role === "superadmin" ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"}`}>
+                                            {u.role}
+                                        </span>
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <span className="font-medium text-sm">{u.conversationCount.toLocaleString()}</span>
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <span className="font-medium text-sm">{u.messageCount.toLocaleString()}</span>
+                                    </td>
+                                    <td className="px-6 py-4 text-muted-foreground text-sm">{formatDate(u.createdAt)}</td>
+                                    <td className="px-6 py-4 text-muted-foreground text-sm">{formatTime(u.lastActive)}</td>
+                                    <td className="px-6 py-4">
+                                        {u.marketingSource ? (
+                                            <span className="inline-flex px-2.5 py-1 rounded-full text-xs font-medium bg-secondary text-secondary-foreground border border-border">
+                                                {u.marketingSource}
+                                            </span>
+                                        ) : (
+                                            <span className="text-muted-foreground text-sm">—</span>
+                                        )}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <button
+                                            onClick={() => { setSelectedUser(u); setDrawerOpen(true); }}
+                                            className="px-3 py-1.5 text-xs font-medium bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors"
+                                        >
+                                            View Chats
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                            {filteredUsers.length === 0 && (
+                                <tr>
+                                    <td colSpan={8} className="px-6 py-12 text-center text-muted-foreground text-sm">
+                                        No users found
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+
+                {/* Footer */}
+                <div className="px-6 py-3 border-t border-border bg-muted/20">
+                    <p className="text-xs text-muted-foreground">
+                        Showing {filteredUsers.length} of {users.length} users
+                    </p>
+                </div>
+            </div>
+
+            <ConversationDrawer
+                user={selectedUser}
+                isOpen={drawerOpen}
+                token={token}
+                onClose={() => { setDrawerOpen(false); setSelectedUser(null); }}
+            />
+        </>
+    );
+}
