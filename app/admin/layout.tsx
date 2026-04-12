@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { AdminSidebar } from "@/components/admin/sidebar";
 import { DateRangePicker } from "@/components/admin/date-range-picker";
+import { ExportAnalyticsButton } from "@/components/admin/export-button";
 
 function AdminLayoutInner({ children }: { children: ReactNode }) {
     const router = useRouter();
@@ -53,7 +54,10 @@ function AdminLayoutInner({ children }: { children: ReactNode }) {
                             </p>
                         </div>
                     </div>
-                    <DateRangePicker value={range} />
+                    <div className="flex items-center gap-2">
+                        <ExportAnalyticsButton />
+                        <DateRangePicker value={range} />
+                    </div>
                 </header>
 
                 {/* Page Content */}
