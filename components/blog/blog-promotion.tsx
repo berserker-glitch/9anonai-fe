@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 interface BlogPromotionProps {
@@ -39,6 +41,18 @@ const BUTTONS = {
     contract: { ar: "منشئ العقود الذكي", en: "AI Contract Builder", fr: "Générateur de Contrats" },
 };
 
+/** Pre-filled deep-link questions per topic (shown as clickable chips below the main CTA) */
+const TOPIC_QUESTIONS: Record<string, { ar: string[]; fr: string[]; en: string[] }> = {
+    "family-law":      { ar: ["ما هي شروط الطلاق في مدونة الأسرة؟", "كيف تُحدَّد الحضانة في المغرب؟"], fr: ["Quelles sont les conditions du divorce selon la Moudawana ?", "Comment la garde d'enfants est-elle déterminée au Maroc ?"], en: ["What are the divorce conditions under Moudawana?", "How is child custody determined in Morocco?"] },
+    "divorce":         { ar: ["ما هي إجراءات الطلاق الاتفاقي؟", "كيف يتم تقسيم الممتلكات عند الطلاق؟"], fr: ["Quelle est la procédure du divorce par consentement mutuel ?", "Comment se partage le patrimoine lors d'un divorce ?"], en: ["What is the mutual consent divorce procedure?", "How is property divided in a Moroccan divorce?"] },
+    "labor-law":       { ar: ["ما هي حقوقي عند الفصل التعسفي؟", "كيف أحسب مكافأة نهاية الخدمة؟"], fr: ["Quels sont mes droits en cas de licenciement abusif ?", "Comment calculer mon indemnité de fin de service ?"], en: ["What are my rights for wrongful dismissal?", "How is end-of-service indemnity calculated?"] },
+    "employee-rights": { ar: ["هل يحق لصاحب العمل تأخير الأجر؟", "ما هي مدة الإشعار المسبق بالإنهاء؟"], fr: ["L'employeur peut-il retarder le salaire ?", "Quelle est la durée du préavis légal ?"], en: ["Can my employer delay my salary?", "What is the legal notice period for termination?"] },
+    "rental-law":      { ar: ["كيف يمكنني إنهاء عقد الكراء قانونياً؟", "ما هي حقوق المستأجر عند رفع الكراء؟"], fr: ["Comment résilier légalement un contrat de bail ?", "Quels sont les droits du locataire lors d'une hausse de loyer ?"], en: ["How can I legally terminate a rental contract?", "What are tenant rights when rent is increased?"] },
+    "inheritance":     { ar: ["كيف تُقسَّم الميراث في المغرب؟", "ما هي حصة البنت من الإرث؟"], fr: ["Comment se répartit l'héritage au Maroc ?", "Quelle est la part de la fille dans la succession ?"], en: ["How is inheritance distributed in Morocco?", "What is a daughter's share in Moroccan inheritance?"] },
+    "business":        { ar: ["ما هي خطوات تأسيس شركة SARL في المغرب؟", "ما الوثائق اللازمة لتسجيل شركة؟"], fr: ["Quelles sont les étapes pour créer une SARL au Maroc ?", "Quels documents faut-il pour immatriculer une société ?"], en: ["What are the steps to create a SARL in Morocco?", "What documents are needed to register a company?"] },
+    "real-estate":     { ar: ["كيف يتم توثيق عقد البيع العقاري؟", "ما هي رسوم التسجيل العقاري؟"], fr: ["Comment authentifier un contrat de vente immobilière ?", "Quels sont les frais d'enregistrement immobilier ?"], en: ["How is a real estate sale contract authenticated?", "What are property registration fees in Morocco?"] },
+};
+
 /**
  * BlogPromotion Component
  * Topic-aware CTA banner embedded in blog posts.
@@ -63,6 +77,18 @@ export function BlogPromotion({ lang, topic }: BlogPromotionProps) {
 
     const title = topicTitle ?? DEFAULT_TITLES[l];
 
+    // Find deep-link questions for this topic
+    let deepQuestions: string[] = [];
+    if (topic) {
+        const topicLower = topic.toLowerCase();
+        for (const [key, qs] of Object.entries(TOPIC_QUESTIONS)) {
+            if (topicLower.includes(key.replace("-", " ")) || topicLower.includes(key)) {
+                deepQuestions = qs[l];
+                break;
+            }
+        }
+    }
+
     return (
         <div className="my-16 p-8 sm:p-10 rounded-3xl relative overflow-hidden glass-premium border border-primary/20 bg-gradient-to-br from-primary/5 via-transparent to-emerald-500/5">
             {/* Background Glows */}
@@ -77,6 +103,24 @@ export function BlogPromotion({ lang, topic }: BlogPromotionProps) {
                     <p className="text-muted-foreground text-lg sm:text-lg">
                         {DESCRIPTIONS[l]}
                     </p>
+
+                    {/* Deep-link question chips — pre-filled queries relevant to the post */}
+                    {deepQuestions.length > 0 && (
+                        <div className="flex flex-wrap gap-2 mt-4 justify-center md:justify-start">
+                            {deepQuestions.map((q, i) => (
+                                <Link
+                                    key={i}
+                                    href={`/chat?q=${encodeURIComponent(q)}`}
+                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-medium hover:bg-primary/10 hover:border-primary/50 transition-all"
+                                >
+                                    <svg className="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    {q.length > 50 ? q.slice(0, 50) + "…" : q}
+                                </Link>
+                            ))}
+                        </div>
+                    )}
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto min-w-[300px]">
