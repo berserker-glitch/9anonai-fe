@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useAuth } from "@/lib/auth-context";
 import { useTranslation, useLanguage } from "@/lib/language-context";
 import { LanguageSwitcher } from "@/components/landing/language-switcher";
+import { trackEvent } from "@/lib/analytics";
 
 export default function RegisterPage() {
     const [name, setName] = useState("");
@@ -38,6 +39,7 @@ export default function RegisterPage() {
         setError("");
         const result = await register(email, password, name);
         if (result.success) {
+            trackEvent("sign_up", { method: "email" });
             router.push("/setup");
         } else {
             setError(result.error || "Registration failed");
