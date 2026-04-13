@@ -268,11 +268,11 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const cookieStore = await cookies();
-  const lang = cookieStore.get("NEXT_LOCALE")?.value || "ar";
+  const lang = cookieStore.get("NEXT_LOCALE")?.value || "fr"; // Bots get French — primary SERP audience
   const dir = lang === "ar" ? "rtl" : "ltr";
 
   return (
-    <html lang={lang} dir="ltr" suppressHydrationWarning>
+    <html lang={lang} dir={dir} suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
         {/* Render all JSON-LD schemas for rich search results */}

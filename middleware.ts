@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 const locales = ["en", "fr", "ar"];
-const defaultLocale = "ar"; // Default to Arabic as per 9anon
+const defaultLocale = "fr"; // Bots (no cookie, no Accept-Language) get French — primary SERP audience
 
 /**
  * Lightweight Accept-Language parser — replaces @formatjs/intl-localematcher
