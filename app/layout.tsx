@@ -1,8 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Plus_Jakarta_Sans, Cairo } from "next/font/google";
 import { cookies } from "next/headers";
+import Script from "next/script";
 import "./globals.css";
 import { Providers } from "@/components/providers/providers";
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -44,7 +47,7 @@ export const metadata: Metadata = {
   // Default description is French — the primary SERP-facing audience.
   // Arabic and English descriptions are served on their respective /ar and /en routes.
   description:
-    "Intelligence artificielle du droit marocain — 9anon AI est le meilleur et le plus rapide assistant juridique IA du Maroc. Obtenez des conseils juridiques gratuits instantanés sur la Moudawana, le Code du Travail, et plus. Chatbot juridique disponible 24/7.",
+    "Obtenez des conseils juridiques gratuits en 30 secondes — 9anon AI répond instantanément sur la Moudawana, le Code du Travail, les contrats et plus. L'assistant juridique IA #1 au Maroc. Disponible 24h/24, 100% gratuit.",
   keywords: [
     // === PRIMARY TARGET ===
     "Intelligence artificielle du droit marocain",
@@ -281,6 +284,23 @@ export default async function RootLayout({
           />
         ))}
       </head>
+      {/* Google Analytics 4 — afterInteractive so it never blocks rendering */}
+      {GA_ID && (
+        <>
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+            strategy="afterInteractive"
+          />
+          <Script id="ga4-init" strategy="afterInteractive">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${GA_ID}', { page_path: window.location.pathname });
+            `}
+          </Script>
+        </>
+      )}
       <body className={`${playfair.variable} ${jakarta.variable} ${cairo.variable} font-sans antialiased`}>
         <Providers lang={lang}>
           {children}
