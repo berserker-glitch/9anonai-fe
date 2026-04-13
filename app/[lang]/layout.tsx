@@ -135,7 +135,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (isArabic) {
         return {
             title: "9anon AI | مساعد قانوني ذكي المغرب - استشارة قانونية مجانية",
-            description: "أفضل وأسرع مساعد قانوني ذكي في المغرب. استشارة قانونية اونلاين مجانية. احصل على إجابات فورية حول مدونة الأسرة، قانون الشغل، القانون التجاري، حقوق الموظف، حقوق المستأجر، الطلاق، الإرث، وتسجيل الشركات. شات بوت قانوني متاح 24/7.",
+            description: "احصل على إجابة قانونية في 30 ثانية — 9anon AI يجيب فوراً على أسئلتك حول مدونة الأسرة، قانون الشغل، الطلاق، الإرث والعقارات. مجاناً 100٪، متاح 24/7. المساعد القانوني الذكي الأول في المغرب.",
             keywords: [
                 "مساعد قانوني ذكي المغرب", "استشارة قانونية اونلاين المغرب",
                 "محامي اونلاين المغرب", "شات بوت قانوني المغرب",
@@ -155,7 +155,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (isFrench) {
         return {
             title: "9anon AI | Intelligence artificielle du droit marocain",
-            description: "Intelligence artificielle du droit marocain - 9anon AI est le meilleur et le plus rapide assistant juridique au Maroc. Obtenez des réponses instantanées pour la Moudawana, le Code du Travail, et plus.",
+            description: "Réponse juridique gratuite en 30 secondes — 9anon AI répond instantanément sur la Moudawana, le Code du Travail, les contrats, l'immobilier et plus. 100% gratuit, disponible 24h/24. L'IA juridique #1 au Maroc.",
             keywords: [
                 "Intelligence artificielle du droit marocain",
                 "assistant juridique IA Maroc", "conseil juridique en ligne Maroc",
@@ -175,8 +175,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     // English (Default)
     return {
-        title: "9anon AI | Free AI Legal Assistant Morocco - Legal Chatbot",
-        description: "The best and fastest AI Legal Assistant for Moroccan Law. Free online legal advice, AI lawyer, legal chatbot for Morocco. Get instant answers about family law, labor law, commercial law, employee rights, tenant rights, divorce, inheritance, contracts, and company registration. Available 24/7.",
+        title: "9anon AI | Free AI Legal Assistant Morocco — Instant Answers 24/7",
+        description: "Get a free legal answer in 30 seconds — 9anon AI gives instant, accurate advice on Moroccan family law, labor law, divorce, inheritance, real estate & contracts. 100% free, no sign-up needed. Morocco's #1 AI legal assistant.",
         keywords: [
             "legal AI assistant Morocco", "online legal advice Morocco",
             "business legal help Morocco", "AI lawyer Morocco",
