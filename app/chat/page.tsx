@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
+import { useLanguage } from "@/lib/language-context";
 import { trackEvent } from "@/lib/analytics";
 import { looksLikeContractRequest } from "@/lib/contract-type-detector";
 
