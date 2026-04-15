@@ -1021,7 +1021,7 @@ export default function NewChatPage() {
                                                     </div>
                                                 )}
                                                 <Textarea
-                                                    placeholder="Message 9anon AI..."
+                                                    placeholder={ui("input_placeholder", language)}
                                                     value={inputValue}
                                                     onChange={(e) => setInputValue(e.target.value)}
                                                     onKeyDown={(e) => {
