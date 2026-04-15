@@ -100,10 +100,11 @@ const SUGGESTIONS: Record<string, { icon: string; text: string }[]> = {
 // ─── UI strings for the chat page ───────────────────────────────────────────
 
 const CHAT_UI: Record<string, Record<string, string>> = {
-    welcome_title: {
-        ar: "مرحباً بك في 9anon",
-        fr: "Bienvenue sur 9anon",
-        en: "Welcome to 9anon",
+    // Prefix only — "9anon" is always rendered separately as a styled span
+    welcome_prefix: {
+        ar: "مرحباً بك في ",
+        fr: "Bienvenue sur ",
+        en: "Welcome to ",
     },
     welcome_subtitle: {
         ar: "مساعدك الذكي للقانون المغربي. اسألني أي سؤال قانوني، عن الإجراءات أو حقوقك.",
@@ -116,7 +117,8 @@ const CHAT_UI: Record<string, Record<string, string>> = {
         en: "Message 9anon AI...",
     },
     disclaimer: {
-        ar: "قد تنتج 9anon AI معلومات غير دقيقة",
+        // Keep "9anon AI" at the front to avoid Arabic bidi reordering splitting the brand name
+        ar: "9anon AI قد ينتج معلومات غير دقيقة",
         fr: "9anon AI peut produire des informations inexactes",
         en: "9anon AI may produce inaccurate information",
     },
@@ -988,10 +990,7 @@ export default function NewChatPage() {
                                     <img src="/9anon-logo.png" alt="9anon Logo" className="w-full h-full object-cover" />
                                 </div>
                                 <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4 text-foreground bg-clip-text text-center">
-                                    {/* All welcome_title strings end with "9anon" — render prefix + branded name */}
-                                    {ui("welcome_title", language).split("9anon")[0]}
-                                    <span className="text-primary">9anon</span>
-                                    {ui("welcome_title", language).split("9anon").slice(1).join("")}
+                                    {ui("welcome_prefix", language)}<span className="text-primary">9anon</span>
                                 </h1>
                                 <p className="text-lg text-muted-foreground mb-12 text-center max-w-xl font-light">
                                     {ui("welcome_subtitle", language)}
