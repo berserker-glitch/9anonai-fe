@@ -1,111 +1,189 @@
 "use client";
 
+import { useState, useRef } from "react";
 import { cn } from "@/lib/utils";
+import { t, WELCOME_EXAMPLES, SupportedLanguage } from "@/lib/contract-ui-strings";
 
 interface ContractWelcomeProps {
-    onSelectType: (type: string, title: string) => void;
+    onSubmit: (description: string, language: string) => void;
     className?: string;
 }
 
-export function ContractWelcome({ onSelectType, className }: ContractWelcomeProps) {
-    const contractTypes = [
-        {
-            id: "rental",
-            title: "Contrat de Bail",
-            description: "Locaux d'habitation ou commerciaux",
-            icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                    <polyline points="9 22 9 12 15 12 15 22" />
-                </svg>
-            ),
-        },
-        {
-            id: "employment",
-            title: "Contrat de Travail",
-            description: "CDI, CDD, ou stage",
-            icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-                    <rect width="20" height="14" x="2" y="7" rx="2" ry="2" />
-                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-                </svg>
-            ),
-        },
-        {
-            id: "service",
-            title: "Prestation de Service",
-            description: "Freelance, conseil, maintenance",
-            icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-                </svg>
-            ),
-        },
-        {
-            id: "nda",
-            title: "Confidentialité (NDA)",
-            description: "Pour protéger vos idées",
-            icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                </svg>
-            ),
-        },
-        {
-            id: "sale",
-            title: "Contrat de Vente",
-            description: "Biens mobiliers ou immobiliers",
-            icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
-                    <path d="M3 6h18" />
-                    <path d="M16 10a4 4 0 0 1-8 0" />
-                </svg>
-            ),
-        },
-        {
-            id: "custom",
-            title: "Autre Document",
-            description: "Document sur mesure",
-            icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                    <polyline points="14 2 14 8 20 8" />
-                    <line x1="16" y1="13" x2="8" y2="13" />
-                    <line x1="16" y1="17" x2="8" y2="17" />
-                    <polyline points="10 9 9 9 8 9" />
-                </svg>
-            ),
-        },
-    ];
+const LANGUAGES: { code: SupportedLanguage; label: string; dir: "ltr" | "rtl" }[] = [
+    { code: "fr", label: "FR", dir: "ltr" },
+    { code: "ar", label: "AR", dir: "rtl" },
+    { code: "en", label: "EN", dir: "ltr" },
+];
+
+export function ContractWelcome({ onSubmit, className }: ContractWelcomeProps) {
+    const [lang, setLang] = useState<SupportedLanguage>("fr");
+    const [description, setDescription] = useState("");
+    const [error, setError] = useState("");
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+    const isRtl = lang === "ar";
+
+    const handleSubmit = () => {
+        if (!description.trim()) {
+            setError(t("validationEmpty", lang));
+            textareaRef.current?.focus();
+            return;
+        }
+        setError("");
+        onSubmit(description.trim(), lang);
+    };
+
+    const handleChipClick = (example: string) => {
+        setDescription(example);
+        setError("");
+        textareaRef.current?.focus();
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+            e.preventDefault();
+            handleSubmit();
+        }
+    };
 
     return (
-        <div className={cn("max-w-4xl mx-auto p-6", className)}>
-            <div className="text-center mb-10">
-                <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60 mb-3">
-                    Contract Builder
-                </h1>
-                <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                    Select a contract type to start drafting with our AI legal assistant.
-                    All contracts are verified against Moroccan law.
-                </p>
-            </div>
+        <div
+            className={cn("flex flex-col items-center justify-center min-h-full px-4 py-10", className)}
+            dir={isRtl ? "rtl" : "ltr"}
+        >
+            <div className="w-full max-w-2xl space-y-6">
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {contractTypes.map((type) => (
-                    <button
-                        key={type.id}
-                        onClick={() => onSelectType(type.id, type.title)}
-                        className="flex flex-col items-center text-center p-6 rounded-xl border bg-card hover:bg-muted/50 transition-all hover:scale-[1.02] hover:shadow-md group"
-                    >
-                        <div className="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors mb-4">
-                            {type.icon}
+                {/* Language Selector */}
+                <div className={cn("flex gap-1.5", isRtl ? "justify-end" : "justify-start")}>
+                    {LANGUAGES.map((l) => (
+                        <button
+                            key={l.code}
+                            onClick={() => { setLang(l.code); setError(""); }}
+                            className={cn(
+                                "px-3 py-1 rounded-md text-xs font-semibold border transition-all duration-150",
+                                lang === l.code
+                                    ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                                    : "bg-transparent text-muted-foreground border-border hover:border-primary/50 hover:text-foreground"
+                            )}
+                        >
+                            {l.label}
+                        </button>
+                    ))}
+                </div>
+
+                {/* Title */}
+                <div className="space-y-2">
+                    <h1 className={cn(
+                        "text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60",
+                        isRtl && "text-right"
+                    )}>
+                        {t("welcomeTitle", lang)}
+                    </h1>
+                    <p className={cn("text-muted-foreground text-base leading-relaxed", isRtl && "text-right")}>
+                        {t("welcomeSubtitle", lang)}
+                    </p>
+                </div>
+
+                {/* Feature badges */}
+                <div className={cn("flex flex-wrap gap-2", isRtl && "flex-row-reverse")}>
+                    {t("welcomeBadge", lang).split("•").map((badge, i) => (
+                        <span key={i} className="flex items-center gap-1 text-xs text-muted-foreground bg-muted/60 px-2.5 py-1 rounded-full">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                            {badge.trim()}
+                        </span>
+                    ))}
+                </div>
+
+                {/* Textarea */}
+                <div className="space-y-2">
+                    <div className={cn(
+                        "relative rounded-xl border bg-background shadow-sm transition-all duration-200 focus-within:ring-2 focus-within:ring-primary/30 focus-within:border-primary/60",
+                        error ? "border-destructive focus-within:ring-destructive/30" : "border-border"
+                    )}>
+                        <textarea
+                            ref={textareaRef}
+                            value={description}
+                            onChange={(e) => { setDescription(e.target.value); if (error) setError(""); }}
+                            onKeyDown={handleKeyDown}
+                            placeholder={t("placeholder", lang)}
+                            rows={5}
+                            dir={isRtl ? "rtl" : "ltr"}
+                            className={cn(
+                                "w-full px-4 pt-4 pb-12 bg-transparent text-sm resize-none outline-none",
+                                "placeholder:text-muted-foreground/60 leading-relaxed",
+                                isRtl && "text-right"
+                            )}
+                        />
+                        {/* Bottom bar inside textarea */}
+                        <div className={cn(
+                            "absolute bottom-0 left-0 right-0 flex items-center px-3 pb-2",
+                            isRtl ? "flex-row-reverse" : "flex-row"
+                        )}>
+                            <span className="text-[10px] text-muted-foreground/50 flex-1">
+                                {isRtl ? "Ctrl+Enter للإرسال" : "Ctrl+Enter to generate"}
+                            </span>
+                            <span className={cn(
+                                "text-[10px] font-mono",
+                                description.length > 1000 ? "text-destructive" : "text-muted-foreground/50"
+                            )}>
+                                {description.length}/2000
+                            </span>
                         </div>
-                        <h3 className="font-semibold text-lg mb-1">{type.title}</h3>
-                        <p className="text-sm text-muted-foreground">{type.description}</p>
-                    </button>
-                ))}
+                    </div>
+
+                    {/* Error message */}
+                    {error && (
+                        <p className={cn("text-xs text-destructive", isRtl && "text-right")}>{error}</p>
+                    )}
+                </div>
+
+                {/* Submit button */}
+                <button
+                    onClick={handleSubmit}
+                    disabled={!description.trim()}
+                    className={cn(
+                        "w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl",
+                        "bg-primary text-primary-foreground font-semibold text-sm",
+                        "hover:bg-primary/90 active:scale-[0.99] transition-all duration-150 shadow-sm",
+                        "disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100"
+                    )}
+                >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                    </svg>
+                    {t("generateButton", lang)}
+                </button>
+
+                {/* Example chips */}
+                <div className="space-y-2">
+                    <p className={cn("text-xs text-muted-foreground font-medium", isRtl && "text-right")}>
+                        {t("exampleChipsLabel", lang)}
+                    </p>
+                    <div className={cn("flex flex-wrap gap-2", isRtl && "flex-row-reverse")}>
+                        {WELCOME_EXAMPLES[lang].map((example) => (
+                            <button
+                                key={example}
+                                onClick={() => handleChipClick(example)}
+                                className={cn(
+                                    "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs",
+                                    "border border-border bg-muted/40 text-muted-foreground",
+                                    "hover:border-primary/50 hover:bg-primary/5 hover:text-foreground",
+                                    "transition-all duration-150"
+                                )}
+                            >
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                                    <path d="M12 5v14" /><path d="M5 12h14" />
+                                </svg>
+                                {example}
+                            </button>
+                        ))}
+                    </div>
+                </div>
             </div>
         </div>
     );
