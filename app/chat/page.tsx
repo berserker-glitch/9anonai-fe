@@ -988,9 +988,10 @@ export default function NewChatPage() {
                                     <img src="/9anon-logo.png" alt="9anon Logo" className="w-full h-full object-cover" />
                                 </div>
                                 <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4 text-foreground bg-clip-text text-center">
-                                    {ui("welcome_title", language).replace("9anon", "").trim().split("9anon")[0]}
+                                    {/* All welcome_title strings end with "9anon" — render prefix + branded name */}
+                                    {ui("welcome_title", language).split("9anon")[0]}
                                     <span className="text-primary">9anon</span>
-                                    {ui("welcome_title", language).split("9anon").slice(1).join("9anon")}
+                                    {ui("welcome_title", language).split("9anon").slice(1).join("")}
                                 </h1>
                                 <p className="text-lg text-muted-foreground mb-12 text-center max-w-xl font-light">
                                     {ui("welcome_subtitle", language)}
