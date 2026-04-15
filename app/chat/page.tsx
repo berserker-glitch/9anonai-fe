@@ -97,6 +97,113 @@ const SUGGESTIONS: Record<string, { icon: string; text: string }[]> = {
     ],
 };
 
+// ─── UI strings for the chat page ───────────────────────────────────────────
+
+const CHAT_UI: Record<string, Record<string, string>> = {
+    welcome_title: {
+        ar: "مرحباً بك في 9anon",
+        fr: "Bienvenue sur 9anon",
+        en: "Welcome to 9anon",
+    },
+    welcome_subtitle: {
+        ar: "مساعدك الذكي للقانون المغربي. اسألني أي سؤال قانوني، عن الإجراءات أو حقوقك.",
+        fr: "Votre assistant IA pour le droit marocain. Posez-moi toute question juridique, sur les procédures ou vos droits.",
+        en: "Your AI-powered Moroccan law assistant. Ask me anything about legal matters, procedures, or rights.",
+    },
+    input_placeholder: {
+        ar: "اكتب رسالتك إلى 9anon...",
+        fr: "Message à 9anon IA...",
+        en: "Message 9anon AI...",
+    },
+    disclaimer: {
+        ar: "قد تنتج 9anon AI معلومات غير دقيقة",
+        fr: "9anon AI peut produire des informations inexactes",
+        en: "9anon AI may produce inaccurate information",
+    },
+    share: {
+        ar: "مشاركة",
+        fr: "Partager",
+        en: "Share",
+    },
+    share_copied: {
+        ar: "تم نسخ الرابط!",
+        fr: "Lien copié !",
+        en: "Link copied!",
+    },
+    delete_confirm_title: {
+        ar: "هل أنت متأكد؟",
+        fr: "Êtes-vous sûr ?",
+        en: "Are you sure?",
+    },
+    delete_confirm_body: {
+        ar: "سيتم حذف هذه المحادثة نهائياً ولا يمكن التراجع عنه.",
+        fr: "Cette conversation sera définitivement supprimée. Cette action est irréversible.",
+        en: "This conversation will be permanently deleted. This action cannot be undone.",
+    },
+    delete_confirm_btn: {
+        ar: "حذف",
+        fr: "Supprimer",
+        en: "Delete",
+    },
+    delete_cancel_btn: {
+        ar: "إلغاء",
+        fr: "Annuler",
+        en: "Cancel",
+    },
+    free_plan: {
+        ar: "الخطة المجانية",
+        fr: "Plan Gratuit",
+        en: "Free Plan",
+    },
+    // Contract suggestion card
+    contract_title: {
+        ar: "هل تريد صياغة عقد احترافي؟",
+        fr: "Besoin d'un contrat professionnel ?",
+        en: "Need a professional contract?",
+    },
+    contract_body: {
+        ar: "منشئ العقود يصيغ وثائق متوافقة مع القانون المغربي مع مراجعة قانونية تلقائية وتصدير PDF.",
+        fr: "Le Générateur de Contrats rédige des documents conformes au droit marocain avec révision juridique automatique et export PDF.",
+        en: "The Contract Builder drafts legally compliant documents with automatic legal review and PDF export.",
+    },
+    contract_cta: {
+        ar: "فتح منشئ العقود →",
+        fr: "Ouvrir le Générateur →",
+        en: "Open Contract Builder →",
+    },
+    // Progressive tips
+    tip_contract_text: {
+        ar: "يمكنك أيضاً صياغة العقود القانونية بالذكاء الاصطناعي 📄",
+        fr: "Vous pouvez aussi rédiger des contrats juridiques avec l'IA 📄",
+        en: "You can also draft legal contracts with AI 📄",
+    },
+    tip_contract_cta: {
+        ar: "جرّب منشئ العقود",
+        fr: "Essayer le générateur de contrats",
+        en: "Try the Contract Builder",
+    },
+    tip_upload_text: {
+        ar: "هل تعلم أنك يمكنك إرفاق وثائق للحصول على تحليل مخصص؟ 📎",
+        fr: "Savez-vous que vous pouvez joindre des documents pour une analyse personnalisée ? 📎",
+        en: "Did you know you can attach documents for personalized analysis? 📎",
+    },
+    tip_upload_cta: {
+        ar: "جرّب الآن",
+        fr: "Essayer maintenant",
+        en: "Try it now",
+    },
+    tip_pin_text: {
+        ar: "ثبّت المحادثات المهمة للوصول إليها بسرعة 📌",
+        fr: "Épinglez vos conversations importantes pour les retrouver rapidement 📌",
+        en: "Pin important conversations for quick access 📌",
+    },
+};
+
+/** Get a UI string for the current language, falling back to French */
+function ui(key: string, lang: string): string {
+    return CHAT_UI[key]?.[lang] ?? CHAT_UI[key]?.["fr"] ?? key;
+}
+
 function getLanguageFromPersonalization(personalization?: string | null): string {
     if (!personalization) return "ar";
     try {
@@ -116,6 +223,7 @@ export default function NewChatPage() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const { user, token, logout, isLoading: authLoading } = useAuth();
+    const { language } = useLanguage();
 
     // State
     const [messages, setMessages] = useState<Message[]>([]);
@@ -775,7 +883,7 @@ export default function NewChatPage() {
     // Which tip to show based on conversation count
     const getProgressiveTip = (): { id: string; text: string; cta: string; href: string } | null => {
         const count = chatHistory.length;
-        const lang = getLanguageFromPersonalization(user?.personalization);
+        const lang = language;
         const tips = [
             {
                 id: "tip_contract",
