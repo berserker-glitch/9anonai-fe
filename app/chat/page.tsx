@@ -888,31 +888,21 @@ export default function NewChatPage() {
             {
                 id: "tip_contract",
                 threshold: 1,
-                text: lang === "fr" ? "Vous pouvez aussi rédiger des contrats juridiques avec l'IA 📄"
-                    : lang === "en" ? "You can also draft legal contracts with AI 📄"
-                    : "يمكنك أيضاً صياغة العقود القانونية بالذكاء الاصطناعي 📄",
-                cta: lang === "fr" ? "Essayer le générateur de contrats"
-                    : lang === "en" ? "Try the Contract Builder"
-                    : "جرّب منشئ العقود",
+                text: ui("tip_contract_text", lang),
+                cta: ui("tip_contract_cta", lang),
                 href: "/contract-builder",
             },
             {
                 id: "tip_upload",
                 threshold: 3,
-                text: lang === "fr" ? "Savez-vous que vous pouvez joindre des documents pour une analyse personnalisée ? 📎"
-                    : lang === "en" ? "Did you know you can attach documents for personalized analysis? 📎"
-                    : "هل تعلم أنك يمكنك إرفاق وثائق للحصول على تحليل مخصص؟ 📎",
-                cta: lang === "fr" ? "Essayer maintenant"
-                    : lang === "en" ? "Try it now"
-                    : "جرّب الآن",
+                text: ui("tip_upload_text", lang),
+                cta: ui("tip_upload_cta", lang),
                 href: "#attach",
             },
             {
                 id: "tip_pin",
                 threshold: 5,
-                text: lang === "fr" ? "Épinglez vos conversations importantes pour les retrouver rapidement 📌"
-                    : lang === "en" ? "Pin important conversations for quick access 📌"
-                    : "ثبّت المحادثات المهمة للوصول إليها بسرعة 📌",
+                text: ui("tip_pin_text", lang),
                 cta: "",
                 href: "",
             },
@@ -998,10 +988,12 @@ export default function NewChatPage() {
                                     <img src="/9anon-logo.png" alt="9anon Logo" className="w-full h-full object-cover" />
                                 </div>
                                 <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4 text-foreground bg-clip-text text-center">
-                                    Welcome to <span className="text-primary">9anon</span>
+                                    {ui("welcome_title", language).replace("9anon", "").trim().split("9anon")[0]}
+                                    <span className="text-primary">9anon</span>
+                                    {ui("welcome_title", language).split("9anon").slice(1).join("9anon")}
                                 </h1>
                                 <p className="text-lg text-muted-foreground mb-12 text-center max-w-xl font-light">
-                                    Your AI-powered Moroccan law assistant. Ask me anything about legal matters, procedures, or rights.
+                                    {ui("welcome_subtitle", language)}
                                 </p>
 
                                 <div className="w-full relative z-10 mb-12">
@@ -1046,8 +1038,7 @@ export default function NewChatPage() {
 
                                 {/* Language-aware suggestion chips — auto-send on click */}
                                 {(() => {
-                                    const lang = getLanguageFromPersonalization(user?.personalization);
-                                    const chips = SUGGESTIONS[lang] ?? SUGGESTIONS.ar;
+                                    const chips = SUGGESTIONS[language] ?? SUGGESTIONS.fr;
                                     return (
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full max-w-2xl mt-4">
                                             {chips.map((s, i) => (
