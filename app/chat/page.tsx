@@ -4,6 +4,7 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { trackEvent } from "@/lib/analytics";
+import { looksLikeContractRequest } from "@/lib/contract-type-detector";
 
 // Layout Components
 import { Sidebar, SidebarProvider } from "@/components/layout/sidebar";
@@ -143,6 +144,10 @@ export default function NewChatPage() {
         try { return new Set(JSON.parse(localStorage.getItem("9anon_dismissed_tips") || "[]")); }
         catch { return new Set(); }
     });
+    // Contract Builder suggestion — shown inline below assistant responses when contract intent detected
+    const [contractSuggestionMessageIds, setContractSuggestionMessageIds] = useState<Set<string>>(new Set());
+    const [dismissedContractSuggestions, setDismissedContractSuggestions] = useState<Set<string>>(new Set());
+
     const autoSentRef = useRef(false);
 
     const messageContainerRef = useRef<HTMLDivElement>(null);
@@ -590,6 +595,12 @@ export default function NewChatPage() {
 
             // Assistant message is now saved by the backend
 
+            // If the user's message looked like a contract request, mark this assistant
+            // message to show the Contract Builder suggestion card
+            if (looksLikeContractRequest(content)) {
+                setContractSuggestionMessageIds(prev => new Set(prev).add(assistantId));
+            }
+
         } catch (error) {
             console.error("Stream error:", error);
             setMessages(prev =>
@@ -1014,7 +1025,62 @@ export default function NewChatPage() {
                                                         {message.sources && message.sources.length > 0 && (
                                                             <SourcesAccordion sources={message.sources} />
                                                         )}
-                                                        {message.contract && (
+                                                        {/* Contract Builder suggestion — shown when contract intent detected */}
+                                        {contractSuggestionMessageIds.has(message.id) &&
+                                            !dismissedContractSuggestions.has(message.id) &&
+                                            !message.isThinking && (
+                                            <div className="mt-4 p-3 bg-primary/5 border border-primary/20 rounded-lg">
+                                                <div className="flex items-start gap-3">
+                                                    <div className="shrink-0 w-8 h-8 rounded-lg bg-primary/15 flex items-center justify-center text-primary mt-0.5">
+                                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                                            <polyline points="14 2 14 8 20 8" />
+                                                            <line x1="16" y1="13" x2="8" y2="13" />
+                                                            <line x1="16" y1="17" x2="8" y2="17" />
+                                                        </svg>
+                                                    </div>
+                                                    <div className="flex-1 min-w-0">
+                                                        <p className="text-sm font-medium text-foreground mb-0.5">
+                                                            {getLanguageFromPersonalization(user?.personalization) === "ar"
+                                                                ? "هل تريد صياغة عقد احترافي؟"
+                                                                : getLanguageFromPersonalization(user?.personalization) === "en"
+                                                                ? "Need a professional contract?"
+                                                                : "Besoin d'un contrat professionnel\u00a0?"}
+                                                        </p>
+                                                        <p className="text-xs text-muted-foreground leading-relaxed">
+                                                            {getLanguageFromPersonalization(user?.personalization) === "ar"
+                                                                ? "منشئ العقود يصيغ وثائق متوافقة مع القانون المغربي مع مراجعة قانونية تلقائية وتصدير PDF."
+                                                                : getLanguageFromPersonalization(user?.personalization) === "en"
+                                                                ? "The Contract Builder drafts legally compliant documents with automatic legal review and PDF export."
+                                                                : "Le G\u00e9n\u00e9rateur de Contrats r\u00e9dige des documents conformes au droit marocain avec r\u00e9vision juridique automatique et export PDF."}
+                                                        </p>
+                                                        <div className="flex items-center gap-3 mt-2">
+                                                            <a
+                                                                href="/contract-builder"
+                                                                className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline"
+                                                            >
+                                                                {getLanguageFromPersonalization(user?.personalization) === "ar"
+                                                                    ? "فتح منشئ العقود ←"
+                                                                    : getLanguageFromPersonalization(user?.personalization) === "en"
+                                                                    ? "Open Contract Builder →"
+                                                                    : "Ouvrir le G\u00e9n\u00e9rateur →"}
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <button
+                                                        onClick={() => setDismissedContractSuggestions(prev => new Set(prev).add(message.id))}
+                                                        className="shrink-0 text-muted-foreground/50 hover:text-muted-foreground transition-colors p-0.5"
+                                                        title="Dismiss"
+                                                    >
+                                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                                                            <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {message.contract && (
                                                             <div className="mt-4 p-4 bg-primary/10 rounded-lg border border-primary/20">
                                                                 <div className="flex items-center gap-3">
                                                                     <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
