@@ -970,7 +970,7 @@ export default function NewChatPage() {
                             </button>
                             <div className="flex-1 min-w-0">
                                 <p className="text-sm font-medium truncate">{user?.name || user?.email}</p>
-                                <p className="text-xs text-muted-foreground">Free Plan</p>
+                                <p className="text-xs text-muted-foreground">{ui("free_plan", language)}</p>
                             </div>
                             <ThemeToggle />
                         </div>
