@@ -6,8 +6,10 @@ import { createContext, useContext, useState, useEffect, ReactNode, useCallback 
 export type Language = "ar" | "en" | "fr";
 
 // Language metadata
+// Note: dir is always "ltr" — the app layout is LTR regardless of language.
+// Arabic content is displayed left-to-right intentionally (per product decision).
 export const languages: Record<Language, { name: string; nativeName: string; dir: "ltr" | "rtl" }> = {
-    ar: { name: "Arabic", nativeName: "العربية", dir: "rtl" },
+    ar: { name: "Arabic", nativeName: "العربية", dir: "ltr" },
     en: { name: "English", nativeName: "English", dir: "ltr" },
     fr: { name: "French", nativeName: "Français", dir: "ltr" },
 };
