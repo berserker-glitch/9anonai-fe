@@ -1351,9 +1351,9 @@ export default function NewChatPage() {
                 isOpen={deleteModalOpen}
                 onClose={() => setDeleteModalOpen(false)}
                 onConfirm={handleDeleteChat}
-                title="Delete chat?"
-                description="This will permanently delete this chat history."
-                confirmText="Delete"
+                title={ui("delete_confirm_title", language)}
+                description={ui("delete_confirm_body", language)}
+                confirmText={ui("delete_confirm_btn", language)}
                 variant="destructive"
             />
 
