@@ -6,7 +6,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useAuth } from "@/lib/auth-context";
 import { useTranslation, useLanguage } from "@/lib/language-context";
-import { LanguageSwitcher } from "@/components/landing/language-switcher";
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
@@ -47,11 +46,6 @@ export default function LoginPage() {
             {/* Subtle background */}
             <div className="fixed inset-0 pointer-events-none">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-gradient-to-b from-primary/8 to-transparent rounded-full blur-[100px] -translate-y-1/2" />
-            </div>
-
-            {/* Language Switcher */}
-            <div className="fixed top-5 end-5 z-20">
-                <LanguageSwitcher />
             </div>
 
             <div className="relative z-10 w-full max-w-[400px] mx-auto px-5 py-10">
