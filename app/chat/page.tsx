@@ -1142,29 +1142,17 @@ export default function NewChatPage() {
                                                     </div>
                                                     <div className="flex-1 min-w-0">
                                                         <p className="text-sm font-medium text-foreground mb-0.5">
-                                                            {getLanguageFromPersonalization(user?.personalization) === "ar"
-                                                                ? "هل تريد صياغة عقد احترافي؟"
-                                                                : getLanguageFromPersonalization(user?.personalization) === "en"
-                                                                ? "Need a professional contract?"
-                                                                : "Besoin d'un contrat professionnel\u00a0?"}
+                                                            {ui("contract_title", language)}
                                                         </p>
                                                         <p className="text-xs text-muted-foreground leading-relaxed">
-                                                            {getLanguageFromPersonalization(user?.personalization) === "ar"
-                                                                ? "منشئ العقود يصيغ وثائق متوافقة مع القانون المغربي مع مراجعة قانونية تلقائية وتصدير PDF."
-                                                                : getLanguageFromPersonalization(user?.personalization) === "en"
-                                                                ? "The Contract Builder drafts legally compliant documents with automatic legal review and PDF export."
-                                                                : "Le G\u00e9n\u00e9rateur de Contrats r\u00e9dige des documents conformes au droit marocain avec r\u00e9vision juridique automatique et export PDF."}
+                                                            {ui("contract_body", language)}
                                                         </p>
                                                         <div className="flex items-center gap-3 mt-2">
                                                             <a
                                                                 href="/contract-builder"
                                                                 className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline"
                                                             >
-                                                                {getLanguageFromPersonalization(user?.personalization) === "ar"
-                                                                    ? "فتح منشئ العقود ←"
-                                                                    : getLanguageFromPersonalization(user?.personalization) === "en"
-                                                                    ? "Open Contract Builder →"
-                                                                    : "Ouvrir le G\u00e9n\u00e9rateur →"}
+                                                                {ui("contract_cta", language)}
                                                             </a>
                                                         </div>
                                                     </div>
