@@ -16,10 +16,10 @@ export function AboutPhilosophy() {
             <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
                 {/* Section heading */}
                 <div className="mb-16 text-center scroll-animate opacity-0 transform translate-y-8 transition-all duration-700">
-                    <span className="text-sm font-bold tracking-widest uppercase text-muted-foreground">
+                    <span className="inline-block px-4 py-1.5 bg-primary/10 text-primary text-sm font-semibold rounded-full mb-6 border border-primary/20">
                         {t("aboutUs.philosophyTag")}
                     </span>
-                    <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mt-4 mb-6">
+                    <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
                         {t("aboutUs.philosophyTitle")}{" "}
                         <span className="text-gradient-emerald">
                             {t("aboutUs.philosophyTitleHighlight")}
