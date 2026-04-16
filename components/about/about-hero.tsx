@@ -19,7 +19,7 @@ export function AboutHero() {
 
             <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
                 {/* Mission badge with pulsing indicator */}
-                <div className="animate-reveal-up inline-flex items-center gap-2 px-4 py-2 rounded-full glass-premium border-glow-emerald mb-8 overflow-hidden group">
+                <div className="animate-reveal-up relative inline-flex items-center gap-2 px-4 py-2 rounded-full glass-premium border-glow-emerald mb-8 overflow-hidden group">
                     <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
                     <span className="relative flex h-2 w-2">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
