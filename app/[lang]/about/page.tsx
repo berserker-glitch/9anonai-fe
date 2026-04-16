@@ -69,7 +69,7 @@ export default function AboutPage() {
             <AboutPhilosophy />
 
             {/* The Engine — tech architecture deep-dive */}
-            <AboutEngine />
+            {/* <AboutEngine /> */}
 
             {/* Trust Metrics — accuracy, latency, sources, uptime */}
             <AboutStats />
