@@ -126,12 +126,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: "monthly",
             priority: 0.5,
         },
-        {
-            url: `${baseUrl}/about`,
+        // About page (trilingual) — high-value SEO page for brand trust and legal authority
+        ...["ar", "fr", "en"].map((lang) => ({
+            url: `${baseUrl}/${lang}/about`,
             lastModified: new Date(),
-            changeFrequency: "monthly",
+            changeFrequency: "monthly" as const,
             priority: 0.8,
-        },
+            alternates: {
+                languages: {
+                    ar: `${baseUrl}/ar/about`,
+                    fr: `${baseUrl}/fr/about`,
+                    en: `${baseUrl}/en/about`,
+                },
+            },
+        })),
         {
             url: `${baseUrl}/vs-9anoun`,
             lastModified: new Date(),
