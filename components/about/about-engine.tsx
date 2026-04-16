@@ -37,8 +37,7 @@ export function AboutEngine() {
 
     return (
         <section
-            className="py-24 lg:py-32 relative border-y border-white/5 overflow-hidden"
-            style={{ background: "#0D1117" }}
+            className="py-24 lg:py-32 relative border-y border-border/20 overflow-hidden bg-[oklch(0.14_0.015_160)]"
         >
             {/* Background texture */}
             <div className="absolute inset-0 bg-zellige opacity-[0.03]" />
@@ -54,7 +53,7 @@ export function AboutEngine() {
                         <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 tracking-tight text-white">
                             {t("aboutUs.techTitle")}
                         </h2>
-                        <p className="text-[#8b949e] text-xl leading-relaxed mb-10">
+                        <p className="text-white/55 text-xl leading-relaxed mb-10">
                             {t("aboutUs.techDesc")}
                         </p>
 
@@ -71,7 +70,7 @@ export function AboutEngine() {
                                         <h4 className="text-xl font-semibold text-white mb-2 group-hover:text-primary transition-colors">
                                             {t(feature.titleKey)}
                                         </h4>
-                                        <p className="text-[#8b949e]">
+                                        <p className="text-white/55">
                                             {t(feature.descKey)}
                                         </p>
                                     </div>
@@ -89,7 +88,7 @@ export function AboutEngine() {
                         {/* Core node */}
                         <div className="absolute inset-0 flex items-center justify-center">
                             <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary to-gold/80 p-[1px] shadow-2xl shadow-primary/40 animate-pulse-gentle">
-                                <div className="w-full h-full rounded-full bg-[#0D1117] flex items-center justify-center relative overflow-hidden">
+                                <div className="w-full h-full rounded-full bg-[oklch(0.14_0.015_160)] flex items-center justify-center relative overflow-hidden">
                                     <div className="absolute inset-0 bg-primary/20 animate-morph" />
                                     <span className="text-3xl font-display font-bold text-white relative z-10">
                                         9anon
