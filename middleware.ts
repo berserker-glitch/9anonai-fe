@@ -89,10 +89,11 @@ export function middleware(request: NextRequest) {
     );
 
     // Identify paths that NEED rewriting to /[lang] structure (routes inside app/[lang])
-    // Includes: /, /blog/*, all SEO landing pages, and the new test landing pages /1 to /11
+    // Includes: /, /blog/*, /about, all SEO landing pages, and the new test landing pages /1 to /11
     if (
         pathname === "/" ||
         pathname.startsWith("/blog") ||
+        pathname === "/about" ||
         isSeoPage ||
         /^\/([1-9]|10|11)(\/|$)/.test(pathname)
     ) {
