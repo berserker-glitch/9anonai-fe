@@ -200,6 +200,7 @@ function UsersAnalyticsContent({ range }: { range: string }) {
                     token={token}
                     onRefresh={fetchUsers}
                     isLoading={usersLoading}
+                    onUsersChange={setAllUsers}
                 />
             )}
         </div>
