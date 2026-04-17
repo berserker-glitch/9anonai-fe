@@ -1,14 +1,17 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Search, Download, RefreshCw } from "lucide-react";
+import { Search, Download, RefreshCw, Star } from "lucide-react";
 import { ConversationDrawer, UserStats } from "./conversation-drawer";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
 
 interface UsersTableProps {
     users: UserStats[];
     token: string | null;
     onRefresh: () => void;
     isLoading?: boolean;
+    onUsersChange?: (updatedUsers: UserStats[]) => void;
 }
 
 function formatDate(dateString: string) {
@@ -30,10 +33,12 @@ function formatTime(dateString: string) {
 
 type SortField = "conversationCount" | "messageCount" | "createdAt" | "lastActive";
 
-export function UsersTable({ users, token, onRefresh, isLoading }: UsersTableProps) {
+export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }: UsersTableProps) {
     const [searchQuery, setSearchQuery] = useState("");
     const [sortField, setSortField] = useState<SortField>("lastActive");
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+    const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+    const [togglingId, setTogglingId] = useState<string | null>(null);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState<UserStats | null>(null);
 
@@ -41,8 +46,9 @@ export function UsersTable({ users, token, onRefresh, isLoading }: UsersTablePro
         return users
             .filter(
                 (u) =>
-                    u.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    (u.name && u.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                    (!showFavoritesOnly || u.isFavorite) &&
+                    (u.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        (u.name && u.name.toLowerCase().includes(searchQuery.toLowerCase())))
             )
             .sort((a, b) => {
                 let comparison = 0;
@@ -53,7 +59,27 @@ export function UsersTable({ users, token, onRefresh, isLoading }: UsersTablePro
                 }
                 return sortOrder === "asc" ? comparison : -comparison;
             });
-    }, [users, searchQuery, sortField, sortOrder]);
+    }, [users, searchQuery, sortField, sortOrder, showFavoritesOnly]);
+
+    const handleToggleFavorite = async (userId: string) => {
+        if (!token || togglingId) return;
+        setTogglingId(userId);
+        try {
+            const res = await fetch(`${API_URL}/admin/users/${userId}/favorite`, {
+                method: "PATCH",
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            if (res.ok) {
+                const { isFavorite } = await res.json();
+                const updated = users.map((u) => u.id === userId ? { ...u, isFavorite } : u);
+                onUsersChange?.(updated);
+            }
+        } catch (e) {
+            console.error("Failed to toggle favorite", e);
+        } finally {
+            setTogglingId(null);
+        }
+    };
 
     const handleSort = (field: SortField) => {
         if (sortField === field) {
@@ -114,6 +140,14 @@ export function UsersTable({ users, token, onRefresh, isLoading }: UsersTablePro
                                 <RefreshCw className={`h-5 w-5 ${isLoading ? "animate-spin" : ""}`} />
                             </button>
                             <button
+                                onClick={() => setShowFavoritesOnly((v) => !v)}
+                                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-colors ${showFavoritesOnly ? "bg-amber-400/20 text-amber-500 border border-amber-400/40 hover:bg-amber-400/30" : "bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80"}`}
+                                title="Show favorites only"
+                            >
+                                <Star className={`h-4 w-4 ${showFavoritesOnly ? "fill-amber-400 text-amber-400" : ""}`} />
+                                Favorites
+                            </button>
+                            <button
                                 onClick={handleExport}
                                 className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-xl hover:bg-primary/90 transition-colors"
                             >
@@ -139,6 +173,7 @@ export function UsersTable({ users, token, onRefresh, isLoading }: UsersTablePro
                     <table className="w-full">
                         <thead className="bg-muted/50">
                             <tr>
+                                <th className="px-4 py-4 w-10"></th>
                                 <th className="text-left px-6 py-4 text-sm font-medium text-muted-foreground">User</th>
                                 <th className="text-left px-6 py-4 text-sm font-medium text-muted-foreground">Role</th>
                                 <th
@@ -172,6 +207,16 @@ export function UsersTable({ users, token, onRefresh, isLoading }: UsersTablePro
                         <tbody className="divide-y divide-border">
                             {filteredUsers.map((u) => (
                                 <tr key={u.id} className="hover:bg-muted/30 transition-colors">
+                                    <td className="px-4 py-4">
+                                        <button
+                                            onClick={() => handleToggleFavorite(u.id)}
+                                            disabled={togglingId === u.id}
+                                            title={u.isFavorite ? "Remove from favorites" : "Add to favorites"}
+                                            className="p-1 rounded-md hover:bg-muted transition-colors disabled:opacity-40"
+                                        >
+                                            <Star className={`h-4 w-4 transition-colors ${u.isFavorite ? "fill-amber-400 text-amber-400" : "text-muted-foreground hover:text-amber-400"}`} />
+                                        </button>
+                                    </td>
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-3">
                                             <div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-medium text-sm shrink-0">
@@ -217,7 +262,7 @@ export function UsersTable({ users, token, onRefresh, isLoading }: UsersTablePro
                             ))}
                             {filteredUsers.length === 0 && (
                                 <tr>
-                                    <td colSpan={8} className="px-6 py-12 text-center text-muted-foreground text-sm">
+                                    <td colSpan={9} className="px-6 py-12 text-center text-muted-foreground text-sm">
                                         No users found
                                     </td>
                                 </tr>
