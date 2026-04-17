@@ -10,6 +10,7 @@ export interface UserStats {
     email: string;
     name: string | null;
     role: string;
+    isFavorite: boolean;
     createdAt: string;
     marketingSource: string | null;
     conversationCount: number;
