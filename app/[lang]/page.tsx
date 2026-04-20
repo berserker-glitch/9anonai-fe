@@ -11,7 +11,7 @@ import CardSwap, { Card } from "@/components/landing/card-swap";
 import { BlogHighlights } from "@/components/landing/blog-highlights";
 
 export default function LandingPage() {
-  const { t } = useTranslation("landing");
+  const { t, isLoading } = useTranslation("landing");
   const { dir, language: lang } = useLanguage();
 
   const heroRef = useRef<HTMLDivElement>(null);
@@ -49,7 +49,7 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background overflow-hidden">
+    <div className="min-h-screen bg-background overflow-hidden" style={{ opacity: isLoading ? 0 : 1, transition: "opacity 0.25s ease-in" }}>
       <div dir={dir}>
         <Header />
       </div>
