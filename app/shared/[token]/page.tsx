@@ -32,7 +32,7 @@ export default function SharedChatPage() {
 
     useEffect(() => {
         if (!token) return;
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/chats/shared/${token}`)
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/chats/shared/${token}`)
             .then((r) => {
                 if (!r.ok) throw new Error("Not found");
                 return r.json();
