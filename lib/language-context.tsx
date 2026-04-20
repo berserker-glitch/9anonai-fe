@@ -129,11 +129,11 @@ export function LanguageProvider({ children, defaultNamespaces = ["landing"], in
         const trans = translations[cacheKey];
 
         if (!trans) {
-            return key; // Return key if translations not loaded
+            return "\u00A0"; // Return non-breaking space while loading to avoid showing raw keys
         }
 
         const value = getNestedValue(trans, key);
-        return value ?? key; // Return key if translation not found
+        return value ?? key; // Return key if translation not found (for debugging)
     }, [language, translations]);
 
     return (
