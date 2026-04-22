@@ -57,7 +57,7 @@ export function FAQSection({ items, title, dir = "ltr" }: FAQSectionProps) {
                     {items.map((item, index) => (
                         <div
                             key={index}
-                            className="glass-premium rounded-xl border border-border/40 overflow-hidden transition-all duration-300"
+                            className="bg-muted/20 rounded-xl overflow-hidden transition-all duration-300"
                         >
                             {/* Question button — uses H3 for SEO heading hierarchy */}
                             <button
