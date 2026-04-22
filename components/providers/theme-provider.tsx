@@ -88,11 +88,8 @@ export function ThemeProvider({ children, defaultTheme = "dark" }: ThemeProvider
         setThemeState((prev) => (prev === "dark" ? "light" : "dark"));
     };
 
-    // Prevent flash
-    if (!mounted) {
-        return <>{children}</>;
-    }
-
+    // Always render with context — early return without Provider broke useTheme() calls.
+    // Flash prevention is handled by suppressHydrationWarning on <html> in layout.tsx.
     return (
         <ThemeContext.Provider value={{ theme, resolvedTheme, setTheme, toggleTheme }}>
             {children}
