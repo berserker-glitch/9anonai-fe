@@ -107,6 +107,59 @@
         "madeWith": "Made with",
         "inMorocco": "in Morocco"
     },
+    "showcase": {
+        "tag": "Our Products",
+        "title": "Everything You Need,",
+        "titleHighlight": "One Platform",
+        "tabChat": "AI Legal Chat",
+        "tabContract": "Contract Builder",
+        "tabCalculator": "Legal Calculators",
+        "chatDesc": "Ask any legal question in Arabic, French, English, or Darija. Get instant answers backed by real Moroccan legal sources.",
+        "contractDesc": "Generate legally-sound contracts tailored to Moroccan law. Employment, rental, sales — ready to sign in minutes.",
+        "calculatorDesc": "Compute inheritance shares, income tax, and rent increases using official Moroccan formulas. Precise to the dirham."
+    },
+    "legalTopics": {
+        "tag": "Legal Domains",
+        "title": "15 Areas of",
+        "titleHighlight": "Moroccan Law",
+        "subtitle": "Deep expertise across every major legal domain in Morocco."
+    },
+    "testimonials": {
+        "tag": "What People Say",
+        "title": "Trusted by",
+        "titleHighlight": "Thousands",
+        "t1Text": "I got my answer about divorce procedures in less than 10 seconds. This would have taken days with a lawyer.",
+        "t1Author": "Fatima Z.",
+        "t1City": "Casablanca",
+        "t2Text": "As a startup founder, 9anon AI helped me understand SARL registration requirements without any consultation fees.",
+        "t2Author": "Youssef B.",
+        "t2City": "Rabat",
+        "t3Text": "The inheritance calculator saved me from a costly mistake. The AI even cited the exact Moudawana articles.",
+        "t3Author": "Amina K.",
+        "t3City": "Marrakech"
+    },
+    "faq": {
+        "tag": "FAQ",
+        "title": "Frequently Asked Questions",
+        "q1": "Is 9anon AI really free?",
+        "a1": "Yes, 9anon AI is completely free to use. No credit card, no hidden fees, no registration required. Our mission is to make Moroccan legal knowledge accessible to everyone.",
+        "q2": "Can I trust the legal answers?",
+        "a2": "Every answer is backed by citations from official Moroccan legal sources — the Bulletin Officiel, Court of Cassation rulings, and specific Dahir articles. Our anti-hallucination pipeline verifies each response before delivery.",
+        "q3": "What languages does 9anon AI support?",
+        "a3": "9anon AI supports Arabic (العربية), French (Français), English, and Moroccan Darija (الدارجة). You can ask your question in any language and get a complete answer.",
+        "q4": "Is my data private?",
+        "a4": "Absolutely. We do not store, log, or read your legal queries. Your conversations are processed in real-time and never persisted. Privacy is guaranteed by architecture, not just policy.",
+        "q5": "Does 9anon AI replace a lawyer?",
+        "a5": "9anon AI provides legal information, not legal advice. It's designed to help you understand your rights and the law. For complex cases that require representation, we recommend consulting a licensed attorney."
+    },
+    "marquee": {
+        "users": "10,000+ Active Users",
+        "questions": "50,000+ Questions Answered",
+        "accuracy": "99.9% Citation Accuracy",
+        "languages": "4 Languages Supported",
+        "sources": "Official Moroccan Sources",
+        "free": "100% Free Forever"
+    },
     "aboutUs": {
         "badge": "About 9anon AI",
         "title": "Democratizing",

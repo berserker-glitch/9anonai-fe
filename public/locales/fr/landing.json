@@ -107,6 +107,59 @@
         "madeWith": "Fait avec",
         "inMorocco": "au Maroc"
     },
+    "showcase": {
+        "tag": "Nos Produits",
+        "title": "Tout Ce Dont Vous Avez Besoin,",
+        "titleHighlight": "Une Seule Plateforme",
+        "tabChat": "Chat Juridique IA",
+        "tabContract": "Générateur de Contrats",
+        "tabCalculator": "Calculateurs Juridiques",
+        "chatDesc": "Posez n'importe quelle question juridique en arabe, français, anglais ou darija. Obtenez des réponses instantanées appuyées par des sources juridiques marocaines officielles.",
+        "contractDesc": "Générez des contrats conformes au droit marocain. Emploi, location, vente — prêts à signer en quelques minutes.",
+        "calculatorDesc": "Calculez les parts d'héritage, l'impôt sur le revenu et les augmentations de loyer selon les formules officielles marocaines. Précis au dirham."
+    },
+    "legalTopics": {
+        "tag": "Domaines Juridiques",
+        "title": "15 Domaines du",
+        "titleHighlight": "Droit Marocain",
+        "subtitle": "Une expertise approfondie dans chaque domaine juridique majeur au Maroc."
+    },
+    "testimonials": {
+        "tag": "Témoignages",
+        "title": "La Confiance de",
+        "titleHighlight": "Milliers d'Utilisateurs",
+        "t1Text": "J'ai obtenu ma réponse sur les procédures de divorce en moins de 10 secondes. Cela aurait pris des jours avec un avocat.",
+        "t1Author": "Fatima Z.",
+        "t1City": "Casablanca",
+        "t2Text": "En tant que fondateur de startup, 9anon AI m'a aidé à comprendre les exigences d'immatriculation SARL sans frais de consultation.",
+        "t2Author": "Youssef B.",
+        "t2City": "Rabat",
+        "t3Text": "Le calculateur d'héritage m'a évité une erreur coûteuse. L'IA a même cité les articles exacts de la Moudawana.",
+        "t3Author": "Amina K.",
+        "t3City": "Marrakech"
+    },
+    "faq": {
+        "tag": "FAQ",
+        "title": "Questions Fréquemment Posées",
+        "q1": "9anon AI est-il vraiment gratuit ?",
+        "a1": "Oui, 9anon AI est entièrement gratuit. Pas de carte de crédit, pas de frais cachés, pas d'inscription requise. Notre mission est de rendre la connaissance juridique marocaine accessible à tous.",
+        "q2": "Puis-je faire confiance aux réponses juridiques ?",
+        "a2": "Chaque réponse est appuyée par des citations de sources juridiques marocaines officielles — le Bulletin Officiel, les arrêts de la Cour de Cassation et les articles de Dahirs spécifiques. Notre pipeline anti-hallucination vérifie chaque réponse avant livraison.",
+        "q3": "Quelles langues 9anon AI supporte-t-il ?",
+        "a3": "9anon AI supporte l'arabe (العربية), le français, l'anglais et le darija marocain (الدارجة). Vous pouvez poser votre question dans n'importe quelle langue et obtenir une réponse complète.",
+        "q4": "Mes données sont-elles privées ?",
+        "a4": "Absolument. Nous ne stockons, n'enregistrons ni ne lisons vos requêtes juridiques. Vos conversations sont traitées en temps réel et jamais conservées. La confidentialité est garantie par l'architecture, pas seulement par une politique.",
+        "q5": "9anon AI remplace-t-il un avocat ?",
+        "a5": "9anon AI fournit des informations juridiques, pas des conseils juridiques. Il est conçu pour vous aider à comprendre vos droits et la loi. Pour les cas complexes nécessitant une représentation, nous recommandons de consulter un avocat agréé."
+    },
+    "marquee": {
+        "users": "+10 000 Utilisateurs Actifs",
+        "questions": "+50 000 Questions Répondues",
+        "accuracy": "99,9% Précision des Citations",
+        "languages": "4 Langues Supportées",
+        "sources": "Sources Marocaines Officielles",
+        "free": "100% Gratuit Pour Toujours"
+    },
     "aboutUs": {
         "badge": "À propos de 9anon AI",
         "title": "Démocratiser le",
