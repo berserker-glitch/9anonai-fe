@@ -66,7 +66,6 @@ export default function TermsOfServicePage() {
 
             {/* Hero Background */}
             <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent pointer-events-none" />
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-br from-primary/10 to-gold/5 rounded-full blur-[150px] opacity-50 pointer-events-none" />
 
             <main className="relative pt-32 pb-20">
                 <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
@@ -153,11 +152,11 @@ export default function TermsOfServicePage() {
                                         </ul>
                                     )}
                                     {section.important && (
-                                        <div className="mt-6 p-4 bg-gold/10 border border-gold/20 rounded-xl flex items-start gap-3">
-                                            <svg className="w-5 h-5 text-gold mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                        <div className="mt-6 p-4 bg-primary/10 border border-primary/20 rounded-xl flex items-start gap-3">
+                                            <svg className="w-5 h-5 text-primary mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                                             </svg>
-                                            <p className="text-gold font-medium">{section.important}</p>
+                                            <p className="text-primary font-medium">{section.important}</p>
                                         </div>
                                     )}
                                     {section.email && (

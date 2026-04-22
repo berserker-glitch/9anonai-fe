@@ -79,18 +79,18 @@ export default function PrivacyPolicyPage() {
             <Header />
 
             {/* Hero Background */}
-            <div className="absolute inset-0 bg-gradient-to-b from-gold/5 via-transparent to-transparent pointer-events-none" />
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-br from-gold/10 to-primary/5 rounded-full blur-[150px] opacity-50 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-br from-primary/10 to-primary/5 rounded-full blur-[150px] opacity-50 pointer-events-none" />
 
             <main className="relative pt-32 pb-20">
                 <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
                     {/* Header */}
                     <div className="text-center mb-16 animate-reveal-up">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-premium border-glow-gold mb-6">
-                            <svg className="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-premium border-glow-primary mb-6">
+                            <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                             </svg>
-                            <span className="text-sm font-medium text-gold">
+                            <span className="text-sm font-medium text-primary">
                                 {language === "ar" ? "خصوصيتك تهمنا" : language === "fr" ? "Votre vie privée compte" : "Your Privacy Matters"}
                             </span>
                         </div>
@@ -106,10 +106,10 @@ export default function PrivacyPolicyPage() {
                     </div>
 
                     {/* Quick Summary */}
-                    <div className="animate-reveal-up delay-100 glass-premium rounded-2xl p-6 mb-8 border-l-4 border-gold">
+                    <div className="animate-reveal-up delay-100 glass-premium rounded-2xl p-6 mb-8 border-l-4 border-primary">
                         <div className="flex items-start gap-4">
-                            <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center shrink-0">
-                                <svg className="w-6 h-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                                <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                             </div>
@@ -241,7 +241,7 @@ export default function PrivacyPolicyPage() {
                         </Link>
                         <Link
                             href="/tos"
-                            className="inline-flex items-center gap-2 px-6 py-3 bg-gold/10 text-gold rounded-xl hover:bg-gold/20 transition-colors"
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-primary/10 text-primary rounded-xl hover:bg-primary/20 transition-colors"
                         >
                             <span>{language === "ar" ? "شروط الخدمة" : language === "fr" ? "Conditions d'Utilisation" : "Terms of Service"}</span>
                             <svg className="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
