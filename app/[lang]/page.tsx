@@ -84,12 +84,12 @@ export default function LandingPage() {
       <Header />
 
       {/* ─── HERO ─── */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-20">
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
         {/* Mesh gradient background */}
         <div className="absolute inset-0 bg-mesh-gradient" />
         <div className="absolute inset-0 bg-background/40" />
 
-        <div className="relative max-w-4xl mx-auto px-6 sm:px-8 text-center">
+        <div className="relative max-w-6xl mx-auto px-6 sm:px-8 text-center">
           {/* Badge */}
           <div className="animate-reveal-up inline-flex items-center gap-2 px-4 py-2 rounded-full glass-premium border border-border/40 mb-10">
             <span className="relative flex h-2 w-2">
@@ -157,8 +157,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ─── SOCIAL PROOF MARQUEE ─── */}
-      <SocialProofMarquee />
 
       {/* ─── BENTO FEATURES ─── */}
       <BentoFeatures />
@@ -228,10 +226,6 @@ export default function LandingPage() {
         {/* Bold layered background — mirrors hero */}
         <div className="absolute inset-0 bg-mesh-gradient" />
         <div className="absolute inset-0 bg-background/40" />
-        {/* Central primary glow */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-[700px] h-[400px] rounded-full bg-primary/12 blur-[120px]" />
-        </div>
 
         <div className="relative max-w-5xl mx-auto px-6 sm:px-8 text-center scroll-animate opacity-0 transform translate-y-8 transition-[opacity,transform] duration-700">
 
@@ -251,7 +245,7 @@ export default function LandingPage() {
           {/* Headline — hero-scale */}
           <h2 className={`font-display text-5xl sm:text-6xl lg:text-7xl xl:text-[5.25rem] font-bold tracking-tight leading-[1.08] mb-6 ${isArabic ? "text-right" : ""}`}>
             {t("cta.title")}
-            <span className="block text-gradient-emerald mt-2">{t("cta.titleHighlight")}</span>
+            <span className="block text-gradient-emerald mt-2 pb-[0.2em] -mb-[0.2em] pr-[0.1em]">{t("cta.titleHighlight")}</span>
           </h2>
 
           {/* Description */}
