@@ -73,6 +73,8 @@ export function LanguageProvider({ children, defaultNamespaces = ["landing"], in
     useEffect(() => {
         if (urlLang && languages[urlLang] && urlLang !== language) {
             setLanguageState(urlLang);
+            localStorage.setItem("9anon-language", urlLang);
+            document.cookie = `NEXT_LOCALE=${urlLang}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
         }
     }, [urlLang]);
 
@@ -83,11 +85,13 @@ export function LanguageProvider({ children, defaultNamespaces = ["landing"], in
         const stored = localStorage.getItem("9anon-language") as Language | null;
         if (stored && languages[stored]) {
             setLanguageState(stored);
+            document.cookie = `NEXT_LOCALE=${stored}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
         } else {
             // Detect browser language
             const browserLang = navigator.language.split("-")[0] as Language;
             if (languages[browserLang]) {
                 setLanguageState(browserLang);
+                document.cookie = `NEXT_LOCALE=${browserLang}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
             }
         }
     }, [initialLanguage]);
