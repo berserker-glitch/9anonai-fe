@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Search, Download, RefreshCw, Star } from "lucide-react";
+import { Search, Download, RefreshCw, Star, Mail } from "lucide-react";
 import { ConversationDrawer, UserStats } from "./conversation-drawer";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
@@ -38,6 +38,7 @@ export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }
     const [sortField, setSortField] = useState<SortField>("lastActive");
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
     const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+    const [showGoogleOnly, setShowGoogleOnly] = useState(false);
     const [togglingId, setTogglingId] = useState<string | null>(null);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState<UserStats | null>(null);
@@ -47,6 +48,7 @@ export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }
             .filter(
                 (u) =>
                     (!showFavoritesOnly || u.isFavorite) &&
+                    (!showGoogleOnly || u.authMethod === "google") &&
                     (u.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
                         (u.name && u.name.toLowerCase().includes(searchQuery.toLowerCase())))
             )
@@ -59,7 +61,7 @@ export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }
                 }
                 return sortOrder === "asc" ? comparison : -comparison;
             });
-    }, [users, searchQuery, sortField, sortOrder, showFavoritesOnly]);
+    }, [users, searchQuery, sortField, sortOrder, showFavoritesOnly, showGoogleOnly]);
 
     const handleToggleFavorite = async (userId: string) => {
         if (!token || togglingId) return;
@@ -91,7 +93,7 @@ export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }
     };
 
     const handleExport = () => {
-        const headers = ["ID", "Email", "Name", "Role", "Created At", "Marketing Source", "Conversations", "Messages", "Last Active"];
+        const headers = ["ID", "Email", "Name", "Role", "Auth Method", "Created At", "Marketing Source", "Conversations", "Messages", "Last Active"];
         const csvContent = [
             headers.join(","),
             ...users.map((u) =>
@@ -100,6 +102,7 @@ export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }
                     u.email,
                     `"${u.name || ""}"`,
                     u.role,
+                    u.authMethod,
                     new Date(u.createdAt).toISOString(),
                     u.marketingSource || "",
                     u.conversationCount,
@@ -146,6 +149,19 @@ export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }
                             >
                                 <Star className={`h-4 w-4 ${showFavoritesOnly ? "fill-amber-400 text-amber-400" : ""}`} />
                                 Favorites
+                            </button>
+                            <button
+                                onClick={() => setShowGoogleOnly((v) => !v)}
+                                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-colors ${showGoogleOnly ? "bg-blue-500/10 text-blue-500 border border-blue-500/20 hover:bg-blue-500/20" : "bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80"}`}
+                                title="Show Google users only"
+                            >
+                                <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
+                                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+                                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+                                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05" />
+                                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
+                                </svg>
+                                Google
                             </button>
                             <button
                                 onClick={handleExport}
@@ -200,6 +216,7 @@ export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }
                                 >
                                     <div className="flex items-center gap-1">Last Active <SortIcon field="lastActive" /></div>
                                 </th>
+                                <th className="text-left px-6 py-4 text-sm font-medium text-muted-foreground">Auth</th>
                                 <th className="text-left px-6 py-4 text-sm font-medium text-muted-foreground">Source</th>
                                 <th className="text-left px-6 py-4 text-sm font-medium text-muted-foreground">Actions</th>
                             </tr>
@@ -219,8 +236,20 @@ export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }
                                     </td>
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-3">
-                                            <div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-medium text-sm shrink-0">
-                                                {u.name?.[0] || u.email[0].toUpperCase()}
+                                            <div className="relative h-9 w-9 shrink-0">
+                                                <div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-medium text-sm">
+                                                    {u.name?.[0] || u.email[0].toUpperCase()}
+                                                </div>
+                                                {u.authMethod === "google" && (
+                                                    <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-card border border-border flex items-center justify-center">
+                                                        <svg className="w-2.5 h-2.5" viewBox="0 0 24 24">
+                                                            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+                                                            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+                                                            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05" />
+                                                            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
+                                                        </svg>
+                                                    </div>
+                                                )}
                                             </div>
                                             <div className="min-w-0">
                                                 <p className="font-medium text-sm truncate">{u.name || "—"}</p>
@@ -242,6 +271,24 @@ export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }
                                     <td className="px-6 py-4 text-muted-foreground text-sm">{formatDate(u.createdAt)}</td>
                                     <td className="px-6 py-4 text-muted-foreground text-sm">{formatTime(u.lastActive)}</td>
                                     <td className="px-6 py-4">
+                                        {u.authMethod === "google" ? (
+                                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-500/10 text-blue-500 border border-blue-500/20">
+                                                <svg className="w-3 h-3" viewBox="0 0 24 24">
+                                                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+                                                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+                                                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05" />
+                                                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
+                                                </svg>
+                                                Google
+                                            </span>
+                                        ) : (
+                                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-muted text-muted-foreground border border-border">
+                                                <Mail className="w-3 h-3" />
+                                                Email
+                                            </span>
+                                        )}
+                                    </td>
+                                    <td className="px-6 py-4">
                                         {u.marketingSource ? (
                                             <span className="inline-flex px-2.5 py-1 rounded-full text-xs font-medium bg-secondary text-secondary-foreground border border-border">
                                                 {u.marketingSource}
@@ -262,7 +309,7 @@ export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }
                             ))}
                             {filteredUsers.length === 0 && (
                                 <tr>
-                                    <td colSpan={9} className="px-6 py-12 text-center text-muted-foreground text-sm">
+                                    <td colSpan={10} className="px-6 py-12 text-center text-muted-foreground text-sm">
                                         No users found
                                     </td>
                                 </tr>

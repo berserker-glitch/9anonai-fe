@@ -97,6 +97,11 @@ function UsersAnalyticsContent({ range }: { range: string }) {
         { name: "Super Admins", value: allUsers.filter((u) => u.role === "superadmin").length },
     ].filter((d) => d.value > 0);
 
+    const authPieData = [
+        { name: "Email / Password", value: allUsers.filter((u) => u.authMethod === "email").length },
+        { name: "Google", value: allUsers.filter((u) => u.authMethod === "google").length },
+    ].filter((d) => d.value > 0);
+
     return (
         <div className="space-y-6">
             {/* Title */}
@@ -160,7 +165,7 @@ function UsersAnalyticsContent({ range }: { range: string }) {
                 )}
             </ChartCard>
 
-            {/* Source + Role Distribution */}
+            {/* Source + Role + Auth Distribution */}
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
                 <ChartCard
                     title="Marketing Sources"
@@ -182,6 +187,20 @@ function UsersAnalyticsContent({ range }: { range: string }) {
                 >
                     <PieChartWrapper
                         data={rolePieData}
+                        height={260}
+                        emptyMessage="No users yet"
+                        showLegend
+                    />
+                </ChartCard>
+            </div>
+
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                <ChartCard
+                    title="Sign-in Method"
+                    subtitle="Google OAuth vs Email / Password"
+                >
+                    <PieChartWrapper
+                        data={authPieData}
                         height={260}
                         emptyMessage="No users yet"
                         showLegend
