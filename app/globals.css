@@ -784,7 +784,7 @@
   inset: 0;
   border-radius: inherit;
   padding: 2px;
-  background: linear-gradient(135deg, var(--gold), var(--primary));
+  background: linear-gradient(135deg, var(--primary), oklch(0.55 0.16 155));
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -800,7 +800,7 @@
 /* Feature card hover glow */
 .feature-card-glow:hover {
   box-shadow: 0 20px 40px -10px color-mix(in oklch, var(--primary) 20%, transparent),
-    0 0 30px -10px color-mix(in oklch, var(--gold) 15%, transparent);
+    0 0 30px -10px color-mix(in oklch, var(--primary) 15%, transparent);
 }
 
 /* Stat counter animation */
@@ -878,7 +878,7 @@
 .animate-shimmer-enhanced {
   background: linear-gradient(90deg,
       transparent 0%,
-      color-mix(in oklch, var(--gold) 30%, transparent) 50%,
+      color-mix(in oklch, var(--primary) 30%, transparent) 50%,
       transparent 100%);
   background-size: 200% 100%;
   animation: shimmer-enhanced 3s infinite;
@@ -1001,5 +1001,175 @@
     box-shadow: none;
     margin: 0;
     width: 100%;
+  }
+}
+
+/* ========================================
+   LANDING PAGE REDESIGN — NEW UTILITIES
+   ======================================== */
+
+/* Animated mesh gradient background for hero */
+.bg-mesh-gradient {
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(16, 185, 129, 0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 60% at 80% 20%, rgba(16, 185, 129, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 70% at 50% 80%, rgba(5, 150, 105, 0.10) 0%, transparent 70%);
+  background-size: 200% 200%;
+  animation: mesh-shift 12s ease-in-out infinite;
+}
+
+@keyframes mesh-shift {
+  0%, 100% {
+    background-position: 0% 0%, 100% 0%, 50% 100%;
+  }
+  33% {
+    background-position: 100% 50%, 0% 100%, 80% 0%;
+  }
+  66% {
+    background-position: 50% 100%, 50% 0%, 0% 50%;
+  }
+}
+
+/* Infinite marquee scroll — CSS-only */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee-scroll 30s linear infinite;
+}
+
+.animate-marquee-reverse {
+  animation: marquee-scroll 30s linear infinite reverse;
+}
+
+/* Bento card hover glow */
+.bento-card {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bento-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 20px 40px -10px color-mix(in oklch, var(--primary) 15%, transparent),
+    0 0 0 1px color-mix(in oklch, var(--primary) 25%, transparent);
+}
+
+/* Timeline connector line-draw animation */
+.timeline-connector {
+  background: linear-gradient(90deg, var(--primary), oklch(0.55 0.16 155));
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timeline-connector.active {
+  transform: scaleX(1);
+}
+
+/* Vertical timeline connector for mobile */
+.timeline-connector-v {
+  background: linear-gradient(180deg, var(--primary), oklch(0.55 0.16 155));
+  transform-origin: top center;
+  transform: scaleY(0);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timeline-connector-v.active {
+  transform: scaleY(1);
+}
+
+/* Bento grid layout — desktop asymmetric, mobile 1-col */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas: "a a b" "c d d" "e e f";
+  gap: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .bento-grid {
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas: "a" "b" "c" "d" "e" "f";
+  }
+}
+
+/* Feature card top-accent line */
+.feature-accent-line {
+  position: absolute;
+  top: 0;
+  left: 1.5rem;
+  right: 1.5rem;
+  height: 2px;
+  border-radius: 0 0 2px 2px;
+  background: linear-gradient(90deg, transparent, var(--primary) 40%, oklch(0.55 0.16 155) 70%, transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.bento-card:hover .feature-accent-line {
+  opacity: 1;
+}
+
+/* Legal topic card hover arrow */
+.legal-card-arrow {
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.group:hover .legal-card-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Testimonial quote decoration */
+.testimonial-quote::before {
+  content: '\201C';
+  font-family: var(--font-display);
+  font-size: 5rem;
+  line-height: 1;
+  position: absolute;
+  top: -0.5rem;
+  left: 1.25rem;
+  color: var(--primary);
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .bg-mesh-gradient {
+    animation: none;
+  }
+
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation: none;
+  }
+
+  .bento-card {
+    transition: none;
+  }
+
+  .timeline-connector,
+  .timeline-connector-v {
+    transition: none;
+    transform: scaleX(1);
+  }
+
+  .timeline-connector-v {
+    transform: scaleY(1);
   }
 }
