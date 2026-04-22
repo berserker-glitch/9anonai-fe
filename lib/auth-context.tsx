@@ -17,6 +17,7 @@ interface AuthContextType {
     user: User | null;
     token: string | null;
     login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
+    loginWithGoogle: (credential: string) => Promise<{ success: boolean; error?: string }>;
     register: (email: string, password: string, name?: string) => Promise<{ success: boolean; error?: string }>;
     logout: () => void;
     updateProfile: (data: { name?: string; personalization?: string; isOnboarded?: boolean; marketingSource?: string }) => Promise<{ success: boolean; error?: string }>;
@@ -81,6 +82,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setUser(data.user);
             return { success: true };
         } catch (error) {
+            return { success: false, error: "Something went wrong" };
+        }
+    };
+
+    const loginWithGoogle = async (credential: string) => {
+        try {
+            const res = await fetch(`${API_URL}/auth/google`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ credential }),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                return { success: false, error: data.error || "Google sign-in failed" };
+            }
+
+            localStorage.setItem("token", data.token);
+            setToken(data.token);
+            setUser(data.user);
+            return { success: true };
+        } catch {
             return { success: false, error: "Something went wrong" };
         }
     };
@@ -192,7 +216,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     return (
-        <AuthContext.Provider value={{ user, token, login, register, logout, updateProfile, changePassword, dismissFeedback, isLoading }}>
+        <AuthContext.Provider value={{ user, token, login, loginWithGoogle, register, logout, updateProfile, changePassword, dismissFeedback, isLoading }}>
             {children}
         </AuthContext.Provider>
     );
