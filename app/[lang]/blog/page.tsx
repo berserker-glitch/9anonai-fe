@@ -95,7 +95,6 @@ export default async function BlogIndex({ params }: { params: Promise<{ lang: Bl
 
     return (
         <div className="min-h-screen bg-background text-foreground font-sans" dir={dir}>
-            {/* Blog listing JSON-LD */}
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -103,25 +102,30 @@ export default async function BlogIndex({ params }: { params: Promise<{ lang: Bl
 
             <Header />
 
-            <main className="pt-32 pb-20 px-6 sm:px-8 lg:px-12 max-w-7xl mx-auto">
-                {/* Breadcrumbs */}
-                <Breadcrumbs
-                    items={[
-                        { label: "9anon AI", href: "/" },
-                        { label: `${t.title} ${t.subtitle}` },
-                    ]}
-                />
-
-                <div className="text-center mb-16">
-                    <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 tracking-tight">
-                        {t.title} <span className="text-gradient-emerald">{t.subtitle}</span>
-                    </h1>
-                    <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-                        {t.desc}
-                    </p>
+            {/* Hero */}
+            <section className="relative pt-36 pb-16 overflow-hidden">
+                <div className="absolute inset-0 bg-mesh-gradient" />
+                <div className="absolute inset-0 bg-background/50" />
+                <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+                    <Breadcrumbs
+                        items={[
+                            { label: "9anon AI", href: "/" },
+                            { label: `${t.title} ${t.subtitle}` },
+                        ]}
+                    />
+                    <div className="mt-8 max-w-3xl">
+                        <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.06]">
+                            <span className="block text-foreground">{t.title}</span>
+                            <span className="block text-gradient-emerald italic pb-[0.2em] -mb-[0.2em]">{t.subtitle}</span>
+                        </h1>
+                        <p className="text-muted-foreground text-lg sm:text-xl leading-relaxed max-w-2xl">
+                            {t.desc}
+                        </p>
+                    </div>
                 </div>
+            </section>
 
-                {/* Interactive Blog Grid with Categories */}
+            <main className="pb-24 px-6 sm:px-8 lg:px-12 max-w-7xl mx-auto pt-12">
                 <BlogGrid posts={posts} lang={lang} dir={dir} />
             </main>
 

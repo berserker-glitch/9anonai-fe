@@ -156,7 +156,7 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: Blo
 
             <ReadingProgress lang={lang} />
 
-            <main className="pt-32 pb-20 px-6 sm:px-8 lg:px-12 max-w-7xl mx-auto relative">
+            <main className="pt-28 pb-20 px-6 sm:px-8 lg:px-12 max-w-7xl mx-auto relative">
                 <div className="max-w-4xl">
                     {/* Breadcrumbs with JSON-LD for Google rich snippets */}
                     <Breadcrumbs
