@@ -122,6 +122,7 @@ export function LanguageProvider({ children, defaultNamespaces = ["landing"], in
     const setLanguage = useCallback((lang: Language) => {
         setLanguageState(lang);
         localStorage.setItem("9anon-language", lang);
+        document.cookie = `NEXT_LOCALE=${lang}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
     }, []);
 
     const t = useCallback((key: string, namespace: string = "landing"): string => {
