@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useAuth } from "@/lib/auth-context";
-import { useTranslation, useLanguage } from "@/lib/language-context";
+import { useTranslation } from "@/lib/language-context";
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
@@ -17,7 +17,6 @@ export default function LoginPage() {
     const router = useRouter();
     const { login, loginWithGoogle, user } = useAuth();
     const { t } = useTranslation("auth");
-    const { dir } = useLanguage();
 
     useEffect(() => {
         if (user) {
@@ -51,7 +50,7 @@ export default function LoginPage() {
     });
 
     return (
-        <div className="min-h-screen bg-background flex items-center justify-center relative overflow-hidden" dir={dir}>
+        <div className="min-h-screen bg-background flex items-center justify-center relative overflow-hidden">
             {/* Background */}
             <div className="absolute inset-0 bg-mesh-gradient" />
             <div className="absolute inset-0 bg-background/55" />
