@@ -28,7 +28,7 @@ export function AboutStats() {
                             className="scroll-animate opacity-0 transform translate-y-8 transition-all duration-700"
                             style={{ transitionDelay: `${i * 100}ms` }}
                         >
-                            <p className="text-4xl md:text-5xl font-display font-bold text-gradient-gold mb-3 drop-shadow-sm">
+                            <p className="text-4xl md:text-5xl font-display font-bold text-gradient-emerald mb-3">
                                 {t(`aboutUs.${stat.value}`)}
                             </p>
                             <p className="text-sm md:text-base text-muted-foreground tracking-wider font-semibold">

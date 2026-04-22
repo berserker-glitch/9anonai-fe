@@ -15,7 +15,7 @@ export function AboutHero() {
             {/* Immersive Background — floating gradient orbs + dot grid */}
             <div className="absolute inset-0 bg-dots opacity-[0.15]" />
             <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-primary/10 via-primary/5 to-transparent rounded-full blur-[150px] opacity-70 animate-pulse-gentle" />
-            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-gold/10 via-gold/5 to-transparent rounded-full blur-[150px] opacity-50 animate-morph" />
+            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-primary/8 via-primary/4 to-transparent rounded-full blur-[150px] opacity-50 animate-morph" />
 
             <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
                 {/* Mission badge with pulsing indicator */}
@@ -35,7 +35,7 @@ export function AboutHero() {
                     <span className="block text-foreground drop-shadow-sm">
                         {t("aboutUs.title")}
                     </span>
-                    <span className="block text-gradient-gold drop-shadow-glow">
+                    <span className="block text-gradient-emerald">
                         {t("aboutUs.titleHighlight")}
                     </span>
                 </h1>

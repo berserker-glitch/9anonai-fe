@@ -20,7 +20,7 @@ export function AboutStory() {
             <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
                 {/* Section tag */}
                 <div className="mb-16 text-center scroll-animate opacity-0 transform translate-y-8 transition-all duration-700">
-                    <span className="inline-block px-4 py-1.5 bg-gold/10 text-gold text-sm font-semibold rounded-full mb-6 border border-gold/20">
+                    <span className="inline-block px-4 py-1.5 bg-primary/10 text-primary text-sm font-semibold rounded-full mb-6 border border-primary/20">
                         {t("aboutUs.storyTag")}
                     </span>
                     <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
@@ -36,7 +36,7 @@ export function AboutStory() {
                     {/* Left column — origin narrative */}
                     <div className="space-y-8 scroll-animate opacity-0 transform translate-y-8 transition-all duration-700 delay-100">
                         <div className="relative">
-                            <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-primary via-gold to-transparent rounded-full hidden lg:block" />
+                            <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-primary via-primary/50 to-transparent rounded-full hidden lg:block" />
                             <div className="lg:pl-8">
                                 <h3 className="text-2xl font-display font-semibold mb-4 text-foreground">
                                     {t("aboutUs.storyOriginTitle")}
@@ -54,7 +54,7 @@ export function AboutStory() {
                     {/* Right column — vision & impact */}
                     <div className="space-y-8 scroll-animate opacity-0 transform translate-y-8 transition-all duration-700 delay-200">
                         <div className="relative">
-                            <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-gold via-primary to-transparent rounded-full hidden lg:block" />
+                            <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-primary/50 via-primary to-transparent rounded-full hidden lg:block" />
                             <div className="lg:pl-8">
                                 <h3 className="text-2xl font-display font-semibold mb-4 text-foreground">
                                     {t("aboutUs.storyVisionTitle")}

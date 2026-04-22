@@ -14,9 +14,8 @@ export function AboutCTA() {
     return (
         <section className="py-24 lg:py-32 relative text-center overflow-hidden">
             {/* Gradient overlays */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-gold/5 to-primary/10" />
-            <div className="absolute inset-0 bg-zellige opacity-5" />
-            <div className="absolute top-0 left-1/2 w-[800px] h-[800px] bg-gradient-to-br from-primary/20 to-gold/10 rounded-full blur-[200px] -translate-y-1/2 -translate-x-1/2 opacity-60 animate-morph" />
+            <div className="absolute inset-0 bg-mesh-gradient" />
+            <div className="absolute inset-0 bg-background/40" />
 
             <div className="relative z-10 max-w-4xl mx-auto px-6 sm:px-8 scroll-animate opacity-0 transform translate-y-8 transition-all duration-700">
                 <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 tracking-tight drop-shadow-sm">
@@ -33,7 +32,7 @@ export function AboutCTA() {
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                     <Link
                         href="/chat"
-                        className="inline-flex items-center gap-3 btn-premium px-12 py-6 text-lg font-semibold bg-gradient-to-r from-primary via-primary to-gold/90 text-primary-foreground rounded-2xl shadow-2xl shadow-primary/30 hover:shadow-primary/50 hover:scale-105 transition-[transform,box-shadow] duration-300 group"
+                        className="inline-flex items-center gap-3 px-12 py-6 text-lg font-semibold bg-primary text-primary-foreground rounded-2xl shadow-xl shadow-primary/25 hover:opacity-90 hover:shadow-primary/40 transition-all duration-300 group"
                     >
                         <span>{t("aboutUs.ctaButton")}</span>
                         <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">

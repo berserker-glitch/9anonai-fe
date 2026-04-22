@@ -23,7 +23,7 @@ export function AboutValues() {
             titleKey: "aboutUs.value2Title",
             descKey: "aboutUs.value2Desc",
             icon: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z",
-            color: "gold",
+            color: "primary",
         },
         {
             titleKey: "aboutUs.value3Title",
@@ -35,7 +35,7 @@ export function AboutValues() {
             titleKey: "aboutUs.value4Title",
             descKey: "aboutUs.value4Desc",
             icon: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z",
-            color: "gold",
+            color: "primary",
         },
         {
             titleKey: "aboutUs.value5Title",
@@ -47,14 +47,14 @@ export function AboutValues() {
             titleKey: "aboutUs.value6Title",
             descKey: "aboutUs.value6Desc",
             icon: "M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9",
-            color: "gold",
+            color: "primary",
         },
     ];
 
     return (
         <section className="py-24 lg:py-32 relative overflow-hidden">
             <div className="absolute inset-0 bg-dots opacity-[0.1]" />
-            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-tl from-gold/8 to-transparent rounded-full blur-[180px] opacity-50 pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-tl from-primary/8 to-transparent rounded-full blur-[180px] opacity-50 pointer-events-none" />
 
             <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
                 {/* Section heading */}
@@ -64,7 +64,7 @@ export function AboutValues() {
                     </span>
                     <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
                         {t("aboutUs.valuesTitle")}{" "}
-                        <span className="text-gradient-gold">
+                        <span className="text-gradient-emerald">
                             {t("aboutUs.valuesTitleHighlight")}
                         </span>
                     </h2>
@@ -84,8 +84,8 @@ export function AboutValues() {
                             {/* Hover overlay glow */}
                             <div
                                 className={`absolute inset-0 bg-gradient-to-br ${
-                                    value.color === "gold"
-                                        ? "from-gold/5 to-transparent"
+                                    false
+                                        ? "from-primary/5 to-transparent"
                                         : "from-primary/5 to-transparent"
                                 } opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
                             />
@@ -94,9 +94,7 @@ export function AboutValues() {
                                 {/* Icon container */}
                                 <div
                                     className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-all duration-500 group-hover:scale-110 ${
-                                        value.color === "gold"
-                                            ? "bg-gradient-to-br from-gold/20 to-gold/5 text-gold border border-gold/20 shadow-lg shadow-gold/10"
-                                            : "bg-gradient-to-br from-primary/20 to-primary/5 text-primary border border-primary/20 shadow-lg shadow-primary/10"
+                                        "bg-gradient-to-br from-primary/20 to-primary/5 text-primary border border-primary/20 shadow-lg shadow-primary/10"
                                     }`}
                                 >
                                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -115,7 +113,7 @@ export function AboutValues() {
                             {/* Corner accent dot */}
                             <div
                                 className={`absolute top-4 right-4 w-2 h-2 rounded-full opacity-50 ${
-                                    value.color === "gold" ? "bg-gold" : "bg-primary"
+                                    "bg-primary"
                                 }`}
                             />
                         </div>

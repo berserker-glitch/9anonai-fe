@@ -29,7 +29,7 @@ export function AboutCoverage() {
             <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
                 {/* Section heading */}
                 <div className="text-center mb-16 lg:mb-20 scroll-animate opacity-0 transform translate-y-8 transition-all duration-700">
-                    <span className="inline-block px-4 py-1.5 bg-gold/10 text-gold text-sm font-semibold rounded-full mb-6 border border-gold/20">
+                    <span className="inline-block px-4 py-1.5 bg-primary/10 text-primary text-sm font-semibold rounded-full mb-6 border border-primary/20">
                         {t("aboutUs.coverageTag")}
                     </span>
                     <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
