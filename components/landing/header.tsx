@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { useTranslation } from "@/lib/language-context";
 import { LanguageSwitcher } from "./language-switcher";
+import { useTheme } from "@/components/providers/theme-provider";
 
 /** Topics shown in the "Legal Topics" dropdown */
 const legalTopics = [
@@ -79,7 +80,7 @@ function NavDropdown({
                 >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-gold group-hover:w-full transition-[width] duration-300" />
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-[width] duration-300" />
             </button>
 
             {open && (
@@ -112,6 +113,7 @@ export function Header() {
     const [mobileToolsOpen, setMobileToolsOpen] = useState(false);
     const { user, isLoading } = useAuth();
     const { t, language } = useTranslation("landing");
+    const { resolvedTheme, toggleTheme } = useTheme();
     const isRtl = language === "ar";
 
     useEffect(() => {
@@ -166,7 +168,7 @@ export function Header() {
                             <span className="text-xl font-display font-semibold tracking-tight group-hover:text-gradient-emerald transition-colors duration-300">
                                 9anon
                             </span>
-                            <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-medium -mt-0.5 group-hover:text-gold transition-colors duration-300">
+                            <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-medium -mt-0.5 group-hover:text-primary transition-colors duration-300">
                                 قانون
                             </span>
                         </div>
@@ -185,7 +187,7 @@ export function Header() {
                                 className="relative text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-300 py-2 group"
                             >
                                 {t(item.key)}
-                                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-gold group-hover:w-full transition-[width] duration-300" />
+                                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-[width] duration-300" />
                             </Link>
                         ))}
 
@@ -195,7 +197,7 @@ export function Header() {
                             className="relative text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-300 py-2 group"
                         >
                             {t("nav.blog")}
-                            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-gold group-hover:w-full transition-[width] duration-300" />
+                            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-[width] duration-300" />
                         </Link>
 
                         {/* Legal Topics dropdown */}
@@ -217,6 +219,22 @@ export function Header() {
 
                     {/* Auth Buttons + Language Switcher */}
                     <div className="hidden md:flex items-center gap-4">
+                        {/* Theme toggle */}
+                        <button
+                            onClick={toggleTheme}
+                            className="w-9 h-9 rounded-xl flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-all duration-300"
+                            aria-label="Toggle theme"
+                        >
+                            {resolvedTheme === "dark" ? (
+                                <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.75" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" strokeLinecap="round" />
+                                </svg>
+                            ) : (
+                                <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.75" viewBox="0 0 24 24">
+                                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                            )}
+                        </button>
                         <LanguageSwitcher />
                         {!isLoading && user ? (
                             <Link
@@ -245,6 +263,21 @@ export function Header() {
 
                     {/* Mobile Menu Button */}
                     <div className="md:hidden flex items-center gap-2">
+                        <button
+                            onClick={toggleTheme}
+                            className="w-9 h-9 rounded-xl flex items-center justify-center text-muted-foreground hover:bg-accent/50 transition-all"
+                            aria-label="Toggle theme"
+                        >
+                            {resolvedTheme === "dark" ? (
+                                <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.75" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" strokeLinecap="round" />
+                                </svg>
+                            ) : (
+                                <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.75" viewBox="0 0 24 24">
+                                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                            )}
+                        </button>
                         <LanguageSwitcher />
                         <button
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
