@@ -28,7 +28,6 @@ const productLinks = [
   { href: "#features",         key: "footer.features" },
   { href: "/about",            key: "footer.howItWorks" },
   { href: "/chat",             key: "footer.startChat" },
-  { href: "/contract-builder", key: "nav.tools" },
   { href: "/blog",             key: "footer.blog" },
   { href: "/vs-9anoun",        key: "footer.compare" },
 ];

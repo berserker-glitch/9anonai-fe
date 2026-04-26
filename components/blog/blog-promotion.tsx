@@ -130,12 +130,6 @@ export function BlogPromotion({ lang, topic }: BlogPromotionProps) {
                     >
                         {BUTTONS.chat[l]}
                     </Link>
-                    <Link
-                        href="/contract-builder"
-                        className="px-8 py-4 glass-premium border border-primary/20 text-primary font-bold rounded-xl hover:bg-primary/5 transition-all text-center"
-                    >
-                        {BUTTONS.contract[l]}
-                    </Link>
                 </div>
             </div>
         </div>
