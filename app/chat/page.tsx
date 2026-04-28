@@ -706,11 +706,7 @@ export default function NewChatPage() {
 
             // Assistant message is now saved by the backend
 
-            // If the user's message looked like a contract request, mark this assistant
-            // message to show the Contract Builder suggestion card
-            if (looksLikeContractRequest(content)) {
-                setContractSuggestionMessageIds(prev => new Set(prev).add(assistantId));
-            }
+            // Contract Builder suggestion disabled — feature is admin-only during development
 
         } catch (error) {
             console.error("Stream error:", error);
@@ -887,13 +883,7 @@ export default function NewChatPage() {
         const count = chatHistory.length;
         const lang = language;
         const tips = [
-            {
-                id: "tip_contract",
-                threshold: 1,
-                text: ui("tip_contract_text", lang),
-                cta: ui("tip_contract_cta", lang),
-                href: "/contract-builder",
-            },
+
             {
                 id: "tip_upload",
                 threshold: 3,

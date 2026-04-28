@@ -3,11 +3,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useTranslation, useLanguage } from "@/lib/language-context";
-import { MessageSquare, FileSignature } from "lucide-react";
+import { MessageSquare } from "lucide-react";
 
 const tabs = [
   { id: "chat"     as const, labelKey: "showcase.tabChat",     descKey: "showcase.chatDesc",     Icon: MessageSquare, href: "/chat" },
-  { id: "contract" as const, labelKey: "showcase.tabContract", descKey: "showcase.contractDesc", Icon: FileSignature, href: "/contract-builder" },
 ];
 
 function ChatMockup({ t }: { t: (k: string) => string }) {
@@ -34,44 +33,13 @@ function ChatMockup({ t }: { t: (k: string) => string }) {
   );
 }
 
-function ContractMockup() {
-  return (
-    <div className="p-6 space-y-4">
-      <div className="flex items-center gap-3 mb-2">
-        <span className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse" />
-        <span className="text-xs font-mono text-muted-foreground">contract-generator.ai · Generating…</span>
-      </div>
-      <div className="space-y-0 border border-border/30 rounded-xl overflow-hidden">
-        {[
-          { label: "Type",         value: "Employment Contract (CDI)" },
-          { label: "Jurisdiction", value: "Kingdom of Morocco" },
-          { label: "Language",     value: "French / Arabic" },
-          { label: "Status",       value: "Draft ready" },
-        ].map((row, i) => (
-          <div key={row.label} className={`flex items-center justify-between px-4 py-3 text-sm ${i % 2 === 0 ? "bg-muted/20" : ""}`}>
-            <span className="text-muted-foreground">{row.label}</span>
-            <span className="font-medium">{row.value}</span>
-          </div>
-        ))}
-      </div>
-      <div className="p-4 rounded-xl bg-muted/20 border border-border/25 space-y-2">
-        <div className="flex justify-between text-xs text-muted-foreground">
-          <span>Generating contract</span>
-          <span className="text-primary font-medium">75%</span>
-        </div>
-        <div className="h-1.5 w-full bg-muted/50 rounded-full overflow-hidden">
-          <div className="h-full w-3/4 bg-gradient-to-r from-primary to-gold rounded-full" />
-        </div>
-      </div>
-    </div>
-  );
-}
+
 
 export function ProductShowcase() {
   const { t } = useTranslation("landing");
   const { language } = useLanguage();
   const isArabic = language === "ar";
-  const [activeTab, setActiveTab] = useState<"chat" | "contract">("chat");
+  const [activeTab, setActiveTab] = useState<"chat">("chat");
 
   const active = tabs.find((tab) => tab.id === activeTab)!;
 
@@ -134,7 +102,6 @@ export function ProductShowcase() {
             {/* Content */}
             <div className="min-h-[300px] bg-background/30">
               {activeTab === "chat"     && <ChatMockup t={t} />}
-              {activeTab === "contract" && <ContractMockup />}
             </div>
 
             {/* Description bar */}

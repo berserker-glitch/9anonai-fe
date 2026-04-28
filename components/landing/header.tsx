@@ -26,11 +26,7 @@ const legalTopics = [
     { href: "/cybersecurity-law", ar: "الأمن السيبراني",      fr: "Cybersécurité",       en: "Cybersecurity Law" },
 ];
 
-const tools = [
-    { href: "/calculators/inheritance",   ar: "حاسبة الإرث",              fr: "Calculateur d'Héritage", en: "Inheritance Calculator" },
-    { href: "/calculators/income-tax",    ar: "حاسبة الضريبة على الدخل",  fr: "Calculateur IR",         en: "Income Tax Calculator" },
-    { href: "/calculators/rent-increase", ar: "حاسبة الزيادة في الكراء",  fr: "Calculateur Loyer",      en: "Rent Increase Calculator" },
-];
+
 
 type Lang = "ar" | "fr" | "en";
 
@@ -126,7 +122,7 @@ export function Header() {
     const [mobileOpen, setMobileOpen]         = useState(false);
     const [scrolled, setScrolled]             = useState(false);
     const [mobileTopicsOpen, setMobileTopics] = useState(false);
-    const [mobileToolsOpen, setMobileTools]   = useState(false);
+
 
     const { user, isLoading } = useAuth();
     const { t, language }     = useTranslation("landing");
@@ -205,12 +201,7 @@ export function Header() {
                                     isRtl={isRtl}
                                     wide
                                 />
-                                <NavDropdown
-                                    label={t("nav.tools")}
-                                    items={tools}
-                                    lang={language}
-                                    isRtl={isRtl}
-                                />
+
                             </nav>
 
                             {/* Right actions */}
@@ -351,30 +342,7 @@ export function Header() {
                                 </div>
                             )}
 
-                            {/* Tools */}
-                            <button
-                                onClick={() => setMobileTools((o) => !o)}
-                                className="py-3 text-sm font-medium text-muted-foreground hover:text-foreground border-b border-border/40 flex items-center justify-between w-full transition-colors"
-                            >
-                                {t("nav.tools")}
-                                <svg className={`w-4 h-4 transition-transform ${mobileToolsOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </button>
-                            {mobileToolsOpen && (
-                                <div className="flex flex-col py-2 border-b border-border/40">
-                                    {tools.map((item) => (
-                                        <Link
-                                            key={item.href}
-                                            href={item.href}
-                                            onClick={() => setMobileOpen(false)}
-                                            className="py-2 px-2 text-sm text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors"
-                                        >
-                                            {getLabel(item, language)}
-                                        </Link>
-                                    ))}
-                                </div>
-                            )}
+
 
                             <div className="flex flex-col gap-3 pt-5">
                                 {!isLoading && user ? (

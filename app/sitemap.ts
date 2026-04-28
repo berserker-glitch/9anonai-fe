@@ -134,48 +134,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: 'weekly',
             priority: 0.9,
         },
-        // Calculator pages (trilingual) — high-value tool pages for viral Moroccan traffic
-        ...["ar", "fr", "en"].flatMap((lang) => [
-            {
-                url: `${baseUrl}/${lang}/calculators/inheritance`,
-                lastModified: new Date(),
-                changeFrequency: "monthly" as const,
-                priority: 0.9,
-                alternates: {
-                    languages: {
-                        ar: `${baseUrl}/ar/calculators/inheritance`,
-                        fr: `${baseUrl}/fr/calculators/inheritance`,
-                        en: `${baseUrl}/en/calculators/inheritance`,
-                    },
-                },
-            },
-            {
-                url: `${baseUrl}/${lang}/calculators/income-tax`,
-                lastModified: new Date(),
-                changeFrequency: "monthly" as const,
-                priority: 0.9,
-                alternates: {
-                    languages: {
-                        ar: `${baseUrl}/ar/calculators/income-tax`,
-                        fr: `${baseUrl}/fr/calculators/income-tax`,
-                        en: `${baseUrl}/en/calculators/income-tax`,
-                    },
-                },
-            },
-            {
-                url: `${baseUrl}/${lang}/calculators/rent-increase`,
-                lastModified: new Date(),
-                changeFrequency: "monthly" as const,
-                priority: 0.9,
-                alternates: {
-                    languages: {
-                        ar: `${baseUrl}/ar/calculators/rent-increase`,
-                        fr: `${baseUrl}/fr/calculators/rent-increase`,
-                        en: `${baseUrl}/en/calculators/rent-increase`,
-                    },
-                },
-            },
-        ]),
         // SEO landing pages — driven by SEO_PAGE_SLUGS (single source of truth in seo-page-types.ts)
         ...seoPageUrls,
         // Blog posts (trilingual)
