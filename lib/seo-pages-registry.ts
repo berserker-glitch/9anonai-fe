@@ -15,6 +15,7 @@ import { taxLegalPage } from "./seo-data-finance";
 import { inheritanceLawPage, immigrationLawPage } from "./seo-data-civic";
 import { rentalLawPage, realEstateLawPage } from "./seo-data-property";
 import { cybersecurityLawPage, cryptoLawPage, digitalLawPage } from "./seo-data-digital";
+import { consumerProtectionPage, companyRegistrationPage, citizenshipLawPage } from "./seo-data-new-pages";
 
 /**
  * Master map of slug → page config.
@@ -48,6 +49,10 @@ export const SEO_PAGES: Record<string, SEOPageConfig> = {
     "family-law": familyLawPage,
     "labor-law": laborLawPage,
     "traffic-law": trafficLawPage,
+    // New high-impression zero-click opportunity pages
+    "consumer-protection": consumerProtectionPage,
+    "company-registration": companyRegistrationPage,
+    "citizenship-law": citizenshipLawPage,
 };
 
 /**

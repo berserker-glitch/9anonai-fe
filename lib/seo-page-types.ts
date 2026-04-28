@@ -97,6 +97,10 @@ export const SEO_PAGE_SLUGS = [
     "family-law",
     "labor-law",
     "traffic-law",
+    // New high-impression zero-click opportunity pages
+    "consumer-protection",
+    "company-registration",
+    "citizenship-law",
 ] as const;
 
 export type SEOPageSlug = typeof SEO_PAGE_SLUGS[number];

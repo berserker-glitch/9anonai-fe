@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import Script from "next/script";
 import "./globals.css";
 import { Providers } from "@/components/providers/providers";
+import { WebVitals } from "@/components/web-vitals";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "";
 
@@ -47,7 +48,7 @@ export const metadata: Metadata = {
   // Default description is French — the primary SERP-facing audience.
   // Arabic and English descriptions are served on their respective /ar and /en routes.
   description:
-    "Obtenez des conseils juridiques gratuits en 30 secondes — 9anon AI répond instantanément sur la Moudawana, le Code du Travail, les contrats et plus. L'assistant juridique IA #1 au Maroc. Disponible 24h/24, 100% gratuit.",
+    "Conseils juridiques gratuits en 30 secondes. 9anon AI répond sur la Moudawana, Code du Travail, divorce, héritage, contrats. IA juridique #1 au Maroc. 100% gratuit, 24h/24.",
   keywords: [
     // === PRIMARY TARGET ===
     "Intelligence artificielle du droit marocain",
@@ -138,7 +139,7 @@ export const metadata: Metadata = {
     languages: {
       "ar-MA": "https://9anonai.com/ar",
       "fr-MA": "https://9anonai.com/fr",
-      "en-US": "https://9anonai.com/en",
+      "en-MA": "https://9anonai.com/en",
     },
   },
   // icons and openGraph images removed to use file-based convention (icon.png)
@@ -146,7 +147,7 @@ export const metadata: Metadata = {
     type: "website",
     // fr_MA as default locale — matches the default description language
     locale: "fr_MA",
-    alternateLocale: ["ar_MA", "en_US"],
+    alternateLocale: ["ar_MA", "en_MA"],
     url: "https://9anonai.com",
     siteName: "9anon AI - Intelligence artificielle du droit marocain",
     title: "9anon AI | Intelligence artificielle du droit marocain",
@@ -301,6 +302,7 @@ export default async function RootLayout({
         </>
       )}
       <body className={`${playfair.variable} ${jakarta.variable} ${cairo.variable} font-sans antialiased`}>
+        <WebVitals />
         <Providers lang={lang}>
           {children}
         </Providers>

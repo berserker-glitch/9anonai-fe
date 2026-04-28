@@ -81,6 +81,8 @@ export function middleware(request: NextRequest) {
         "cybersecurity-law", "crypto-law", "digital-law",
         // Topic hub pages
         "family-law", "labor-law", "traffic-law",
+        // New high-impression zero-click opportunity pages
+        "consumer-protection", "company-registration", "citizenship-law",
     ];
 
     // Check if the pathname matches a SEO page slug

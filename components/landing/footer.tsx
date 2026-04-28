@@ -2,35 +2,27 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useTranslation } from "@/lib/language-context";
+import { useTranslation, useLanguage } from "@/lib/language-context";
 
-const legalLinks1 = [
-  { href: "/family-law",       key: "footer.familyLaw" },
-  { href: "/labor-law",        key: "footer.laborLaw" },
-  { href: "/divorce-law",      key: "footer.divorceLaw" },
-  { href: "/traffic-law",      key: "footer.trafficLaw" },
-  { href: "/employee-rights",  key: "footer.employeeRights" },
-  { href: "/tenant-rights",    key: "footer.tenantRights" },
-  { href: "/inheritance-law",  key: "footer.inheritanceLaw" },
-  { href: "/immigration-law",  key: "footer.immigrationLaw" },
+// Slugs for SEO landing pages — prefixed with /{lang}/ at render time
+const legalSlugs1 = [
+  { slug: "family-law",      key: "footer.familyLaw" },
+  { slug: "labor-law",       key: "footer.laborLaw" },
+  { slug: "divorce-law",     key: "footer.divorceLaw" },
+  { slug: "traffic-law",     key: "footer.trafficLaw" },
+  { slug: "employee-rights", key: "footer.employeeRights" },
+  { slug: "tenant-rights",   key: "footer.tenantRights" },
+  { slug: "inheritance-law", key: "footer.inheritanceLaw" },
+  { slug: "immigration-law", key: "footer.immigrationLaw" },
 ];
 
-const legalLinks2 = [
-  { href: "/business-legal",  key: "footer.businessLegal" },
-  { href: "/tax-legal",       key: "footer.taxLaw" },
-  { href: "/rental-law",      key: "footer.realEstateLaw" },
-  { href: "/real-estate-law", key: "footer.realEstateLaw" },
-  { href: "/crypto-law",      key: "footer.cryptoLaw" },
-  { href: "/commercial-law",  key: "footer.businessLegal" },
-];
-
-const productLinks = [
-  { href: "#features",         key: "footer.features" },
-  { href: "/about",            key: "footer.howItWorks" },
-  { href: "/chat",             key: "footer.startChat" },
-  { href: "/contract-builder", key: "nav.tools" },
-  { href: "/blog",             key: "footer.blog" },
-  { href: "/vs-9anoun",        key: "footer.compare" },
+const legalSlugs2 = [
+  { slug: "business-legal",  key: "footer.businessLegal" },
+  { slug: "tax-legal",       key: "footer.taxLaw" },
+  { slug: "rental-law",      key: "footer.realEstateLaw" },
+  { slug: "real-estate-law", key: "footer.realEstateLaw" },
+  { slug: "crypto-law",      key: "footer.cryptoLaw" },
+  { slug: "commercial-law",  key: "footer.businessLegal" },
 ];
 
 const socialLinks = [
@@ -74,6 +66,19 @@ const socialLinks = [
 
 export function Footer() {
   const { t } = useTranslation("landing");
+  const { language: lang } = useLanguage();
+
+  const legalLinks1 = legalSlugs1.map((l) => ({ href: `/${lang}/${l.slug}`, key: l.key }));
+  const legalLinks2 = legalSlugs2.map((l) => ({ href: `/${lang}/${l.slug}`, key: l.key }));
+
+  const productLinks = [
+    { href: "#features",         key: "footer.features" },
+    { href: `/${lang}/about`,    key: "footer.howItWorks" },
+    { href: "/chat",             key: "footer.startChat" },
+    { href: "/contract-builder", key: "nav.tools" },
+    { href: `/${lang}/blog`,     key: "footer.blog" },
+    { href: "/vs-9anoun",        key: "footer.compare" },
+  ];
 
   return (
     <footer className="relative border-t border-border/30 overflow-hidden">
