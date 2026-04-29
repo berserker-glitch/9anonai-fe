@@ -384,6 +384,23 @@ export default function PricingPage() {
                         ))}
                     </div>
                 </div>
+
+                {/* Refund note */}
+                <p className="text-center text-xs text-muted-foreground mt-10">
+                    {{
+                        ar: "جميع الاشتراكات المدفوعة مشمولة بـ",
+                        fr: "Tous les abonnements payants sont couverts par une",
+                        en: "All paid subscriptions are covered by a",
+                    }[language] ?? "All paid subscriptions are covered by a"}{" "}
+                    <Link href="/refund" className="underline hover:text-foreground transition-colors">
+                        {{
+                            ar: "ضمان استرداد لمدة 14 يوماً",
+                            fr: "garantie de remboursement de 14 jours",
+                            en: "14-day money-back guarantee",
+                        }[language] ?? "14-day money-back guarantee"}
+                    </Link>
+                    .
+                </p>
             </main>
 
             <Footer />
