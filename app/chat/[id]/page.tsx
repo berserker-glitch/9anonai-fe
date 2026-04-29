@@ -26,6 +26,7 @@ import { ChatInput } from "@/components/interaction/chat-input";
 import { FilePreview } from "@/components/chat/file-preview";
 import { AttachButton } from "@/components/interaction/attach-button";
 import { AnimatedThinkingSvg } from "@/components/interaction/animated-thinking-svg";
+import { PaywallBanner } from "@/components/billing/paywall-banner";
 import { ScrollToBottom } from "@/components/utility/scroll-to-bottom";
 import { ConfirmModal } from "@/components/utility/modal";
 import { SettingsModal } from "@/components/settings/settings-modal";
@@ -99,6 +100,7 @@ export default function ChatWithIdPage() {
     const [inputValue, setInputValue] = useState("");
     const [isTyping, setIsTyping] = useState(false);
     const [isGenerating, setIsGenerating] = useState(false);
+    const [conversationLimitReached, setConversationLimitReached] = useState(false);
     const [chatHistory, setChatHistory] = useState<ChatHistory[]>([]);
     const [activeChatId, setActiveChatId] = useState<string | null>(chatId);
     const [searchQuery, setSearchQuery] = useState("");
@@ -570,6 +572,13 @@ export default function ChatWithIdPage() {
 
             if (!response.ok) {
                 const errData = await response.json().catch(() => ({}));
+                if (response.status === 402 && errData.error === 'conversation_limit_reached') {
+                    setConversationLimitReached(true);
+                    setMessages(prev => prev.filter(m => m.id !== currentMessageId && m.id !== assistantId));
+                    setIsTyping(false);
+                    setIsGenerating(false);
+                    return;
+                }
                 throw new Error(errData.error || `HTTP error! status: ${response.status}`);
             }
 
@@ -943,7 +952,11 @@ export default function ChatWithIdPage() {
                             </button>
                             <div className="flex-1 min-w-0">
                                 <p className="text-sm font-medium truncate">{user?.name || user?.email}</p>
-                                <p className="text-xs text-muted-foreground">{idu("free_plan", language)}</p>
+                                <p className="text-xs text-muted-foreground">
+                                    {user?.plan === 'pro' ? 'Plan Mihani'
+                                        : user?.plan === 'basic' ? 'Plan Asasi'
+                                        : idu("free_plan", language)}
+                                </p>
                             </div>
                             <ThemeToggle />
                         </div>
@@ -1183,8 +1196,13 @@ export default function ChatWithIdPage() {
                         </ChatContainer>
                     )}
 
+                    {/* Paywall banner — shown when free conversation cap is reached */}
+                    {!showWelcome && conversationLimitReached && (
+                        <PaywallBanner language={language} onNewConversation={handleNewChat} />
+                    )}
+
                     {/* Input Area when not in welcome mode */}
-                    {!showWelcome && (
+                    {!showWelcome && !conversationLimitReached && (
                         <ChatInput onSubmit={handleSendMessage} isLoading={isGenerating}>
                             <div className="flex-1 flex items-end gap-2 w-full min-w-0">
                                 <AttachButton onFilesSelected={handleFileUpload} />

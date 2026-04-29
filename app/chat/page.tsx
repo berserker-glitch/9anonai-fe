@@ -33,6 +33,7 @@ import { FeedbackModal } from "@/components/chat/feedback-modal";
 import { AttachButton } from "@/components/interaction/attach-button";
 import { FilePreview } from "@/components/chat/file-preview";
 import { AnimatedThinkingSvg } from "@/components/interaction/animated-thinking-svg";
+import { PaywallBanner } from "@/components/billing/paywall-banner";
 
 // UI Components
 import { Textarea } from "@/components/ui/textarea";
@@ -157,6 +158,16 @@ const CHAT_UI: Record<string, Record<string, string>> = {
         fr: "Plan Gratuit",
         en: "Free Plan",
     },
+    basic_plan: {
+        ar: "الخطة الأساسية",
+        fr: "Plan Asasi",
+        en: "Basic Plan",
+    },
+    pro_plan: {
+        ar: "الخطة المهنية",
+        fr: "Plan Mihani",
+        en: "Pro Plan",
+    },
     // Contract suggestion card
     contract_title: {
         ar: "هل تريد صياغة عقد احترافي؟",
@@ -232,6 +243,7 @@ export default function NewChatPage() {
     const [inputValue, setInputValue] = useState("");
     const [isTyping, setIsTyping] = useState(false);
     const [isGenerating, setIsGenerating] = useState(false);
+    const [conversationLimitReached, setConversationLimitReached] = useState(false);
     const [chatHistory, setChatHistory] = useState<ChatHistory[]>([]);
     const [activeChatId, setActiveChatId] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState("");
@@ -361,6 +373,7 @@ export default function NewChatPage() {
         setShowWelcome(true);
         setInputValue("");
         setSessionAssistantCount(0);
+        setConversationLimitReached(false);
         window.history.pushState(null, '', '/chat');
     };
 
@@ -641,6 +654,13 @@ export default function NewChatPage() {
 
             if (!response.ok) {
                 const errData = await response.json().catch(() => ({}));
+                if (response.status === 402 && errData.error === 'conversation_limit_reached') {
+                    setConversationLimitReached(true);
+                    setMessages(prev => prev.filter(m => m.id !== currentMessageId && m.id !== assistantId));
+                    setIsTyping(false);
+                    setIsGenerating(false);
+                    return;
+                }
                 throw new Error(errData.error || `HTTP error! status: ${response.status}`);
             }
 
@@ -962,7 +982,11 @@ export default function NewChatPage() {
                             </button>
                             <div className="flex-1 min-w-0">
                                 <p className="text-sm font-medium truncate">{user?.name || user?.email}</p>
-                                <p className="text-xs text-muted-foreground">{ui("free_plan", language)}</p>
+                                <p className="text-xs text-muted-foreground">
+                                    {user?.plan === 'pro' ? ui("pro_plan", language)
+                                        : user?.plan === 'basic' ? ui("basic_plan", language)
+                                        : ui("free_plan", language)}
+                                </p>
                             </div>
                             <ThemeToggle />
                         </div>
@@ -1285,8 +1309,13 @@ export default function NewChatPage() {
                         );
                     })()}
 
+                    {/* Paywall banner — shown when free conversation cap is reached */}
+                    {!showWelcome && conversationLimitReached && (
+                        <PaywallBanner language={language} onNewConversation={handleNewChat} />
+                    )}
+
                     {/* Input Area when not in welcome mode */}
-                    {!showWelcome && (
+                    {!showWelcome && !conversationLimitReached && (
                         <ChatInput onSubmit={handleSendMessage} isLoading={isGenerating}>
                             <div className="flex-1 flex items-end gap-2 w-full min-w-0">
                                 <AttachButton onFilesSelected={handleFileUpload} />
