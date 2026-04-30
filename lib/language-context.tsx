@@ -6,10 +6,8 @@ import { createContext, useContext, useState, useEffect, ReactNode, useCallback 
 export type Language = "ar" | "en" | "fr";
 
 // Language metadata
-// Note: dir is always "ltr" — the app layout is LTR regardless of language.
-// Arabic content is displayed left-to-right intentionally (per product decision).
 export const languages: Record<Language, { name: string; nativeName: string; dir: "ltr" | "rtl" }> = {
-    ar: { name: "Arabic", nativeName: "العربية", dir: "ltr" },
+    ar: { name: "Arabic", nativeName: "العربية", dir: "rtl" },
     en: { name: "English", nativeName: "English", dir: "ltr" },
     fr: { name: "French", nativeName: "Français", dir: "ltr" },
 };
@@ -116,11 +114,10 @@ export function LanguageProvider({ children, defaultNamespaces = ["landing"], in
         load();
     }, [language, defaultNamespaces]);
 
-    // Update HTML lang attribute only (not dir - that's handled per-page)
+    // Update HTML lang + dir attributes
     useEffect(() => {
         document.documentElement.lang = language;
-        // Note: dir is intentionally NOT set globally
-        // Landing pages apply dir themselves, chat interface stays LTR
+        document.documentElement.dir = languages[language].dir;
     }, [language]);
 
     const setLanguage = useCallback((lang: Language) => {
