@@ -16,13 +16,13 @@ const legalSlugs1 = [
   { slug: "immigration-law", key: "footer.immigrationLaw" },
 ];
 
-const legalLinks2 = [
-  { href: "/business-legal", key: "footer.businessLegal" },
-  { href: "/tax-legal", key: "footer.taxLaw" },
-  { href: "/rental-law", key: "footer.realEstateLaw" },
-  { href: "/real-estate-law", key: "footer.realEstateLaw" },
-  { href: "/crypto-law", key: "footer.cryptoLaw" },
-  { href: "/commercial-law", key: "footer.businessLegal" },
+const legalSlugs2 = [
+  { slug: "business-legal", key: "footer.businessLegal" },
+  { slug: "tax-legal", key: "footer.taxLaw" },
+  { slug: "rental-law", key: "footer.realEstateLaw" },
+  { slug: "real-estate-law", key: "footer.realEstateLaw" },
+  { slug: "crypto-law", key: "footer.cryptoLaw" },
+  { slug: "commercial-law", key: "footer.businessLegal" },
 ];
 
 const productLinks = [
