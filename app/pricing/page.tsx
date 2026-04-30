@@ -31,12 +31,10 @@ const T: Record<string, Record<string, string>> = {
     pro_name: { ar: "مهني", fr: "Mihani", en: "Pro" },
     enterprise_name: { ar: "مؤسسة", fr: "Mouassasa", en: "Enterprise" },
     // Prices
-    free_price: { ar: "0 درهم", fr: "0 MAD", en: "0 MAD" },
-    basic_price_mad: { ar: "49 درهم/شهر", fr: "49 MAD/mois", en: "49 MAD/mo" },
-    basic_price_eur: { ar: "4.99 يورو/شهر", fr: "4,99 €/mois", en: "€4.99/mo" },
-    pro_price_mad: { ar: "149 درهم/شهر", fr: "149 MAD/mois", en: "149 MAD/mo" },
-    pro_price_eur: { ar: "14.99 يورو/شهر", fr: "14,99 €/mois", en: "€14.99/mo" },
-    enterprise_price: { ar: "500+ درهم/شهر", fr: "500+ MAD/mois", en: "500+ MAD/mo" },
+    free_price: { ar: "مجاني", fr: "Gratuit", en: "Free" },
+    basic_price: { ar: "$4.99/شهر", fr: "$4.99/mois", en: "$4.99/mo" },
+    pro_price: { ar: "$14.99/شهر", fr: "$14.99/mois", en: "$14.99/mo" },
+    enterprise_price: { ar: "تواصل معنا", fr: "Sur devis", en: "Contact us" },
     // Tag labels
     tag_popular: { ar: "الأكثر شعبية", fr: "Populaire", en: "Most popular" },
     tag_power: { ar: "للمحترفين", fr: "Pour les pros", en: "For power users" },
@@ -100,9 +98,9 @@ const T: Record<string, Record<string, string>> = {
         en: "vs. a Lawyer",
     },
     compare_body: {
-        ar: "استشارة محامٍ واحدة في المغرب تكلف 500–2000 درهم. اشتراك الأساسي السنوي = 588 درهم فقط — أقل من استشارة واحدة.",
-        fr: "Une consultation d'avocat au Maroc coûte 500–2 000 MAD. L'abonnement Asasi annuel = 588 MAD seulement — moins d'une seule consultation.",
-        en: "One lawyer consultation in Morocco costs 500–2,000 MAD. A full year of Basic = 588 MAD — less than a single consultation.",
+        ar: "استشارة محامٍ واحدة في المغرب تكلف 50–200 دولار. اشتراك الأساسي لسنة كاملة = 59.88 دولار فقط — أقل من استشارة واحدة.",
+        fr: "Une consultation d'avocat au Maroc coûte 50–200 $. L'abonnement Asasi pour un an entier = 59,88 $ seulement — moins d'une seule consultation.",
+        en: "One lawyer consultation in Morocco costs $50–200. A full year of Basic = $59.88 — less than a single consultation.",
     },
 };
 
@@ -170,7 +168,6 @@ interface FeatureItem {
 interface TierConfig {
     nameKey: string;
     priceKey: string;
-    altPriceKey?: string;
     ctaKey: string;
     ctaHref: string;
     highlight: boolean;
@@ -223,8 +220,7 @@ export default function PricingPage() {
         },
         {
             nameKey: "basic_name",
-            priceKey: "basic_price_mad",
-            altPriceKey: "basic_price_eur",
+            priceKey: "basic_price",
             ctaKey: "cta_basic",
             ctaHref: "/api/billing/checkout?plan=basic",
             highlight: true,
@@ -261,8 +257,7 @@ export default function PricingPage() {
         },
         {
             nameKey: "pro_name",
-            priceKey: "pro_price_mad",
-            altPriceKey: "pro_price_eur",
+            priceKey: "pro_price",
             ctaKey: "cta_pro",
             ctaHref: "/api/billing/checkout?plan=pro",
             highlight: false,
@@ -436,11 +431,6 @@ function TierCard({ tier, language }: { tier: TierConfig; language: string }) {
             {/* Price */}
             <div className="mb-4">
                 <span className="text-2xl font-bold">{t(tier.priceKey, language)}</span>
-                {tier.altPriceKey && (
-                    <span className="text-xs text-muted-foreground ms-2">
-                        / {t(tier.altPriceKey, language)}
-                    </span>
-                )}
             </div>
 
             {/* CTA */}
