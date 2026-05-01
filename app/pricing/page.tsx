@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useLanguage } from "@/lib/language-context";
 import { useAuth } from "@/lib/auth-context";
+import { usePaddleCheckout } from "@/lib/use-paddle-checkout";
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
 import { Check, X, ArrowRight, Shield, Zap, Scale, Building2, Users, FileText, MessageSquare, Upload, Headphones } from "lucide-react";
@@ -153,34 +155,11 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
 
 export default function PricingPage() {
     const { language: lang, dir } = useLanguage();
-    const { token } = useAuth();
-    const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null);
-
-    const handleCheckout = async (plan: 'basic' | 'pro') => {
-        if (!token) {
-            window.location.href = '/login?redirect=/pricing';
-            return;
-        }
-        setCheckoutLoading(plan);
-        try {
-            const res = await fetch(`${API_URL}/billing/checkout`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({ plan }),
-            });
-            const data = await res.json();
-            if (data.checkout_url) {
-                window.location.href = data.checkout_url;
-            }
-        } catch (err) {
-            console.error('[checkout] Error', err);
-        } finally {
-            setCheckoutLoading(null);
-        }
-    };
+    useAuth();
+    const searchParams = useSearchParams();
+    const paymentSuccess = searchParams.get("status") === "success";
+    const { openCheckout, loading: checkoutLoading } = usePaddleCheckout();
+    const handleCheckout = openCheckout;
 
     // Scroll-reveal
     useEffect(() => {
@@ -283,6 +262,14 @@ export default function PricingPage() {
             <Header />
 
             <main className="flex-1">
+
+                {/* Payment success banner */}
+                {paymentSuccess && (
+                    <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-primary text-primary-foreground shadow-xl shadow-primary/30 text-sm font-semibold animate-reveal-up">
+                        <Shield className="w-4 h-4 shrink-0" />
+                        {{ ar: "تمت عملية الدفع! جارٍ تفعيل اشتراكك…", fr: "Paiement reçu ! Activation de votre abonnement…", en: "Payment received! Activating your subscription…" }[lang] ?? "Payment received!"}
+                    </div>
+                )}
 
                 {/* ══════════════════════════════════════════════════════════
                     HERO
