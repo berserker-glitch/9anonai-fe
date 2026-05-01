@@ -28,9 +28,9 @@ const T: Record<string, Record<string, string>> = {
         en: "New Conversation",
     },
     upgrade: {
-        ar: "ترقية — 49 درهم / شهر",
-        fr: "Passer à Asasi — 49 MAD/mois",
-        en: "Upgrade — 49 MAD/mo",
+        ar: "ترقية — $4.99 / شهر",
+        fr: "Passer à Asasi — $4.99/mois",
+        en: "Upgrade — $4.99/mo",
     },
     lawyer_comparison: {
         ar: "أرخص بكثير من استشارة محامٍ واحدة (500–2000 درهم)",
