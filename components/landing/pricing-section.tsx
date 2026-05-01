@@ -1,12 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 import { useLanguage } from "@/lib/language-context";
-import { useAuth } from "@/lib/auth-context";
+import { usePaddleCheckout } from "@/lib/use-paddle-checkout";
 import { Check, Zap, ArrowRight } from "lucide-react";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
 
 // ─── Translations ────────────────────────────────────────────────────────────
 
@@ -123,34 +120,7 @@ const TIERS: Tier[] = [
 
 export function PricingSection() {
     const { language: lang, dir } = useLanguage();
-    const { token } = useAuth();
-    const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null);
-
-    const handleCheckout = async (plan: 'basic' | 'pro') => {
-        if (!token) {
-            window.location.href = '/login?redirect=/pricing';
-            return;
-        }
-        setCheckoutLoading(plan);
-        try {
-            const res = await fetch(`${API_URL}/billing/checkout`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({ plan }),
-            });
-            const data = await res.json();
-            if (data.checkout_url) {
-                window.location.href = data.checkout_url;
-            }
-        } catch (err) {
-            console.error('[checkout] Error', err);
-        } finally {
-            setCheckoutLoading(null);
-        }
-    };
+    const { openCheckout, loading: checkoutLoading } = usePaddleCheckout();
 
     return (
         <section className="relative py-24 lg:py-36 overflow-hidden" dir={dir}>
@@ -192,7 +162,7 @@ export function PricingSection() {
                             <TierCard
                                 tier={tier}
                                 lang={lang}
-                                onCheckout={tier.checkoutPlan ? () => handleCheckout(tier.checkoutPlan!) : undefined}
+                                onCheckout={tier.checkoutPlan ? () => openCheckout(tier.checkoutPlan!) : undefined}
                                 isLoading={checkoutLoading === tier.checkoutPlan}
                             />
                         </div>
