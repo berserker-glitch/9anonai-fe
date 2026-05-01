@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import { useLanguage } from "@/lib/language-context";
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
-import { Check, X, ArrowRight, Shield, Zap, Scale, Building2, Users, FileText, MessageSquare, Clock, Upload, Headphones } from "lucide-react";
+import { Check, X, ArrowRight, Shield, Zap, Scale, Building2, Users, FileText, MessageSquare, Upload, Headphones } from "lucide-react";
 
 // ─── Translations ─────────────────────────────────────────────────────────────
 
@@ -175,14 +175,6 @@ export default function PricingPage() {
             ent: c("v_msgs_paid", lang),
         },
         {
-            icon: <Clock className="w-3.5 h-3.5" />,
-            labelKey: "f_history",
-            free: c("v_hist_free", lang),
-            basic: c("v_hist_paid", lang),
-            pro: c("v_hist_paid", lang),
-            ent: c("v_hist_paid", lang),
-        },
-        {
             icon: <FileText className="w-3.5 h-3.5" />,
             labelKey: "f_contracts",
             free: false,
@@ -303,141 +295,95 @@ export default function PricingPage() {
                 {/* ══════════════════════════════════════════════════════════
                     TIER CARDS
                 ══════════════════════════════════════════════════════════ */}
-                <section className="relative py-0 pb-32 overflow-visible">
-                    {/* Wide ambient pulse behind the grid */}
-                    <div
-                        className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[600px] pointer-events-none"
-                        style={{ background: 'radial-gradient(ellipse 55% 60% at 50% 50%, oklch(0.65 0.16 160 / 0.07) 0%, transparent 70%)' }}
-                    />
-
+                <section className="relative py-4 pb-28">
                     <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 items-end">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
                             {tiers.map((tier, i) => (
                                 <div
                                     key={tier.nameKey}
                                     className="relative scroll-animate opacity-0 transform translate-y-8 transition-[opacity,transform] duration-700"
                                     style={{ transitionDelay: `${(i + 1) * 100}ms` }}
                                 >
-                                    {/* Deep radial glow that bleeds outside Basic */}
+                                    {/* Popular badge — top-right, overlaps card border */}
                                     {tier.highlight && (
-                                        <div
-                                            className="absolute -inset-8 -z-10 pointer-events-none"
-                                            style={{ background: 'radial-gradient(ellipse at center, oklch(0.65 0.16 160 / 0.28) 0%, transparent 65%)' }}
-                                        />
-                                    )}
-
-                                    {/* Floating "Most Popular" — hovers above the card */}
-                                    {tier.highlight && (
-                                        <div className="absolute -top-[18px] inset-x-0 flex justify-center z-10">
-                                            <span
-                                                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.25em] shadow-lg"
-                                                style={{
-                                                    background: 'oklch(0.65 0.16 160)',
-                                                    color: 'oklch(0.10 0.02 160)',
-                                                    boxShadow: '0 6px 24px oklch(0.65 0.16 160 / 0.55)',
-                                                }}
-                                            >
-                                                <span className="relative flex h-1.5 w-1.5">
-                                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-current opacity-60" />
-                                                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-current" />
-                                                </span>
+                                        <div className="absolute -top-3 right-4 z-10">
+                                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary text-primary-foreground text-[11px] font-bold shadow-lg shadow-primary/40">
+                                                <Zap className="w-3 h-3" />
                                                 {c("popular", lang)}
                                             </span>
                                         </div>
                                     )}
 
-                                    <div
-                                        className={`relative flex flex-col rounded-3xl transition-all duration-300
-                                            ${tier.highlight
-                                                ? "bg-primary lg:-translate-y-10 shadow-[0_48px_120px_-16px] shadow-primary/55"
-                                                : "bg-muted/10 border border-border/40 hover:border-primary/35 hover:bg-muted/20 hover:-translate-y-1"
-                                            }`}
+                                    <div className={`flex flex-col h-full rounded-2xl border transition-colors duration-200
+                                        ${tier.highlight
+                                            ? "border-primary bg-card"
+                                            : "border-border/50 bg-card hover:border-border/80"
+                                        }`}
                                     >
-                                        {/* Top-edge inner light for glass-on-emerald feel */}
-                                        {tier.highlight && (
-                                            <div
-                                                className="absolute top-0 inset-x-0 h-px rounded-t-3xl"
-                                                style={{ background: 'linear-gradient(90deg, transparent 10%, oklch(1 0 0 / 0.30) 50%, transparent 90%)' }}
-                                            />
-                                        )}
-                                        {!tier.highlight && (
-                                            <div className="absolute top-0 inset-x-0 h-px rounded-t-3xl bg-gradient-to-r from-transparent via-primary/18 to-transparent" />
-                                        )}
-
-                                        <div className={`flex flex-col flex-1 p-7 ${tier.highlight ? "pt-10" : "pt-8"}`}>
-
-                                            {/* Plan label */}
-                                            <p className={`text-[10px] font-black uppercase tracking-[0.32em] mb-2 ${tier.highlight ? "text-primary-foreground/55" : "text-primary/45"}`}>
+                                        {/* Header: name, description, price */}
+                                        <div className="p-6 pb-5">
+                                            <h3 className={`text-xl font-bold tracking-tight mb-1 ${tier.highlight ? "text-primary" : "text-foreground"}`}>
                                                 {c(tier.nameKey, lang)}
-                                            </p>
-
-                                            {/* Tagline */}
-                                            <p className={`text-sm leading-relaxed mb-7 ${tier.highlight ? "text-primary-foreground/60" : "text-muted-foreground"}`}>
+                                            </h3>
+                                            <p className="text-sm text-muted-foreground mb-5">
                                                 {c(tier.descKey, lang)}
                                             </p>
-
-                                            {/* Price — the editorial anchor */}
-                                            <div className="mb-7">
-                                                <div className="flex items-end gap-2 flex-wrap">
-                                                    <span
-                                                        className={`font-display font-bold leading-[0.85] tracking-tight ${
-                                                            tier.highlight
-                                                                ? "text-primary-foreground"
-                                                                : "text-foreground"
-                                                        }`}
-                                                        style={{ fontSize: tier.highlight ? '4.75rem' : '3.5rem' }}
-                                                    >
-                                                        {c(tier.priceKey, lang)}
-                                                    </span>
-                                                    {tier.showPerMo && (
-                                                        <span className={`text-sm font-semibold mb-2 ${tier.highlight ? "text-primary-foreground/50" : "text-muted-foreground"}`}>
-                                                            {c("per_mo", lang)}
-                                                        </span>
-                                                    )}
-                                                </div>
+                                            <div className="flex items-baseline gap-1.5 flex-wrap">
+                                                <span className="font-display text-[3.25rem] font-bold tracking-tight leading-none text-foreground">
+                                                    {c(tier.priceKey, lang)}
+                                                </span>
+                                                {tier.showPerMo && (
+                                                    <span className="text-sm text-muted-foreground">{c("per_mo", lang)}</span>
+                                                )}
                                             </div>
+                                        </div>
 
-                                            {/* CTA button */}
-                                            <Link
-                                                href={tier.ctaHref}
-                                                className={`w-full py-4 rounded-2xl text-sm font-bold text-center transition-all duration-200 block mb-8
-                                                    ${tier.highlight
-                                                        ? "bg-primary-foreground/90 text-primary hover:bg-primary-foreground shadow-xl hover:-translate-y-0.5"
-                                                        : "border-2 border-border/55 text-foreground hover:border-primary/50 hover:text-primary hover:-translate-y-0.5"
-                                                    }`}
-                                            >
-                                                {c(tier.ctaKey, lang)}
-                                            </Link>
+                                        {/* Divider */}
+                                        <div className="h-px bg-border/50 mx-6" />
 
-                                            {/* Rule */}
-                                            <div className={`h-px mb-7 ${tier.highlight ? "bg-primary-foreground/12" : "bg-border/25"}`} />
-
-                                            {/* Feature list */}
-                                            <ul className="flex-1 space-y-4">
+                                        {/* Features */}
+                                        <div className="flex-1 p-6 py-5">
+                                            <ul className="space-y-3.5">
                                                 {getHighlights(tier.nameKey, lang).map((feat, j) => (
                                                     <li key={j} className="flex items-start gap-3">
-                                                        <Check
-                                                            className={`w-4 h-4 shrink-0 mt-[1px] ${tier.highlight ? "text-primary-foreground/70" : "text-primary"}`}
-                                                            strokeWidth={2.5}
-                                                        />
-                                                        <span className={`text-[13px] leading-snug ${tier.highlight ? "text-primary-foreground/75 font-medium" : "text-foreground/70"}`}>
+                                                        <div className={`w-[18px] h-[18px] rounded-full border flex items-center justify-center shrink-0 mt-0.5 ${tier.highlight ? "border-primary/60 bg-primary/10" : "border-primary/40 bg-primary/8"}`}>
+                                                            <Check className="w-2.5 h-2.5 text-primary" strokeWidth={3} />
+                                                        </div>
+                                                        <span className="text-sm text-foreground/80 leading-snug">
                                                             {feat}
                                                         </span>
                                                     </li>
                                                 ))}
                                             </ul>
                                         </div>
+
+                                        {/* Divider */}
+                                        <div className="h-px bg-border/50 mx-6" />
+
+                                        {/* CTA */}
+                                        <div className="p-6 pt-5">
+                                            <Link
+                                                href={tier.ctaHref}
+                                                className={`w-full py-3.5 rounded-xl text-sm font-semibold text-center transition-all duration-150 block
+                                                    ${tier.highlight
+                                                        ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                                                        : "border border-border/60 text-foreground bg-transparent hover:border-primary/50 hover:text-primary"
+                                                    }`}
+                                            >
+                                                {c(tier.ctaKey, lang)}
+                                            </Link>
+                                        </div>
                                     </div>
                                 </div>
                             ))}
                         </div>
 
-                        {/* Guarantee pill */}
-                        <div className="mt-16 flex justify-center scroll-animate opacity-0 transform translate-y-4 transition-[opacity,transform] duration-700 delay-500">
-                            <p className="inline-flex items-center gap-2.5 text-sm text-muted-foreground px-6 py-3 rounded-full border border-border/30 glass-premium">
+                        {/* Guarantee */}
+                        <div className="mt-10 flex justify-center scroll-animate opacity-0 transform translate-y-4 transition-[opacity,transform] duration-700 delay-500">
+                            <p className="inline-flex items-center gap-2 text-sm text-muted-foreground">
                                 <Shield className="w-4 h-4 text-primary shrink-0" />
                                 {c("guarantee", lang)}{" "}
-                                <Link href="/refund" className="text-primary hover:text-primary/80 font-semibold underline-offset-2 hover:underline transition-colors">
+                                <Link href="/refund" className="text-primary hover:text-primary/80 font-medium underline-offset-2 hover:underline transition-colors">
                                     {c("refund_link", lang)}
                                 </Link>
                             </p>
@@ -695,14 +641,14 @@ function CompCell({ val, highlight }: { val: CellVal; highlight: boolean }) {
 function getHighlights(nameKey: string, lang: string): string[] {
     const map: Record<string, Record<string, string[]>> = {
         free_name: {
-            ar: ["15 رسالة / محادثة", "محادثات غير محدودة", "آخر 10 محادثات", "دعم بالبريد الإلكتروني"],
-            fr: ["15 messages / conversation", "Conversations illimitées", "10 dernières conversations", "Support par e-mail"],
-            en: ["15 messages / conversation", "Unlimited conversations", "Last 10 conversations", "Email support"],
+            ar: ["15 رسالة / محادثة", "محادثات غير محدودة", "دعم بالبريد الإلكتروني"],
+            fr: ["15 messages / conversation", "Conversations illimitées", "Support par e-mail"],
+            en: ["15 messages / conversation", "Unlimited conversations", "Email support"],
         },
         basic_name: {
-            ar: ["رسائل غير محدودة", "3 عقود / شهر", "سجل غير محدود", "تصدير PDF"],
-            fr: ["Messages illimités", "3 contrats / mois", "Historique illimité", "Export PDF"],
-            en: ["Unlimited messages", "3 contracts / month", "Unlimited history", "PDF export"],
+            ar: ["رسائل غير محدودة", "3 عقود / شهر", "تصدير PDF"],
+            fr: ["Messages illimités", "3 contrats / mois", "Export PDF"],
+            en: ["Unlimited messages", "3 contracts / month", "PDF export"],
         },
         pro_name: {
             ar: ["رسائل غير محدودة", "عقود غير محدودة", "رفع الملفات وتحليلها", "دعم ذو أولوية"],
