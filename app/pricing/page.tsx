@@ -303,80 +303,126 @@ export default function PricingPage() {
                 {/* ══════════════════════════════════════════════════════════
                     TIER CARDS
                 ══════════════════════════════════════════════════════════ */}
-                <section className="relative py-4 pb-24">
-                    <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 items-end">
+                <section className="relative py-0 pb-32 overflow-visible">
+                    {/* Wide ambient pulse behind the grid */}
+                    <div
+                        className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[600px] pointer-events-none"
+                        style={{ background: 'radial-gradient(ellipse 55% 60% at 50% 50%, oklch(0.65 0.16 160 / 0.07) 0%, transparent 70%)' }}
+                    />
+
+                    <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 items-end">
                             {tiers.map((tier, i) => (
                                 <div
                                     key={tier.nameKey}
-                                    className="scroll-animate opacity-0 transform translate-y-8 transition-[opacity,transform] duration-700"
+                                    className="relative scroll-animate opacity-0 transform translate-y-8 transition-[opacity,transform] duration-700"
                                     style={{ transitionDelay: `${(i + 1) * 100}ms` }}
                                 >
-                                    <div className={`relative flex flex-col rounded-2xl border transition-all duration-300
-                                        ${tier.highlight
-                                            ? "border-primary/40 bg-primary/5 shadow-2xl shadow-primary/12 lg:-translate-y-3"
-                                            : "border-border/40 bg-muted/15 hover:bg-muted/25 hover:border-border/60"
-                                        }`}
-                                    >
-                                        {/* Top accent line */}
-                                        {tier.highlight && (
-                                            <div className="absolute top-0 inset-x-0 h-0.5 rounded-t-2xl bg-gradient-to-r from-transparent via-primary to-transparent" />
-                                        )}
+                                    {/* Deep radial glow that bleeds outside Basic */}
+                                    {tier.highlight && (
+                                        <div
+                                            className="absolute -inset-8 -z-10 pointer-events-none"
+                                            style={{ background: 'radial-gradient(ellipse at center, oklch(0.65 0.16 160 / 0.28) 0%, transparent 65%)' }}
+                                        />
+                                    )}
 
-                                        {/* Popular badge — inside card, no overflow-hidden needed */}
-                                        {tier.highlight && (
-                                            <div className="px-7 pt-6 pb-0">
-                                                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/15 border border-primary/20 text-primary text-[11px] font-bold uppercase tracking-wide">
-                                                    <span className="relative flex h-1.5 w-1.5">
-                                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-                                                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary" />
-                                                    </span>
-                                                    {c("popular", lang)}
+                                    {/* Floating "Most Popular" — hovers above the card */}
+                                    {tier.highlight && (
+                                        <div className="absolute -top-[18px] inset-x-0 flex justify-center z-10">
+                                            <span
+                                                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.25em] shadow-lg"
+                                                style={{
+                                                    background: 'oklch(0.65 0.16 160)',
+                                                    color: 'oklch(0.10 0.02 160)',
+                                                    boxShadow: '0 6px 24px oklch(0.65 0.16 160 / 0.55)',
+                                                }}
+                                            >
+                                                <span className="relative flex h-1.5 w-1.5">
+                                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-current opacity-60" />
+                                                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-current" />
                                                 </span>
-                                            </div>
+                                                {c("popular", lang)}
+                                            </span>
+                                        </div>
+                                    )}
+
+                                    <div
+                                        className={`relative flex flex-col rounded-3xl transition-all duration-300
+                                            ${tier.highlight
+                                                ? "bg-primary lg:-translate-y-10 shadow-[0_48px_120px_-16px] shadow-primary/55"
+                                                : "bg-muted/10 border border-border/40 hover:border-primary/35 hover:bg-muted/20 hover:-translate-y-1"
+                                            }`}
+                                    >
+                                        {/* Top-edge inner light for glass-on-emerald feel */}
+                                        {tier.highlight && (
+                                            <div
+                                                className="absolute top-0 inset-x-0 h-px rounded-t-3xl"
+                                                style={{ background: 'linear-gradient(90deg, transparent 10%, oklch(1 0 0 / 0.30) 50%, transparent 90%)' }}
+                                            />
+                                        )}
+                                        {!tier.highlight && (
+                                            <div className="absolute top-0 inset-x-0 h-px rounded-t-3xl bg-gradient-to-r from-transparent via-primary/18 to-transparent" />
                                         )}
 
-                                        <div className={`flex flex-col flex-1 ${tier.highlight ? "p-7 pt-4" : "p-7"}`}>
-                                            {/* Name + desc */}
-                                            <div className="mb-6">
-                                                <p className={`text-xs font-bold uppercase tracking-[0.18em] mb-2 ${tier.highlight ? "text-primary" : "text-muted-foreground"}`}>
-                                                    {c(tier.nameKey, lang)}
-                                                </p>
-                                                <p className="text-sm text-muted-foreground leading-relaxed">
-                                                    {c(tier.descKey, lang)}
-                                                </p>
-                                            </div>
+                                        <div className={`flex flex-col flex-1 p-7 ${tier.highlight ? "pt-10" : "pt-8"}`}>
 
-                                            {/* Price */}
-                                            <div className="mb-7 pb-6 border-b border-border/25">
-                                                <div className="flex items-baseline gap-1.5 flex-wrap">
-                                                    <span className="font-display text-4xl font-bold tracking-tight text-foreground">
+                                            {/* Plan label */}
+                                            <p className={`text-[10px] font-black uppercase tracking-[0.32em] mb-2 ${tier.highlight ? "text-primary-foreground/55" : "text-primary/45"}`}>
+                                                {c(tier.nameKey, lang)}
+                                            </p>
+
+                                            {/* Tagline */}
+                                            <p className={`text-sm leading-relaxed mb-7 ${tier.highlight ? "text-primary-foreground/60" : "text-muted-foreground"}`}>
+                                                {c(tier.descKey, lang)}
+                                            </p>
+
+                                            {/* Price — the editorial anchor */}
+                                            <div className="mb-7">
+                                                <div className="flex items-end gap-2 flex-wrap">
+                                                    <span
+                                                        className={`font-display font-bold leading-[0.85] tracking-tight ${
+                                                            tier.highlight
+                                                                ? "text-primary-foreground"
+                                                                : "text-foreground"
+                                                        }`}
+                                                        style={{ fontSize: tier.highlight ? '4.75rem' : '3.5rem' }}
+                                                    >
                                                         {c(tier.priceKey, lang)}
                                                     </span>
                                                     {tier.showPerMo && (
-                                                        <span className="text-sm text-muted-foreground">{c("per_mo", lang)}</span>
+                                                        <span className={`text-sm font-semibold mb-2 ${tier.highlight ? "text-primary-foreground/50" : "text-muted-foreground"}`}>
+                                                            {c("per_mo", lang)}
+                                                        </span>
                                                     )}
                                                 </div>
                                             </div>
 
-                                            {/* CTA */}
+                                            {/* CTA button */}
                                             <Link
                                                 href={tier.ctaHref}
-                                                className={`w-full py-3 px-4 rounded-xl text-sm font-semibold text-center transition-all duration-200 block mb-7
+                                                className={`w-full py-4 rounded-2xl text-sm font-bold text-center transition-all duration-200 block mb-8
                                                     ${tier.highlight
-                                                        ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20"
-                                                        : "border border-border/50 bg-background/40 hover:bg-muted/50 text-foreground"
+                                                        ? "bg-primary-foreground/90 text-primary hover:bg-primary-foreground shadow-xl hover:-translate-y-0.5"
+                                                        : "border-2 border-border/55 text-foreground hover:border-primary/50 hover:text-primary hover:-translate-y-0.5"
                                                     }`}
                                             >
                                                 {c(tier.ctaKey, lang)}
                                             </Link>
 
-                                            {/* Feature highlights */}
-                                            <ul className="flex-1 space-y-3">
+                                            {/* Rule */}
+                                            <div className={`h-px mb-7 ${tier.highlight ? "bg-primary-foreground/12" : "bg-border/25"}`} />
+
+                                            {/* Feature list */}
+                                            <ul className="flex-1 space-y-4">
                                                 {getHighlights(tier.nameKey, lang).map((feat, j) => (
-                                                    <li key={j} className="flex items-start gap-3 text-sm">
-                                                        <Check className={`w-4 h-4 shrink-0 mt-0.5 ${tier.highlight ? "text-primary" : "text-primary/70"}`} />
-                                                        <span className="text-foreground/85 leading-snug">{feat}</span>
+                                                    <li key={j} className="flex items-start gap-3">
+                                                        <Check
+                                                            className={`w-4 h-4 shrink-0 mt-[1px] ${tier.highlight ? "text-primary-foreground/70" : "text-primary"}`}
+                                                            strokeWidth={2.5}
+                                                        />
+                                                        <span className={`text-[13px] leading-snug ${tier.highlight ? "text-primary-foreground/75 font-medium" : "text-foreground/70"}`}>
+                                                            {feat}
+                                                        </span>
                                                     </li>
                                                 ))}
                                             </ul>
@@ -386,12 +432,12 @@ export default function PricingPage() {
                             ))}
                         </div>
 
-                        {/* Guarantee row */}
-                        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-6 scroll-animate opacity-0 transform translate-y-4 transition-[opacity,transform] duration-700 delay-500">
-                            <p className="flex items-center gap-2 text-sm text-muted-foreground">
+                        {/* Guarantee pill */}
+                        <div className="mt-16 flex justify-center scroll-animate opacity-0 transform translate-y-4 transition-[opacity,transform] duration-700 delay-500">
+                            <p className="inline-flex items-center gap-2.5 text-sm text-muted-foreground px-6 py-3 rounded-full border border-border/30 glass-premium">
                                 <Shield className="w-4 h-4 text-primary shrink-0" />
                                 {c("guarantee", lang)}{" "}
-                                <Link href="/refund" className="text-primary hover:text-primary/80 underline underline-offset-2 transition-colors">
+                                <Link href="/refund" className="text-primary hover:text-primary/80 font-semibold underline-offset-2 hover:underline transition-colors">
                                     {c("refund_link", lang)}
                                 </Link>
                             </p>
