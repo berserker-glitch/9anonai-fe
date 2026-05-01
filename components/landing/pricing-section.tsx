@@ -1,8 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { useLanguage } from "@/lib/language-context";
+import { useAuth } from "@/lib/auth-context";
 import { Check, Zap, ArrowRight } from "lucide-react";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
 
 // ─── Translations ────────────────────────────────────────────────────────────
 
@@ -87,6 +91,7 @@ interface Tier {
     showPerMo: boolean;
     ctaKey: string;
     ctaHref: string;
+    checkoutPlan?: 'basic' | 'pro';
     highlight: boolean;
     features: string[]; // only included features
 }
@@ -99,12 +104,12 @@ const TIERS: Tier[] = [
     },
     {
         nameKey: "basic_name", priceKey: "basic_price", descKey: "basic_desc",
-        showPerMo: true, ctaKey: "cta_basic", ctaHref: "/api/billing/checkout?plan=basic", highlight: true,
+        showPerMo: true, ctaKey: "cta_basic", ctaHref: "", checkoutPlan: "basic" as const, highlight: true,
         features: ["f_chat_unl", "f_history_unl", "f_contract_3", "f_support"],
     },
     {
         nameKey: "pro_name", priceKey: "pro_price", descKey: "pro_desc",
-        showPerMo: true, ctaKey: "cta_pro", ctaHref: "/api/billing/checkout?plan=pro", highlight: false,
+        showPerMo: true, ctaKey: "cta_pro", ctaHref: "", checkoutPlan: "pro" as const, highlight: false,
         features: ["f_chat_unl", "f_history_unl", "f_contract_unl", "f_files", "f_priority"],
     },
     {
@@ -118,6 +123,34 @@ const TIERS: Tier[] = [
 
 export function PricingSection() {
     const { language: lang, dir } = useLanguage();
+    const { token } = useAuth();
+    const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null);
+
+    const handleCheckout = async (plan: 'basic' | 'pro') => {
+        if (!token) {
+            window.location.href = '/login?redirect=/pricing';
+            return;
+        }
+        setCheckoutLoading(plan);
+        try {
+            const res = await fetch(`${API_URL}/billing/checkout`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ plan }),
+            });
+            const data = await res.json();
+            if (data.checkout_url) {
+                window.location.href = data.checkout_url;
+            }
+        } catch (err) {
+            console.error('[checkout] Error', err);
+        } finally {
+            setCheckoutLoading(null);
+        }
+    };
 
     return (
         <section className="relative py-24 lg:py-36 overflow-hidden" dir={dir}>
@@ -156,7 +189,12 @@ export function PricingSection() {
                             className={`scroll-animate opacity-0 transform translate-y-8 transition-[opacity,transform] duration-700`}
                             style={{ transitionDelay: `${(i + 1) * 100}ms` }}
                         >
-                            <TierCard tier={tier} lang={lang} />
+                            <TierCard
+                                tier={tier}
+                                lang={lang}
+                                onCheckout={tier.checkoutPlan ? () => handleCheckout(tier.checkoutPlan!) : undefined}
+                                isLoading={checkoutLoading === tier.checkoutPlan}
+                            />
                         </div>
                     ))}
                 </div>
@@ -182,7 +220,7 @@ export function PricingSection() {
 
 // ─── TierCard ─────────────────────────────────────────────────────────────────
 
-function TierCard({ tier, lang }: { tier: Tier; lang: string }) {
+function TierCard({ tier, lang, onCheckout, isLoading }: { tier: Tier; lang: string; onCheckout?: () => void; isLoading?: boolean }) {
     const isPopular = tier.highlight;
 
     return (
@@ -249,16 +287,30 @@ function TierCard({ tier, lang }: { tier: Tier; lang: string }) {
                 </ul>
 
                 {/* CTA */}
-                <Link
-                    href={tier.ctaHref}
-                    className={`w-full py-3 px-4 rounded-xl text-sm font-semibold text-center transition-all duration-200 block
-                        ${isPopular
-                            ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20"
-                            : "border border-border/50 bg-background/40 hover:bg-muted/50 text-foreground"
-                        }`}
-                >
-                    {c(tier.ctaKey, lang)}
-                </Link>
+                {onCheckout ? (
+                    <button
+                        onClick={onCheckout}
+                        disabled={isLoading}
+                        className={`w-full py-3 px-4 rounded-xl text-sm font-semibold text-center transition-all duration-200 block disabled:opacity-60 disabled:cursor-not-allowed
+                            ${isPopular
+                                ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20"
+                                : "border border-border/50 bg-background/40 hover:bg-muted/50 text-foreground"
+                            }`}
+                    >
+                        {isLoading ? "..." : c(tier.ctaKey, lang)}
+                    </button>
+                ) : (
+                    <Link
+                        href={tier.ctaHref}
+                        className={`w-full py-3 px-4 rounded-xl text-sm font-semibold text-center transition-all duration-200 block
+                            ${isPopular
+                                ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20"
+                                : "border border-border/50 bg-background/40 hover:bg-muted/50 text-foreground"
+                            }`}
+                    >
+                        {c(tier.ctaKey, lang)}
+                    </Link>
+                )}
             </div>
         </div>
     );
