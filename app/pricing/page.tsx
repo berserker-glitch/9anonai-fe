@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/lib/language-context";
+import { useAuth } from "@/lib/auth-context";
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
 import { Check, X, ArrowRight, Shield, Zap, Scale, Building2, Users, FileText, MessageSquare, Upload, Headphones } from "lucide-react";
@@ -148,8 +149,38 @@ interface CompRow {
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
+
 export default function PricingPage() {
     const { language: lang, dir } = useLanguage();
+    const { token } = useAuth();
+    const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null);
+
+    const handleCheckout = async (plan: 'basic' | 'pro') => {
+        if (!token) {
+            window.location.href = '/login?redirect=/pricing';
+            return;
+        }
+        setCheckoutLoading(plan);
+        try {
+            const res = await fetch(`${API_URL}/billing/checkout`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ plan }),
+            });
+            const data = await res.json();
+            if (data.checkout_url) {
+                window.location.href = data.checkout_url;
+            }
+        } catch (err) {
+            console.error('[checkout] Error', err);
+        } finally {
+            setCheckoutLoading(null);
+        }
+    };
 
     // Scroll-reveal
     useEffect(() => {
@@ -232,12 +263,12 @@ export default function PricingPage() {
         },
         {
             nameKey: "basic_name", priceKey: "basic_price", descKey: "basic_desc",
-            ctaKey: "cta_basic",  ctaHref: "/api/billing/checkout?plan=basic", highlight: true, icon: <Zap className="w-5 h-5" />,
+            ctaKey: "cta_basic",  ctaHref: "",  checkoutPlan: "basic" as const, highlight: true, icon: <Zap className="w-5 h-5" />,
             showPerMo: true,
         },
         {
             nameKey: "pro_name",   priceKey: "pro_price",   descKey: "pro_desc",
-            ctaKey: "cta_pro",    ctaHref: "/api/billing/checkout?plan=pro",   highlight: false, icon: <FileText className="w-5 h-5" />,
+            ctaKey: "cta_pro",    ctaHref: "",  checkoutPlan: "pro" as const, highlight: false, icon: <FileText className="w-5 h-5" />,
             showPerMo: true,
         },
         {
@@ -362,16 +393,30 @@ export default function PricingPage() {
 
                                         {/* CTA */}
                                         <div className="p-6 pt-5">
-                                            <Link
-                                                href={tier.ctaHref}
-                                                className={`w-full py-3.5 rounded-xl text-sm font-semibold text-center transition-all duration-150 block
-                                                    ${tier.highlight
-                                                        ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                                                        : "border border-border/60 text-foreground bg-transparent hover:border-primary/50 hover:text-primary"
-                                                    }`}
-                                            >
-                                                {c(tier.ctaKey, lang)}
-                                            </Link>
+                                            {tier.checkoutPlan ? (
+                                                <button
+                                                    onClick={() => handleCheckout(tier.checkoutPlan!)}
+                                                    disabled={checkoutLoading === tier.checkoutPlan}
+                                                    className={`w-full py-3.5 rounded-xl text-sm font-semibold text-center transition-all duration-150 block disabled:opacity-60 disabled:cursor-not-allowed
+                                                        ${tier.highlight
+                                                            ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                                                            : "border border-border/60 text-foreground bg-transparent hover:border-primary/50 hover:text-primary"
+                                                        }`}
+                                                >
+                                                    {checkoutLoading === tier.checkoutPlan ? "..." : c(tier.ctaKey, lang)}
+                                                </button>
+                                            ) : (
+                                                <Link
+                                                    href={tier.ctaHref}
+                                                    className={`w-full py-3.5 rounded-xl text-sm font-semibold text-center transition-all duration-150 block
+                                                        ${tier.highlight
+                                                            ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                                                            : "border border-border/60 text-foreground bg-transparent hover:border-primary/50 hover:text-primary"
+                                                        }`}
+                                                >
+                                                    {c(tier.ctaKey, lang)}
+                                                </Link>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -540,13 +585,14 @@ export default function PricingPage() {
                         </div>
 
                         <div className="mt-8">
-                            <Link
-                                href="/api/billing/checkout?plan=basic"
-                                className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-primary text-primary-foreground font-bold text-base shadow-xl shadow-primary/25 hover:bg-primary/90 transition-all duration-200 group"
+                            <button
+                                onClick={() => handleCheckout('basic')}
+                                disabled={checkoutLoading === 'basic'}
+                                className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-primary text-primary-foreground font-bold text-base shadow-xl shadow-primary/25 hover:bg-primary/90 transition-all duration-200 group disabled:opacity-60 disabled:cursor-not-allowed"
                             >
-                                {c("cta_basic", lang)}
+                                {checkoutLoading === 'basic' ? "..." : c("cta_basic", lang)}
                                 <ArrowRight className="w-5 h-5 rtl:rotate-180 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform" />
-                            </Link>
+                            </button>
                         </div>
                     </div>
                 </section>
@@ -609,13 +655,14 @@ export default function PricingPage() {
                             >
                                 {c("cta_free", lang)}
                             </Link>
-                            <Link
-                                href="/api/billing/checkout?plan=basic"
-                                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm shadow-lg shadow-primary/25 hover:bg-primary/90 transition-all duration-200 group"
+                            <button
+                                onClick={() => handleCheckout('basic')}
+                                disabled={checkoutLoading === 'basic'}
+                                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm shadow-lg shadow-primary/25 hover:bg-primary/90 transition-all duration-200 group disabled:opacity-60 disabled:cursor-not-allowed"
                             >
-                                {c("cta_basic", lang)}
+                                {checkoutLoading === 'basic' ? "..." : c("cta_basic", lang)}
                                 <ArrowRight className="w-4 h-4 rtl:rotate-180 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform" />
-                            </Link>
+                            </button>
                         </div>
                     </div>
                 </section>
