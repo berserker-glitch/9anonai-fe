@@ -178,6 +178,8 @@ export function Footer() {
               {t("footer.legal")}
             </h4>
             <nav className="flex flex-col gap-3">
+              <Link href="/pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">{t("footer.pricing")}</Link>
+              <Link href="/refund" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">{t("footer.refund")}</Link>
               <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">{t("footer.privacy")}</Link>
               <Link href="/tos" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">{t("footer.terms")}</Link>
               <Link href="mailto:9anonai@gmail.com" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">{t("footer.contact")}</Link>
