@@ -1,6 +1,6 @@
 {
     "title": "Terms of Service",
-    "lastUpdated": "Last Updated: January 2026",
+    "lastUpdated": "Last Updated: April 29, 2026",
     "intro": "Welcome to 9anon AI. By using our services, you agree to these terms. Please read them carefully.",
     "sections": {
         "acceptance": {
@@ -40,16 +40,41 @@
             "title": "6. Privacy",
             "content": "We respect your privacy. Please review our Privacy Policy to learn how we collect and use your information."
         },
+        "billing": {
+            "title": "7. Billing & Payments",
+            "content": "All payments on this platform are processed by Paddle.com Market Limited ("Paddle"), acting as our Merchant of Record for all transactions. By completing a purchase you enter a direct agreement with Paddle for payment processing. Your bank or card statement will show a charge from 'PADDLE.NET' or 'Paddle.com'. Paddle handles VAT, sales tax, and currency conversion on our behalf.",
+            "items": [
+                "Accepted payment methods: Visa, Mastercard, Maestro, American Express, PayPal",
+                "Prices are displayed in USD; Paddle converts to your local currency at checkout",
+                "Applicable VAT or sales tax may be added at checkout depending on your country",
+                "Paddle issues payment receipts and handles billing disputes on our behalf"
+            ]
+        },
+        "subscription": {
+            "title": "8. Subscriptions & Cancellation",
+            "content": "Paid plans (Basic and Pro) are billed monthly on a recurring basis and auto-renew until cancelled. You will be notified before each renewal charge.",
+            "items": [
+                "You are charged on the same calendar date each month",
+                "Cancel any time from the Settings page — access continues until the end of the current billing period",
+                "Downgrading or cancelling takes effect at the start of the next billing cycle",
+                "We send a reminder email before each renewal charge"
+            ]
+        },
+        "refund": {
+            "title": "9. Refunds",
+            "content": "All paid plans include a 14-day money-back guarantee from the date of your first payment. Renewal charges are non-refundable after 14 days from each renewal date. To request a refund, email contact@9anonai.com with 'Refund' in the subject line. See our full Refund Policy at /refund for details.",
+            "important": "The guarantee does not apply to accounts that have previously received a refund, requests submitted after the 14-day window, or accounts terminated for Terms of Service violations."
+        },
         "modifications": {
-            "title": "7. Modifications",
+            "title": "10. Modifications",
             "content": "We reserve the right to modify these terms at any time. You will be notified of any material changes. Your continued use of the service after modifications means you accept the new terms."
         },
         "governing": {
-            "title": "8. Governing Law",
+            "title": "11. Governing Law",
             "content": "These terms are governed by Moroccan law. Any disputes arising from the use of our services will be subject to the jurisdiction of Moroccan courts."
         },
         "contact": {
-            "title": "9. Contact Us",
+            "title": "12. Contact Us",
             "content": "If you have any questions about these terms, please contact us at:",
             "email": "contact@9anonai.com"
         }
