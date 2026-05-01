@@ -1,6 +1,6 @@
 {
     "title": "Politique de Confidentialité",
-    "lastUpdated": "Dernière mise à jour: Janvier 2026",
+    "lastUpdated": "Dernière mise à jour: 29 avril 2026",
     "intro": "Cette Politique de Confidentialité décrit comment nous collectons, utilisons et protégeons vos informations personnelles lors de l'utilisation de 9anon AI.",
     "sections": {
         "collection": {
@@ -36,12 +36,17 @@
         },
         "sharing": {
             "title": "4. Partage d'Informations",
-            "content": "Nous ne vendons ni ne louons vos informations personnelles. Nous pouvons partager des informations uniquement dans les cas suivants:",
+            "content": "Nous ne vendons ni ne louons vos informations personnelles. Nous pouvons partager des informations uniquement dans les cas suivants :",
             "items": [
                 "Avec votre consentement explicite",
                 "Pour se conformer aux exigences légales",
-                "Avec des prestataires de services de confiance qui nous aident à exploiter notre plateforme"
+                "Avec Paddle.com Market Limited (notre marchand de référence) — données de facturation (e-mail, détails de transaction) nécessaires au traitement de votre abonnement",
+                "Avec des prestataires d'infrastructure de confiance (hébergement, analytique) liés par des accords de confidentialité"
             ]
+        },
+        "payment": {
+            "title": "5. Données de Paiement",
+            "content": "Nous ne stockons pas vos coordonnées bancaires. Toutes les informations de paiement sont traitées directement par Paddle.com Market Limited, notre marchand de référence. Les pratiques de confidentialité de Paddle régissent la collecte et l'utilisation de vos données de paiement — consultez paddle.com/legal/privacy. Nous recevons uniquement une confirmation de paiement réussi et un identifiant de transaction."
         },
         "cookies": {
             "title": "5. Cookies",
