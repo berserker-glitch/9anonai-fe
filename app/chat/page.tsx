@@ -970,11 +970,7 @@ export default function NewChatPage() {
                             <Avatar fallback={user?.name?.[0] || user?.email?.[0] || "U"} size="md" isOnline />
                             <div className="flex-1 min-w-0">
                                 <p className="text-sm font-medium truncate">{user?.name || user?.email}</p>
-                                <p className="text-xs text-muted-foreground">
-                                    {user?.plan === 'pro' ? ui("pro_plan", language)
-                                        : user?.plan === 'basic' ? ui("basic_plan", language)
-                                        : ui("free_plan", language)}
-                                </p>
+                                <p className="text-xs text-muted-foreground">{ui("free_plan", language)}</p>
                             </div>
                             <button
                                 onClick={() => setSettingsOpen(true)}
