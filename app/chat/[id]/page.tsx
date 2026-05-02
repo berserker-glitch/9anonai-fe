@@ -34,7 +34,6 @@ import { FeedbackModal } from "@/components/chat/feedback-modal";
 
 // UI Components
 import { Avatar } from "@/components/ui/avatar";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { AuthenticatedImage } from "@/components/ui/authenticated-image";
 
 // Types
@@ -77,7 +76,10 @@ const ID_UI: Record<string, Record<string, string>> = {
     delete_title:  { ar: "هل أنت متأكد؟", fr: "Êtes-vous sûr ?", en: "Are you sure?" },
     delete_body:   { ar: "سيتم حذف هذه المحادثة نهائياً.", fr: "Cette conversation sera définitivement supprimée.", en: "This conversation will be permanently deleted." },
     delete_btn:    { ar: "حذف",        fr: "Supprimer",      en: "Delete" },
-    free_plan:     { ar: "الخطة المجانية", fr: "Plan Gratuit", en: "Free Plan" },
+    free_plan:     { ar: "الخطة المجانية",  fr: "Plan Gratuit", en: "Free Plan" },
+    basic_plan:    { ar: "الخطة الأساسية", fr: "Plan Asasi",   en: "Basic Plan" },
+    pro_plan:      { ar: "الخطة المهنية",  fr: "Plan Mihani",  en: "Pro Plan" },
+    settings_label:{ ar: "الإعدادات",      fr: "Paramètres",   en: "Settings" },
 };
 function idu(key: string, lang: string): string {
     return ID_UI[key]?.[lang] ?? ID_UI[key]?.["fr"] ?? key;
@@ -947,22 +949,26 @@ export default function ChatWithIdPage() {
                     {/* User Footer */}
                     <div className="p-3 mt-auto">
                         <div className="flex items-center gap-3 px-2">
-                            <button
-                                onClick={() => setSettingsOpen(true)}
-                                className="focus:outline-none rounded-full"
-                                title="Open settings"
-                            >
-                                <Avatar fallback={user?.name?.[0] || user?.email?.[0] || "U"} size="md" isOnline />
-                            </button>
+                            <Avatar fallback={user?.name?.[0] || user?.email?.[0] || "U"} size="md" isOnline />
                             <div className="flex-1 min-w-0">
                                 <p className="text-sm font-medium truncate">{user?.name || user?.email}</p>
                                 <p className="text-xs text-muted-foreground">
-                                    {user?.plan === 'pro' ? 'Plan Mihani'
-                                        : user?.plan === 'basic' ? 'Plan Asasi'
+                                    {user?.plan === 'pro' ? idu("pro_plan", language)
+                                        : user?.plan === 'basic' ? idu("basic_plan", language)
                                         : idu("free_plan", language)}
                                 </p>
                             </div>
-                            <ThemeToggle />
+                            <button
+                                onClick={() => setSettingsOpen(true)}
+                                className="flex items-center gap-1.5 shrink-0 px-2.5 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors"
+                                title={idu("settings_label", language)}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                                {idu("settings_label", language)}
+                            </button>
                         </div>
                     </div>
                 </Sidebar>
