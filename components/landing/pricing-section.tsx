@@ -152,11 +152,11 @@ export function PricingSection() {
                 </div>
 
                 {/* ── Cards grid ── */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 items-end">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
                     {TIERS.map((tier, i) => (
                         <div
                             key={tier.nameKey}
-                            className={`scroll-animate opacity-0 transform translate-y-8 transition-[opacity,transform] duration-700`}
+                            className="relative scroll-animate opacity-0 transform translate-y-8 transition-[opacity,transform] duration-700"
                             style={{ transitionDelay: `${(i + 1) * 100}ms` }}
                         >
                             <TierCard
@@ -194,94 +194,91 @@ function TierCard({ tier, lang, onCheckout, isLoading }: { tier: Tier; lang: str
     const isPopular = tier.highlight;
 
     return (
-        <div className={`relative flex flex-col rounded-2xl border transition-all duration-300
-            ${isPopular
-                ? "border-primary/40 bg-primary/5 shadow-2xl shadow-primary/10 lg:-translate-y-3"
-                : "border-border/40 bg-muted/15 hover:bg-muted/25 hover:border-border/60"
-            }`}
-        >
-            {/* Top accent line on popular */}
+        <>
+            {/* Popular badge — top-right, overlaps card border */}
             {isPopular && (
-                <div className="absolute top-0 inset-x-0 h-0.5 rounded-t-2xl bg-gradient-to-r from-transparent via-primary to-transparent" />
-            )}
-
-            {/* Popular badge — inside card, no overflow-hidden needed */}
-            {isPopular && (
-                <div className="px-7 pt-6 pb-0">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/15 border border-primary/20 text-primary text-[11px] font-bold uppercase tracking-wide">
-                        <span className="relative flex h-1.5 w-1.5">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-                            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary" />
-                        </span>
+                <div className="absolute -top-3 right-4 z-10">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary text-primary-foreground text-[11px] font-bold shadow-lg shadow-primary/40">
+                        <Zap className="w-3 h-3" />
                         {c("popular", lang)}
                     </span>
                 </div>
             )}
 
-            <div className={`flex flex-col flex-1 ${isPopular ? "p-7 pt-4" : "p-7"}`}>
-
-                {/* Name + desc */}
-                <div className="mb-6">
-                    <p className={`text-xs font-bold uppercase tracking-[0.18em] mb-2 ${isPopular ? "text-primary" : "text-muted-foreground"}`}>
+            <div className={`flex flex-col h-full rounded-2xl border transition-colors duration-200
+                ${isPopular
+                    ? "border-primary bg-card"
+                    : "border-border/50 bg-card hover:border-border/80"
+                }`}
+            >
+                {/* Header: name, description, price */}
+                <div className="p-6 pb-5">
+                    <h3 className={`text-xl font-bold tracking-tight mb-1 ${isPopular ? "text-primary" : "text-foreground"}`}>
                         {c(tier.nameKey, lang)}
-                    </p>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-5">
                         {c(tier.descKey, lang)}
                     </p>
-                </div>
-
-                {/* Price */}
-                <div className="mb-7 pb-6 border-b border-border/25">
                     <div className="flex items-baseline gap-1.5 flex-wrap">
-                        <span className="font-display text-4xl font-bold tracking-tight text-foreground">
+                        <span className="font-display text-[3.25rem] font-bold tracking-tight leading-none text-foreground">
                             {c(tier.priceKey, lang)}
                         </span>
                         {tier.showPerMo && (
-                            <span className="text-sm text-muted-foreground">
-                                {c("per_mo", lang)}
-                            </span>
+                            <span className="text-sm text-muted-foreground">{c("per_mo", lang)}</span>
                         )}
                     </div>
                 </div>
 
-                {/* Features — only included, no strikethrough clutter */}
-                <ul className="flex-1 space-y-3 mb-8">
-                    {tier.features.map((key) => (
-                        <li key={key} className="flex items-start gap-3 text-sm">
-                            <Check className={`w-4 h-4 shrink-0 mt-0.5 ${isPopular ? "text-primary" : "text-primary/70"}`} />
-                            <span className="text-foreground/85 leading-snug">
-                                {c(key, lang)}
-                            </span>
-                        </li>
-                    ))}
-                </ul>
+                {/* Divider */}
+                <div className="h-px bg-border/50 mx-6" />
+
+                {/* Features */}
+                <div className="flex-1 p-6 py-5">
+                    <ul className="space-y-3.5">
+                        {tier.features.map((key) => (
+                            <li key={key} className="flex items-start gap-3">
+                                <div className={`w-[18px] h-[18px] rounded-full border flex items-center justify-center shrink-0 mt-0.5 ${isPopular ? "border-primary/60 bg-primary/10" : "border-primary/40 bg-primary/8"}`}>
+                                    <Check className="w-2.5 h-2.5 text-primary" strokeWidth={3} />
+                                </div>
+                                <span className="text-sm text-foreground/80 leading-snug">
+                                    {c(key, lang)}
+                                </span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                {/* Divider */}
+                <div className="h-px bg-border/50 mx-6" />
 
                 {/* CTA */}
-                {onCheckout ? (
-                    <button
-                        onClick={onCheckout}
-                        disabled={isLoading}
-                        className={`w-full py-3 px-4 rounded-xl text-sm font-semibold text-center transition-all duration-200 block disabled:opacity-60 disabled:cursor-not-allowed
-                            ${isPopular
-                                ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20"
-                                : "border border-border/50 bg-background/40 hover:bg-muted/50 text-foreground"
-                            }`}
-                    >
-                        {isLoading ? "..." : c(tier.ctaKey, lang)}
-                    </button>
-                ) : (
-                    <Link
-                        href={tier.ctaHref}
-                        className={`w-full py-3 px-4 rounded-xl text-sm font-semibold text-center transition-all duration-200 block
-                            ${isPopular
-                                ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20"
-                                : "border border-border/50 bg-background/40 hover:bg-muted/50 text-foreground"
-                            }`}
-                    >
-                        {c(tier.ctaKey, lang)}
-                    </Link>
-                )}
+                <div className="p-6 pt-5">
+                    {onCheckout ? (
+                        <button
+                            onClick={onCheckout}
+                            disabled={isLoading}
+                            className={`w-full py-3.5 rounded-xl text-sm font-semibold text-center transition-all duration-150 block disabled:opacity-60 disabled:cursor-not-allowed
+                                ${isPopular
+                                    ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                                    : "border border-border/60 text-foreground bg-transparent hover:border-primary/50 hover:text-primary"
+                                }`}
+                        >
+                            {isLoading ? "..." : c(tier.ctaKey, lang)}
+                        </button>
+                    ) : (
+                        <Link
+                            href={tier.ctaHref}
+                            className={`w-full py-3.5 rounded-xl text-sm font-semibold text-center transition-all duration-150 block
+                                ${isPopular
+                                    ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                                    : "border border-border/60 text-foreground bg-transparent hover:border-primary/50 hover:text-primary"
+                                }`}
+                        >
+                            {c(tier.ctaKey, lang)}
+                        </Link>
+                    )}
+                </div>
             </div>
-        </div>
+        </>
     );
 }
