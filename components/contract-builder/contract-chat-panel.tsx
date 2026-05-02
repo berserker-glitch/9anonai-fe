@@ -149,19 +149,13 @@ export function ContractChatPanel({
 
             {/* Input Area */}
             <div className="p-4 border-t bg-background">
-                <ChatInput onSubmit={onSend} isLoading={isLoading}>
-                    <input
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                        placeholder={t("chatInputPlaceholder", lang)}
-                        className={cn(
-                            "flex-1 bg-transparent border-none outline-none text-sm placeholder:text-muted-foreground/70",
-                            isRtl && "text-right"
-                        )}
-                        disabled={isLoading}
-                        dir={isRtl ? "rtl" : "ltr"}
-                    />
-                </ChatInput>
+                <ChatInput
+                    value={input}
+                    onChange={setInput}
+                    onSubmit={onSend}
+                    isLoading={isLoading}
+                    placeholder={t("chatInputPlaceholder", lang)}
+                />
             </div>
         </div>
     );
