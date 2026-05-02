@@ -195,6 +195,13 @@ export default function ChatWithIdPage() {
                         });
                         setMessages(formattedMessages);
                         setShowWelcome(formattedMessages.length === 0);
+                        if (formattedMessages.length > 0) {
+                            setTimeout(() => {
+                                if (messageContainerRef.current) {
+                                    messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
+                                }
+                            }, 100);
+                        }
                     }
                 })
                 .catch(err => console.error("Failed to load messages", err));
