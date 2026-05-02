@@ -79,6 +79,8 @@ const ID_UI: Record<string, Record<string, string>> = {
     delete_body:   { ar: "سيتم حذف هذه المحادثة نهائياً.", fr: "Cette conversation sera définitivement supprimée.", en: "This conversation will be permanently deleted." },
     delete_btn:    { ar: "حذف",        fr: "Supprimer",      en: "Delete" },
     free_plan:     { ar: "الخطة المجانية",  fr: "Plan Gratuit", en: "Free Plan" },
+    basic_plan:    { ar: "الخطة الأساسية", fr: "Plan Asasi",   en: "Basic Plan" },
+    pro_plan:      { ar: "الخطة المهنية",  fr: "Plan Mihani",  en: "Pro Plan" },
     settings_label:{ ar: "الإعدادات",      fr: "Paramètres",   en: "Settings" },
 };
 function idu(key: string, lang: string): string {
@@ -944,7 +946,11 @@ export default function ChatWithIdPage() {
                             <Avatar fallback={user?.name?.[0] || user?.email?.[0] || "U"} size="md" isOnline />
                             <div className="flex-1 min-w-0">
                                 <p className="text-sm font-medium truncate">{user?.name || user?.email}</p>
-                                <p className="text-xs text-muted-foreground">{idu("free_plan", language)}</p>
+                                <p className="text-xs text-muted-foreground">
+                                    {user?.plan === 'pro' ? idu("pro_plan", language)
+                                        : user?.plan === 'basic' ? idu("basic_plan", language)
+                                        : idu("free_plan", language)}
+                                </p>
                             </div>
                             <button
                                 onClick={() => setSettingsOpen(true)}
