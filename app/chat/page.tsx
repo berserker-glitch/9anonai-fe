@@ -30,12 +30,10 @@ import { ConfirmModal } from "@/components/utility/modal";
 import { SettingsModal } from "@/components/settings/settings-modal";
 import { FilesModal } from "@/components/chat/files-modal";
 import { FeedbackModal } from "@/components/chat/feedback-modal";
-import { AttachButton } from "@/components/interaction/attach-button";
 import { FilePreview } from "@/components/chat/file-preview";
 import { AnimatedThinkingSvg } from "@/components/interaction/animated-thinking-svg";
 
 // UI Components
-import { Textarea } from "@/components/ui/textarea";
 import { Avatar } from "@/components/ui/avatar";
 import { AuthenticatedImage } from "@/components/ui/authenticated-image";
 
@@ -1005,43 +1003,16 @@ export default function NewChatPage() {
                                 </p>
 
                                 <div className="w-full relative z-10 mb-12">
-                                    <ChatInput onSubmit={handleSendMessage} className="!sticky-none bg-transparent">
-                                        <div className="flex-1 flex items-end gap-2 w-full min-w-0 bg-card/50 backdrop-blur-md border border-border/50 rounded-2xl p-2 shadow-sm transition-all duration-300 focus-within:shadow-md focus-within:border-primary/50 focus-within:bg-card">
-                                            <AttachButton onFilesSelected={handleFileUpload} />
-                                            <div className="relative flex-1 w-full min-w-0">
-                                                {attachedFiles.length > 0 && (
-                                                    <div className="flex gap-2 mb-2 flex-wrap pb-2 border-b border-border/50">
-                                                        {attachedFiles.map((file, idx) => (
-                                                            <FilePreview
-                                                                key={idx}
-                                                                file={{
-                                                                    id: idx.toString(),
-                                                                    name: file.name,
-                                                                    url: URL.createObjectURL(file),
-                                                                    mimetype: file.type,
-                                                                    size: file.size
-                                                                }}
-                                                                mode="input"
-                                                                onRemove={() => setAttachedFiles(prev => prev.filter((_, i) => i !== idx))}
-                                                            />
-                                                        ))}
-                                                    </div>
-                                                )}
-                                                <Textarea
-                                                    placeholder={ui("input_placeholder", language)}
-                                                    value={inputValue}
-                                                    onChange={(e) => setInputValue(e.target.value)}
-                                                    onKeyDown={(e) => {
-                                                        if (e.key === "Enter" && !e.shiftKey) {
-                                                            e.preventDefault();
-                                                            handleSendMessage();
-                                                        }
-                                                    }}
-                                                    className="resize-none min-h-[48px] max-h-[200px] border-none focus-visible:ring-0 bg-transparent px-2 py-3 text-base"
-                                                />
-                                            </div>
-                                        </div>
-                                    </ChatInput>
+                                    <ChatInput
+                                        variant="welcome"
+                                        value={inputValue}
+                                        onChange={setInputValue}
+                                        onSubmit={handleSendMessage}
+                                        onFileUpload={handleFileUpload}
+                                        attachedFiles={attachedFiles}
+                                        onRemoveFile={(idx) => setAttachedFiles(prev => prev.filter((_, i) => i !== idx))}
+                                        placeholder={ui("input_placeholder", language)}
+                                    />
                                 </div>
 
                                 {/* Language-aware suggestion chips — auto-send on click */}
@@ -1305,43 +1276,16 @@ export default function NewChatPage() {
 
                     {/* Input Area when not in welcome mode */}
                     {!showWelcome && (
-                        <ChatInput onSubmit={handleSendMessage} isLoading={isGenerating}>
-                            <div className="flex-1 flex items-end gap-2 w-full min-w-0">
-                                <AttachButton onFilesSelected={handleFileUpload} />
-                                <div className="relative flex-1 w-full min-w-0">
-                                    {attachedFiles.length > 0 && (
-                                        <div className="flex gap-2 mb-2 flex-wrap">
-                                            {attachedFiles.map((file, idx) => (
-                                                <FilePreview
-                                                    key={idx}
-                                                    file={{
-                                                        id: idx.toString(),
-                                                        name: file.name,
-                                                        url: URL.createObjectURL(file),
-                                                        mimetype: file.type,
-                                                        size: file.size
-                                                    }}
-                                                    mode="input"
-                                                    onRemove={() => setAttachedFiles(prev => prev.filter((_, i) => i !== idx))}
-                                                />
-                                            ))}
-                                        </div>
-                                    )}
-                                    <Textarea
-                                        placeholder="Message 9anon AI..."
-                                        value={inputValue}
-                                        onChange={(e) => setInputValue(e.target.value)}
-                                        onKeyDown={(e) => {
-                                            if (e.key === "Enter" && !e.shiftKey) {
-                                                e.preventDefault();
-                                                handleSendMessage();
-                                            }
-                                        }}
-                                        className="resize-none min-h-[48px] max-h-[200px]"
-                                    />
-                                </div>
-                            </div>
-                        </ChatInput>
+                        <ChatInput
+                            value={inputValue}
+                            onChange={setInputValue}
+                            onSubmit={handleSendMessage}
+                            onFileUpload={handleFileUpload}
+                            attachedFiles={attachedFiles}
+                            onRemoveFile={(idx) => setAttachedFiles(prev => prev.filter((_, i) => i !== idx))}
+                            isLoading={isGenerating}
+                            placeholder={ui("input_placeholder", language)}
+                        />
                     )}
                 </main>
             </div>
