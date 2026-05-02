@@ -1049,7 +1049,7 @@ export default function NewChatPage() {
                             </div>
                         </div>
                     ) : (
-                        <ChatContainer className="flex-1 overflow-hidden md:rounded-[2rem]">
+                        <ChatContainer className="flex-1 min-h-0 overflow-hidden md:rounded-[2rem]">
                             <div className="flex items-center justify-between px-4 py-1.5">
                                 <p className="text-[11px] text-muted-foreground">
                                     {ui("disclaimer", language)}
@@ -1068,7 +1068,7 @@ export default function NewChatPage() {
                                     </button>
                                 )}
                             </div>
-                            <div ref={messageContainerRef} onScroll={handleScroll} className="flex-1 overflow-y-auto w-full px-4 sm:px-6 lg:px-8 py-4">
+                            <div ref={messageContainerRef} onScroll={handleScroll} data-lenis-prevent className="flex-1 min-h-0 overflow-y-auto w-full px-4 sm:px-6 lg:px-8 py-4">
                                 <div className="flex flex-col gap-6 w-full max-w-4xl mx-auto">
                                     {messages.map(message => (
                                         <MessageBubble key={message.id} variant={message.role}>
