@@ -1,46 +1,19 @@
 {
-  "title": "Invitez vos amis",
-  "subtitle": "Invitez 5 amis et gagnez 1 mois gratuit au lancement des abonnements",
-  "close": "Fermer",
-  "stats": {
-    "invited": "ami(s) invité(s)",
-    "earned": "mois gratuit(s) gagné(s)",
-    "none": "Aucun encore"
-  },
-  "progress": {
-    "label": "Progression vers votre prochain mois gratuit",
-    "done": "Bravo ! Vous avez gagné un mois gratuit",
-    "of": "sur"
-  },
-  "link": {
-    "label": "Votre lien de parrainage personnel",
-    "copy": "Copier",
-    "copied": "Copié ✓",
-    "loading": "Chargement..."
-  },
-  "code_label": "Code de parrainage",
-  "share": {
-    "whatsapp": "Partager sur WhatsApp",
-    "whatsapp_message": "Salut ! Essaie 9anon AI pour tes questions juridiques — le meilleur assistant juridique. Inscris-toi via mon lien : "
-  },
-  "how": {
-    "title": "Comment ça marche ?",
-    "step1": {
-      "title": "Partagez votre lien",
-      "desc": "Envoyez votre lien personnel à vos amis, famille ou collègues via WhatsApp ou tout autre canal"
-    },
-    "step2": {
-      "title": "Ils s'inscrivent",
-      "desc": "Dès qu'une personne crée un compte avec votre lien, cela est automatiquement compté comme un parrainage valide"
-    },
-    "step3": {
-      "title": "Vous recevez votre récompense",
-      "desc": "5 parrainages validés = 1 mois gratuit sur n'importe quel abonnement payant au lancement officiel"
-    }
-  },
-  "reward": {
-    "label": "Condition de la récompense",
-    "value": "5 parrainages = 1 mois gratuit",
-    "note": "Les récompenses sont créditées automatiquement sur votre compte au lancement — aucune action requise"
-  }
+  "badge": "Parrainez vos amis",
+  "title": "Aidez-nous à grandir",
+  "subtitle": "Invitez 5 personnes — obtenez 1 mois gratuit",
+  "story_title": "Notre histoire",
+  "story": "Nous sommes une petite équipe qui croit que chacun mérite d'avoir accès à des réponses juridiques, quel que soit son budget. 9anon a été créé pour combler ce vide, et nous n'en sommes qu'au début. Nous avons besoin de votre soutien. Chaque personne que vous invitez nous aide à continuer à offrir une assistance juridique gratuite à tous ceux qui en ont besoin.",
+  "milestone_label": "Votre progression vers la récompense",
+  "milestone_done_title": "Bravo, vous l'avez fait ! 🎉",
+  "milestone_done_sub": "Un mois gratuit vous attend au lancement des abonnements",
+  "reward_title": "Votre récompense",
+  "reward_value": "1 mois gratuit",
+  "reward_desc": "Dès que 5 personnes s'inscrivent via votre lien, vous obtenez automatiquement 1 mois gratuit sur n'importe quel abonnement payant au lancement — sans aucune action de votre part.",
+  "link_label": "Votre lien personnel",
+  "code_label": "Code",
+  "copy": "Copier le lien",
+  "copied": "Copié ✓",
+  "whatsapp": "Partager sur WhatsApp",
+  "close": "Fermer"
 }
