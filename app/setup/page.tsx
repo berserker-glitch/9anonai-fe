@@ -194,7 +194,7 @@ export default function SetupPage() {
             });
 
             if (res.success) {
-                trackEvent("onboarding_completed", { language: spokenLanguage, source, persona });
+                trackEvent("onboarding_completed", { language: spokenLanguage, source, persona: persona ?? "" });
                 const encoded = question ? encodeURIComponent(question) : "";
                 router.push(encoded ? `/chat?q=${encoded}` : "/chat");
             } else {
