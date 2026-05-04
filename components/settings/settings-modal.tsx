@@ -1,9 +1,12 @@
-import { useState, ReactNode, useEffect } from "react";
+import { useState, ReactNode, useEffect, useCallback } from "react";
 import { Modal } from "../utility/modal";
 import { useLanguage, languages, Language } from "@/lib/language-context";
 import { useAuth } from "@/lib/auth-context";
 import { useTheme } from "../providers/theme-provider";
 import Link from "next/link";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
+const REFERRAL_MILESTONE = 5;
 
 interface SettingsModalProps {
     isOpen: boolean;
@@ -12,7 +15,7 @@ interface SettingsModalProps {
     onLogout: () => void;
 }
 
-type SettingsTab = "general" | "notifications" | "personalization" | "account" | "data" | "security" | "subscription";
+type SettingsTab = "general" | "notifications" | "personalization" | "account" | "data" | "security" | "subscription" | "referral";
 
 // ─── Trilingual UI strings ────────────────────────────────────────────────────
 
@@ -25,6 +28,25 @@ const S: Record<string, Record<string, string>> = {
     tab_security:         { fr: "Sécurité",         ar: "الأمان",             en: "Security" },
     tab_account:          { fr: "Compte",           ar: "الحساب",             en: "Account" },
     tab_subscription:     { fr: "Abonnement",       ar: "الاشتراك",           en: "Subscription" },
+    tab_referral:         { fr: "Parrainage",       ar: "الإحالة",            en: "Referral" },
+
+    // Referral tab
+    ref_title:            { fr: "Parrainage",           ar: "برنامج الإحالة",        en: "Referral" },
+    ref_story_title:      { fr: "Notre histoire",       ar: "قصتنا",                en: "Our story" },
+    ref_story:            { fr: "Nous sommes une petite équipe qui croit que chacun mérite d'avoir accès à des réponses juridiques, quel que soit son budget. Nous n'en sommes qu'au début et nous avons besoin de votre soutien pour continuer.", ar: "نحن فريق صغير نؤمن بأن لكل شخص الحق في الحصول على إجابات قانونية بغض النظر عن ميزانيته. نحن في بداياتنا ونحتاج دعمكم للاستمرار.", en: "We're a small team that believes everyone deserves access to legal answers regardless of their budget. We're just getting started and we need your support to keep going." },
+    ref_milestone:        { fr: "Progression vers la récompense", ar: "تقدّمك نحو المكافأة", en: "Progress toward reward" },
+    ref_done_title:       { fr: "Objectif atteint ! 🎉",  ar: "أحسنت! لقد فعلتها 🎉",  en: "You did it! 🎉" },
+    ref_done_sub:         { fr: "1 mois gratuit vous attend au lancement", ar: "شهر مجاني ينتظرك عند الإطلاق", en: "1 free month waiting for you at launch" },
+    ref_link_label:       { fr: "Votre lien de parrainage", ar: "رابطك الشخصي",        en: "Your referral link" },
+    ref_copy:             { fr: "Copier",               ar: "نسخ",                   en: "Copy" },
+    ref_copied:           { fr: "Copié ✓",              ar: "تم النسخ ✓",             en: "Copied ✓" },
+    ref_code:             { fr: "Code",                 ar: "الرمز",                 en: "Code" },
+    ref_whatsapp:         { fr: "Partager sur WhatsApp", ar: "شارك عبر واتساب",       en: "Share on WhatsApp" },
+    ref_whatsapp_msg:     { fr: "Salut ! J'utilise 9anon AI pour des réponses juridiques gratuites. Inscris-toi via mon lien : ", ar: "أهلاً! أنا أستخدم 9anon AI للحصول على إجابات قانونية مجانية. سجّل عبر رابطي: ", en: "Hey! I use 9anon AI for free legal answers. Sign up with my link: " },
+    ref_reward_title:     { fr: "Votre récompense",     ar: "مكافأتك",               en: "Your reward" },
+    ref_reward_value:     { fr: "1 mois gratuit",       ar: "شهر مجاني",             en: "1 free month" },
+    ref_reward_desc:      { fr: "Dès que 5 personnes s'inscrivent via votre lien, vous obtenez automatiquement 1 mois gratuit au lancement des abonnements.", ar: "بمجرد تسجيل 5 أشخاص عبر رابطك، ستحصل تلقائياً على شهر مجاني عند إطلاق الاشتراكات.", en: "Once 5 people sign up using your link, you automatically get 1 free month when paid plans launch." },
+    ref_loading:          { fr: "Chargement...",        ar: "جاري التحميل...",        en: "Loading..." },
 
     // Subscription tab
     sub_title:            { fr: "Abonnement",           ar: "الاشتراك",              en: "Subscription" },
@@ -119,9 +141,8 @@ function s(key: string, lang: string): string {
 
 export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: SettingsModalProps) {
     const [activeTab, setActiveTab] = useState<SettingsTab>("general");
-    const { user: authUser } = useAuth();
+    const { user: authUser, updateProfile, changePassword, token } = useAuth();
     const { language, setLanguage } = useLanguage();
-    const { updateProfile, changePassword } = useAuth();
 
     // Profile State
     const [name, setName] = useState(propUser?.name || "");
@@ -144,6 +165,11 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: Set
     const [passwordData, setPasswordData] = useState({ current: "", new: "", confirm: "" });
     const [status, setStatus] = useState<{ type: "success" | "error"; message: string } | null>(null);
     const [loading, setLoading] = useState(false);
+
+    // Referral State
+    const [referralData, setReferralData] = useState<{ code: string | null; credits: number; referralCount: number } | null>(null);
+    const [referralLoading, setReferralLoading] = useState(false);
+    const [referralCopied, setReferralCopied] = useState(false);
 
     // Language flags
     const langIcons: Record<Language, string> = {
@@ -180,6 +206,28 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: Set
             if (propUser?.personalization) setPersonalizationInput(propUser.personalization);
         }
     }, [isOpen, propUser]);
+
+    // Fetch referral data when tab is active
+    useEffect(() => {
+        if (activeTab !== "referral" || !isOpen) return;
+        const t = token || localStorage.getItem("token");
+        if (!t) return;
+        setReferralLoading(true);
+        fetch(`${API_URL}/referrals/me`, { headers: { Authorization: `Bearer ${t}` } })
+            .then((r) => r.json())
+            .then((data) => setReferralData(data))
+            .catch(() => {})
+            .finally(() => setReferralLoading(false));
+    }, [activeTab, isOpen, token]);
+
+    const handleReferralCopy = useCallback(() => {
+        if (!referralData?.code) return;
+        const link = `${window.location.origin}/register?ref=${referralData.code}`;
+        navigator.clipboard.writeText(link).then(() => {
+            setReferralCopied(true);
+            setTimeout(() => setReferralCopied(false), 2000);
+        });
+    }, [referralData]);
 
     const handleUpdateProfile = async () => {
         setLoading(true);
@@ -296,6 +344,15 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: Set
             icon: (
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                </svg>
+            ),
+        },
+        {
+            id: "referral",
+            labelKey: "tab_referral",
+            icon: (
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
             ),
         },
@@ -644,6 +701,110 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: Set
                                 >
                                     {s("sub_upgrade", language)}
                                 </Link>
+                            </div>
+                        );
+                    })()}
+                    {/* ── Referral ── */}
+                    {activeTab === "referral" && (() => {
+                        const count = referralData?.referralCount ?? 0;
+                        const milestoneReached = count >= REFERRAL_MILESTONE;
+                        const dotsCount = Math.min(count, REFERRAL_MILESTONE);
+                        const referralLink = referralData?.code
+                            ? `${typeof window !== "undefined" ? window.location.origin : ""}/register?ref=${referralData.code}`
+                            : "";
+
+                        return (
+                            <div className="space-y-5">
+                                <h2 className="text-lg font-semibold">{s("ref_title", language)}</h2>
+
+                                {referralLoading ? (
+                                    <p className="text-sm text-muted-foreground">{s("ref_loading", language)}</p>
+                                ) : (
+                                    <>
+                                        {/* Story */}
+                                        <div className="py-3 border-b border-border">
+                                            <p className="text-sm font-medium mb-1">{s("ref_story_title", language)}</p>
+                                            <p className="text-xs text-muted-foreground leading-relaxed">{s("ref_story", language)}</p>
+                                        </div>
+
+                                        {/* Progress */}
+                                        <div className="py-3 border-b border-border">
+                                            <div className="flex items-center justify-between mb-2">
+                                                <p className="text-sm font-medium">{s("ref_milestone", language)}</p>
+                                                <span className="text-xs font-semibold text-primary">{count} / {REFERRAL_MILESTONE}</span>
+                                            </div>
+                                            <div className="flex gap-1.5">
+                                                {Array.from({ length: REFERRAL_MILESTONE }).map((_, i) => (
+                                                    <div
+                                                        key={i}
+                                                        className={`h-2 flex-1 rounded-full transition-colors ${
+                                                            i < dotsCount
+                                                                ? milestoneReached ? "bg-emerald-500" : "bg-primary"
+                                                                : "bg-muted"
+                                                        }`}
+                                                    />
+                                                ))}
+                                            </div>
+                                            {milestoneReached && (
+                                                <div className="mt-2 p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                                                    <p className="text-xs font-semibold text-emerald-600">{s("ref_done_title", language)}</p>
+                                                    <p className="text-xs text-emerald-600/80 mt-0.5">{s("ref_done_sub", language)}</p>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Referral link */}
+                                        <div className="py-3 border-b border-border space-y-2">
+                                            <p className="text-sm font-medium">{s("ref_link_label", language)}</p>
+                                            <div className="flex gap-2">
+                                                <input
+                                                    readOnly
+                                                    value={referralLink}
+                                                    className="flex-1 px-3 py-1.5 bg-muted/50 border border-border rounded-lg text-xs text-muted-foreground focus:outline-none truncate"
+                                                />
+                                                <button
+                                                    onClick={handleReferralCopy}
+                                                    className="px-3 py-1.5 bg-primary text-primary-foreground text-xs font-medium rounded-lg hover:bg-primary/90 transition-colors shrink-0"
+                                                >
+                                                    {referralCopied ? s("ref_copied", language) : s("ref_copy", language)}
+                                                </button>
+                                            </div>
+                                            {referralData?.code && (
+                                                <p className="text-xs text-muted-foreground">
+                                                    {s("ref_code", language)}: <span className="font-mono font-semibold text-foreground">{referralData.code}</span>
+                                                </p>
+                                            )}
+                                        </div>
+
+                                        {/* WhatsApp */}
+                                        <a
+                                            href={`https://wa.me/?text=${encodeURIComponent(s("ref_whatsapp_msg", language) + referralLink)}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-2 px-4 py-2.5 bg-[#25D366] text-white text-sm font-medium rounded-lg hover:bg-[#22c55e] transition-colors w-full justify-center"
+                                        >
+                                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                                            </svg>
+                                            {s("ref_whatsapp", language)}
+                                        </a>
+
+                                        {/* Reward callout */}
+                                        <div className={`p-3 rounded-lg border ${milestoneReached ? "bg-emerald-500/10 border-emerald-500/20" : "bg-amber-500/10 border-amber-500/20"}`}>
+                                            <div className="flex items-start gap-2">
+                                                <span className="text-lg">{milestoneReached ? "🎉" : "🎁"}</span>
+                                                <div>
+                                                    <p className={`text-xs font-semibold ${milestoneReached ? "text-emerald-600" : "text-amber-600"}`}>
+                                                        {s("ref_reward_title", language)} — {s("ref_reward_value", language)}
+                                                    </p>
+                                                    <p className={`text-xs mt-0.5 ${milestoneReached ? "text-emerald-600/80" : "text-amber-600/80"}`}>
+                                                        {s("ref_reward_desc", language)}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         );
                     })()}
