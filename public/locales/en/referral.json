@@ -1,46 +1,19 @@
 {
-  "title": "Invite Friends",
-  "subtitle": "Invite 5 friends and earn 1 free month when paid plans launch",
-  "close": "Close",
-  "stats": {
-    "invited": "friend(s) invited",
-    "earned": "free month(s) earned",
-    "none": "None yet"
-  },
-  "progress": {
-    "label": "Progress toward your next free month",
-    "done": "You've earned a free month!",
-    "of": "of"
-  },
-  "link": {
-    "label": "Your personal referral link",
-    "copy": "Copy link",
-    "copied": "Copied ✓",
-    "loading": "Loading..."
-  },
-  "code_label": "Referral code",
-  "share": {
-    "whatsapp": "Share on WhatsApp",
-    "whatsapp_message": "Hey! Try 9anon AI for your legal questions — the smartest legal assistant. Sign up with my link: "
-  },
-  "how": {
-    "title": "How it works",
-    "step1": {
-      "title": "Share your link",
-      "desc": "Send your personal referral link to friends, family, or colleagues via WhatsApp or any other channel"
-    },
-    "step2": {
-      "title": "They sign up",
-      "desc": "When someone creates a new account using your link, it is automatically counted as a valid referral"
-    },
-    "step3": {
-      "title": "You earn your reward",
-      "desc": "Every 5 successful referrals = 1 full free month on any paid subscription plan when we officially launch"
-    }
-  },
-  "reward": {
-    "label": "Reward condition",
-    "value": "5 referrals = 1 free month",
-    "note": "Rewards are applied automatically to your account when paid plans launch — no action needed"
-  }
+  "badge": "Refer friends",
+  "title": "Help us grow",
+  "subtitle": "Invite 5 people — get 1 free month",
+  "story_title": "Our story",
+  "story": "We're a small team that believes everyone deserves access to legal answers — regardless of their budget. 9anon was built to fill that gap, and we're just getting started. We need your support. Every person you invite helps us keep going and reach more people who need legal help but can't afford a lawyer.",
+  "milestone_label": "Your progress toward the reward",
+  "milestone_done_title": "You did it! 🎉",
+  "milestone_done_sub": "A free month is waiting for you when paid plans launch",
+  "reward_title": "Your reward",
+  "reward_value": "1 free month",
+  "reward_desc": "Once 5 people sign up using your link, you automatically get 1 full free month on any paid plan when we launch — no action needed from you.",
+  "link_label": "Your referral link",
+  "code_label": "Code",
+  "copy": "Copy link",
+  "copied": "Copied ✓",
+  "whatsapp": "Share on WhatsApp",
+  "close": "Close"
 }
