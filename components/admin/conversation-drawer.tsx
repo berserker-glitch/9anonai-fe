@@ -17,6 +17,7 @@ export interface UserStats {
     conversationCount: number;
     messageCount: number;
     lastActive: string;
+    referredBy: { id: string; email: string; name: string | null } | null;
 }
 
 interface UserChat {

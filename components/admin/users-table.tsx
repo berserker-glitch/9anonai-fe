@@ -218,6 +218,7 @@ export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }
                                 </th>
                                 <th className="text-left px-6 py-4 text-sm font-medium text-muted-foreground">Auth</th>
                                 <th className="text-left px-6 py-4 text-sm font-medium text-muted-foreground">Source</th>
+                                <th className="text-left px-6 py-4 text-sm font-medium text-muted-foreground">Referred by</th>
                                 <th className="text-left px-6 py-4 text-sm font-medium text-muted-foreground">Actions</th>
                             </tr>
                         </thead>
@@ -298,6 +299,20 @@ export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }
                                         )}
                                     </td>
                                     <td className="px-6 py-4">
+                                        {u.referredBy ? (
+                                            <div className="min-w-0">
+                                                <p className="text-xs font-medium text-emerald-600 dark:text-emerald-400 truncate max-w-[140px]">
+                                                    {u.referredBy.name || u.referredBy.email}
+                                                </p>
+                                                <p className="text-[11px] text-muted-foreground truncate max-w-[140px]">
+                                                    {u.referredBy.name ? u.referredBy.email : ""}
+                                                </p>
+                                            </div>
+                                        ) : (
+                                            <span className="text-muted-foreground text-sm">—</span>
+                                        )}
+                                    </td>
+                                    <td className="px-6 py-4">
                                         <button
                                             onClick={() => { setSelectedUser(u); setDrawerOpen(true); }}
                                             className="px-3 py-1.5 text-xs font-medium bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors"
@@ -309,7 +324,7 @@ export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }
                             ))}
                             {filteredUsers.length === 0 && (
                                 <tr>
-                                    <td colSpan={10} className="px-6 py-12 text-center text-muted-foreground text-sm">
+                                    <td colSpan={11} className="px-6 py-12 text-center text-muted-foreground text-sm">
                                         No users found
                                     </td>
                                 </tr>
