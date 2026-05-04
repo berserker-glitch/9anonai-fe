@@ -1,0 +1,46 @@
+{
+  "title": "Invite Friends",
+  "subtitle": "Invite 5 friends and earn 1 free month when paid plans launch",
+  "close": "Close",
+  "stats": {
+    "invited": "friend(s) invited",
+    "earned": "free month(s) earned",
+    "none": "None yet"
+  },
+  "progress": {
+    "label": "Progress toward your next free month",
+    "done": "You've earned a free month!",
+    "of": "of"
+  },
+  "link": {
+    "label": "Your personal referral link",
+    "copy": "Copy link",
+    "copied": "Copied ✓",
+    "loading": "Loading..."
+  },
+  "code_label": "Referral code",
+  "share": {
+    "whatsapp": "Share on WhatsApp",
+    "whatsapp_message": "Hey! Try 9anon AI for your legal questions — the smartest legal assistant. Sign up with my link: "
+  },
+  "how": {
+    "title": "How it works",
+    "step1": {
+      "title": "Share your link",
+      "desc": "Send your personal referral link to friends, family, or colleagues via WhatsApp or any other channel"
+    },
+    "step2": {
+      "title": "They sign up",
+      "desc": "When someone creates a new account using your link, it is automatically counted as a valid referral"
+    },
+    "step3": {
+      "title": "You earn your reward",
+      "desc": "Every 5 successful referrals = 1 full free month on any paid subscription plan when we officially launch"
+    }
+  },
+  "reward": {
+    "label": "Reward condition",
+    "value": "5 referrals = 1 free month",
+    "note": "Rewards are applied automatically to your account when paid plans launch — no action needed"
+  }
+}

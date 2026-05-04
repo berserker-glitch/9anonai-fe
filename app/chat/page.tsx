@@ -28,6 +28,7 @@ import { ChatInput } from "@/components/interaction/chat-input";
 import { ScrollToBottom } from "@/components/utility/scroll-to-bottom";
 import { ConfirmModal } from "@/components/utility/modal";
 import { SettingsModal } from "@/components/settings/settings-modal";
+import { ReferralModal } from "@/components/referral/referral-modal";
 import { FilesModal } from "@/components/chat/files-modal";
 import { FeedbackModal } from "@/components/chat/feedback-modal";
 import { FilePreview } from "@/components/chat/file-preview";
@@ -255,6 +256,7 @@ export default function NewChatPage() {
     const [attachedFiles, setAttachedFiles] = useState<File[]>([]);
     const [showWelcome, setShowWelcome] = useState(true);
     const [settingsOpen, setSettingsOpen] = useState(false);
+    const [referralOpen, setReferralOpen] = useState(false);
     const [filesModalOpen, setFilesModalOpen] = useState(false);
     const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
     // Track assistant responses in this session for inline feedback prompt
@@ -985,6 +987,19 @@ export default function NewChatPage() {
                                 </p>
                             </div>
                             <button
+                                onClick={() => setReferralOpen(true)}
+                                className="flex items-center gap-1.5 shrink-0 px-2.5 py-1.5 rounded-lg text-xs font-medium text-primary/80 hover:text-primary hover:bg-primary/10 transition-colors"
+                                title="Invite friends"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="9" cy="7" r="4"/>
+                                    <line x1="19" y1="8" x2="19" y2="14"/>
+                                    <line x1="22" y1="11" x2="16" y2="11"/>
+                                </svg>
+                                Invite
+                            </button>
+                            <button
                                 onClick={() => setSettingsOpen(true)}
                                 className="flex items-center gap-1.5 shrink-0 px-2.5 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors"
                                 title={ui("settings_label", language)}
@@ -1308,6 +1323,8 @@ export default function NewChatPage() {
                     )}
                 </main>
             </div>
+
+            <ReferralModal isOpen={referralOpen} onClose={() => setReferralOpen(false)} />
 
             {/* Settings Modal - Placed outside of Sidebar to prevent containment */}
             <SettingsModal

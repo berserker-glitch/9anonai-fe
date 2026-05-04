@@ -16,9 +16,16 @@ export default function RegisterPage() {
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [refCode, setRefCode] = useState<string | undefined>(undefined);
     const router = useRouter();
     const { register, loginWithGoogle, user } = useAuth();
     const { t } = useTranslation("auth");
+
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const ref = params.get("ref");
+        if (ref) setRefCode(ref);
+    }, []);
 
     useEffect(() => {
         if (user) {
@@ -32,7 +39,7 @@ export default function RegisterPage() {
         onSuccess: async (tokenResponse) => {
             setIsLoading(true);
             setError("");
-            const result = await loginWithGoogle(tokenResponse.access_token);
+            const result = await loginWithGoogle(tokenResponse.access_token, refCode);
             if (result.success) {
                 trackEvent("sign_up", { method: "google" });
                 router.push("/setup");
@@ -49,7 +56,7 @@ export default function RegisterPage() {
         e.preventDefault();
         setIsLoading(true);
         setError("");
-        const result = await register(email, password, name);
+        const result = await register(email, password, name, refCode);
         if (result.success) {
             trackEvent("sign_up", { method: "email" });
             router.push("/setup");
@@ -76,6 +83,16 @@ export default function RegisterPage() {
                         </div>
                     </Link>
                 </div>
+
+                {/* Referral banner */}
+                {refCode && (
+                    <div className="animate-reveal-up delay-50 mb-5 flex items-center gap-2.5 bg-primary/10 border border-primary/20 text-primary px-4 py-3 rounded-xl text-sm font-medium">
+                        <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <span>You were invited by a friend — once they reach 5 referrals, they earn a free month.</span>
+                    </div>
+                )}
 
                 {/* Heading */}
                 <div className="animate-reveal-up delay-100 text-center mb-8">
