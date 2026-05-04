@@ -286,6 +286,16 @@ export default function NewChatPage() {
         }
     }, [user, authLoading, router]);
 
+    // Auto-show referral modal once per session after user loads
+    useEffect(() => {
+        if (!user) return;
+        const key = "9anon_referral_shown";
+        if (sessionStorage.getItem(key)) return;
+        sessionStorage.setItem(key, "1");
+        const timer = setTimeout(() => setReferralOpen(true), 1500);
+        return () => clearTimeout(timer);
+    }, [user]);
+
     // Auto-send ?q= query param (from onboarding scenario picker)
     useEffect(() => {
         if (!user || !token || autoSentRef.current) return;
