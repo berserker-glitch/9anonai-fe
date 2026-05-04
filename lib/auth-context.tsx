@@ -17,8 +17,8 @@ interface AuthContextType {
     user: User | null;
     token: string | null;
     login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
-    loginWithGoogle: (credential: string) => Promise<{ success: boolean; error?: string }>;
-    register: (email: string, password: string, name?: string) => Promise<{ success: boolean; error?: string }>;
+    loginWithGoogle: (credential: string, referralCode?: string) => Promise<{ success: boolean; error?: string }>;
+    register: (email: string, password: string, name?: string, referralCode?: string) => Promise<{ success: boolean; error?: string }>;
     logout: () => void;
     updateProfile: (data: { name?: string; personalization?: string; isOnboarded?: boolean; marketingSource?: string }) => Promise<{ success: boolean; error?: string }>;
     changePassword: (current: string, newPass: string) => Promise<{ success: boolean; error?: string }>;
@@ -86,12 +86,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     };
 
-    const loginWithGoogle = async (credential: string) => {
+    const loginWithGoogle = async (credential: string, referralCode?: string) => {
         try {
             const res = await fetch(`${API_URL}/auth/google`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ credential }),
+                body: JSON.stringify({ credential, ...(referralCode ? { referralCode } : {}) }),
             });
 
             const data = await res.json();
@@ -109,12 +109,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     };
 
-    const register = async (email: string, password: string, name?: string) => {
+    const register = async (email: string, password: string, name?: string, referralCode?: string) => {
         try {
             const res = await fetch(`${API_URL}/auth/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password, name }),
+                body: JSON.stringify({ email, password, name, ...(referralCode ? { referralCode } : {}) }),
             });
 
             const data = await res.json();
