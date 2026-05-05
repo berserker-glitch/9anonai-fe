@@ -116,6 +116,7 @@ const jsonLd = [
         description:
             "L'assistant juridique IA marocain le plus rapide. Réponses instantanées sur la Moudawana, le Code du Travail, l'immobilier, le droit commercial. 100% gratuit, sans inscription.",
         url: "https://9anonai.com",
+        image: "https://9anonai.com/og-default.png",
         brand: { "@type": "Brand", name: "9anon AI" },
         offers: {
             "@type": "Offer",
