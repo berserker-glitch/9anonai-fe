@@ -67,9 +67,9 @@ const T: Record<string, Record<string, string>> = {
         en: "5. Payment Processor",
     },
     s5_body: {
-        ar: "تُعالَج جميع المدفوعات بواسطة Paddle.com Market Limited، وهي التاجر القانوني المسؤول (Merchant of Record) عن جميع معاملاتنا. قد تحمل كشوفاتك البنكية اسم 'Paddle.com' بدلاً من 9anon AI. يخضع استرداد الأموال لسياسات Paddle الإضافية المتاحة على paddle.com.",
-        fr: "Tous les paiements sont traités par Paddle.com Market Limited, marchand de référence légal (Merchant of Record) pour l'ensemble de nos transactions. Votre relevé bancaire peut mentionner 'Paddle.com' plutôt que 9anon AI. Les remboursements sont également soumis aux politiques complémentaires de Paddle disponibles sur paddle.com.",
-        en: "All payments are processed by Paddle.com Market Limited, the legal Merchant of Record for all our transactions. Your bank statement may show 'Paddle.com' instead of 9anon AI. Refunds are also subject to Paddle's additional policies available at paddle.com.",
+        ar: "تُعالَج جميع المدفوعات بواسطة Polar (polar.sh)، وهي التاجر القانوني المسؤول (Merchant of Record) عن جميع معاملاتنا. قد تحمل كشوفاتك البنكية اسم 'Polar' بدلاً من 9anon AI. يخضع استرداد الأموال لسياسات Polar الإضافية المتاحة على polar.sh.",
+        fr: "Tous les paiements sont traités par Polar (polar.sh), marchand de référence légal (Merchant of Record) pour l'ensemble de nos transactions. Votre relevé bancaire peut mentionner 'Polar' plutôt que 9anon AI. Les remboursements sont également soumis aux politiques complémentaires de Polar disponibles sur polar.sh.",
+        en: "All payments are processed by Polar (polar.sh), the legal Merchant of Record for all our transactions. Your bank statement may show 'Polar' instead of 9anon AI. Refunds are also subject to Polar's additional policies available at polar.sh.",
     },
     s6_title: {
         ar: "6. التواصل معنا",
