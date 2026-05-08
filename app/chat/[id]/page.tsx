@@ -119,6 +119,7 @@ export default function ChatWithIdPage() {
     const [shareUrl, setShareUrl] = useState<string | null>(null);
     const [shareCopied, setShareCopied] = useState(false);
     const [shareLoading, setShareLoading] = useState(false);
+    const [imageUploadLimitError, setImageUploadLimitError] = useState<{ resetAt: string } | null>(null);
 
     const messageContainerRef = useRef<HTMLDivElement>(null);
 
@@ -234,32 +235,14 @@ export default function ChatWithIdPage() {
         }
     }, []);
 
-    // Scroll specific message to top
-    const scrollToMessage = useCallback((messageId: string) => {
-        setTimeout(() => {
-            const el = document.getElementById(`message-${messageId}`);
-            if (el) {
-                // Scroll the element into view at the top of the container
-                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }, 100);
-    }, []);
-
-    // Auto-scroll when a new user message is added
+    // Auto-scroll to bottom whenever messages update
     useEffect(() => {
         if (messages.length > 0) {
-            const lastMessage = messages[messages.length - 1];
-            // If the last message is the user's message, or if it's the AI's "thinking" stub right after
-            if (lastMessage.role === "user") {
-                scrollToMessage(lastMessage.id);
-            } else if (lastMessage.role === "assistant" && lastMessage.isThinking && messages.length >= 2) {
-                const prevMessage = messages[messages.length - 2];
-                if (prevMessage.role === "user") {
-                    scrollToMessage(prevMessage.id);
-                }
-            }
+            const container = messageContainerRef.current;
+            if (!container) return;
+            container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
         }
-    }, [messages, scrollToMessage]);
+    }, [messages]);
 
     // Handle scroll
     const handleScroll = useCallback(() => {
@@ -495,6 +478,15 @@ export default function ChatWithIdPage() {
                             mimetype: f.mimetype,
                             size: f.size
                         }));
+                    }
+                } else if (uploadRes.status === 429) {
+                    const errBody = await uploadRes.json().catch(() => ({}));
+                    if (errBody.error === 'daily_image_limit_reached') {
+                        setMessages(prev => prev.filter(m => m.id !== currentMessageId && m.id !== assistantId));
+                        setImageUploadLimitError({ resetAt: errBody.resetAt });
+                        setIsGenerating(false);
+                        setIsTyping(false);
+                        return;
                     }
                 }
             } catch (err) {
@@ -998,7 +990,28 @@ export default function ChatWithIdPage() {
                                         attachedFiles={attachedFiles}
                                         onRemoveFile={(idx) => setAttachedFiles(prev => prev.filter((_, i) => i !== idx))}
                                         placeholder="Message 9anon AI..."
+                                        canUpload={true}
                                     />
+                                    {imageUploadLimitError && (
+                                        <div className="mt-3 rounded-2xl bg-foreground px-5 py-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                                            <div className="flex items-center gap-2.5 min-w-0">
+                                                <span className="text-background/50 text-base shrink-0">📷</span>
+                                                <p className="text-sm font-medium text-background/90 leading-snug">
+                                                    {{
+                                                        ar: `حد الصور اليومي. يُجدَّد في ${new Date(imageUploadLimitError.resetAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`,
+                                                        fr: `Limite d'images atteinte — réinitialisation à ${new Date(imageUploadLimitError.resetAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`,
+                                                        en: `Daily image limit reached — resets at ${new Date(imageUploadLimitError.resetAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`,
+                                                    }[language] ?? `Daily image limit reached`}
+                                                </p>
+                                            </div>
+                                            <div className="flex items-center gap-2 shrink-0">
+                                                <a href="/pricing" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-xs font-bold hover:bg-primary/90 transition-colors">
+                                                    {{ ar: "الترقية إلى الأساسي — 49 د.م", fr: "Passer à Asasi — 49 MAD", en: "Upgrade — 49 MAD/mo" }[language] ?? "Upgrade — 49 MAD/mo"}
+                                                </a>
+                                                <button onClick={() => setImageUploadLimitError(null)} className="text-background/40 hover:text-background/70 text-sm px-1 transition-colors" aria-label="Dismiss">✕</button>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
 
                                 <div className="flex flex-wrap justify-center gap-2 max-w-2xl mt-4">
@@ -1184,6 +1197,30 @@ export default function ChatWithIdPage() {
                         <PaywallBanner language={language} onNewConversation={handleNewChat} />
                     )}
 
+                    {/* Daily image upload limit banner */}
+                    {!showWelcome && imageUploadLimitError && (
+                        <div className="sticky bottom-0 z-10 px-3 sm:px-6 lg:px-8 pb-3">
+                            <div className="max-w-4xl mx-auto rounded-2xl bg-foreground px-5 py-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                                <div className="flex items-center gap-2.5 min-w-0">
+                                    <span className="text-background/50 text-base shrink-0">📷</span>
+                                    <p className="text-sm font-medium text-background/90 leading-snug">
+                                        {{
+                                            ar: `حد الصور اليومي. يُجدَّد في ${new Date(imageUploadLimitError.resetAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`,
+                                            fr: `Limite d'images atteinte — réinitialisation à ${new Date(imageUploadLimitError.resetAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`,
+                                            en: `Daily image limit reached — resets at ${new Date(imageUploadLimitError.resetAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`,
+                                        }[language] ?? `Daily image limit reached`}
+                                    </p>
+                                </div>
+                                <div className="flex items-center gap-2 shrink-0">
+                                    <a href="/pricing" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-xs font-bold hover:bg-primary/90 transition-colors">
+                                        {{ ar: "الترقية إلى الأساسي — 49 د.م", fr: "Passer à Asasi — 49 MAD", en: "Upgrade — 49 MAD/mo" }[language] ?? "Upgrade — 49 MAD/mo"}
+                                    </a>
+                                    <button onClick={() => setImageUploadLimitError(null)} className="text-background/40 hover:text-background/70 text-sm px-1 transition-colors" aria-label="Dismiss">✕</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Input Area when not in welcome mode */}
                     {!showWelcome && !conversationLimitReached && (
                         <ChatInput
@@ -1195,6 +1232,7 @@ export default function ChatWithIdPage() {
                             onRemoveFile={(idx) => setAttachedFiles(prev => prev.filter((_, i) => i !== idx))}
                             isLoading={isGenerating}
                             placeholder="Message 9anon AI..."
+                            canUpload={true}
                         />
                     )}
                 </main>
