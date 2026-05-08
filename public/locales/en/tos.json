@@ -42,12 +42,12 @@
         },
         "billing": {
             "title": "7. Billing & Payments",
-            "content": "All payments on this platform are processed by Paddle.com Market Limited (\\\"Paddle\\\"), acting as our Merchant of Record for all transactions. By completing a purchase you enter a direct agreement with Paddle for payment processing. Your bank or card statement will show a charge from 'PADDLE.NET' or 'Paddle.com'. Paddle handles VAT, sales tax, and currency conversion on our behalf.",
+            "content": "All payments on this platform are processed by Polar (polar.sh), acting as our Merchant of Record for all transactions. By completing a purchase you enter a direct agreement with Polar for payment processing. Your bank or card statement will show a charge from 'Polar'. Polar handles VAT, sales tax, and currency conversion on our behalf.",
             "items": [
-                "Accepted payment methods: Visa, Mastercard, Maestro, American Express, PayPal",
-                "Prices are displayed in USD; Paddle converts to your local currency at checkout",
+                "Accepted payment methods: Visa, Mastercard, American Express",
+                "Prices are displayed in USD; Polar converts to your local currency at checkout",
                 "Applicable VAT or sales tax may be added at checkout depending on your country",
-                "Paddle issues payment receipts and handles billing disputes on our behalf"
+                "Polar issues payment receipts and handles billing disputes on our behalf"
             ]
         },
         "subscription": {

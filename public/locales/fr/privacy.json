@@ -40,13 +40,13 @@
             "items": [
                 "Avec votre consentement explicite",
                 "Pour se conformer aux exigences légales",
-                "Avec Paddle.com Market Limited (notre marchand de référence) — données de facturation (e-mail, détails de transaction) nécessaires au traitement de votre abonnement",
+                "Avec Polar (polar.sh), notre marchand de référence — données de facturation (e-mail, détails de transaction) nécessaires au traitement de votre abonnement",
                 "Avec des prestataires d'infrastructure de confiance (hébergement, analytique) liés par des accords de confidentialité"
             ]
         },
         "payment": {
             "title": "5. Données de Paiement",
-            "content": "Nous ne stockons pas vos coordonnées bancaires. Toutes les informations de paiement sont traitées directement par Paddle.com Market Limited, notre marchand de référence. Les pratiques de confidentialité de Paddle régissent la collecte et l'utilisation de vos données de paiement — consultez paddle.com/legal/privacy. Nous recevons uniquement une confirmation de paiement réussi et un identifiant de transaction."
+            "content": "Nous ne stockons pas vos coordonnées bancaires. Toutes les informations de paiement sont traitées directement par Polar (polar.sh), notre marchand de référence. Les pratiques de confidentialité de Polar régissent la collecte et l'utilisation de vos données de paiement — consultez polar.sh/legal/privacy. Nous recevons uniquement une confirmation de paiement réussi et un identifiant de transaction."
         },
         "cookies": {
             "title": "5. Cookies",
