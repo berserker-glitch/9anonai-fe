@@ -53,8 +53,6 @@ const copy: Record<string, Record<string, string>> = {
     f_chat_unl:   { ar: "رسائل غير محدودة",             fr: "Messages illimités",            en: "Unlimited messages"           },
     f_history_free:{ ar: "آخر 10 محادثات",             fr: "10 dernières conversations",    en: "Last 10 conversations"        },
     f_history_unl: { ar: "سجل غير محدود",              fr: "Historique illimité",           en: "Unlimited history"            },
-    f_contract_3:  { ar: "3 عقود / شهر",               fr: "3 contrats / mois",             en: "3 contracts / month"          },
-    f_contract_unl:{ ar: "عقود غير محدودة",            fr: "Contrats illimités",            en: "Unlimited contracts"          },
     f_pdf:         { ar: "تصدير PDF",                    fr: "Export PDF",                   en: "PDF export"                   },
     f_img_free:    { ar: "1 صورة / يوم",               fr: "1 image / jour",               en: "1 image / day"                },
     f_files:       { ar: "صور غير محدودة",             fr: "Images illimitées",             en: "Unlimited images"             },
@@ -104,12 +102,12 @@ const TIERS: Tier[] = [
     {
         nameKey: "basic_name", priceKey: "basic_price", descKey: "basic_desc",
         showPerMo: true, ctaKey: "cta_basic", ctaHref: "", checkoutPlan: "basic" as const, highlight: true,
-        features: ["f_chat_unl", "f_history_unl", "f_contract_3", "f_pdf", "f_files", "f_support"],
+        features: ["f_chat_unl", "f_history_unl", "f_pdf", "f_files", "f_support"],
     },
     {
         nameKey: "ent_name", priceKey: "ent_price", descKey: "ent_desc",
         showPerMo: false, ctaKey: "cta_ent", ctaHref: "mailto:contact@9anonai.com", highlight: false,
-        features: ["f_chat_unl", "f_history_unl", "f_contract_unl", "f_files", "f_api", "f_sla"],
+        features: ["f_chat_unl", "f_history_unl", "f_files", "f_api", "f_sla"],
     },
 ];
 

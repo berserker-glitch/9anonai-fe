@@ -59,7 +59,7 @@ const S: Record<string, Record<string, string>> = {
     sub_cancelled:        { fr: "Annulé — accès jusqu'au", ar: "ملغى — الوصول حتى",  en: "Cancelled — access until" },
     sub_upgrade:          { fr: "Voir les plans",        ar: "عرض الخطط",             en: "See plans" },
     sub_free_limit:       { fr: "5 messages / conversation",  ar: "5 رسائل / محادثة",   en: "5 messages per conversation" },
-    sub_basic_limit:      { fr: "Messages illimités + 3 contrats/mois", ar: "رسائل غير محدودة + 3 عقود/شهر", en: "Unlimited messages + 3 contracts/mo" },
+    sub_basic_limit:      { fr: "Messages illimités + export PDF", ar: "رسائل غير محدودة + تصدير PDF", en: "Unlimited messages + PDF export" },
     sub_pro_limit:        { fr: "Tout illimité + téléversement de fichiers", ar: "كل شيء غير محدود + رفع ملفات", en: "Everything unlimited + file uploads" },
 
     // General tab

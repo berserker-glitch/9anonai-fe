@@ -114,10 +114,8 @@
         "title": "Everything You Need,",
         "titleHighlight": "One Platform",
         "tabChat": "AI Legal Chat",
-        "tabContract": "Contract Builder",
         "tabCalculator": "Legal Calculators",
         "chatDesc": "Ask any legal question in Arabic, French, English, or Darija. Get instant answers backed by real Moroccan legal sources.",
-        "contractDesc": "Generate legally-sound contracts tailored to Moroccan law. Employment, rental, sales — ready to sign in minutes.",
         "calculatorDesc": "Compute inheritance shares, income tax, and rent increases using official Moroccan formulas. Precise to the dirham."
     },
     "legalTopics": {

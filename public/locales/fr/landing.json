@@ -114,10 +114,8 @@
         "title": "Tout Ce Dont Vous Avez Besoin,",
         "titleHighlight": "Une Seule Plateforme",
         "tabChat": "Chat Juridique IA",
-        "tabContract": "Générateur de Contrats",
         "tabCalculator": "Calculateurs Juridiques",
         "chatDesc": "Posez n'importe quelle question juridique en arabe, français, anglais ou darija. Obtenez des réponses instantanées appuyées par des sources juridiques marocaines officielles.",
-        "contractDesc": "Générez des contrats conformes au droit marocain. Emploi, location, vente — prêts à signer en quelques minutes.",
         "calculatorDesc": "Calculez les parts d'héritage, l'impôt sur le revenu et les augmentations de loyer selon les formules officielles marocaines. Précis au dirham."
     },
     "legalTopics": {

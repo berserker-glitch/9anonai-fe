@@ -49,7 +49,6 @@ const T: Record<string, Record<string, string>> = {
     // Feature rows
     f_msgs:       { ar: "رسائل",             fr: "Messages",            en: "Messages"                 },
     f_history:    { ar: "سجل المحادثات",     fr: "Historique",          en: "Chat history"             },
-    f_contracts:  { ar: "منشئ العقود",       fr: "Générateur de contrats", en: "Contract Builder"     },
     f_pdf:        { ar: "تصدير PDF",         fr: "Export PDF",          en: "PDF export"               },
     f_files:      { ar: "رفع الصور",          fr: "Import d'images",     en: "Image uploads"            },
     f_support:    { ar: "الدعم",             fr: "Support",             en: "Support"                  },
@@ -61,9 +60,6 @@ const T: Record<string, Record<string, string>> = {
     v_msgs_paid:  { ar: "غير محدود",         fr: "Illimité",            en: "Unlimited"                },
     v_hist_free:  { ar: "آخر 10",            fr: "10 dernières",        en: "Last 10"                  },
     v_hist_paid:  { ar: "غير محدود",         fr: "Illimité",            en: "Unlimited"                },
-    v_contr_free: { ar: "—",                 fr: "—",                   en: "—"                        },
-    v_contr_basic:{ ar: "3 / شهر",           fr: "3 / mois",            en: "3 / month"                },
-    v_contr_pro:  { ar: "غير محدود",         fr: "Illimité",            en: "Unlimited"                },
     v_email:      { ar: "بريد إلكتروني",     fr: "E-mail",              en: "Email"                    },
     v_priority:   { ar: "أولوية",            fr: "Prioritaire",         en: "Priority"                 },
     v_dedicated:  { ar: "مخصص + SLA",        fr: "Dédié + SLA",         en: "Dedicated + SLA"          },
@@ -118,14 +114,6 @@ const FAQ_ITEMS = [
             ar: "نعم. يمكنك بدء محادثات جديدة بشكل غير محدود. الحد الوحيد هو 5 رسائل داخل كل محادثة. بعد ذلك، افتح محادثة جديدة مجاناً.",
             fr: "Oui. Vous pouvez commencer autant de nouvelles conversations que vous le souhaitez. La seule limite est de 5 messages par conversation — ouvrez-en une nouvelle ensuite.",
             en: "Yes. Unlimited new conversations. The only cap is 5 messages per conversation — after that, just open a new one for free.",
-        },
-    },
-    {
-        q: { ar: "ما هو منشئ العقود؟", fr: "Qu'est-ce que le Générateur de contrats ?", en: "What is the Contract Builder?" },
-        a: {
-            ar: "أداة مدعومة بالذكاء الاصطناعي تُنشئ عقوداً قانونية احترافية (إيجار، عمل، سرية، خدمات...) جاهزة للتنزيل بصيغة PDF، بأقل تكلفة من محامٍ بكثير.",
-            fr: "Un outil IA qui génère des contrats juridiques professionnels (bail, travail, NDA, prestation de services…) exportables en PDF — à une fraction du prix d'un avocat.",
-            en: "An AI tool that generates professional legal contracts (rental, employment, NDA, services…) as downloadable PDFs — at a fraction of lawyer fees.",
         },
     },
     {
@@ -528,7 +516,7 @@ export default function PricingPage() {
                                     {[
                                         {ar:"ساعات العمل فقط", fr:"Heures de bureau uniquement", en:"Business hours only"},
                                         {ar:"انتظار أسابيع للموعد", fr:"Semaines d'attente", en:"Weeks of waiting"},
-                                        {ar:"تكاليف مرتفعة للعقود", fr:"Contrats à prix élevé", en:"High cost per contract"},
+                                        {ar:"تكاليف باهظة", fr:"Tarifs élevés", en:"Expensive fees"},
                                     ].map((item, i) => (
                                         <li key={i} className="flex items-center gap-2">
                                             <X className="w-3.5 h-3.5 text-destructive/60 shrink-0" />
@@ -549,7 +537,7 @@ export default function PricingPage() {
                                     {[
                                         {ar:"متاح 24/7 بدون انتظار", fr:"Disponible 24/7 sans attente", en:"24/7 with no waiting"},
                                         {ar:"محادثات غير محدودة", fr:"Conversations illimitées", en:"Unlimited conversations"},
-                                        {ar:"منشئ عقود مدمج", fr:"Générateur de contrats inclus", en:"Contract Builder included"},
+                                        {ar:"رسائل غير محدودة + رفع الصور", fr:"Messages illimités + import d'images", en:"Unlimited messages + image uploads"},
                                     ].map((item, i) => (
                                         <li key={i} className="flex items-center gap-2">
                                             <Check className="w-3.5 h-3.5 text-primary shrink-0" />
@@ -669,14 +657,14 @@ function getHighlights(nameKey: string, lang: string): string[] {
             en: ["5 messages / conversation", "Unlimited conversations", "Email support"],
         },
         basic_name: {
-            ar: ["رسائل غير محدودة", "3 عقود / شهر", "تصدير PDF"],
-            fr: ["Messages illimités", "3 contrats / mois", "Export PDF"],
-            en: ["Unlimited messages", "3 contracts / month", "PDF export"],
+            ar: ["رسائل غير محدودة", "صور غير محدودة", "تصدير PDF"],
+            fr: ["Messages illimités", "Images illimitées", "Export PDF"],
+            en: ["Unlimited messages", "Unlimited images", "PDF export"],
         },
         pro_name: {
-            ar: ["رسائل غير محدودة", "عقود غير محدودة", "رفع الملفات وتحليلها", "دعم ذو أولوية"],
-            fr: ["Messages illimités", "Contrats illimités", "Dépôt & analyse de docs", "Support prioritaire"],
-            en: ["Unlimited messages", "Unlimited contracts", "Document upload & analysis", "Priority support"],
+            ar: ["رسائل غير محدودة", "صور غير محدودة", "رفع المستندات", "دعم ذو أولوية"],
+            fr: ["Messages illimités", "Images illimitées", "Dépôt de documents", "Support prioritaire"],
+            en: ["Unlimited messages", "Unlimited images", "Document uploads", "Priority support"],
         },
         ent_name: {
             ar: ["كل ميزات الأساسي", "وصول API", "مقاعد متعددة للفريق", "دعم مخصص + SLA"],

@@ -1,8 +1,8 @@
 "use client";
 
 /**
- * UpgradeModal — shown when a free user tries to access a premium feature
- * (e.g. Contract Builder). Explains the value and links to pricing.
+ * UpgradeModal — shown when a free user tries to access a premium feature.
+ * Explains the value and links to pricing.
  */
 
 import { Modal } from "@/components/utility/modal";
@@ -12,20 +12,20 @@ interface UpgradeModalProps {
     onClose: () => void;
     language: string;
     /** Which feature triggered the modal — determines copy */
-    feature?: "contract_builder" | "file_upload" | "generic";
+    feature?: "file_upload" | "generic";
 }
 
 const T: Record<string, Record<string, string>> = {
-    // Contract Builder copy
-    cb_heading: {
-        ar: "منشئ العقود — ميزة مدفوعة",
-        fr: "Générateur de contrats — Fonctionnalité payante",
-        en: "Contract Builder — Premium Feature",
+    // File upload copy
+    fu_heading: {
+        ar: "رفع الصور — ميزة مدفوعة",
+        fr: "Import d'images — Fonctionnalité payante",
+        en: "Image Uploads — Premium Feature",
     },
-    cb_body: {
-        ar: "أنشئ عقوداً قانونية احترافية بالذكاء الاصطناعي: عقود إيجار، عمل، سرية، خدمات، وأكثر — جاهزة للتنزيل بصيغة PDF.\n\nبدلاً من دفع 500–2000 درهم لمحامٍ، اشترك بـ 49 درهم/شهر.",
-        fr: "Générez des contrats juridiques professionnels avec l'IA : bail, travail, NDA, prestation de services et plus — exportables en PDF.\n\nAu lieu de payer 500–2 000 MAD à un avocat, abonnez-vous pour 49 MAD/mois.",
-        en: "Generate professional legal contracts with AI: rental, employment, NDA, service agreements and more — ready to download as PDF.\n\nInstead of paying 500–2,000 MAD to a lawyer, subscribe for 49 MAD/month.",
+    fu_body: {
+        ar: "ارفع صور المستندات القانونية وحللها مباشرة في المحادثة.\n\nالخطة المجانية تتيح صورة واحدة يومياً — اشترك بـ 49 درهم/شهر للحصول على صور غير محدودة.",
+        fr: "Importez vos documents juridiques sous forme d'images et analysez-les directement dans la conversation.\n\nLe plan gratuit permet 1 image par jour — abonnez-vous pour 49 MAD/mois pour des images illimitées.",
+        en: "Upload images of legal documents and analyze them directly in the conversation.\n\nThe free plan allows 1 image per day — subscribe for 49 MAD/month for unlimited images.",
     },
     // Generic copy
     generic_heading: {
@@ -34,9 +34,9 @@ const T: Record<string, Record<string, string>> = {
         en: "Premium Feature",
     },
     generic_body: {
-        ar: "قم بالترقية للوصول إلى هذه الميزة وغيرها — رسائل غير محدودة، منشئ العقود، وأكثر.",
+        ar: "قم بالترقية للوصول إلى هذه الميزة وغيرها — رسائل غير محدودة، صور غير محدودة، وأكثر.",
         fr: "Passez à un abonnement payant pour accéder à cette fonctionnalité et bien d'autres.",
-        en: "Upgrade to access this feature and more — unlimited messages, contract builder, and more.",
+        en: "Upgrade to access this feature and more — unlimited messages, unlimited images, and more.",
     },
     // CTA
     upgrade_basic: {
@@ -66,9 +66,9 @@ function t(key: string, lang: string): string {
 }
 
 export function UpgradeModal({ isOpen, onClose, language, feature = "generic" }: UpgradeModalProps) {
-    const isCB = feature === "contract_builder";
-    const heading = isCB ? t("cb_heading", language) : t("generic_heading", language);
-    const body = isCB ? t("cb_body", language) : t("generic_body", language);
+    const isFileUpload = feature === "file_upload";
+    const heading = isFileUpload ? t("fu_heading", language) : t("generic_heading", language);
+    const body = isFileUpload ? t("fu_body", language) : t("generic_body", language);
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} size="sm">
