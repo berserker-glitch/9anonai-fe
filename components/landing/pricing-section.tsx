@@ -55,7 +55,9 @@ const copy: Record<string, Record<string, string>> = {
     f_history_unl: { ar: "سجل غير محدود",              fr: "Historique illimité",           en: "Unlimited history"            },
     f_contract_3:  { ar: "3 عقود / شهر",               fr: "3 contrats / mois",             en: "3 contracts / month"          },
     f_contract_unl:{ ar: "عقود غير محدودة",            fr: "Contrats illimités",            en: "Unlimited contracts"          },
-    f_files:       { ar: "رفع وتحليل المستندات",        fr: "Dépôt & analyse de documents", en: "Document upload & analysis"   },
+    f_pdf:         { ar: "تصدير PDF",                    fr: "Export PDF",                   en: "PDF export"                   },
+    f_img_free:    { ar: "1 صورة / يوم",               fr: "1 image / jour",               en: "1 image / day"                },
+    f_files:       { ar: "صور غير محدودة",             fr: "Images illimitées",             en: "Unlimited images"             },
     f_support:     { ar: "دعم بالبريد الإلكتروني",      fr: "Support par e-mail",           en: "Email support"                },
     f_priority:    { ar: "دعم ذو أولوية",               fr: "Support prioritaire",          en: "Priority support"             },
     f_api:         { ar: "API + مقاعد الفريق",          fr: "API + sièges équipe",          en: "API + team seats"             },
@@ -97,17 +99,17 @@ const TIERS: Tier[] = [
     {
         nameKey: "free_name", priceKey: "free_price", descKey: "free_desc",
         showPerMo: false, ctaKey: "cta_free", ctaHref: "/chat", highlight: false,
-        features: ["f_chat_free", "f_history_free", "f_support"],
+        features: ["f_chat_free", "f_history_free", "f_img_free", "f_support"],
     },
     {
         nameKey: "basic_name", priceKey: "basic_price", descKey: "basic_desc",
         showPerMo: true, ctaKey: "cta_basic", ctaHref: "", checkoutPlan: "basic" as const, highlight: true,
-        features: ["f_chat_unl", "f_history_unl", "f_contract_3", "f_support"],
+        features: ["f_chat_unl", "f_history_unl", "f_contract_3", "f_pdf", "f_files", "f_support"],
     },
     {
         nameKey: "ent_name", priceKey: "ent_price", descKey: "ent_desc",
         showPerMo: false, ctaKey: "cta_ent", ctaHref: "mailto:contact@9anonai.com", highlight: false,
-        features: ["f_chat_unl", "f_history_unl", "f_contract_unl", "f_api", "f_sla"],
+        features: ["f_chat_unl", "f_history_unl", "f_contract_unl", "f_files", "f_api", "f_sla"],
     },
 ];
 
