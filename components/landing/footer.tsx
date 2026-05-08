@@ -25,15 +25,6 @@ const legalSlugs2 = [
   { slug: "commercial-law", key: "footer.businessLegal" },
 ];
 
-const productLinks = [
-  { href: "#features", key: "footer.features" },
-  { href: "/about", key: "footer.howItWorks" },
-  { href: "/chat", key: "footer.startChat" },
-  { href: "/contract-builder", key: "nav.tools" },
-  { href: "/blog", key: "footer.blog" },
-  { href: "/vs-9anoun", key: "footer.compare" },
-];
-
 const socialLinks = [
   {
     href: "https://web.facebook.com/profile.php?id=61587241558455",
@@ -84,7 +75,6 @@ export function Footer() {
     { href: "#features", key: "footer.features" },
     { href: `/${lang}/about`, key: "footer.howItWorks" },
     { href: "/chat", key: "footer.startChat" },
-    { href: "/contract-builder", key: "nav.tools" },
     { href: `/${lang}/blog`, key: "footer.blog" },
     { href: "/vs-9anoun", key: "footer.compare" },
   ];

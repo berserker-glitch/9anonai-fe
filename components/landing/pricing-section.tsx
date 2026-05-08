@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useLanguage } from "@/lib/language-context";
-import { usePaddleCheckout } from "@/lib/use-paddle-checkout";
+import { useCheckout } from "@/lib/use-checkout";
 import { Check, Zap, ArrowRight } from "lucide-react";
 
 // ─── Translations ────────────────────────────────────────────────────────────
@@ -23,8 +23,8 @@ const copy: Record<string, Record<string, string>> = {
     ent_name:   { ar: "مؤسسة",         fr: "Mouassasa",         en: "Enterprise"       },
     // prices
     free_price: { ar: "مجاناً",        fr: "Gratuit",           en: "Free"             },
-    basic_price:{ ar: "$4.99",         fr: "$4.99",             en: "$4.99"            },
-    pro_price:  { ar: "$14.99",        fr: "$14.99",            en: "$14.99"           },
+    basic_price:{ ar: "49 د.م",        fr: "49 MAD",            en: "49 MAD"           },
+    pro_price:  { ar: "149 د.م",       fr: "149 MAD",           en: "149 MAD"          },
     ent_price:  { ar: "تواصل معنا",    fr: "Sur devis",         en: "Contact us"       },
     per_mo:     { ar: "/ شهر",         fr: "/ mois",            en: "/ mo"             },
     // descriptions
@@ -49,7 +49,7 @@ const copy: Record<string, Record<string, string>> = {
         en: "For teams and organizations",
     },
     // features (included only — unlisted = not available)
-    f_chat_free:  { ar: "15 رسالة / محادثة",            fr: "15 messages / conversation",   en: "15 messages / conversation"   },
+    f_chat_free:  { ar: "5 رسائل / محادثة",              fr: "5 messages / conversation",    en: "5 messages / conversation"    },
     f_chat_unl:   { ar: "رسائل غير محدودة",             fr: "Messages illimités",            en: "Unlimited messages"           },
     f_history_free:{ ar: "آخر 10 محادثات",             fr: "10 dernières conversations",    en: "Last 10 conversations"        },
     f_history_unl: { ar: "سجل غير محدود",              fr: "Historique illimité",           en: "Unlimited history"            },
@@ -105,11 +105,6 @@ const TIERS: Tier[] = [
         features: ["f_chat_unl", "f_history_unl", "f_contract_3", "f_support"],
     },
     {
-        nameKey: "pro_name", priceKey: "pro_price", descKey: "pro_desc",
-        showPerMo: true, ctaKey: "cta_pro", ctaHref: "", checkoutPlan: "pro" as const, highlight: false,
-        features: ["f_chat_unl", "f_history_unl", "f_contract_unl", "f_files", "f_priority"],
-    },
-    {
         nameKey: "ent_name", priceKey: "ent_price", descKey: "ent_desc",
         showPerMo: false, ctaKey: "cta_ent", ctaHref: "mailto:contact@9anonai.com", highlight: false,
         features: ["f_chat_unl", "f_history_unl", "f_contract_unl", "f_api", "f_sla"],
@@ -120,7 +115,7 @@ const TIERS: Tier[] = [
 
 export function PricingSection() {
     const { language: lang, dir } = useLanguage();
-    const { openCheckout, loading: checkoutLoading } = usePaddleCheckout();
+    const { openCheckout, loading: checkoutLoading } = useCheckout();
 
     return (
         <section className="relative py-24 lg:py-36 overflow-hidden" dir={dir}>
@@ -152,7 +147,7 @@ export function PricingSection() {
                 </div>
 
                 {/* ── Cards grid ── */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
                     {TIERS.map((tier, i) => (
                         <div
                             key={tier.nameKey}

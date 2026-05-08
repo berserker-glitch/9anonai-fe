@@ -52,12 +52,13 @@ const S: Record<string, Record<string, string>> = {
     sub_title:            { fr: "Abonnement",           ar: "الاشتراك",              en: "Subscription" },
     sub_current_plan:     { fr: "Plan actuel",           ar: "الخطة الحالية",         en: "Current plan" },
     sub_free_label:       { fr: "Majjani — Gratuit",     ar: "مجاني — Majjani",       en: "Majjani — Free" },
-    sub_basic_label:      { fr: "Asasi — $4.99/mois",   ar: "أساسي — $4.99/شهر",    en: "Asasi — $4.99/mo" },
-    sub_pro_label:        { fr: "Mihani — $14.99/mois", ar: "مهني — $14.99/شهر",    en: "Mihani — $14.99/mo" },
+    sub_basic_label:      { fr: "Asasi — 49 MAD/mois",  ar: "أساسي — 49 د.م/شهر",   en: "Asasi — 49 MAD/mo" },
+    sub_pro_label:        { fr: "Mihani — 149 MAD/mois",ar: "مهني — 149 د.م/شهر",   en: "Mihani — 149 MAD/mo" },
+    sub_ent_label:        { fr: "Mouassasa — Sur devis",ar: "مؤسسة — تواصل معنا",    en: "Enterprise — Custom" },
     sub_renews:           { fr: "Renouvellement le",     ar: "يتجدد في",              en: "Renews on" },
     sub_cancelled:        { fr: "Annulé — accès jusqu'au", ar: "ملغى — الوصول حتى",  en: "Cancelled — access until" },
     sub_upgrade:          { fr: "Voir les plans",        ar: "عرض الخطط",             en: "See plans" },
-    sub_free_limit:       { fr: "15 messages / conversation", ar: "15 رسالة / محادثة",  en: "15 messages per conversation" },
+    sub_free_limit:       { fr: "5 messages / conversation",  ar: "5 رسائل / محادثة",   en: "5 messages per conversation" },
     sub_basic_limit:      { fr: "Messages illimités + 3 contrats/mois", ar: "رسائل غير محدودة + 3 عقود/شهر", en: "Unlimited messages + 3 contracts/mo" },
     sub_pro_limit:        { fr: "Tout illimité + téléversement de fichiers", ar: "كل شيء غير محدود + رفع ملفات", en: "Everything unlimited + file uploads" },
 
@@ -666,7 +667,8 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: Set
                     {activeTab === "subscription" && (() => {
                         const plan = authUser?.plan ?? 'free';
                         const sub = authUser?.subscription;
-                        const planLabel = plan === 'pro' ? s("sub_pro_label", language)
+                        const planLabel = plan === 'enterprise' ? s("sub_ent_label", language)
+                            : plan === 'pro' ? s("sub_pro_label", language)
                             : plan === 'basic' ? s("sub_basic_label", language)
                             : s("sub_free_label", language);
                         const planDetail = plan === 'pro' ? s("sub_pro_limit", language)
