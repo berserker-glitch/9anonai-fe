@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  /** Increase per-page static generation timeout from 60s (default) to 5 min.
+   *  The Coolify Docker build environment has limited CPU/memory, which causes
+   *  large blog posts and SEO pages to exceed the default 60-second limit. */
+  staticPageGenerationTimeout: 300,
+
   /* Block access to test landing pages 1-11 */
   async redirects() {
     return [
