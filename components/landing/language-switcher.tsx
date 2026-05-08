@@ -73,6 +73,12 @@ export function LanguageSwitcher() {
                                         // Homepage: rewritten internally by middleware — just update cookie/state.
                                         // The server will pick up the new locale on next navigation.
                                     } else {
+                                        // Pages that manage their own i18n via useLanguage() — no navigation needed.
+                                        const selfLocalizedPages = ['/refund', '/pricing', '/tos', '/privacy'];
+                                        if (selfLocalizedPages.includes(pathname)) {
+                                            // Language state already updated above — page re-renders automatically.
+                                            return;
+                                        }
                                         // Slug-only URL (e.g. /family-law, /divorce-law, /legal-ai):
                                         // The middleware rewrites these internally so the browser URL has no
                                         // lang prefix. Navigate explicitly to the lang-prefixed version so

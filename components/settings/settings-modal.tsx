@@ -3,6 +3,7 @@ import { Modal } from "../utility/modal";
 import { useLanguage, languages, Language } from "@/lib/language-context";
 import { useAuth } from "@/lib/auth-context";
 import { useTheme } from "../providers/theme-provider";
+import Link from "next/link";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
 const REFERRAL_MILESTONE = 5;
@@ -14,7 +15,7 @@ interface SettingsModalProps {
     onLogout: () => void;
 }
 
-type SettingsTab = "general" | "notifications" | "personalization" | "account" | "data" | "security" | "referral";
+type SettingsTab = "general" | "notifications" | "personalization" | "account" | "data" | "security" | "subscription" | "referral";
 
 // ─── Trilingual UI strings ────────────────────────────────────────────────────
 
@@ -26,6 +27,7 @@ const S: Record<string, Record<string, string>> = {
     tab_data:             { fr: "Données",          ar: "البيانات",           en: "Data controls" },
     tab_security:         { fr: "Sécurité",         ar: "الأمان",             en: "Security" },
     tab_account:          { fr: "Compte",           ar: "الحساب",             en: "Account" },
+    tab_subscription:     { fr: "Abonnement",       ar: "الاشتراك",           en: "Subscription" },
     tab_referral:         { fr: "Parrainage",       ar: "الإحالة",            en: "Referral" },
 
     // Referral tab
@@ -45,6 +47,20 @@ const S: Record<string, Record<string, string>> = {
     ref_reward_value:     { fr: "1 mois gratuit",       ar: "شهر مجاني",             en: "1 free month" },
     ref_reward_desc:      { fr: "Dès que 5 personnes s'inscrivent via votre lien, vous obtenez automatiquement 1 mois gratuit au lancement des abonnements.", ar: "بمجرد تسجيل 5 أشخاص عبر رابطك، ستحصل تلقائياً على شهر مجاني عند إطلاق الاشتراكات.", en: "Once 5 people sign up using your link, you automatically get 1 free month when paid plans launch." },
     ref_loading:          { fr: "Chargement...",        ar: "جاري التحميل...",        en: "Loading..." },
+
+    // Subscription tab
+    sub_title:            { fr: "Abonnement",           ar: "الاشتراك",              en: "Subscription" },
+    sub_current_plan:     { fr: "Plan actuel",           ar: "الخطة الحالية",         en: "Current plan" },
+    sub_free_label:       { fr: "Majjani — Gratuit",     ar: "مجاني — Majjani",       en: "Majjani — Free" },
+    sub_basic_label:      { fr: "Asasi — 49 MAD/mois",  ar: "أساسي — 49 د.م/شهر",   en: "Asasi — 49 MAD/mo" },
+    sub_pro_label:        { fr: "Mihani — 149 MAD/mois",ar: "مهني — 149 د.م/شهر",   en: "Mihani — 149 MAD/mo" },
+    sub_ent_label:        { fr: "Mouassasa — Sur devis",ar: "مؤسسة — تواصل معنا",    en: "Enterprise — Custom" },
+    sub_renews:           { fr: "Renouvellement le",     ar: "يتجدد في",              en: "Renews on" },
+    sub_cancelled:        { fr: "Annulé — accès jusqu'au", ar: "ملغى — الوصول حتى",  en: "Cancelled — access until" },
+    sub_upgrade:          { fr: "Voir les plans",        ar: "عرض الخطط",             en: "See plans" },
+    sub_free_limit:       { fr: "5 messages / conversation",  ar: "5 رسائل / محادثة",   en: "5 messages per conversation" },
+    sub_basic_limit:      { fr: "Messages illimités + 3 contrats/mois", ar: "رسائل غير محدودة + 3 عقود/شهر", en: "Unlimited messages + 3 contracts/mo" },
+    sub_pro_limit:        { fr: "Tout illimité + téléversement de fichiers", ar: "كل شيء غير محدود + رفع ملفات", en: "Everything unlimited + file uploads" },
 
     // General tab
     general_title:        { fr: "Général",                      ar: "الإعدادات العامة",          en: "General" },
@@ -320,6 +336,15 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: Set
             icon: (
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+            ),
+        },
+        {
+            id: "subscription",
+            labelKey: "tab_subscription",
+            icon: (
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                 </svg>
             ),
         },
@@ -638,6 +663,49 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: Set
                             </div>
                         </div>
                     )}
+                    {/* ── Subscription ── */}
+                    {activeTab === "subscription" && (() => {
+                        const plan = authUser?.plan ?? 'free';
+                        const sub = authUser?.subscription;
+                        const planLabel = plan === 'enterprise' ? s("sub_ent_label", language)
+                            : plan === 'pro' ? s("sub_pro_label", language)
+                            : plan === 'basic' ? s("sub_basic_label", language)
+                            : s("sub_free_label", language);
+                        const planDetail = plan === 'pro' ? s("sub_pro_limit", language)
+                            : plan === 'basic' ? s("sub_basic_limit", language)
+                            : s("sub_free_limit", language);
+                        const periodEnd = sub?.currentPeriodEnd
+                            ? new Date(sub.currentPeriodEnd).toLocaleDateString()
+                            : null;
+
+                        return (
+                            <div className="space-y-6">
+                                <h2 className="text-lg font-semibold">{s("sub_title", language)}</h2>
+
+                                {/* Current plan card */}
+                                <div className="rounded-xl border border-border bg-muted/30 p-4 space-y-2">
+                                    <p className="text-xs text-muted-foreground uppercase tracking-wide">{s("sub_current_plan", language)}</p>
+                                    <p className="text-sm font-semibold">{planLabel}</p>
+                                    <p className="text-xs text-muted-foreground">{planDetail}</p>
+                                    {periodEnd && sub?.status === 'active' && !sub.cancelledAt && (
+                                        <p className="text-xs text-muted-foreground">{s("sub_renews", language)} {periodEnd}</p>
+                                    )}
+                                    {sub?.cancelledAt && periodEnd && (
+                                        <p className="text-xs text-amber-600">{s("sub_cancelled", language)} {periodEnd}</p>
+                                    )}
+                                </div>
+
+                                {/* CTA */}
+                                <Link
+                                    href="/pricing"
+                                    onClick={onClose}
+                                    className="block w-full px-4 py-2.5 text-sm font-medium text-center rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                                >
+                                    {s("sub_upgrade", language)}
+                                </Link>
+                            </div>
+                        );
+                    })()}
                     {/* ── Referral ── */}
                     {activeTab === "referral" && (() => {
                         const count = referralData?.referralCount ?? 0;

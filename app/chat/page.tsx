@@ -33,6 +33,7 @@ import { FilesModal } from "@/components/chat/files-modal";
 import { FeedbackModal } from "@/components/chat/feedback-modal";
 import { FilePreview } from "@/components/chat/file-preview";
 import { AnimatedThinkingSvg } from "@/components/interaction/animated-thinking-svg";
+import { PaywallBanner } from "@/components/billing/paywall-banner";
 
 // UI Components
 import { Avatar } from "@/components/ui/avatar";
@@ -245,6 +246,7 @@ export default function NewChatPage() {
     const [inputValue, setInputValue] = useState("");
     const [isTyping, setIsTyping] = useState(false);
     const [isGenerating, setIsGenerating] = useState(false);
+    const [conversationLimitReached, setConversationLimitReached] = useState(false);
     const [chatHistory, setChatHistory] = useState<ChatHistory[]>([]);
     const [activeChatId, setActiveChatId] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState("");
@@ -272,6 +274,7 @@ export default function NewChatPage() {
     // Contract Builder suggestion — shown inline below assistant responses when contract intent detected
     const [contractSuggestionMessageIds, setContractSuggestionMessageIds] = useState<Set<string>>(new Set());
     const [dismissedContractSuggestions, setDismissedContractSuggestions] = useState<Set<string>>(new Set());
+    const [imageUploadLimitError, setImageUploadLimitError] = useState<{ resetAt: string } | null>(null);
 
     const autoSentRef = useRef(false);
 
@@ -336,32 +339,15 @@ export default function NewChatPage() {
         }
     }, []);
 
-    // Scroll specific message to top
-    const scrollToMessage = useCallback((messageId: string) => {
-        setTimeout(() => {
-            const el = document.getElementById(`message-${messageId}`);
-            if (el) {
-                // Scroll the element into view at the top of the container
-                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }, 100);
-    }, []);
-
-    // Auto-scroll when a new user message is added
+    // Auto-scroll to bottom whenever new messages arrive or content updates
     useEffect(() => {
         if (messages.length > 0) {
-            const lastMessage = messages[messages.length - 1];
-            // If the last message is the user's message, or if it's the AI's "thinking" stub right after
-            if (lastMessage.role === "user") {
-                scrollToMessage(lastMessage.id);
-            } else if (lastMessage.role === "assistant" && lastMessage.isThinking && messages.length >= 2) {
-                const prevMessage = messages[messages.length - 2];
-                if (prevMessage.role === "user") {
-                    scrollToMessage(prevMessage.id);
-                }
-            }
+            const container = messageContainerRef.current;
+            if (!container) return;
+            // Instant snap for initial render, smooth for subsequent updates
+            container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
         }
-    }, [messages, scrollToMessage]);
+    }, [messages]);
 
     // Handle scroll
     const handleScroll = useCallback(() => {
@@ -385,6 +371,7 @@ export default function NewChatPage() {
         setShowWelcome(true);
         setInputValue("");
         setSessionAssistantCount(0);
+        setConversationLimitReached(false);
         window.history.pushState(null, '', '/chat');
     };
 
@@ -495,9 +482,6 @@ export default function NewChatPage() {
         const filesToProcess = [...attachedFiles];
         setAttachedFiles([]);
 
-        // Update scroll position early
-        setTimeout(() => scrollToMessage(currentMessageId), 50);
-
         // Create new chat if needed
         if (!currentChatId) {
             try {
@@ -583,6 +567,15 @@ export default function NewChatPage() {
                             size: f.size
                         }));
                     }
+                } else if (uploadRes.status === 429) {
+                    const errBody = await uploadRes.json().catch(() => ({}));
+                    if (errBody.error === 'daily_image_limit_reached') {
+                        setMessages(prev => prev.filter(m => m.id !== currentMessageId && m.id !== assistantId));
+                        setImageUploadLimitError({ resetAt: errBody.resetAt });
+                        setIsGenerating(false);
+                        setIsTyping(false);
+                        return;
+                    }
                 }
             } catch (err) {
                 console.error("Failed to upload files to server", err);
@@ -665,6 +658,13 @@ export default function NewChatPage() {
 
             if (!response.ok) {
                 const errData = await response.json().catch(() => ({}));
+                if (response.status === 402 && errData.error === 'conversation_limit_reached') {
+                    setConversationLimitReached(true);
+                    setMessages(prev => prev.filter(m => m.id !== currentMessageId && m.id !== assistantId));
+                    setIsTyping(false);
+                    setIsGenerating(false);
+                    return;
+                }
                 throw new Error(errData.error || `HTTP error! status: ${response.status}`);
             }
 
@@ -980,21 +980,13 @@ export default function NewChatPage() {
                             <Avatar fallback={user?.name?.[0] || user?.email?.[0] || "U"} size="md" isOnline />
                             <div className="flex-1 min-w-0">
                                 <p className="text-sm font-medium truncate">{user?.name || user?.email}</p>
-                                <p className="text-xs text-muted-foreground">{ui("free_plan", language)}</p>
+                                <p className="text-xs text-muted-foreground">
+                                    {user?.plan === 'enterprise' ? 'Enterprise'
+                                        : user?.plan === 'pro' ? ui("pro_plan", language)
+                                        : user?.plan === 'basic' ? ui("basic_plan", language)
+                                        : ui("free_plan", language)}
+                                </p>
                             </div>
-                            <button
-                                onClick={() => setReferralOpen(true)}
-                                className="flex items-center gap-1.5 shrink-0 px-2.5 py-1.5 rounded-lg text-xs font-medium text-primary/80 hover:text-primary hover:bg-primary/10 transition-colors"
-                                title="Invite friends"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                                    <circle cx="9" cy="7" r="4"/>
-                                    <line x1="19" y1="8" x2="19" y2="14"/>
-                                    <line x1="22" y1="11" x2="16" y2="11"/>
-                                </svg>
-                                Invite
-                            </button>
                             <button
                                 onClick={() => setSettingsOpen(true)}
                                 className="flex items-center gap-1.5 shrink-0 px-2.5 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors"
@@ -1037,7 +1029,28 @@ export default function NewChatPage() {
                                         attachedFiles={attachedFiles}
                                         onRemoveFile={(idx) => setAttachedFiles(prev => prev.filter((_, i) => i !== idx))}
                                         placeholder={ui("input_placeholder", language)}
+                                        canUpload={true}
                                     />
+                                    {imageUploadLimitError && (
+                                        <div className="mt-3 rounded-2xl bg-foreground px-5 py-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                                            <div className="flex items-center gap-2.5 min-w-0">
+                                                <span className="text-background/50 text-base shrink-0">📷</span>
+                                                <p className="text-sm font-medium text-background/90 leading-snug">
+                                                    {{
+                                                        ar: `حد الصور اليومي. يُجدَّد في ${new Date(imageUploadLimitError.resetAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`,
+                                                        fr: `Limite d'images atteinte — réinitialisation à ${new Date(imageUploadLimitError.resetAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`,
+                                                        en: `Daily image limit reached — resets at ${new Date(imageUploadLimitError.resetAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`,
+                                                    }[language] ?? `Daily image limit reached`}
+                                                </p>
+                                            </div>
+                                            <div className="flex items-center gap-2 shrink-0">
+                                                <a href="/pricing" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-xs font-bold hover:bg-primary/90 transition-colors">
+                                                    {{ ar: "الترقية إلى الأساسي — 49 د.م", fr: "Passer à Asasi — 49 MAD", en: "Upgrade — 49 MAD/mo" }[language] ?? "Upgrade — 49 MAD/mo"}
+                                                </a>
+                                                <button onClick={() => setImageUploadLimitError(null)} className="text-background/40 hover:text-background/70 text-sm px-1 transition-colors" aria-label="Dismiss">✕</button>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Language-aware suggestion chips — auto-send on click */}
@@ -1299,8 +1312,37 @@ export default function NewChatPage() {
                         );
                     })()}
 
+                    {/* Paywall banner — shown when free conversation cap is reached */}
+                    {!showWelcome && conversationLimitReached && (
+                        <PaywallBanner language={language} onNewConversation={handleNewChat} />
+                    )}
+
+                    {/* Daily image upload limit banner */}
+                    {imageUploadLimitError && (
+                        <div className="sticky bottom-0 z-10 px-3 sm:px-6 lg:px-8 pb-3">
+                            <div className="max-w-4xl mx-auto rounded-2xl bg-foreground px-5 py-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                                <div className="flex items-center gap-2.5 min-w-0">
+                                    <span className="text-background/50 text-base shrink-0">📷</span>
+                                    <p className="text-sm font-medium text-background/90 leading-snug">
+                                        {{
+                                            ar: `حد الصور اليومي. يُجدَّد في ${new Date(imageUploadLimitError.resetAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`,
+                                            fr: `Limite d'images atteinte — réinitialisation à ${new Date(imageUploadLimitError.resetAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`,
+                                            en: `Daily image limit reached — resets at ${new Date(imageUploadLimitError.resetAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`,
+                                        }[language] ?? `Daily image limit reached`}
+                                    </p>
+                                </div>
+                                <div className="flex items-center gap-2 shrink-0">
+                                    <a href="/pricing" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-xs font-bold hover:bg-primary/90 transition-colors">
+                                        {{ ar: "الترقية إلى الأساسي — 49 د.م", fr: "Passer à Asasi — 49 MAD", en: "Upgrade — 49 MAD/mo" }[language] ?? "Upgrade — 49 MAD/mo"}
+                                    </a>
+                                    <button onClick={() => setImageUploadLimitError(null)} className="text-background/40 hover:text-background/70 text-sm px-1 transition-colors" aria-label="Dismiss">✕</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Input Area when not in welcome mode */}
-                    {!showWelcome && (
+                    {!showWelcome && !conversationLimitReached && (
                         <ChatInput
                             value={inputValue}
                             onChange={setInputValue}
@@ -1310,6 +1352,7 @@ export default function NewChatPage() {
                             onRemoveFile={(idx) => setAttachedFiles(prev => prev.filter((_, i) => i !== idx))}
                             isLoading={isGenerating}
                             placeholder={ui("input_placeholder", language)}
+                            canUpload={true}
                         />
                     )}
                 </main>

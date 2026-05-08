@@ -25,15 +25,6 @@ const legalSlugs2 = [
   { slug: "commercial-law", key: "footer.businessLegal" },
 ];
 
-const productLinks = [
-  { href: "#features", key: "footer.features" },
-  { href: "/about", key: "footer.howItWorks" },
-  { href: "/chat", key: "footer.startChat" },
-  { href: "/contract-builder", key: "nav.tools" },
-  { href: "/blog", key: "footer.blog" },
-  { href: "/vs-9anoun", key: "footer.compare" },
-];
-
 const socialLinks = [
   {
     href: "https://web.facebook.com/profile.php?id=61587241558455",
@@ -84,7 +75,6 @@ export function Footer() {
     { href: "#features", key: "footer.features" },
     { href: `/${lang}/about`, key: "footer.howItWorks" },
     { href: "/chat", key: "footer.startChat" },
-    { href: "/contract-builder", key: "nav.tools" },
     { href: `/${lang}/blog`, key: "footer.blog" },
     { href: "/vs-9anoun", key: "footer.compare" },
   ];
@@ -178,6 +168,8 @@ export function Footer() {
               {t("footer.legal")}
             </h4>
             <nav className="flex flex-col gap-3">
+              <Link href="/pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">{t("footer.pricing")}</Link>
+              <Link href="/refund" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">{t("footer.refund")}</Link>
               <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">{t("footer.privacy")}</Link>
               <Link href="/tos" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">{t("footer.terms")}</Link>
               <Link href="mailto:9anonai@gmail.com" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">{t("footer.contact")}</Link>

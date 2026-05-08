@@ -114,6 +114,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: "monthly",
             priority: 0.5,
         },
+        {
+            url: `${baseUrl}/refund`,
+            lastModified: new Date(),
+            changeFrequency: "monthly",
+            priority: 0.5,
+        },
+        {
+            url: `${baseUrl}/pricing`,
+            lastModified: new Date(),
+            changeFrequency: "monthly",
+            priority: 0.7,
+        },
         // About page (trilingual) — high-value SEO page for brand trust and legal authority
         ...["ar", "fr", "en"].map((lang) => ({
             url: `${baseUrl}/${lang}/about`,

@@ -10,6 +10,7 @@ import { SocialProofMarquee } from "@/components/landing/social-proof-marquee";
 import { BentoFeatures } from "@/components/landing/bento-features";
 import { LegalTopicsGrid } from "@/components/landing/legal-topics-grid";
 import { TestimonialsSection } from "@/components/landing/testimonials-section";
+import { PricingSection } from "@/components/landing/pricing-section";
 import { BlogHighlights } from "@/components/landing/blog-highlights";
 import { FAQSection } from "@/components/landing/faq-section";
 import { Search, ArrowRight, CheckCircle2 } from "lucide-react";
@@ -210,6 +211,9 @@ export default function LandingPage() {
 
       {/* ─── TESTIMONIALS ─── */}
       <TestimonialsSection />
+
+      {/* ─── PRICING ─── */}
+      <PricingSection />
 
       {/* ─── BLOG HIGHLIGHTS ─── */}
       <BlogHighlights lang={lang} />

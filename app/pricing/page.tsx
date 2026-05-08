@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useLanguage } from "@/lib/language-context";
 import { useAuth } from "@/lib/auth-context";
-import { usePaddleCheckout } from "@/lib/use-paddle-checkout";
+import { useCheckout } from "@/lib/use-checkout";
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
 import { Check, X, ArrowRight, Shield, Zap, Scale, Building2, Users, FileText, MessageSquare, Upload, Headphones } from "lucide-react";
@@ -17,9 +17,9 @@ const T: Record<string, Record<string, string>> = {
     hero_title:   { ar: "بسيط. شفاف.",       fr: "Simple. Honnête.",    en: "Simple. Honest."          },
     hero_hl:      { ar: "بدون مفاجآت.",      fr: "Sans surprises.",     en: "No surprises."            },
     hero_sub:     {
-        ar: "ابدأ مجاناً واترقِّ فقط حين تحتاج — بدون عقود، بدون رسوم خفية. استشارة محامٍ واحدة تكلف أكثر من سنة كاملة معنا.",
-        fr: "Commencez gratuitement, passez à la vitesse supérieure quand vous en avez besoin — sans contrat, sans frais cachés. Une consultation d'avocat coûte plus qu'une année entière chez nous.",
-        en: "Start free, upgrade only when you need to — no contracts, no hidden fees. One lawyer consultation costs more than a full year with us.",
+        ar: "ابدأ مجاناً واترقِّ فقط حين تحتاج — بدون عقود، بدون رسوم خفية. استشارة محامٍ واحدة تكلف أكثر من سنة كاملة معنا بـ 49 درهم.",
+        fr: "Commencez gratuitement, passez à la vitesse supérieure quand vous en avez besoin — sans contrat, sans frais cachés. À seulement 49 MAD/mois.",
+        en: "Start free, upgrade only when you need to — no contracts, no hidden fees. At just 49 MAD/month.",
     },
     // Tier names
     free_name:    { ar: "مجاني",             fr: "Gratuit",             en: "Free"                     },
@@ -28,8 +28,8 @@ const T: Record<string, Record<string, string>> = {
     ent_name:     { ar: "مؤسسة",             fr: "Mouassasa",           en: "Enterprise"               },
     // Prices
     free_price:   { ar: "مجاناً",            fr: "Gratuit",             en: "Free"                     },
-    basic_price:  { ar: "$4.99",             fr: "$4.99",               en: "$4.99"                    },
-    pro_price:    { ar: "$14.99",            fr: "$14.99",              en: "$14.99"                   },
+    basic_price:  { ar: "49 د.م",            fr: "49 MAD",              en: "49 MAD"                   },
+    pro_price:    { ar: "149 د.م",           fr: "149 MAD",             en: "149 MAD"                  },
     ent_price:    { ar: "تواصل معنا",        fr: "Sur devis",           en: "Contact us"               },
     per_mo:       { ar: "/ شهر",             fr: "/ mois",              en: "/ mo"                     },
     // Descriptions
@@ -51,13 +51,13 @@ const T: Record<string, Record<string, string>> = {
     f_history:    { ar: "سجل المحادثات",     fr: "Historique",          en: "Chat history"             },
     f_contracts:  { ar: "منشئ العقود",       fr: "Générateur de contrats", en: "Contract Builder"     },
     f_pdf:        { ar: "تصدير PDF",         fr: "Export PDF",          en: "PDF export"               },
-    f_files:      { ar: "رفع الملفات",       fr: "Import de fichiers",  en: "File uploads"             },
+    f_files:      { ar: "رفع الصور",          fr: "Import d'images",     en: "Image uploads"            },
     f_support:    { ar: "الدعم",             fr: "Support",             en: "Support"                  },
     f_api:        { ar: "وصول API",          fr: "Accès API",           en: "API access"               },
     f_team:       { ar: "مقاعد الفريق",      fr: "Sièges équipe",       en: "Team seats"               },
     f_sla:        { ar: "SLA مضمون",         fr: "SLA garanti",         en: "Guaranteed SLA"           },
     // Feature values
-    v_msgs_free:  { ar: "15 رسالة / محادثة", fr: "15 messages / conversation", en: "15 msgs / conversation" },
+    v_msgs_free:  { ar: "5 رسائل / محادثة", fr: "5 messages / conversation", en: "5 msgs / conversation" },
     v_msgs_paid:  { ar: "غير محدود",         fr: "Illimité",            en: "Unlimited"                },
     v_hist_free:  { ar: "آخر 10",            fr: "10 dernières",        en: "Last 10"                  },
     v_hist_paid:  { ar: "غير محدود",         fr: "Illimité",            en: "Unlimited"                },
@@ -68,13 +68,15 @@ const T: Record<string, Record<string, string>> = {
     v_priority:   { ar: "أولوية",            fr: "Prioritaire",         en: "Priority"                 },
     v_dedicated:  { ar: "مخصص + SLA",        fr: "Dédié + SLA",         en: "Dedicated + SLA"          },
     v_custom:     { ar: "مخصص",              fr: "Personnalisé",        en: "Custom"                   },
+    v_img_free:   { ar: "1 صورة / يوم",    fr: "1 image / jour",     en: "1 image / day"            },
+    v_img_basic:  { ar: "صور غير محدودة",  fr: "Images illimitées",   en: "Unlimited images"         },
     // Lawyer compare section
     compare_tag:  { ar: "مقارنة",            fr: "Comparaison",         en: "Comparison"               },
     compare_title:{ ar: "مقابل محامٍ تقليدي",fr: "Face à un avocat classique", en: "vs. a Traditional Lawyer" },
     compare_sub:  {
-        ar: "الاشتراك الأساسي لسنة كاملة = 59.88 دولار. استشارة محامٍ واحدة = 50–200 دولار. الحساب بسيط.",
-        fr: "L'abonnement Asasi pour une année complète = 59,88 $. Une consultation d'avocat = 50–200 $. Le calcul est simple.",
-        en: "A full year of Basic = $59.88. One lawyer consultation = $50–200. The math is simple.",
+        ar: "الاشتراك الأساسي لسنة كاملة = 588 درهم. استشارة محامٍ واحدة = 500–2000 درهم. الحساب بسيط.",
+        fr: "L'abonnement Asasi pour une année complète = 588 MAD. Une consultation d'avocat = 500–2000 MAD. Le calcul est simple.",
+        en: "A full year of Basic = 588 MAD. One lawyer consultation = 500–2000 MAD. The math is simple.",
     },
     // FAQ
     faq_title:    { ar: "أسئلة شائعة",       fr: "Questions fréquentes",en: "Frequently asked questions" },
@@ -105,17 +107,17 @@ const FAQ_ITEMS = [
     {
         q: { ar: "كيف تتم معالجة المدفوعات؟", fr: "Comment les paiements sont-ils traités ?", en: "How are payments processed?" },
         a: {
-            ar: "ندعم البطاقات الدولية (Visa، Mastercard، PayPal) عبر Paddle، وهو وكيل تجاري دولي يتعامل مع ضريبة القيمة المضافة والتحويلات.",
-            fr: "Nous acceptons les cartes internationales (Visa, Mastercard, PayPal) via Paddle, un marchand de référence mondial gérant la TVA et les conversions.",
-            en: "We accept international cards (Visa, Mastercard, PayPal) via Paddle — a global merchant of record that handles VAT and currency conversion.",
+            ar: "ندعم البطاقات الدولية (Visa، Mastercard) عبر Polar، وهو وكيل تجاري دولي يتعامل مع ضريبة القيمة المضافة والتحويلات.",
+            fr: "Nous acceptons les cartes internationales (Visa, Mastercard) via Polar, un marchand de référence mondial gérant la TVA et les conversions.",
+            en: "We accept international cards (Visa, Mastercard) via Polar — a global merchant of record that handles VAT and currency conversion.",
         },
     },
     {
         q: { ar: "هل المحادثات المجانية فعلاً غير محدودة؟", fr: "Les conversations gratuites sont-elles vraiment illimitées ?", en: "Are free conversations truly unlimited?" },
         a: {
-            ar: "نعم. يمكنك بدء محادثات جديدة بشكل غير محدود. الحد الوحيد هو 15 رسالة داخل كل محادثة. بعد ذلك، افتح محادثة جديدة مجاناً.",
-            fr: "Oui. Vous pouvez commencer autant de nouvelles conversations que vous le souhaitez. La seule limite est de 15 messages par conversation — ouvrez-en une nouvelle ensuite.",
-            en: "Yes. Unlimited new conversations. The only cap is 15 messages per conversation — after that, just open a new one for free.",
+            ar: "نعم. يمكنك بدء محادثات جديدة بشكل غير محدود. الحد الوحيد هو 5 رسائل داخل كل محادثة. بعد ذلك، افتح محادثة جديدة مجاناً.",
+            fr: "Oui. Vous pouvez commencer autant de nouvelles conversations que vous le souhaitez. La seule limite est de 5 messages par conversation — ouvrez-en une nouvelle ensuite.",
+            en: "Yes. Unlimited new conversations. The only cap is 5 messages per conversation — after that, just open a new one for free.",
         },
     },
     {
@@ -129,9 +131,9 @@ const FAQ_ITEMS = [
     {
         q: { ar: "هل هناك نسخة تجريبية؟", fr: "Y a-t-il une période d'essai ?", en: "Is there a trial period?" },
         a: {
-            ar: "يُعتبر المستوى المجاني نسخة تجريبية دائمة — 15 رسالة لكل محادثة بدون حدود زمنية. بالإضافة إلى ذلك، تأتي جميع الخطط المدفوعة مع ضمان استرداد لمدة 14 يوماً.",
-            fr: "Le plan gratuit est un essai permanent — 15 messages par conversation, sans limite de temps. De plus, tous les plans payants incluent une garantie de remboursement de 14 jours.",
-            en: "The free plan is a permanent trial — 15 messages per conversation, no time limit. Plus, all paid plans come with a 14-day money-back guarantee.",
+            ar: "يُعتبر المستوى المجاني نسخة تجريبية دائمة — 5 رسائل لكل محادثة بدون حدود زمنية. بالإضافة إلى ذلك، تأتي جميع الخطط المدفوعة مع ضمان استرداد لمدة 14 يوماً.",
+            fr: "Le plan gratuit est un essai permanent — 5 messages par conversation, sans limite de temps. De plus, tous les plans payants incluent une garantie de remboursement de 14 jours.",
+            en: "The free plan is a permanent trial — 5 messages per conversation, no time limit. Plus, all paid plans come with a 14-day money-back guarantee.",
         },
     },
 ];
@@ -158,7 +160,7 @@ export default function PricingPage() {
     useAuth();
     const searchParams = useSearchParams();
     const paymentSuccess = searchParams.get("status") === "success";
-    const { openCheckout, loading: checkoutLoading } = usePaddleCheckout();
+    const { openCheckout, loading: checkoutLoading } = useCheckout();
     const handleCheckout = openCheckout;
 
     // Scroll-reveal
@@ -186,14 +188,6 @@ export default function PricingPage() {
         },
         {
             icon: <FileText className="w-3.5 h-3.5" />,
-            labelKey: "f_contracts",
-            free: false,
-            basic: c("v_contr_basic", lang),
-            pro: c("v_contr_pro", lang),
-            ent: c("v_contr_pro", lang),
-        },
-        {
-            icon: <FileText className="w-3.5 h-3.5" />,
             labelKey: "f_pdf",
             free: false,
             basic: true,
@@ -203,8 +197,8 @@ export default function PricingPage() {
         {
             icon: <Upload className="w-3.5 h-3.5" />,
             labelKey: "f_files",
-            free: false,
-            basic: false,
+            free: c("v_img_free", lang),
+            basic: c("v_img_basic", lang),
             pro: true,
             ent: true,
         },
@@ -243,11 +237,6 @@ export default function PricingPage() {
         {
             nameKey: "basic_name", priceKey: "basic_price", descKey: "basic_desc",
             ctaKey: "cta_basic",  ctaHref: "",  checkoutPlan: "basic" as const, highlight: true, icon: <Zap className="w-5 h-5" />,
-            showPerMo: true,
-        },
-        {
-            nameKey: "pro_name",   priceKey: "pro_price",   descKey: "pro_desc",
-            ctaKey: "cta_pro",    ctaHref: "",  checkoutPlan: "pro" as const, highlight: false, icon: <FileText className="w-5 h-5" />,
             showPerMo: true,
         },
         {
@@ -315,7 +304,7 @@ export default function PricingPage() {
                 ══════════════════════════════════════════════════════════ */}
                 <section className="relative py-4 pb-28">
                     <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
                             {tiers.map((tier, i) => (
                                 <div
                                     key={tier.nameKey}
@@ -485,7 +474,7 @@ export default function PricingPage() {
                                                     {c(row.labelKey, lang)}
                                                 </div>
                                             </td>
-                                            {[row.free, row.basic, row.pro, row.ent].map((val, j) => (
+                                            {[row.free, row.basic, row.ent].map((val, j) => (
                                                 <td key={j} className={`py-3.5 px-2 text-center text-xs ${tiers[j].highlight ? "bg-primary/3" : ""}`}>
                                                     <CompCell val={val} highlight={tiers[j].highlight} />
                                                 </td>
@@ -531,7 +520,7 @@ export default function PricingPage() {
                                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground mb-3">
                                     {{ar:"محامٍ تقليدي", fr:"Avocat classique", en:"Traditional Lawyer"}[lang]}
                                 </p>
-                                <p className="font-display text-3xl font-bold text-foreground mb-1">$50–200</p>
+                                <p className="font-display text-3xl font-bold text-foreground mb-1">500–2000 MAD</p>
                                 <p className="text-sm text-muted-foreground">
                                     {{ar:"لكل استشارة", fr:"par consultation", en:"per consultation"}[lang]}
                                 </p>
@@ -552,7 +541,7 @@ export default function PricingPage() {
                             <div className="rounded-2xl border border-primary/40 bg-primary/5 p-6 text-start relative overflow-hidden">
                                 <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent" />
                                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary mb-3">9anon AI</p>
-                                <p className="font-display text-3xl font-bold text-foreground mb-1">$59.88</p>
+                                <p className="font-display text-3xl font-bold text-foreground mb-1">588 MAD</p>
                                 <p className="text-sm text-muted-foreground">
                                     {{ar:"لسنة كاملة (الأساسي)", fr:"pour une année entière (Asasi)", en:"for a full year (Basic)"}[lang]}
                                 </p>
@@ -675,9 +664,9 @@ function CompCell({ val, highlight }: { val: CellVal; highlight: boolean }) {
 function getHighlights(nameKey: string, lang: string): string[] {
     const map: Record<string, Record<string, string[]>> = {
         free_name: {
-            ar: ["15 رسالة / محادثة", "محادثات غير محدودة", "دعم بالبريد الإلكتروني"],
-            fr: ["15 messages / conversation", "Conversations illimitées", "Support par e-mail"],
-            en: ["15 messages / conversation", "Unlimited conversations", "Email support"],
+            ar: ["5 رسائل / محادثة", "محادثات غير محدودة", "دعم بالبريد الإلكتروني"],
+            fr: ["5 messages / conversation", "Conversations illimitées", "Support par e-mail"],
+            en: ["5 messages / conversation", "Unlimited conversations", "Email support"],
         },
         basic_name: {
             ar: ["رسائل غير محدودة", "3 عقود / شهر", "تصدير PDF"],
@@ -690,9 +679,9 @@ function getHighlights(nameKey: string, lang: string): string[] {
             en: ["Unlimited messages", "Unlimited contracts", "Document upload & analysis", "Priority support"],
         },
         ent_name: {
-            ar: ["كل ميزات المهني", "وصول API", "مقاعد متعددة للفريق", "دعم مخصص + SLA"],
-            fr: ["Tout Mihani inclus", "Accès API", "Sièges multi-utilisateurs", "Support dédié + SLA"],
-            en: ["Everything in Pro", "API access", "Multi-seat team access", "Dedicated support + SLA"],
+            ar: ["كل ميزات الأساسي", "وصول API", "مقاعد متعددة للفريق", "دعم مخصص + SLA"],
+            fr: ["Tout Asasi inclus", "Accès API", "Sièges multi-utilisateurs", "Support dédié + SLA"],
+            en: ["Everything in Basic", "API access", "Multi-seat team access", "Dedicated support + SLA"],
         },
     };
     return map[nameKey]?.[lang] ?? map[nameKey]?.["en"] ?? [];

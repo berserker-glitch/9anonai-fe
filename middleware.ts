@@ -34,7 +34,15 @@ function getLocale(request: NextRequest): string {
 }
 
 export function middleware(request: NextRequest) {
-    const { pathname, hostname } = request.nextUrl;
+    const { pathname, hostname, searchParams } = request.nextUrl;
+
+    // Polar post-checkout redirect — bounce to pricing success page
+    if (searchParams.has("checkout_id")) {
+        const url = request.nextUrl.clone();
+        url.pathname = "/pricing";
+        url.search = "?status=success";
+        return NextResponse.redirect(url, 302);
+    }
 
     // SEO: Redirect www to non-www (canonical domain)
     if (hostname === "www.9anonai.com") {

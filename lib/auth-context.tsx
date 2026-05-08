@@ -2,7 +2,17 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
-interface User {
+export interface UserSubscription {
+    status: string;
+    planName: string;
+    planDisplayName: string;
+    currentPeriodEnd: string;
+    cancelledAt: string | null;
+    messagesPerConversation: number; // 0 = unlimited
+    contractsPerMonth: number;        // 0 = unlimited
+}
+
+export interface User {
     id: string;
     email: string;
     name?: string;
@@ -11,6 +21,9 @@ interface User {
     isOnboarded?: boolean;
     marketingSource?: string;
     feedbackDismissed?: boolean;
+    country?: string;
+    plan?: string;           // "free" | "basic" | "pro" | "enterprise"
+    subscription?: UserSubscription | null;
 }
 
 interface AuthContextType {
@@ -23,7 +36,9 @@ interface AuthContextType {
     updateProfile: (data: { name?: string; personalization?: string; isOnboarded?: boolean; marketingSource?: string }) => Promise<{ success: boolean; error?: string }>;
     changePassword: (current: string, newPass: string) => Promise<{ success: boolean; error?: string }>;
     dismissFeedback: () => Promise<void>;
+    refetchUser: () => Promise<void>;
     isLoading: boolean;
+    isPaidPlan: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -215,8 +230,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     };
 
+    /** Re-fetches /auth/me to refresh plan and subscription data after payment. */
+    const refetchUser = async () => {
+        const storedToken = token || localStorage.getItem("token");
+        if (!storedToken) return;
+        try {
+            const res = await fetch(`${API_URL}/auth/me`, {
+                headers: { Authorization: `Bearer ${storedToken}` },
+            });
+            const data = await res.json();
+            if (data.user) setUser(data.user);
+        } catch (e) {
+            console.error("Failed to refetch user", e);
+        }
+    };
+
+    const isPaidPlan = !!(user?.plan && user.plan !== 'free');
+
     return (
-        <AuthContext.Provider value={{ user, token, login, loginWithGoogle, register, logout, updateProfile, changePassword, dismissFeedback, isLoading }}>
+        <AuthContext.Provider value={{ user, token, login, loginWithGoogle, register, logout, updateProfile, changePassword, dismissFeedback, refetchUser, isLoading, isPaidPlan }}>
             {children}
         </AuthContext.Provider>
     );

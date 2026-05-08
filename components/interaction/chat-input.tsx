@@ -12,6 +12,8 @@ interface ChatInputProps {
     isLoading?: boolean;
     placeholder?: string;
     className?: string;
+    /** Whether the current user's plan allows file uploads (Pro+). Defaults to false. */
+    canUpload?: boolean;
     /**
      * "chat"    → compact height, sticky to bottom (default)
      * "welcome" → expanded height, centered on page, not sticky
@@ -63,6 +65,7 @@ export function ChatInput({
     isLoading = false,
     placeholder = "Message 9anon AI...",
     className = "",
+    canUpload = false,
     variant = "chat",
 }: ChatInputProps) {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -188,6 +191,7 @@ export function ChatInput({
             >
                 {/* Left: attach button + keyboard hint */}
                 <div className="flex items-center gap-2.5">
+                    {canUpload && (
                     <button
                         type="button"
                         onClick={() => fileInputRef.current?.click()}
@@ -216,6 +220,7 @@ export function ChatInput({
                             <path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48" />
                         </svg>
                     </button>
+                    )}
 
                     <span
                         className={[

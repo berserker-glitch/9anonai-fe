@@ -100,6 +100,8 @@
         "inheritanceCalc": "Inheritance Calculator",
         "incomeTaxCalc": "Income Tax Calculator",
         "rentCalc": "Rent Increase Calculator",
+        "pricing": "Pricing",
+        "refund": "Refund Policy",
         "privacy": "Privacy Policy",
         "terms": "Terms of Service",
         "contact": "Contact Us",

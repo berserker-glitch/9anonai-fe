@@ -42,12 +42,12 @@
         },
         "billing": {
             "title": "7. Facturation et Paiements",
-            "content": "Tous les paiements sur cette plateforme sont traités par Paddle.com Market Limited (« Paddle »), agissant en tant que marchand de référence (Merchant of Record) pour l'ensemble de nos transactions. En finalisant un achat, vous concluez un accord direct avec Paddle pour le traitement du paiement. Votre relevé bancaire affichera une charge de « PADDLE.NET » ou « Paddle.com ». Paddle gère la TVA, les taxes et la conversion de devises en notre nom.",
+            "content": "Tous les paiements sur cette plateforme sont traités par Polar (polar.sh), agissant en tant que marchand de référence (Merchant of Record) pour l'ensemble de nos transactions. En finalisant un achat, vous concluez un accord direct avec Polar pour le traitement du paiement. Votre relevé bancaire affichera une charge de « Polar ». Polar gère la TVA, les taxes et la conversion de devises en notre nom.",
             "items": [
-                "Moyens de paiement acceptés : Visa, Mastercard, Maestro, American Express, PayPal",
-                "Les prix sont affichés en USD ; Paddle convertit dans votre devise locale à la caisse",
+                "Moyens de paiement acceptés : Visa, Mastercard, American Express",
+                "Les prix sont affichés en USD ; Polar convertit dans votre devise locale à la caisse",
                 "La TVA ou les taxes applicables peuvent s'ajouter selon votre pays",
-                "Paddle émet les reçus et gère les litiges de facturation en notre nom"
+                "Polar émet les reçus et gère les litiges de facturation en notre nom"
             ]
         },
         "subscription": {
