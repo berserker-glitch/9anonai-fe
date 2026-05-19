@@ -107,9 +107,9 @@ const FAQ_ITEMS = [
     {
         q: { ar: "كيف تتم معالجة المدفوعات؟", fr: "Comment les paiements sont-ils traités ?", en: "How are payments processed?" },
         a: {
-            ar: "ندعم البطاقات الدولية (Visa، Mastercard) عبر Polar، وهو وكيل تجاري دولي يتعامل مع ضريبة القيمة المضافة والتحويلات.",
-            fr: "Nous acceptons les cartes internationales (Visa, Mastercard) via Polar, un marchand de référence mondial gérant la TVA et les conversions.",
-            en: "We accept international cards (Visa, Mastercard) via Polar — a global merchant of record that handles VAT and currency conversion.",
+            ar: "ندعم البطاقات الدولية (Visa، Mastercard، PayPal) عبر PayPal، منصة دفع عالمية تتعامل مع ضريبة القيمة المضافة والتحويلات.",
+            fr: "Nous acceptons les cartes internationales (Visa, Mastercard, PayPal) via PayPal, une plateforme de paiement mondiale gérant la TVA et les conversions.",
+            en: "We accept international cards (Visa, Mastercard, PayPal) via PayPal — a trusted global payment platform that handles VAT and currency conversion.",
         },
     },
     {
