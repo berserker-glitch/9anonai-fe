@@ -120,7 +120,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             const data = await res.json();
 
             if (!res.ok) {
-                return { success: false, error: data.error || "Registration failed" };
+                const validationDetails = Array.isArray(data.details)
+                    ? data.details
+                        .map((detail: { message?: unknown }) => detail?.message)
+                        .filter((message: unknown): message is string => typeof message === "string" && message.length > 0)
+                        .join(". ")
+                    : "";
+
+                return { success: false, error: validationDetails || data.error || "Registration failed" };
             }
 
             // Auto-login after registration
