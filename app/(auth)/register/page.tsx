@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { useGoogleLogin } from "@react-oauth/google";
+import { Check } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { useTranslation } from "@/lib/language-context";
 import { trackEvent } from "@/lib/analytics";
@@ -20,6 +21,31 @@ export default function RegisterPage() {
     const router = useRouter();
     const { register, loginWithGoogle, user } = useAuth();
     const { t } = useTranslation("auth");
+
+    const passwordRequirements = [
+        {
+            id: "minLength",
+            label: t("register.passwordRequirements.minLength"),
+            isMet: password.length >= 8,
+        },
+        {
+            id: "uppercase",
+            label: t("register.passwordRequirements.uppercase"),
+            isMet: /[A-Z]/.test(password),
+        },
+        {
+            id: "lowercase",
+            label: t("register.passwordRequirements.lowercase"),
+            isMet: /[a-z]/.test(password),
+        },
+        {
+            id: "number",
+            label: t("register.passwordRequirements.number"),
+            isMet: /[0-9]/.test(password),
+        },
+    ];
+    const hasPasswordInput = password.length > 0;
+    const isPasswordEligible = passwordRequirements.every((requirement) => requirement.isMet);
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
@@ -54,8 +80,14 @@ export default function RegisterPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setIsLoading(true);
         setError("");
+
+        if (!isPasswordEligible) {
+            setError(t("register.passwordRequirements.error"));
+            return;
+        }
+
+        setIsLoading(true);
         const result = await register(email, password, name, refCode);
         if (result.success) {
             trackEvent("sign_up", { method: "email" });
@@ -185,8 +217,9 @@ export default function RegisterPage() {
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
-                                    minLength={6}
                                     autoComplete="new-password"
+                                    aria-describedby="register-password-requirements"
+                                    aria-invalid={hasPasswordInput && !isPasswordEligible}
                                     className="w-full px-4 py-3 pe-11 rounded-xl border border-border/60 bg-background/50 backdrop-blur-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all text-[15px]"
                                     placeholder={t("register.passwordPlaceholder")}
                                 />
@@ -208,9 +241,45 @@ export default function RegisterPage() {
                                     )}
                                 </button>
                             </div>
-                            <p className="mt-1.5 text-xs text-muted-foreground/60">
+                            <p className="mt-2 text-xs font-medium text-muted-foreground/75">
                                 {t("register.passwordHint")}
                             </p>
+                            <ul
+                                id="register-password-requirements"
+                                className="mt-2 grid grid-cols-1 gap-1.5 text-xs sm:grid-cols-2"
+                                aria-live="polite"
+                            >
+                                {passwordRequirements.map((requirement) => {
+                                    const isUnmet = hasPasswordInput && !requirement.isMet;
+
+                                    return (
+                                        <li
+                                            key={requirement.id}
+                                            className={`flex items-center gap-2 transition-colors ${
+                                                requirement.isMet
+                                                    ? "text-primary"
+                                                    : isUnmet
+                                                        ? "text-destructive"
+                                                        : "text-muted-foreground/65"
+                                            }`}
+                                        >
+                                            <span
+                                                className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-colors ${
+                                                    requirement.isMet
+                                                        ? "border-primary bg-primary text-primary-foreground"
+                                                        : isUnmet
+                                                            ? "border-destructive/60"
+                                                            : "border-border"
+                                                }`}
+                                                aria-hidden="true"
+                                            >
+                                                {requirement.isMet ? <Check className="h-3 w-3" strokeWidth={3} /> : null}
+                                            </span>
+                                            <span>{requirement.label}</span>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
                         </div>
 
                         {/* Terms */}
