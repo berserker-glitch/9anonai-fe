@@ -21,17 +21,44 @@ const nextConfig: NextConfig = {
       { source: '/blog', destination: '/ar/blog', permanent: true },
       { source: '/blog/:slug', destination: '/ar/blog/:slug', permanent: true },
 
-      // SEO: Redirect standalone topic pages to localized versions (middleware handles locale detection)
-      // These were English-only; now they are served trilingual via app/[lang]/[slug]
-      { source: '/family-law', destination: '/ar/family-law', permanent: true },
-      { source: '/labor-law', destination: '/ar/labor-law', permanent: true },
-      { source: '/traffic-law', destination: '/ar/traffic-law', permanent: true },
-      { source: '/consumer-protection', destination: '/ar/consumer-protection', permanent: true },
-      { source: '/company-registration', destination: '/ar/company-registration', permanent: true },
-      { source: '/citizenship-law', destination: '/ar/citizenship-law', permanent: true },
+      // SEO: Redirect /about to localized version (prevents GSC "Autre page avec balise canonique correcte")
+      { source: '/about', destination: '/fr/about', permanent: true },
 
-      // SEO: Redirect HTTP non-www to HTTPS www (handled at hosting level, but good to document)
-      // SEO: Redirect www.9anonai.com to 9anonai.com (handled at hosting level)
+      // SEO: Redirect ALL non-localized SEO page slugs to localized versions
+      // This prevents Google from indexing bare /{slug} URLs as duplicates of /{lang}/{slug}
+      // Core AI / consultation
+      { source: '/legal-ai', destination: '/fr/legal-ai', permanent: true },
+      { source: '/legal-chatbot', destination: '/fr/legal-chatbot', permanent: true },
+      { source: '/online-consultation', destination: '/fr/online-consultation', permanent: true },
+      // Individual rights
+      { source: '/divorce-law', destination: '/fr/divorce-law', permanent: true },
+      { source: '/employee-rights', destination: '/fr/employee-rights', permanent: true },
+      { source: '/tenant-rights', destination: '/fr/tenant-rights', permanent: true },
+      { source: '/inheritance-law', destination: '/fr/inheritance-law', permanent: true },
+      { source: '/immigration-law', destination: '/fr/immigration-law', permanent: true },
+      // Business / commercial
+      { source: '/business-legal', destination: '/fr/business-legal', permanent: true },
+      { source: '/startup-legal', destination: '/fr/startup-legal', permanent: true },
+      { source: '/contract-review', destination: '/fr/contract-review', permanent: true },
+      { source: '/commercial-law', destination: '/fr/commercial-law', permanent: true },
+      { source: '/tax-legal', destination: '/fr/tax-legal', permanent: true },
+      // Property
+      { source: '/rental-law', destination: '/fr/rental-law', permanent: true },
+      { source: '/real-estate-law', destination: '/fr/real-estate-law', permanent: true },
+      // Digital law
+      { source: '/cybersecurity-law', destination: '/fr/cybersecurity-law', permanent: true },
+      { source: '/crypto-law', destination: '/fr/crypto-law', permanent: true },
+      { source: '/digital-law', destination: '/fr/digital-law', permanent: true },
+      // Topic hub pages
+      { source: '/family-law', destination: '/fr/family-law', permanent: true },
+      { source: '/labor-law', destination: '/fr/labor-law', permanent: true },
+      { source: '/traffic-law', destination: '/fr/traffic-law', permanent: true },
+      // High-impression pages
+      { source: '/consumer-protection', destination: '/fr/consumer-protection', permanent: true },
+      { source: '/company-registration', destination: '/fr/company-registration', permanent: true },
+      { source: '/citizenship-law', destination: '/fr/citizenship-law', permanent: true },
+
+      // SEO: www → non-www redirect handled in middleware.ts (301)
     ];
   },
 

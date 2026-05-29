@@ -89,10 +89,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
 
     return [
-        {
-            url: baseUrl,
+        // Localized root pages — each is the canonical for its locale.
+        // NOTE: Do NOT add bare `baseUrl` here — it rewrites to /{locale}
+        // and causes "Autre page avec balise canonique correcte" in GSC.
+        ...["ar", "fr", "en"].map((lang) => ({
+            url: `${baseUrl}/${lang}`,
             lastModified: new Date(),
-            changeFrequency: "daily",
+            changeFrequency: "daily" as const,
             priority: 1,
             alternates: {
                 languages: {
@@ -101,7 +104,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
                     en: `${baseUrl}/en`,
                 },
             },
-        },
+        })),
         {
             url: `${baseUrl}/privacy`,
             lastModified: new Date(),

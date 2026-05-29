@@ -64,39 +64,12 @@ export function middleware(request: NextRequest) {
         return response;
     }
 
-    // === SEO page slugs that live under app/[lang]/[slug]/ ===
-    // These base paths get rewritten to /[lang]/[slug] for locale detection
-    const seoPageSlugs = [
-        // Core AI / consultation
-        "legal-ai", "legal-chatbot", "online-consultation",
-        // Individual rights
-        "divorce-law", "employee-rights", "tenant-rights",
-        "inheritance-law", "immigration-law",
-        // Business / commercial
-        "business-legal", "startup-legal", "contract-review",
-        "commercial-law", "tax-legal",
-        // Property
-        "rental-law", "real-estate-law",
-        // Digital law
-        "cybersecurity-law", "crypto-law", "digital-law",
-        // Topic hub pages
-        "family-law", "labor-law", "traffic-law",
-        // New high-impression zero-click opportunity pages
-        "consumer-protection", "company-registration", "citizenship-law",
-    ];
-
-    // Check if the pathname matches a SEO page slug
-    const isSeoPage = seoPageSlugs.some(
-        (slug) => pathname === `/${slug}` || pathname === `/${slug}/`
-    );
-
-    // Identify paths that NEED rewriting to /[lang] structure (routes inside app/[lang])
-    // Includes: /, /blog/*, /about, all SEO landing pages, and the new test landing pages /1 to /11
+    // === Routes that need locale rewriting ===
+    // /about and SEO page slugs are handled by next.config.ts permanent redirects
+    // Only / and /blog/* still need middleware rewriting
     if (
         pathname === "/" ||
         pathname.startsWith("/blog") ||
-        pathname === "/about" ||
-        isSeoPage ||
         /^\/([1-9]|10|11)(\/|$)/.test(pathname)
     ) {
         const locale = getLocale(request);

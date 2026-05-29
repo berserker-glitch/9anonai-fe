@@ -135,7 +135,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://9anonai.com",
+    canonical: "https://9anonai.com/fr",
     languages: {
       "ar-MA": "https://9anonai.com/ar",
       "fr-MA": "https://9anonai.com/fr",
