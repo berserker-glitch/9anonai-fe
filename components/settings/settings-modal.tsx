@@ -3,7 +3,7 @@ import { Modal } from "../utility/modal";
 import { useLanguage, languages, Language } from "@/lib/language-context";
 import { useAuth } from "@/lib/auth-context";
 import { useTheme } from "../providers/theme-provider";
-import { PaypalButtons } from "@/components/billing/paypal-buttons";
+import { PaypalCheckoutModal } from "@/components/billing/paypal-checkout-modal";
 import { Avatar } from "../ui/avatar";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
@@ -63,6 +63,9 @@ const S: Record<string, Record<string, string>> = {
     sub_pro_expired:      { fr: "Votre accès Pro a expiré. Renouvelez pour réactiver les fonctionnalités Pro.", ar: "انتهى وصولك إلى Pro. جدّد لإعادة تفعيل مزايا Pro.", en: "Your Pro access has ended. Renew to reactivate Pro features." },
     sub_upgrade_title:    { fr: "Passer à Pro",               ar: "الترقية إلى Pro",           en: "Upgrade to Pro" },
     sub_renew_title:      { fr: "Renouveler Pro",             ar: "تجديد Pro",                 en: "Renew Pro" },
+    sub_renew_locked_title:{ fr: "Renouvellement disponible 5 jours avant l'expiration", ar: "التجديد متاح قبل الانتهاء بـ 5 أيام", en: "Renewal opens 5 days before expiry" },
+    sub_renew_locked_date:{ fr: "Ouverture du renouvellement", ar: "يفتح التجديد", en: "Renewal opens" },
+    sub_renew_locked_body:{ fr: "Votre accès Pro est actif. Pour éviter les paiements trop tôt, vous pourrez renouveler seulement dans les 5 derniers jours de votre période Pro.", ar: "وصولك إلى Pro نشط. لتجنب الدفع المبكر أكثر من اللازم، يمكنك التجديد فقط خلال آخر 5 أيام من فترة Pro.", en: "Your Pro access is active. To avoid charging too early, renewal is only available during the final 5 days of your current Pro period." },
     sub_price_mo:         { fr: "/ mois",                     ar: "/ شهر",                     en: "/ month" },
     sub_benefit_unlimited:{ fr: "Messages illimités",         ar: "رسائل غير محدودة",          en: "Unlimited messages" },
     sub_benefit_uploads:  { fr: "Import & analyse de fichiers/images", ar: "رفع وتحليل الملفات/الصور", en: "File & image uploads + analysis" },
@@ -175,6 +178,8 @@ function s(key: string, lang: string): string {
 
 const settingBlockClass = "rounded-xl bg-secondary/40 px-4 py-3";
 const compactBlockClass = "rounded-lg bg-secondary/40 p-3";
+const RENEWAL_WINDOW_DAYS = 5;
+const RENEWAL_WINDOW_MS = RENEWAL_WINDOW_DAYS * 24 * 60 * 60 * 1000;
 const fieldClass = "w-full rounded-lg bg-background px-3 py-2 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:bg-accent/70 disabled:opacity-50";
 const selectClass = "rounded-lg bg-background px-3 py-1.5 text-sm text-foreground outline-none transition-colors hover:bg-accent focus:bg-accent";
 const primaryActionClass = "inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50";
@@ -201,6 +206,7 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout, initi
     // Subscription / billing state
     const [billing, setBilling] = useState<BillingStatus | null>(null);
     const [billingLoading, setBillingLoading] = useState(false);
+    const [checkoutOpen, setCheckoutOpen] = useState(false);
     const [paySuccess, setPaySuccess] = useState(false);
 
     const loadBilling = useCallback(async () => {
@@ -451,7 +457,14 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout, initi
 
     const activeTabMeta = tabs.find((tab) => tab.id === activeTab) ?? tabs[0];
 
+    const handleCheckoutSuccess = () => {
+        setPaySuccess(true);
+        loadBilling();
+        refetchUser();
+    };
+
     return (
+        <>
         <Modal
             isOpen={isOpen}
             onClose={onClose}
@@ -817,6 +830,8 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout, initi
                                 const locale = language === "ar" ? "ar-MA" : language === "fr" ? "fr-FR" : "en-US";
                                 const fmt = (d: Date) => d.toLocaleDateString(locale, { year: "numeric", month: "short", day: "numeric" });
                                 const price = billing?.priceUSD || "5.00";
+                                const renewalOpensAt = expiry ? new Date(expiry.getTime() - RENEWAL_WINDOW_MS) : null;
+                                const renewalAvailable = !isProActive || !expiry || expiry.getTime() - Date.now() <= RENEWAL_WINDOW_MS;
 
                                 return (
                                     <>
@@ -851,6 +866,20 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout, initi
                                         {/* Upgrade / renew */}
                                         {billing && !billing.configured ? (
                                             <p className={`${compactBlockClass} text-sm text-muted-foreground`}>{s("sub_unavailable", language)}</p>
+                                        ) : isProActive && expiry && !renewalAvailable ? (
+                                            <div className={`${settingBlockClass} space-y-3`}>
+                                                <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                                                    <h3 className="text-base font-semibold">{s("sub_renew_locked_title", language)}</h3>
+                                                    {renewalOpensAt && (
+                                                        <span className="rounded-full bg-background px-3 py-1 text-xs font-semibold text-primary">
+                                                            {s("sub_renew_locked_date", language)}: {fmt(renewalOpensAt)}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                                <p className="text-xs font-medium leading-relaxed text-muted-foreground">
+                                                    {s("sub_renew_locked_body", language)}
+                                                </p>
+                                            </div>
                                         ) : (
                                             <div className={`${settingBlockClass} space-y-4`}>
                                                 <div className="flex items-baseline justify-between gap-4">
@@ -872,7 +901,13 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout, initi
                                                         </li>
                                                     ))}
                                                 </ul>
-                                                <PaypalButtons onSuccess={() => { setPaySuccess(true); loadBilling(); refetchUser(); }} />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setCheckoutOpen(true)}
+                                                    className={`${primaryActionClass} w-full py-3`}
+                                                >
+                                                    {isProActive ? s("sub_renew_title", language) : s("sub_upgrade_title", language)}
+                                                </button>
                                                 <p className="text-xs font-medium leading-relaxed text-muted-foreground">{s("sub_pay_note", language)}</p>
                                             </div>
                                         )}
@@ -1021,5 +1056,13 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout, initi
                 </div>
             </div>
         </Modal>
+        <PaypalCheckoutModal
+            isOpen={checkoutOpen}
+            onClose={() => setCheckoutOpen(false)}
+            onSuccess={handleCheckoutSuccess}
+            title={billing?.plan === "pro" ? s("sub_renew_title", language) : s("sub_upgrade_title", language)}
+            description={s("sub_pay_note", language)}
+        />
+        </>
     );
 }
