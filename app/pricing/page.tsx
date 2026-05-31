@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/lib/language-context";
 import { useAuth } from "@/lib/auth-context";
-import { PaypalButtons } from "@/components/billing/paypal-buttons";
+import { PaypalCheckoutModal } from "@/components/billing/paypal-checkout-modal";
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
 import { Check, X, ArrowRight, Shield, Sparkles, Upload, MessageSquare, Zap, Scale, Crown, Infinity as InfinityIcon } from "lucide-react";
@@ -170,7 +170,7 @@ const FAQ_ITEMS = [
 export default function PricingPage() {
     const { language: lang, dir } = useLanguage();
     const { user, token, isPro, refetchUser } = useAuth();
-    const [showPaypal, setShowPaypal] = useState(false);
+    const [checkoutOpen, setCheckoutOpen] = useState(false);
     const [paid, setPaid] = useState(false);
 
     // Scroll-reveal
@@ -188,7 +188,7 @@ export default function PricingPage() {
         ? new Date(user.proExpiresAt).toLocaleDateString(LOCALE[lang] ?? "en-US", { year: "numeric", month: "long", day: "numeric" })
         : null;
 
-    const handleSuccess = () => { setPaid(true); setShowPaypal(false); refetchUser(); };
+    const handleSuccess = () => { setPaid(true); refetchUser(); };
 
     return (
         <div className="min-h-screen bg-background flex flex-col" dir={dir}>
@@ -319,14 +319,10 @@ export default function PricingPage() {
                                             <Link href="/login?redirect=/pricing" className="w-full py-3.5 rounded-xl text-sm font-semibold text-center bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-150 block">
                                                 {c("pro_cta_guest", lang)}
                                             </Link>
-                                        ) : showPaypal ? (
-                                            <div className="animate-fade-in">
-                                                <PaypalButtons onSuccess={handleSuccess} />
-                                            </div>
                                         ) : (
                                             <>
                                                 <button
-                                                    onClick={() => setShowPaypal(true)}
+                                                    onClick={() => setCheckoutOpen(true)}
                                                     className="w-full py-3.5 rounded-xl text-sm font-semibold text-center bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-150 flex items-center justify-center gap-2 group"
                                                 >
                                                     {c("pro_cta", lang)}
@@ -498,7 +494,7 @@ export default function PricingPage() {
                             </Link>
                             <Link
                                 href={token ? "#" : "/login?redirect=/pricing"}
-                                onClick={(e) => { if (token) { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); setShowPaypal(true); } }}
+                                onClick={(e) => { if (token) { e.preventDefault(); setCheckoutOpen(true); } }}
                                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm shadow-lg shadow-primary/25 hover:bg-primary/90 transition-all duration-200 group"
                             >
                                 {c("pro_cta", lang)}
@@ -511,6 +507,13 @@ export default function PricingPage() {
             </main>
 
             <Footer />
+            <PaypalCheckoutModal
+                isOpen={checkoutOpen}
+                onClose={() => setCheckoutOpen(false)}
+                onSuccess={handleSuccess}
+                title={c("pro_cta", lang)}
+                description={c("pay_note", lang)}
+            />
         </div>
     );
 }
