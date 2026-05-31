@@ -42,28 +42,30 @@
         },
         "billing": {
             "title": "7. Facturation et Paiements",
-            "content": "Tous les paiements sur cette plateforme sont traités par Paddle.com Market Limited (« Paddle »), agissant en tant que marchand de référence (Merchant of Record) pour l'ensemble de nos transactions. En finalisant un achat, vous concluez un accord direct avec Paddle pour le traitement du paiement. Votre relevé bancaire affichera une charge de « PADDLE.NET » ou « Paddle.com ». Paddle gère la TVA, les taxes et la conversion de devises en notre nom.",
+            "content": "Les paiements du plan Pro (Mihani) sont traités de manière sécurisée via PayPal. 9anon est le vendeur et le marchand de référence pour tous les achats. Vous n'avez pas besoin de compte PayPal pour payer — PayPal accepte aussi les principales cartes de débit et de crédit en tant qu'invité. Votre relevé affichera une charge de PayPal / 9anon.",
             "items": [
-                "Moyens de paiement acceptés : Visa, Mastercard, Maestro, American Express, PayPal",
-                "Les prix sont affichés en USD ; Paddle convertit dans votre devise locale à la caisse",
-                "La TVA ou les taxes applicables peuvent s'ajouter selon votre pays",
-                "Paddle émet les reçus et gère les litiges de facturation en notre nom"
+                "Le plan Pro coûte 5,00 $ US (USD) par mois",
+                "Chaque paiement mensuel est une charge unique et distincte — nous ne conservons pas vos données de carte et ne vous débitons pas automatiquement",
+                "Les prix sont affichés en dollars américains (USD) ; votre banque peut appliquer des frais de conversion",
+                "Vous êtes responsable des taxes éventuellement applicables dans votre pays",
+                "PayPal émet un reçu électronique pour chaque paiement réussi"
             ]
         },
         "subscription": {
-            "title": "8. Abonnements et Résiliation",
-            "content": "Les plans payants (Asasi et Mihani) sont facturés mensuellement et se renouvellent automatiquement jusqu'à résiliation. Vous serez notifié avant chaque renouvellement.",
+            "title": "8. Plan Pro et Renouvellement Mensuel",
+            "content": "Le plan Pro se renouvelle manuellement chaque mois. Il n'y a aucune facturation récurrente automatique — vous choisissez activement de payer chaque mois pour garder Pro actif. Il n'y a aucun délai de grâce : si un renouvellement n'est pas payé à sa date d'échéance, votre compte revient immédiatement au plan gratuit Basic (Asasi) jusqu'au prochain paiement.",
             "items": [
-                "Vous êtes facturé à la même date chaque mois",
-                "Résiliez à tout moment depuis la page Paramètres — l'accès se poursuit jusqu'à la fin de la période en cours",
-                "Le rétrogradage ou la résiliation prend effet au début du prochain cycle de facturation",
-                "Un e-mail de rappel est envoyé avant chaque renouvellement"
+                "Votre date de renouvellement tombe le même jour calendaire chaque mois, selon votre dernier paiement",
+                "À chaque date de renouvellement, une facture apparaît dans Paramètres → Abonnement, à régler",
+                "Réglez la facture pour conserver les fonctionnalités Pro — réponses IA illimitées et envoi de documents et d'images",
+                "Si vous ne payez pas, vous gardez Pro jusqu'à la fin de la période déjà payée, puis revenez à Basic ; vos données et conversations sont conservées",
+                "Pour cesser d'utiliser Pro, il suffit de ne pas régler la prochaine facture — aucune résiliation n'est requise"
             ]
         },
         "refund": {
             "title": "9. Remboursements",
-            "content": "Tous les plans payants bénéficient d'une garantie de remboursement de 14 jours à compter de la date du premier paiement. Les frais de renouvellement ne sont pas remboursables après 14 jours suivant chaque renouvellement. Pour demander un remboursement, envoyez un e-mail à contact@9anonai.com avec « Remboursement » en objet. Consultez notre Politique de remboursement complète sur /refund.",
-            "important": "La garantie ne s'applique pas aux comptes ayant déjà bénéficié d'un remboursement, aux demandes soumises après le délai de 14 jours, ni aux comptes résiliés pour violation des Conditions d'utilisation."
+            "content": "Chaque paiement Pro achète un mois d'accès et constitue une charge unique. Si vous n'êtes pas satisfait, vous pouvez demander un remboursement dans les 14 jours suivant une charge en écrivant à contact@9anonai.com avec « Remboursement » en objet ; les remboursements approuvés sont effectués via PayPal sur votre moyen de paiement d'origine. Passé 14 jours, la charge de ce mois n'est pas remboursable. Consultez notre Politique de remboursement complète sur /refund.",
+            "important": "Les remboursements ne s'appliquent pas aux demandes faites plus de 14 jours après une charge, aux comptes ayant déjà bénéficié d'un remboursement, ni aux comptes résiliés pour violation des Conditions d'utilisation."
         },
         "modifications": {
             "title": "10. Modifications",
