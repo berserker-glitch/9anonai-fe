@@ -3,6 +3,8 @@ import { Modal } from "../utility/modal";
 import { useLanguage, languages, Language } from "@/lib/language-context";
 import { useAuth } from "@/lib/auth-context";
 import { useTheme } from "../providers/theme-provider";
+import { PaypalButtons } from "@/components/billing/paypal-buttons";
+import { Avatar } from "../ui/avatar";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
 const REFERRAL_MILESTONE = 5;
@@ -12,13 +14,35 @@ interface SettingsModalProps {
     onClose: () => void;
     user: { name?: string; email?: string; personalization?: string } | null;
     onLogout: () => void;
+    /** Tab to open on mount / when reopened (e.g. "subscription" from an upgrade prompt). */
+    initialTab?: SettingsTab;
 }
 
-type SettingsTab = "general" | "notifications" | "personalization" | "account" | "data" | "security" | "referral";
+type SettingsTab = "general" | "notifications" | "personalization" | "account" | "data" | "security" | "referral" | "subscription";
+
+interface BillingPayment {
+    id: string;
+    amount: number;
+    currency: string;
+    status: string;
+    periodStart: string;
+    periodEnd: string;
+    createdAt: string;
+}
+interface BillingStatus {
+    configured: boolean;
+    plan: "basic" | "pro";
+    rawPlan: string;
+    proExpiresAt: string | null;
+    priceUSD: string;
+    payments: BillingPayment[];
+}
 
 // ─── Trilingual UI strings ────────────────────────────────────────────────────
 
 const S: Record<string, Record<string, string>> = {
+    settings_title:       { fr: "Paramètres",       ar: "الإعدادات",          en: "Settings" },
+
     // Tabs
     tab_general:          { fr: "Général",          ar: "عام",                en: "General" },
     tab_notifications:    { fr: "Notifications",    ar: "الإشعارات",          en: "Notifications" },
@@ -26,7 +50,34 @@ const S: Record<string, Record<string, string>> = {
     tab_data:             { fr: "Données",          ar: "البيانات",           en: "Data controls" },
     tab_security:         { fr: "Sécurité",         ar: "الأمان",             en: "Security" },
     tab_account:          { fr: "Compte",           ar: "الحساب",             en: "Account" },
+    tab_subscription:     { fr: "Abonnement",       ar: "الاشتراك",           en: "Subscription" },
     tab_referral:         { fr: "Parrainage",       ar: "الإحالة",            en: "Referral" },
+
+    // Subscription tab
+    sub_title:            { fr: "Abonnement",                 ar: "الاشتراك",                  en: "Subscription" },
+    sub_current_plan:     { fr: "Plan actuel",                ar: "خطتك الحالية",              en: "Current plan" },
+    sub_plan_free:        { fr: "Gratuit (Basic)",            ar: "مجاني (Basic)",             en: "Free (Basic)" },
+    sub_plan_pro:         { fr: "Pro",                        ar: "Pro",                       en: "Pro" },
+    sub_free_blurb:       { fr: "Vous utilisez le plan gratuit : 5 réponses par conversation, sans import de fichiers.", ar: "أنت على الخطة المجانية: 5 ردود لكل محادثة، بدون رفع ملفات.", en: "You're on the free plan: 5 replies per conversation, no file uploads." },
+    sub_pro_active:       { fr: "Pro actif jusqu'au",         ar: "Pro نشط حتى",               en: "Pro active until" },
+    sub_pro_expired:      { fr: "Votre accès Pro a expiré. Renouvelez pour réactiver les fonctionnalités Pro.", ar: "انتهى وصولك إلى Pro. جدّد لإعادة تفعيل مزايا Pro.", en: "Your Pro access has ended. Renew to reactivate Pro features." },
+    sub_upgrade_title:    { fr: "Passer à Pro",               ar: "الترقية إلى Pro",           en: "Upgrade to Pro" },
+    sub_renew_title:      { fr: "Renouveler Pro",             ar: "تجديد Pro",                 en: "Renew Pro" },
+    sub_price_mo:         { fr: "/ mois",                     ar: "/ شهر",                     en: "/ month" },
+    sub_benefit_unlimited:{ fr: "Messages illimités",         ar: "رسائل غير محدودة",          en: "Unlimited messages" },
+    sub_benefit_uploads:  { fr: "Import & analyse de fichiers/images", ar: "رفع وتحليل الملفات/الصور", en: "File & image uploads + analysis" },
+    sub_benefit_priority: { fr: "Support prioritaire",        ar: "دعم ذو أولوية",             en: "Priority support" },
+    sub_pay_note:         { fr: "Paiement mensuel manuel via PayPal. Aucun prélèvement automatique — vous repassez en Basic si vous ne renouvelez pas. Aucune donnée de carte n'est stockée.", ar: "دفع شهري يدوي عبر PayPal. لا خصم تلقائي — تعود إلى Basic إذا لم تجدّد. لا نخزّن بيانات البطاقة.", en: "Manual monthly payment via PayPal. No auto-charge — you revert to Basic if you don't renew. No card data is stored." },
+    sub_paid_success:     { fr: "Paiement reçu — Pro est maintenant actif ! 🎉", ar: "تم استلام الدفع — Pro نشط الآن! 🎉", en: "Payment received — Pro is now active! 🎉" },
+    sub_history:          { fr: "Historique de facturation",  ar: "سجل الفواتير",              en: "Billing history" },
+    sub_no_history:       { fr: "Aucun paiement pour le moment.", ar: "لا توجد مدفوعات بعد.",   en: "No payments yet." },
+    sub_col_date:         { fr: "Date",                       ar: "التاريخ",                   en: "Date" },
+    sub_col_amount:       { fr: "Montant",                    ar: "المبلغ",                    en: "Amount" },
+    sub_col_status:       { fr: "Statut",                     ar: "الحالة",                    en: "Status" },
+    sub_col_period:       { fr: "Période",                    ar: "الفترة",                    en: "Period" },
+    sub_status_completed: { fr: "Payé",                       ar: "مدفوع",                     en: "Paid" },
+    sub_loading:          { fr: "Chargement...",              ar: "جاري التحميل...",           en: "Loading..." },
+    sub_unavailable:      { fr: "Les paiements sont temporairement indisponibles.", ar: "المدفوعات غير متاحة مؤقتاً.", en: "Payments are temporarily unavailable." },
 
     // Referral tab
     ref_title:            { fr: "Parrainage",           ar: "برنامج الإحالة",        en: "Referral" },
@@ -122,12 +173,50 @@ function s(key: string, lang: string): string {
     return S[key]?.[lang] ?? S[key]?.["fr"] ?? key;
 }
 
+const settingBlockClass = "rounded-xl bg-secondary/40 px-4 py-3";
+const compactBlockClass = "rounded-lg bg-secondary/40 p-3";
+const fieldClass = "w-full rounded-lg bg-background px-3 py-2 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:bg-accent/70 disabled:opacity-50";
+const selectClass = "rounded-lg bg-background px-3 py-1.5 text-sm text-foreground outline-none transition-colors hover:bg-accent focus:bg-accent";
+const primaryActionClass = "inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50";
+const secondaryActionClass = "inline-flex items-center justify-center rounded-lg bg-muted px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent disabled:opacity-50";
+const dangerActionClass = "inline-flex items-center justify-center rounded-lg bg-destructive/10 px-4 py-2 text-sm font-medium text-destructive transition-colors hover:bg-destructive/20";
+
+function ToggleSwitch({ defaultChecked }: { defaultChecked?: boolean }) {
+    return (
+        <label className="relative inline-flex cursor-pointer items-center">
+            <input type="checkbox" className="peer sr-only" defaultChecked={defaultChecked} />
+            <span className="h-5 w-9 rounded-full bg-background transition-colors peer-checked:bg-primary" />
+            <span className="pointer-events-none absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-card transition-transform peer-checked:translate-x-4" />
+        </label>
+    );
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 
-export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: SettingsModalProps) {
-    const [activeTab, setActiveTab] = useState<SettingsTab>("general");
-    const { user: authUser, updateProfile, changePassword, token } = useAuth();
+export function SettingsModal({ isOpen, onClose, user: propUser, onLogout, initialTab }: SettingsModalProps) {
+    const [activeTab, setActiveTab] = useState<SettingsTab>(initialTab ?? "general");
+    const { user: authUser, updateProfile, changePassword, token, refetchUser } = useAuth();
     const { language, setLanguage } = useLanguage();
+
+    // Subscription / billing state
+    const [billing, setBilling] = useState<BillingStatus | null>(null);
+    const [billingLoading, setBillingLoading] = useState(false);
+    const [paySuccess, setPaySuccess] = useState(false);
+
+    const loadBilling = useCallback(async () => {
+        const t = token || localStorage.getItem("token");
+        if (!t) return;
+        setBillingLoading(true);
+        try {
+            const res = await fetch(`${API_URL}/billing/status`, { headers: { Authorization: `Bearer ${t}` } });
+            const data = await res.json();
+            if (res.ok) setBilling(data);
+        } catch {
+            /* ignore */
+        } finally {
+            setBillingLoading(false);
+        }
+    }, [token]);
 
     // Profile State
     const [name, setName] = useState(propUser?.name || "");
@@ -204,6 +293,23 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: Set
             .catch(() => {})
             .finally(() => setReferralLoading(false));
     }, [activeTab, isOpen, token]);
+
+    // Jump to a requested tab when the modal opens (e.g. an in-chat upgrade prompt
+    // deep-links straight to "subscription").
+    useEffect(() => {
+        if (isOpen && initialTab) setActiveTab(initialTab);
+    }, [isOpen, initialTab]);
+
+    // Fetch billing status when the Subscription tab opens
+    useEffect(() => {
+        if (activeTab !== "subscription" || !isOpen) return;
+        loadBilling();
+    }, [activeTab, isOpen, loadBilling]);
+
+    // Reset the success banner when leaving the tab / closing the modal
+    useEffect(() => {
+        if (activeTab !== "subscription" || !isOpen) setPaySuccess(false);
+    }, [activeTab, isOpen]);
 
     const handleReferralCopy = useCallback(() => {
         if (!referralData?.code) return;
@@ -324,6 +430,15 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: Set
             ),
         },
         {
+            id: "subscription",
+            labelKey: "tab_subscription",
+            icon: (
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                </svg>
+            ),
+        },
+        {
             id: "referral",
             labelKey: "tab_referral",
             icon: (
@@ -334,31 +449,90 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: Set
         },
     ];
 
+    const activeTabMeta = tabs.find((tab) => tab.id === activeTab) ?? tabs[0];
+
     return (
-        <Modal isOpen={isOpen} onClose={onClose} size="lg">
-            <div className="flex h-[500px] -m-4">
-                {/* Sidebar */}
-                <div className="w-48 border-r border-border bg-muted/30 py-2 shrink-0">
-                    {tabs.map((tab) => (
+        <Modal
+            isOpen={isOpen}
+            onClose={onClose}
+            size="xl"
+            hideHeader
+            bodyClassName="p-0"
+            contentClassName="overflow-hidden rounded-[2rem] border-0 bg-sidebar shadow-none"
+        >
+            <div className="flex h-[calc(100vh-2rem)] max-h-[680px] min-h-[520px] flex-col bg-sidebar md:flex-row">
+                <aside className="flex shrink-0 flex-col gap-2 bg-sidebar p-3 text-sidebar-foreground md:w-[280px]">
+                    <div className="flex items-center gap-1">
+                        <div className="flex flex-1 items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-sidebar-foreground">
+                            <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-sidebar-accent/50 text-primary">
+                                {activeTabMeta.icon}
+                            </span>
+                            <span className="truncate">{s("settings_title", language)}</span>
+                        </div>
                         <button
-                            key={tab.id}
-                            onClick={() => { setActiveTab(tab.id); setStatus(null); }}
-                            className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${
-                                activeTab === tab.id
-                                    ? "bg-accent text-foreground font-medium"
-                                    : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
-                            }`}
+                            onClick={onClose}
+                            className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground"
+                            aria-label="Close settings"
                         >
-                            {tab.icon}
-                            {s(tab.labelKey, language)}
+                            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 6l12 12M18 6L6 18" />
+                            </svg>
                         </button>
-                    ))}
-                </div>
+                    </div>
+
+                    <nav className="flex gap-1.5 overflow-x-auto pb-1 md:flex-col md:overflow-visible md:pb-0">
+                        {tabs.map((tab) => {
+                            const isActive = activeTab === tab.id;
+                            return (
+                                <button
+                                    key={tab.id}
+                                    onClick={() => { setActiveTab(tab.id); setStatus(null); }}
+                                    className={`group flex min-w-max items-center gap-2 rounded-lg px-3 py-2.5 text-sm transition-colors duration-150 md:min-w-0 ${
+                                        isActive
+                                            ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                                            : "text-sidebar-foreground hover:bg-sidebar-accent/50"
+                                    }`}
+                                >
+                                    <span className={`shrink-0 ${isActive ? "text-primary" : "opacity-60"}`}>
+                                        {tab.icon}
+                                    </span>
+                                    <span className="truncate">{s(tab.labelKey, language)}</span>
+                                </button>
+                            );
+                        })}
+                    </nav>
+
+                    <div className="mt-auto hidden px-2 md:block">
+                        <div className="flex items-center gap-3">
+                            <Avatar fallback={propUser?.name?.[0] || propUser?.email?.[0] || "U"} size="md" isOnline />
+                            <div className="min-w-0 flex-1">
+                                <p className="truncate text-sm font-medium">{propUser?.name || propUser?.email || "9anon"}</p>
+                                <p className={`text-xs ${authUser?.plan === "pro" ? "font-semibold text-primary" : "text-muted-foreground"}`}>
+                                    {authUser?.plan === "pro" ? s("sub_plan_pro", language) : s("sub_plan_free", language)}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
 
                 {/* Content */}
-                <div className="flex-1 p-6 overflow-y-auto">
+                <div className="relative flex min-w-0 flex-1 flex-col overflow-hidden bg-background md:m-2 md:rounded-[2rem]">
+                    <div className="flex items-center justify-between px-4 py-1.5">
+                        <div className="min-w-0">
+                            <p className="text-[11px] text-muted-foreground">{s("settings_title", language)}</p>
+                            <h1 className="truncate text-sm font-medium text-foreground">
+                                {s(activeTabMeta.labelKey, language)}
+                            </h1>
+                        </div>
+                        <div className="hidden max-w-[240px] truncate rounded-lg px-2 py-1 text-xs text-muted-foreground hover:bg-muted/60 sm:block">
+                            {propUser?.email || propUser?.name || "9anon"}
+                        </div>
+                    </div>
+
+                    <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4 sm:px-6 lg:px-8">
+                        <div className="mx-auto w-full max-w-3xl">
                     {status && (
-                        <div className={`mb-4 p-3 rounded-lg text-sm ${
+                        <div className={`mb-4 rounded-lg p-3 text-sm font-medium ${
                             status.type === "success"
                                 ? "bg-green-500/10 text-green-600"
                                 : "bg-red-500/10 text-red-600"
@@ -369,19 +543,23 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: Set
 
                     {/* ── General ── */}
                     {activeTab === "general" && (
-                        <div className="space-y-6">
-                            <h2 className="text-lg font-semibold">{s("general_title", language)}</h2>
+                        <div className="space-y-3">
 
                             {/* Appearance */}
-                            <div className="flex items-center justify-between py-3 border-b border-border">
+                            <div className={`${settingBlockClass} flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between`}>
                                 <div>
                                     <p className="text-sm font-medium">{s("appearance", language)}</p>
-                                    <p className="text-xs text-muted-foreground">{s("theme_mode", language)}</p>
+                                    <p className="mt-1 text-xs text-muted-foreground">{s("theme_mode", language)}</p>
                                 </div>
                                 <select
                                     value={theme}
-                                    onChange={(e) => setTheme(e.target.value as any)}
-                                    className="bg-accent border border-border rounded-lg px-3 py-1.5 text-sm"
+                                    onChange={(e) => {
+                                        const nextTheme = e.target.value;
+                                        if (nextTheme === "light" || nextTheme === "dark" || nextTheme === "system") {
+                                            setTheme(nextTheme);
+                                        }
+                                    }}
+                                    className={selectClass}
                                 >
                                     <option value="light">{s("theme_light", language)}</option>
                                     <option value="dark">{s("theme_dark", language)}</option>
@@ -390,22 +568,22 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: Set
                             </div>
 
                             {/* Interface Language */}
-                            <div className="py-3 border-b border-border">
-                                <div className="flex items-center justify-between mb-1">
+                            <div className={settingBlockClass}>
+                                <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                                     <div>
                                         <p className="text-sm font-medium">{s("language_label", language)}</p>
-                                        <p className="text-xs text-muted-foreground">{s("language_desc", language)}</p>
+                                        <p className="mt-1 text-xs text-muted-foreground">{s("language_desc", language)}</p>
                                     </div>
-                                    <div className="flex gap-1.5">
+                                    <div className="flex flex-wrap gap-2">
                                         {(Object.keys(languages) as Language[]).map((lang) => (
                                             <button
                                                 key={lang}
                                                 onClick={() => setLanguage(lang)}
                                                 title={languages[lang].nativeName}
-                                                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm border transition-all ${
+                                                className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
                                                     language === lang
-                                                        ? "bg-primary text-primary-foreground border-primary font-medium"
-                                                        : "bg-accent border-border text-muted-foreground hover:border-primary/30 hover:text-foreground"
+                                                        ? "bg-primary text-primary-foreground"
+                                                        : "bg-background text-muted-foreground hover:bg-accent hover:text-foreground"
                                                 }`}
                                             >
                                                 <span>{langIcons[lang]}</span>
@@ -417,13 +595,13 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: Set
                             </div>
 
                             {/* Spoken Language */}
-                            <div className="py-3 border-b border-border">
-                                <div className="flex items-center justify-between">
+                            <div className={settingBlockClass}>
+                                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                                     <p className="text-sm font-medium">{s("spoken_language", language)}</p>
                                     <select
                                         value={spokenLanguage}
                                         onChange={(e) => handleSpokenLanguageChange(e.target.value)}
-                                        className="bg-accent border border-border rounded-lg px-3 py-1.5 text-sm"
+                                        className={selectClass}
                                     >
                                         <option value="auto">{s("spoken_auto", language)}</option>
                                         <option value="ar">العربية</option>
@@ -431,39 +609,34 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: Set
                                         <option value="en">English</option>
                                     </select>
                                 </div>
-                                <p className="text-xs text-muted-foreground mt-1.5">{s("spoken_desc", language)}</p>
+                                <p className="mt-1.5 text-xs text-muted-foreground">{s("spoken_desc", language)}</p>
                             </div>
                         </div>
                     )}
 
                     {/* ── Notifications ── */}
                     {activeTab === "notifications" && (
-                        <div className="space-y-6">
-                            <h2 className="text-lg font-semibold">{s("notif_title", language)}</h2>
-                            <div className="flex items-center justify-between py-3 border-b border-border">
+                        <div className="space-y-3">
+                            <div className={`${settingBlockClass} flex items-center justify-between gap-4`}>
                                 <div>
                                     <p className="text-sm font-medium">{s("email_notif", language)}</p>
-                                    <p className="text-xs text-muted-foreground">{s("email_notif_desc", language)}</p>
+                                    <p className="mt-1 text-xs text-muted-foreground">{s("email_notif_desc", language)}</p>
                                 </div>
-                                <label className="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" className="sr-only peer" />
-                                    <div className="w-9 h-5 bg-muted peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
-                                </label>
+                                <ToggleSwitch />
                             </div>
                         </div>
                     )}
 
                     {/* ── Personalization ── */}
                     {activeTab === "personalization" && (
-                        <div className="space-y-6">
-                            <h2 className="text-lg font-semibold">{s("person_title", language)}</h2>
-                            <p className="text-sm text-muted-foreground">{s("person_desc", language)}</p>
+                        <div className="space-y-3">
+                            <p className={`${settingBlockClass} text-sm font-medium leading-relaxed text-muted-foreground`}>{s("person_desc", language)}</p>
 
-                            <div className="space-y-4">
+                            <div className="space-y-3">
                                 {/* Tone chips */}
-                                <div className="space-y-2">
+                                <div className={`${settingBlockClass} space-y-3`}>
                                     <label className="text-sm font-medium">{s("comm_style", language)}</label>
-                                    <div className="grid grid-cols-2 gap-2">
+                                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                                         {TONE_OPTIONS.map((tone) => {
                                             const isSelected = selectedTones.includes(tone.id);
                                             return (
@@ -474,10 +647,10 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: Set
                                                             ? selectedTones.filter(t => t !== tone.id)
                                                             : [...selectedTones, tone.id]);
                                                     }}
-                                                    className={`px-3 py-2 text-sm rounded-lg border transition-all ${
+                                                    className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                                                         isSelected
-                                                            ? "bg-primary text-primary-foreground border-primary"
-                                                            : "bg-muted/30 border-border hover:bg-muted text-muted-foreground"
+                                                            ? "bg-primary text-primary-foreground"
+                                                            : "bg-background text-muted-foreground hover:bg-accent hover:text-foreground"
                                                     }`}
                                                 >
                                                     {s(tone.labelKey, language)}
@@ -488,20 +661,20 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: Set
                                 </div>
 
                                 {/* Custom instructions */}
-                                <div className="space-y-2">
+                                <div className={`${settingBlockClass} space-y-3`}>
                                     <label className="text-sm font-medium">{s("custom_instructions", language)}</label>
                                     <textarea
                                         value={personalizationInput}
                                         onChange={(e) => setPersonalizationInput(e.target.value)}
                                         placeholder={s("custom_placeholder", language)}
-                                        className="w-full h-32 px-3 py-2 bg-muted/50 border border-border rounded-lg text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary"
+                                        className={`${fieldClass} h-32 resize-none leading-relaxed`}
                                     />
                                 </div>
 
                                 <button
                                     onClick={handleUpdatePersonalization}
                                     disabled={loading}
-                                    className="px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50"
+                                    className={primaryActionClass}
                                 >
                                     {loading ? s("saving", language) : s("save_prefs", language)}
                                 </button>
@@ -511,21 +684,17 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: Set
 
                     {/* ── Data controls ── */}
                     {activeTab === "data" && (
-                        <div className="space-y-6">
-                            <h2 className="text-lg font-semibold">{s("data_title", language)}</h2>
-                            <div className="py-3 border-b border-border">
+                        <div className="space-y-3">
+                            <div className={settingBlockClass}>
                                 <div className="flex items-center justify-between">
                                     <div>
                                         <p className="text-sm font-medium">{s("chat_history", language)}</p>
-                                        <p className="text-xs text-muted-foreground">{s("chat_history_desc", language)}</p>
+                                        <p className="mt-1 text-xs text-muted-foreground">{s("chat_history_desc", language)}</p>
                                     </div>
-                                    <label className="relative inline-flex items-center cursor-pointer">
-                                        <input type="checkbox" className="sr-only peer" defaultChecked />
-                                        <div className="w-9 h-5 bg-muted peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
-                                    </label>
+                                    <ToggleSwitch defaultChecked />
                                 </div>
                             </div>
-                            <button className="text-sm text-destructive hover:underline">
+                            <button className={dangerActionClass}>
                                 {s("delete_history", language)}
                             </button>
                         </div>
@@ -533,36 +702,35 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: Set
 
                     {/* ── Security ── */}
                     {activeTab === "security" && (
-                        <div className="space-y-6">
-                            <h2 className="text-lg font-semibold">{s("security_title", language)}</h2>
-                            <div className="py-3">
-                                <p className="text-sm font-medium mb-4">{s("change_password", language)}</p>
+                        <div className="space-y-3">
+                            <div className={settingBlockClass}>
+                                <p className="mb-4 text-sm font-medium">{s("change_password", language)}</p>
                                 <div className="space-y-3">
                                     <input
                                         type="password"
                                         placeholder={s("current_password", language)}
                                         value={passwordData.current}
                                         onChange={(e) => setPasswordData({ ...passwordData, current: e.target.value })}
-                                        className="w-full px-3 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                                        className={fieldClass}
                                     />
                                     <input
                                         type="password"
                                         placeholder={s("new_password", language)}
                                         value={passwordData.new}
                                         onChange={(e) => setPasswordData({ ...passwordData, new: e.target.value })}
-                                        className="w-full px-3 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                                        className={fieldClass}
                                     />
                                     <input
                                         type="password"
                                         placeholder={s("confirm_password", language)}
                                         value={passwordData.confirm}
                                         onChange={(e) => setPasswordData({ ...passwordData, confirm: e.target.value })}
-                                        className="w-full px-3 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                                        className={fieldClass}
                                     />
                                     <button
                                         onClick={handleChangePassword}
                                         disabled={loading || !passwordData.current || !passwordData.new}
-                                        className="px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50"
+                                        className={primaryActionClass}
                                     >
                                         {loading ? s("changing", language) : s("change_btn", language)}
                                     </button>
@@ -573,71 +741,178 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: Set
 
                     {/* ── Account ── */}
                     {activeTab === "account" && (
-                        <div className="space-y-6">
-                            <h2 className="text-lg font-semibold">{s("account_title", language)}</h2>
+                        <div className="space-y-3">
 
-                            <div className="py-3 border-b border-border">
+                            <div className={settingBlockClass}>
                                 <p className="text-sm font-medium">{s("email_label", language)}</p>
-                                <p className="text-sm text-muted-foreground mt-1">{propUser?.email}</p>
+                                <p className="mt-1 break-all rounded-lg bg-background px-3 py-2 text-sm text-muted-foreground">{propUser?.email}</p>
                             </div>
 
-                            <div className="py-3 border-b border-border">
-                                <div className="flex items-center justify-between mb-1">
+                            <div className={settingBlockClass}>
+                                <div className="mb-3 flex items-center justify-between gap-3">
                                     <p className="text-sm font-medium">{s("name_label", language)}</p>
                                     {!isEditingName && (
                                         <button
                                             onClick={() => setIsEditingName(true)}
-                                            className="text-xs text-primary hover:underline"
+                                            className="rounded-lg bg-background px-3 py-1.5 text-xs font-medium text-primary transition-colors hover:bg-accent"
                                         >
                                             {s("edit_btn", language)}
                                         </button>
                                     )}
                                 </div>
                                 {isEditingName ? (
-                                    <div className="flex gap-2">
+                                    <div className="flex flex-col gap-2 sm:flex-row">
                                         <input
                                             type="text"
                                             value={name}
                                             onChange={(e) => setName(e.target.value)}
-                                            className="flex-1 px-3 py-1.5 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                                            className={`${fieldClass} flex-1`}
                                         />
                                         <button
                                             onClick={handleUpdateProfile}
                                             disabled={loading}
-                                            className="px-3 py-1.5 bg-primary text-primary-foreground text-xs rounded-lg hover:bg-primary/90"
+                                            className={`${primaryActionClass} px-3 py-2 text-xs`}
                                         >
                                             {s("save_btn", language)}
                                         </button>
                                         <button
                                             onClick={() => { setIsEditingName(false); setName(propUser?.name || ""); }}
-                                            className="px-3 py-1.5 bg-accent text-accent-foreground text-xs rounded-lg hover:bg-accent/80"
+                                            className={`${secondaryActionClass} px-3 py-2 text-xs`}
                                         >
                                             {s("cancel_btn", language)}
                                         </button>
                                     </div>
                                 ) : (
-                                    <p className="text-sm text-muted-foreground">
+                                    <p className="rounded-lg bg-background px-3 py-2 text-sm text-muted-foreground">
                                         {propUser?.name || s("name_not_set", language)}
                                     </p>
                                 )}
                             </div>
 
-                            <div className="pt-4 space-y-3">
+                            <div className="grid gap-2 sm:grid-cols-2">
                                 <button
                                     onClick={() => { onLogout(); onClose(); }}
-                                    className="w-full px-4 py-2.5 text-sm font-medium bg-accent hover:bg-accent/80 rounded-lg transition-colors flex items-center justify-center gap-2"
+                                    className={`${secondaryActionClass} w-full gap-2`}
                                 >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                                     </svg>
                                     {s("logout_btn", language)}
                                 </button>
-                                <button className="w-full px-4 py-2.5 text-sm font-medium text-destructive border border-destructive/30 hover:bg-destructive/10 rounded-lg transition-colors">
+                                <button className={`${dangerActionClass} w-full`}>
                                     {s("delete_account", language)}
                                 </button>
                             </div>
                         </div>
                     )}
+                    {/* ── Subscription ── */}
+                    {activeTab === "subscription" && (
+                        <div className="space-y-3">
+
+                            {billingLoading && !billing ? (
+                                <p className={`${compactBlockClass} text-sm text-muted-foreground`}>{s("sub_loading", language)}</p>
+                            ) : (() => {
+                                const isProActive = billing?.plan === "pro";
+                                const expiry = billing?.proExpiresAt ? new Date(billing.proExpiresAt) : null;
+                                const locale = language === "ar" ? "ar-MA" : language === "fr" ? "fr-FR" : "en-US";
+                                const fmt = (d: Date) => d.toLocaleDateString(locale, { year: "numeric", month: "short", day: "numeric" });
+                                const price = billing?.priceUSD || "5.00";
+
+                                return (
+                                    <>
+                                        {paySuccess && (
+                                            <div className="rounded-lg bg-emerald-500/10 p-3 text-sm font-medium text-emerald-600">
+                                                {s("sub_paid_success", language)}
+                                            </div>
+                                        )}
+
+                                        {/* Current plan */}
+                                        <div className={`rounded-xl px-4 py-3 ${isProActive ? "bg-primary/10" : "bg-muted/60"}`}>
+                                            <div className="flex items-center justify-between">
+                                                <div>
+                                                    <p className="mb-1 text-xs font-medium uppercase tracking-wide text-muted-foreground">{s("sub_current_plan", language)}</p>
+                                                    <p className={`text-xl font-bold ${isProActive ? "text-primary" : "text-foreground"}`}>
+                                                        {isProActive ? s("sub_plan_pro", language) : s("sub_plan_free", language)}
+                                                    </p>
+                                                </div>
+                                                {isProActive && (
+                                                    <span className="rounded-full bg-primary px-2.5 py-1 text-xs font-bold text-primary-foreground">PRO</span>
+                                                )}
+                                            </div>
+                                            {isProActive && expiry ? (
+                                                <p className="mt-3 text-sm font-medium text-muted-foreground">
+                                                    {s("sub_pro_active", language)} <span className="font-semibold text-foreground">{fmt(expiry)}</span>
+                                                </p>
+                                            ) : (
+                                                <p className="mt-3 text-sm font-medium text-muted-foreground">{s("sub_free_blurb", language)}</p>
+                                            )}
+                                        </div>
+
+                                        {/* Upgrade / renew */}
+                                        {billing && !billing.configured ? (
+                                            <p className={`${compactBlockClass} text-sm text-muted-foreground`}>{s("sub_unavailable", language)}</p>
+                                        ) : (
+                                            <div className={`${settingBlockClass} space-y-4`}>
+                                                <div className="flex items-baseline justify-between gap-4">
+                                                    <h3 className="text-base font-semibold">
+                                                        {isProActive ? s("sub_renew_title", language) : s("sub_upgrade_title", language)}
+                                                    </h3>
+                                                    <p>
+                                                        <span className="text-2xl font-bold">${price}</span>
+                                                        <span className="text-sm text-muted-foreground"> {s("sub_price_mo", language)}</span>
+                                                    </p>
+                                                </div>
+                                                <ul className="grid gap-1.5 text-sm">
+                                                    {["sub_benefit_unlimited", "sub_benefit_uploads", "sub_benefit_priority"].map((k) => (
+                                                        <li key={k} className="flex items-center gap-2 rounded-lg bg-background px-3 py-2 text-foreground/80">
+                                                            <svg className="h-4 w-4 shrink-0 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                                                            </svg>
+                                                            {s(k, language)}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                                <PaypalButtons onSuccess={() => { setPaySuccess(true); loadBilling(); refetchUser(); }} />
+                                                <p className="text-xs font-medium leading-relaxed text-muted-foreground">{s("sub_pay_note", language)}</p>
+                                            </div>
+                                        )}
+
+                                        {/* Billing history */}
+                                        <div className={settingBlockClass}>
+                                            <h3 className="mb-2 text-sm font-semibold">{s("sub_history", language)}</h3>
+                                            {billing && billing.payments.length > 0 ? (
+                                                <div className="overflow-x-auto">
+                                                    <table className="w-full border-separate border-spacing-y-1 text-xs">
+                                                        <thead>
+                                                            <tr className="text-muted-foreground">
+                                                                <th className="pb-2 text-start font-medium">{s("sub_col_date", language)}</th>
+                                                                <th className="pb-2 text-start font-medium">{s("sub_col_amount", language)}</th>
+                                                                <th className="pb-2 text-start font-medium">{s("sub_col_status", language)}</th>
+                                                                <th className="pb-2 text-start font-medium">{s("sub_col_period", language)}</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {billing.payments.map((p) => (
+                                                                <tr key={p.id} className="bg-background/70">
+                                                                    <td className="rounded-l-lg px-3 py-2">{fmt(new Date(p.createdAt))}</td>
+                                                                    <td className="px-3 py-2">${p.amount.toFixed(2)} {p.currency}</td>
+                                                                    <td className="px-3 py-2 text-emerald-600">{s("sub_status_completed", language)}</td>
+                                                                    <td className="rounded-r-lg px-3 py-2 text-muted-foreground">{fmt(new Date(p.periodStart))} – {fmt(new Date(p.periodEnd))}</td>
+                                                                </tr>
+                                                            ))}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            ) : (
+                                                <p className="text-sm font-medium text-muted-foreground">{s("sub_no_history", language)}</p>
+                                            )}
+                                        </div>
+                                    </>
+                                );
+                            })()}
+                        </div>
+                    )}
+
                     {/* ── Referral ── */}
                     {activeTab === "referral" && (() => {
                         const count = referralData?.referralCount ?? 0;
@@ -648,57 +923,56 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: Set
                             : "";
 
                         return (
-                            <div className="space-y-5">
-                                <h2 className="text-lg font-semibold">{s("ref_title", language)}</h2>
+                            <div className="space-y-3">
 
                                 {referralLoading ? (
-                                    <p className="text-sm text-muted-foreground">{s("ref_loading", language)}</p>
+                                    <p className={`${compactBlockClass} text-sm text-muted-foreground`}>{s("ref_loading", language)}</p>
                                 ) : (
                                     <>
                                         {/* Story */}
-                                        <div className="py-3 border-b border-border">
-                                            <p className="text-sm font-medium mb-1">{s("ref_story_title", language)}</p>
-                                            <p className="text-xs text-muted-foreground leading-relaxed">{s("ref_story", language)}</p>
+                                        <div className={settingBlockClass}>
+                                            <p className="mb-1 text-sm font-medium">{s("ref_story_title", language)}</p>
+                                            <p className="text-xs leading-relaxed text-muted-foreground">{s("ref_story", language)}</p>
                                         </div>
 
                                         {/* Progress */}
-                                        <div className="py-3 border-b border-border">
+                                        <div className={settingBlockClass}>
                                             <div className="flex items-center justify-between mb-2">
                                                 <p className="text-sm font-medium">{s("ref_milestone", language)}</p>
-                                                <span className="text-xs font-semibold text-primary">{count} / {REFERRAL_MILESTONE}</span>
+                                                <span className="rounded-full bg-background px-2.5 py-1 text-xs font-semibold text-primary">{count} / {REFERRAL_MILESTONE}</span>
                                             </div>
-                                            <div className="flex gap-1.5">
+                                            <div className="flex gap-2">
                                                 {Array.from({ length: REFERRAL_MILESTONE }).map((_, i) => (
                                                     <div
                                                         key={i}
-                                                        className={`h-2 flex-1 rounded-full transition-colors ${
+                                                        className={`h-3 flex-1 rounded-full transition-colors ${
                                                             i < dotsCount
                                                                 ? milestoneReached ? "bg-emerald-500" : "bg-primary"
-                                                                : "bg-muted"
+                                                                : "bg-background"
                                                         }`}
                                                     />
                                                 ))}
                                             </div>
                                             {milestoneReached && (
-                                                <div className="mt-2 p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                                                <div className="mt-2 rounded-lg bg-emerald-500/10 p-2.5">
                                                     <p className="text-xs font-semibold text-emerald-600">{s("ref_done_title", language)}</p>
-                                                    <p className="text-xs text-emerald-600/80 mt-0.5">{s("ref_done_sub", language)}</p>
+                                                    <p className="mt-0.5 text-xs font-medium text-emerald-600/80">{s("ref_done_sub", language)}</p>
                                                 </div>
                                             )}
                                         </div>
 
                                         {/* Referral link */}
-                                        <div className="py-3 border-b border-border space-y-2">
+                                        <div className={`${settingBlockClass} space-y-3`}>
                                             <p className="text-sm font-medium">{s("ref_link_label", language)}</p>
-                                            <div className="flex gap-2">
+                                            <div className="flex flex-col gap-2 sm:flex-row">
                                                 <input
                                                     readOnly
                                                     value={referralLink}
-                                                    className="flex-1 px-3 py-1.5 bg-muted/50 border border-border rounded-lg text-xs text-muted-foreground focus:outline-none truncate"
+                                                    className={`${fieldClass} flex-1 truncate text-xs`}
                                                 />
                                                 <button
                                                     onClick={handleReferralCopy}
-                                                    className="px-3 py-1.5 bg-primary text-primary-foreground text-xs font-medium rounded-lg hover:bg-primary/90 transition-colors shrink-0"
+                                                    className={`${primaryActionClass} shrink-0 px-4 text-xs`}
                                                 >
                                                     {referralCopied ? s("ref_copied", language) : s("ref_copy", language)}
                                                 </button>
@@ -715,7 +989,7 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: Set
                                             href={`https://wa.me/?text=${encodeURIComponent(s("ref_whatsapp_msg", language) + referralLink)}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="flex items-center gap-2 px-4 py-2.5 bg-[#25D366] text-white text-sm font-medium rounded-lg hover:bg-[#22c55e] transition-colors w-full justify-center"
+                                            className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#25D366] px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#22c55e]"
                                         >
                                             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -724,14 +998,14 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: Set
                                         </a>
 
                                         {/* Reward callout */}
-                                        <div className={`p-3 rounded-lg border ${milestoneReached ? "bg-emerald-500/10 border-emerald-500/20" : "bg-amber-500/10 border-amber-500/20"}`}>
+                                        <div className={`rounded-xl px-4 py-3 ${milestoneReached ? "bg-emerald-500/10" : "bg-amber-500/10"}`}>
                                             <div className="flex items-start gap-2">
                                                 <span className="text-lg">{milestoneReached ? "🎉" : "🎁"}</span>
                                                 <div>
                                                     <p className={`text-xs font-semibold ${milestoneReached ? "text-emerald-600" : "text-amber-600"}`}>
                                                         {s("ref_reward_title", language)} — {s("ref_reward_value", language)}
                                                     </p>
-                                                    <p className={`text-xs mt-0.5 ${milestoneReached ? "text-emerald-600/80" : "text-amber-600/80"}`}>
+                                                    <p className={`mt-0.5 text-xs font-medium ${milestoneReached ? "text-emerald-600/80" : "text-amber-600/80"}`}>
                                                         {s("ref_reward_desc", language)}
                                                     </p>
                                                 </div>
@@ -742,6 +1016,8 @@ export function SettingsModal({ isOpen, onClose, user: propUser, onLogout }: Set
                             </div>
                         );
                     })()}
+                        </div>
+                    </div>
                 </div>
             </div>
         </Modal>

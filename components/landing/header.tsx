@@ -305,6 +305,7 @@ export function Header() {
                             {[
                                 { href: "#features",         key: "nav.features" },
                                 { href: "/about",            key: "nav.about"    },
+                                { href: "/pricing",          key: "nav.pricing"  },
                                 { href: `/${language}/blog`, key: "nav.blog"     },
                             ].map((item) => (
                                 <Link

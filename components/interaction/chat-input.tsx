@@ -17,6 +17,10 @@ interface ChatInputProps {
      * "welcome" → expanded height, centered on page, not sticky
      */
     variant?: "chat" | "welcome";
+    /** When false, the attach button triggers `onUpgradeRequired` instead of opening the file picker (Basic plan). */
+    canAttach?: boolean;
+    /** Fired when a Basic user taps the (locked) attach button. */
+    onUpgradeRequired?: () => void;
 }
 
 function formatFileSize(bytes: number): string {
@@ -64,6 +68,8 @@ export function ChatInput({
     placeholder = "Message 9anon AI...",
     className = "",
     variant = "chat",
+    canAttach = true,
+    onUpgradeRequired,
 }: ChatInputProps) {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -190,12 +196,15 @@ export function ChatInput({
                 <div className="flex items-center gap-2.5">
                     <button
                         type="button"
-                        onClick={() => fileInputRef.current?.click()}
+                        onClick={() => {
+                            if (!canAttach) { onUpgradeRequired?.(); return; }
+                            fileInputRef.current?.click();
+                        }}
                         data-attach-button
-                        title="Attach file"
-                        aria-label="Attach file"
+                        title={canAttach ? "Attach file" : "Upgrade to Pro to attach files"}
+                        aria-label={canAttach ? "Attach file" : "Upgrade to Pro to attach files"}
                         className={[
-                            "flex items-center justify-center shrink-0",
+                            "relative flex items-center justify-center shrink-0",
                             "bg-primary/10 border border-primary/15 text-primary",
                             "hover:bg-primary/15 hover:border-primary/22",
                             "rounded-xl transition-all duration-150 active:scale-95",
@@ -215,6 +224,15 @@ export function ChatInput({
                         >
                             <path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48" />
                         </svg>
+                        {/* Pro lock badge for Basic users */}
+                        {!canAttach && (
+                            <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-primary text-primary-foreground flex items-center justify-center ring-2 ring-card">
+                                <svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" />
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                </svg>
+                            </span>
+                        )}
                     </button>
 
                     <span

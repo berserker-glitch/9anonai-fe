@@ -12,6 +12,9 @@ interface ModalProps {
     children?: ReactNode;
     footer?: ReactNode;
     size?: "sm" | "md" | "lg" | "xl";
+    hideHeader?: boolean;
+    contentClassName?: string;
+    bodyClassName?: string;
 }
 
 const sizeClasses = {
@@ -29,6 +32,9 @@ export function Modal({
     children,
     footer,
     size = "md",
+    hideHeader = false,
+    contentClassName = "",
+    bodyClassName = "",
 }: ModalProps) {
     useEffect(() => {
         const handleEscape = (e: KeyboardEvent) => {
@@ -65,9 +71,11 @@ export function Modal({
           border border-border
           rounded-xl shadow-2xl
           animate-in fade-in-0 zoom-in-95 duration-200
+          ${contentClassName}
         `}
             >
                 {/* Header */}
+                {!hideHeader && (
                 <div className="flex items-start justify-between p-4 border-b border-border">
                     <div>
                         {title && (
@@ -100,9 +108,10 @@ export function Modal({
                         </svg>
                     </IconButton>
                 </div>
+                )}
 
                 {/* Body */}
-                {children && <div className="p-4">{children}</div>}
+                {children && <div className={`p-4 ${bodyClassName}`}>{children}</div>}
 
                 {/* Footer */}
                 {footer && (
