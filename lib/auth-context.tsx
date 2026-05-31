@@ -11,6 +11,8 @@ interface User {
     isOnboarded?: boolean;
     marketingSource?: string;
     feedbackDismissed?: boolean;
+    plan?: string;            // "basic" (free) | "pro"
+    proExpiresAt?: string | null; // ISO timestamp when Pro access lapses
 }
 
 interface AuthContextType {
@@ -23,6 +25,8 @@ interface AuthContextType {
     updateProfile: (data: { name?: string; personalization?: string; isOnboarded?: boolean; marketingSource?: string }) => Promise<{ success: boolean; error?: string }>;
     changePassword: (current: string, newPass: string) => Promise<{ success: boolean; error?: string }>;
     dismissFeedback: () => Promise<void>;
+    refetchUser: () => Promise<void>;
+    isPro: boolean;
     isLoading: boolean;
 }
 
@@ -222,8 +226,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     };
 
+    // Re-pull the user (e.g. after a successful Pro payment) so plan/proExpiresAt refresh.
+    const refetchUser = async () => {
+        const activeToken = token || localStorage.getItem("token");
+        if (!activeToken) return;
+        try {
+            const res = await fetch(`${API_URL}/auth/me`, {
+                headers: { Authorization: `Bearer ${activeToken}` },
+            });
+            const data = await res.json();
+            if (data.user) setUser(data.user);
+        } catch (e) {
+            console.error("Failed to refetch user", e);
+        }
+    };
+
+    // Effective Pro: stored plan is "pro" AND the paid period hasn't lapsed (no grace period).
+    const isPro = Boolean(
+        user?.plan === "pro" &&
+        user?.proExpiresAt &&
+        new Date(user.proExpiresAt).getTime() > Date.now()
+    );
+
     return (
-        <AuthContext.Provider value={{ user, token, login, loginWithGoogle, register, logout, updateProfile, changePassword, dismissFeedback, isLoading }}>
+        <AuthContext.Provider value={{ user, token, login, loginWithGoogle, register, logout, updateProfile, changePassword, dismissFeedback, refetchUser, isPro, isLoading }}>
             {children}
         </AuthContext.Provider>
     );
