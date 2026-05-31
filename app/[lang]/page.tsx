@@ -12,7 +12,7 @@ import { LegalTopicsGrid } from "@/components/landing/legal-topics-grid";
 import { TestimonialsSection } from "@/components/landing/testimonials-section";
 import { BlogHighlights } from "@/components/landing/blog-highlights";
 import { FAQSection } from "@/components/landing/faq-section";
-import { Search, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Search, ArrowRight, CheckCircle2, Crown } from "lucide-react";
 
 export default function LandingPage() {
   const { t, isLoading } = useTranslation("landing");
@@ -204,6 +204,92 @@ export default function LandingPage() {
                 </p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── PRICING TEASER ─── */}
+      <section className="py-24 lg:py-32 relative overflow-hidden">
+        <div className="absolute inset-0 bg-mesh-gradient opacity-60" />
+        <div className="absolute inset-0 bg-background/50" />
+
+        <div className="relative max-w-5xl mx-auto px-6 sm:px-8 lg:px-12">
+          {/* Header */}
+          <div className="text-center mb-14 scroll-animate opacity-0 transform translate-y-8 transition-[opacity,transform] duration-700">
+            <div className="flex items-center justify-center gap-3 mb-5">
+              <span className="w-8 h-px bg-primary/40" />
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">{t("pricingTeaser.tag")}</span>
+              <span className="w-8 h-px bg-primary/40" />
+            </div>
+            <h2 className="font-display text-4xl sm:text-5xl lg:text-[3.25rem] font-bold tracking-tight leading-[1.12] mb-4">
+              {t("pricingTeaser.title")}{" "}
+              <span className="text-gradient-emerald">{t("pricingTeaser.titleHighlight")}</span>
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
+              {t("pricingTeaser.subtitle")}
+            </p>
+          </div>
+
+          {/* Tier cards */}
+          <div className="grid sm:grid-cols-2 gap-5 max-w-3xl mx-auto mb-12">
+            {/* Basic */}
+            <div className="scroll-animate opacity-0 transform translate-y-8 transition-[opacity,transform] duration-700 glass-premium border border-border/40 rounded-3xl p-8 flex flex-col">
+              <span className="text-sm font-bold uppercase tracking-[0.18em] text-muted-foreground mb-3">
+                {t("pricingTeaser.basicName")}
+              </span>
+              <div className="flex items-baseline gap-1 mb-2">
+                <span className="font-display text-4xl font-bold">{t("pricingTeaser.basicPrice")}</span>
+              </div>
+              <p className={`text-muted-foreground text-sm mb-6 ${isArabic ? "text-right" : ""}`}>
+                {t("pricingTeaser.basicDesc")}
+              </p>
+              <ul className="space-y-3 mt-auto">
+                {[t("pricingTeaser.basicFeature1"), t("pricingTeaser.basicFeature2")].map((f, i) => (
+                  <li key={i} className={`flex items-center gap-2.5 text-sm ${isArabic ? "flex-row-reverse text-right" : ""}`}>
+                    <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Pro */}
+            <div className="scroll-animate opacity-0 transform translate-y-8 transition-[opacity,transform] duration-700 delay-100 relative border-glow-emerald rounded-3xl p-8 flex flex-col bg-card/60 backdrop-blur-xl">
+              {/* Best value badge */}
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-primary to-primary/90 text-primary-foreground text-xs font-bold uppercase tracking-[0.12em] shadow-lg shadow-primary/30">
+                <Crown className="w-3.5 h-3.5" />
+                {t("pricingTeaser.proTag")}
+              </div>
+              <span className="text-sm font-bold uppercase tracking-[0.18em] text-primary mb-3">
+                {t("pricingTeaser.proName")}
+              </span>
+              <div className="flex items-baseline gap-1.5 mb-2">
+                <span className="font-display text-4xl font-bold text-gradient-emerald">{t("pricingTeaser.proPrice")}</span>
+                <span className="text-muted-foreground text-sm">{t("pricingTeaser.proPer")}</span>
+              </div>
+              <p className={`text-muted-foreground text-sm mb-6 ${isArabic ? "text-right" : ""}`}>
+                {t("pricingTeaser.proDesc")}
+              </p>
+              <ul className="space-y-3 mt-auto">
+                {[t("pricingTeaser.proFeature1"), t("pricingTeaser.proFeature2")].map((f, i) => (
+                  <li key={i} className={`flex items-center gap-2.5 text-sm ${isArabic ? "flex-row-reverse text-right" : ""}`}>
+                    <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="text-center scroll-animate opacity-0 transform translate-y-8 transition-[opacity,transform] duration-700">
+            <Link
+              href="/pricing"
+              className="inline-flex items-center gap-2.5 btn-premium px-9 py-4 text-base font-bold bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-2xl shadow-xl shadow-primary/25 group"
+            >
+              <span>{t("pricingTeaser.cta")}</span>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
+            </Link>
           </div>
         </div>
       </section>

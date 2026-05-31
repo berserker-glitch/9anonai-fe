@@ -28,6 +28,7 @@ import { AnimatedThinkingSvg } from "@/components/interaction/animated-thinking-
 import { ScrollToBottom } from "@/components/utility/scroll-to-bottom";
 import { ConfirmModal } from "@/components/utility/modal";
 import { SettingsModal } from "@/components/settings/settings-modal";
+import { UpgradeDialog, type UpgradeReason } from "@/components/billing/upgrade-dialog";
 import { FilesModal } from "@/components/chat/files-modal";
 import { FeedbackModal } from "@/components/chat/feedback-modal";
 
@@ -91,7 +92,7 @@ export default function ChatWithIdPage() {
     const chatId = params?.id as string;
     const initialMessage = searchParams?.get("message");
     const router = useRouter();
-    const { user, token, logout, isLoading: authLoading } = useAuth();
+    const { user, token, logout, isLoading: authLoading, isPro } = useAuth();
     const { language } = useLanguage();
 
     // State
@@ -105,6 +106,8 @@ export default function ChatWithIdPage() {
     const [showScrollButton, setShowScrollButton] = useState(false);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [settingsOpen, setSettingsOpen] = useState(false);
+    const [settingsTab, setSettingsTab] = useState<"subscription" | undefined>(undefined);
+    const [upgradeReason, setUpgradeReason] = useState<UpgradeReason | null>(null);
     const [chatToDelete, setChatToDelete] = useState<string | null>(null);
     const [attachedFiles, setAttachedFiles] = useState<File[]>([]);
     const [showWelcome, setShowWelcome] = useState(true);
@@ -268,11 +271,19 @@ export default function ChatWithIdPage() {
         }
     }, []);
 
-    // File upload handler
+    // File upload handler — Basic plan can't attach; surface the upgrade prompt
     const handleFileUpload = (files: FileList | null) => {
         if (!files || files.length === 0) return;
+        if (!isPro) { setUpgradeReason("uploads"); return; }
         const fileArray = Array.from(files);
         setAttachedFiles(prev => [...prev, ...fileArray]);
+    };
+
+    // Open Settings directly on the Subscription tab (from an upgrade prompt)
+    const openSubscription = () => {
+        setUpgradeReason(null);
+        setSettingsTab("subscription");
+        setSettingsOpen(true);
     };
 
     // Create new chat
@@ -577,6 +588,21 @@ export default function ChatWithIdPage() {
 
             if (!response.ok) {
                 const errData = await response.json().catch(() => ({}));
+                const code = errData?.details?.code;
+                // Freemium limits → show the upgrade prompt instead of an error bubble,
+                // drop the optimistic turn, and restore the user's typed text.
+                if (response.status === 402 && code === "MESSAGE_LIMIT_REACHED") {
+                    setMessages(prev => prev.filter(m => m.id !== currentMessageId && m.id !== assistantId));
+                    setInputValue(content);
+                    setUpgradeReason("messages");
+                    return;
+                }
+                if (response.status === 403 && code === "UPGRADE_REQUIRED") {
+                    setMessages(prev => prev.filter(m => m.id !== currentMessageId && m.id !== assistantId));
+                    setInputValue(content);
+                    setUpgradeReason("uploads");
+                    return;
+                }
                 throw new Error(errData.error || `HTTP error! status: ${response.status}`);
             }
 
@@ -688,6 +714,14 @@ export default function ChatWithIdPage() {
 
             if (!response.ok) {
                 const errData = await response.json().catch(() => ({}));
+                const code = errData?.details?.code;
+                if ((response.status === 402 && code === "MESSAGE_LIMIT_REACHED") ||
+                    (response.status === 403 && code === "UPGRADE_REQUIRED")) {
+                    // Drop the empty regenerated bubble and surface the upgrade prompt
+                    setMessages(prev => prev.filter(m => m.id !== newAssistantId));
+                    setUpgradeReason(code === "UPGRADE_REQUIRED" ? "uploads" : "messages");
+                    return;
+                }
                 throw new Error(errData.error || `HTTP error! status: ${response.status}`);
             }
 
@@ -944,7 +978,9 @@ export default function ChatWithIdPage() {
                             <Avatar fallback={user?.name?.[0] || user?.email?.[0] || "U"} size="md" isOnline />
                             <div className="flex-1 min-w-0">
                                 <p className="text-sm font-medium truncate">{user?.name || user?.email}</p>
-                                <p className="text-xs text-muted-foreground">{idu("free_plan", language)}</p>
+                                <p className={`text-xs ${isPro ? "text-primary font-semibold" : "text-muted-foreground"}`}>
+                                    {isPro ? idu("pro_plan", language) : idu("basic_plan", language)}
+                                </p>
                             </div>
                             <button
                                 onClick={() => setSettingsOpen(true)}
@@ -962,7 +998,7 @@ export default function ChatWithIdPage() {
                 </Sidebar>
 
                 {/* Main Content */}
-                <main className="flex-1 flex flex-col min-w-0 bg-background md:rounded-[2rem] md:border border-border md:m-2 overflow-hidden relative">
+                <main className="flex-1 flex flex-col min-w-0 bg-background md:rounded-[2rem] md:m-2 overflow-hidden relative">
                     {showWelcome ? (
                         <div className="flex-1 flex flex-col items-center justify-center p-6 sm:p-12 animate-in fade-in duration-1000">
                             <div className="w-full max-w-3xl flex flex-col items-center mb-8">
@@ -986,6 +1022,8 @@ export default function ChatWithIdPage() {
                                         attachedFiles={attachedFiles}
                                         onRemoveFile={(idx) => setAttachedFiles(prev => prev.filter((_, i) => i !== idx))}
                                         placeholder="Message 9anon AI..."
+                                        canAttach={isPro}
+                                        onUpgradeRequired={() => setUpgradeReason("uploads")}
                                     />
                                 </div>
 
@@ -1178,6 +1216,8 @@ export default function ChatWithIdPage() {
                             onRemoveFile={(idx) => setAttachedFiles(prev => prev.filter((_, i) => i !== idx))}
                             isLoading={isGenerating}
                             placeholder="Message 9anon AI..."
+                            canAttach={isPro}
+                            onUpgradeRequired={() => setUpgradeReason("uploads")}
                         />
                     )}
                 </main>
@@ -1195,9 +1235,18 @@ export default function ChatWithIdPage() {
                 {/* Settings Modal - Placed outside of Sidebar to prevent containment */}
                 <SettingsModal
                     isOpen={settingsOpen}
-                    onClose={() => setSettingsOpen(false)}
+                    onClose={() => { setSettingsOpen(false); setSettingsTab(undefined); }}
                     user={user}
                     onLogout={logout}
+                    initialTab={settingsTab}
+                />
+
+                {/* Freemium upgrade prompt — message limit or upload gating */}
+                <UpgradeDialog
+                    reason={upgradeReason}
+                    onClose={() => setUpgradeReason(null)}
+                    onUpgrade={openSubscription}
+                    lang={language}
                 />
 
                 <FilesModal

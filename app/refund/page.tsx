@@ -22,14 +22,14 @@ const T: Record<string, Record<string, string>> = {
     },
     // Section titles
     s1_title: {
-        ar: "1. ضمان استرداد الأموال لمدة 14 يوماً",
-        fr: "1. Garantie de remboursement de 14 jours",
-        en: "1. 14-Day Money-Back Guarantee",
+        ar: "1. فترة استرداد لمدة 14 يوماً",
+        fr: "1. Fenêtre de remboursement de 14 jours",
+        en: "1. 14-Day Refund Window",
     },
     s1_body: {
-        ar: "إذا لم تكن راضياً عن اشتراكك في 9anon AI لأي سبب كان، يمكنك طلب استرداد كامل خلال 14 يوماً من تاريخ أول دفعة. لا أسئلة، لا قيود.",
-        fr: "Si vous n'êtes pas satisfait de votre abonnement 9anon AI pour quelque raison que ce soit, vous pouvez demander un remboursement complet dans les 14 jours suivant votre premier paiement. Sans questions, sans conditions.",
-        en: "If you are not satisfied with your 9anon AI subscription for any reason, you may request a full refund within 14 days of your first payment. No questions asked.",
+        ar: "كل دفعة للخطة المهنية هي رسوم شهرية منفردة لمرة واحدة بقيمة 5.00 دولارات أمريكية تشتري شهراً واحداً من الوصول. إذا لم تكن راضياً، يمكنك طلب الاسترداد خلال 14 يوماً من تلك الدفعة.",
+        fr: "Chaque paiement Pro est une charge mensuelle unique et distincte de 5,00 $ US qui achète un mois d'accès. Si vous n'êtes pas satisfait, vous pouvez demander un remboursement dans les 14 jours suivant cette charge.",
+        en: "Each Pro payment is a separate one-time US$5.00 monthly charge that buys one month of access. If you are not satisfied, you may request a refund within 14 days of that charge.",
     },
     s2_title: {
         ar: "2. كيفية طلب الاسترداد",
@@ -37,19 +37,19 @@ const T: Record<string, Record<string, string>> = {
         en: "2. How to Request a Refund",
     },
     s2_body: {
-        ar: "أرسل بريداً إلكترونياً إلى contact@9anonai.com من العنوان المرتبط بحسابك، مع ذكر 'استرداد' في الموضوع. سيتم معالجة طلبك خلال 3 أيام عمل، وستتلقى المبلغ على بطاقتك الأصلية خلال 5-10 أيام عمل حسب مزود الدفع.",
-        fr: "Envoyez un e-mail à contact@9anonai.com depuis l'adresse associée à votre compte, avec 'Remboursement' en objet. Votre demande sera traitée dans les 3 jours ouvrés ; le montant sera recrédité sur votre moyen de paiement d'origine sous 5 à 10 jours ouvrés selon votre prestataire bancaire.",
-        en: "Send an email to contact@9anonai.com from the address linked to your account, with 'Refund' in the subject line. Your request will be processed within 3 business days; the amount will be returned to your original payment method within 5–10 business days depending on your bank.",
+        ar: "أرسل بريداً إلكترونياً إلى contact@9anonai.com من العنوان المرتبط بحسابك، مع ذكر 'استرداد' في الموضوع. تُعاد الاستردادات المعتمدة عبر PayPal إلى وسيلة الدفع الأصلية؛ وقد يستغرق PayPal أو بنكك 5-10 أيام عمل لإظهار المبلغ.",
+        fr: "Envoyez un e-mail à contact@9anonai.com depuis l'adresse associée à votre compte, avec 'Remboursement' en objet. Les remboursements approuvés sont effectués via PayPal sur votre moyen de paiement d'origine ; PayPal ou votre banque peut prendre 5 à 10 jours ouvrés pour afficher le remboursement.",
+        en: "Send an email to contact@9anonai.com from the address linked to your account, with 'Refund' in the subject line. Approved refunds are returned through PayPal to your original payment method; PayPal or your bank may take 5-10 business days to post the refund.",
     },
     s3_title: {
-        ar: "3. الاشتراكات المتجددة",
-        fr: "3. Renouvellements d'abonnement",
-        en: "3. Subscription Renewals",
+        ar: "3. دفعات شهرية لمرة واحدة",
+        fr: "3. Paiements mensuels uniques",
+        en: "3. One-Time Monthly Payments",
     },
     s3_body: {
-        ar: "تُجدَّد الاشتراكات تلقائياً كل شهر. يمكنك إلغاء اشتراكك في أي وقت من صفحة الإعدادات قبل تاريخ التجديد لتجنب الرسوم التالية. لا يُسترد المبلغ عن فترات التجديد بعد انقضاء 14 يوماً من تاريخ كل تجديد.",
-        fr: "Les abonnements se renouvellent automatiquement chaque mois. Vous pouvez annuler à tout moment depuis la page Paramètres avant la date de renouvellement pour éviter la prochaine facturation. Les frais de renouvellement ne sont pas remboursables après le délai de 14 jours suivant chaque renouvellement.",
-        en: "Subscriptions renew automatically each month. You may cancel at any time from the Settings page before your renewal date to avoid the next charge. Renewal charges are non-refundable after 14 days from each renewal date.",
+        ar: "تتجدد الخطة المهنية يدوياً كل شهر. لا توجد خصومات تلقائية ولا خطوة إلغاء: إذا لم تدفع الفاتورة الشهرية التالية، يعود حسابك إلى الخطة الأساسية المجانية بعد انتهاء الفترة المدفوعة مسبقاً.",
+        fr: "Le plan Pro se renouvelle manuellement chaque mois. Il n'y a aucun prélèvement automatique ni étape de résiliation : si vous ne payez pas la prochaine facture mensuelle, votre compte revient au plan gratuit Basic après la fin de la période déjà payée.",
+        en: "Pro renews manually each month. There are no automatic charges and no cancellation step: if you do not pay the next monthly invoice, your account returns to the free Basic plan after the period already paid for ends.",
     },
     s4_title: {
         ar: "4. الاستثناءات",
@@ -57,19 +57,19 @@ const T: Record<string, Record<string, string>> = {
         en: "4. Exceptions",
     },
     s4_body: {
-        ar: "لا يسري ضمان الاسترداد في الحالات التالية: سوء الاستخدام أو انتهاك شروط الخدمة، أو الطلبات المقدَّمة بعد انقضاء 14 يوماً، أو الحسابات التي سبق أن استفادت منه سابقاً.",
-        fr: "La garantie de remboursement ne s'applique pas en cas d'abus ou de violation des Conditions d'utilisation, de demandes soumises après le délai de 14 jours, ou de comptes en ayant déjà bénéficié.",
-        en: "The money-back guarantee does not apply in cases of abuse or violation of the Terms of Service, requests submitted after 14 days, or accounts that have previously benefited from it.",
+        ar: "لا تسري الاستردادات على الطلبات المقدَّمة بعد مرور أكثر من 14 يوماً على الدفعة، ولا على الحسابات التي سبق أن استفادت من استرداد، ولا على الحسابات المنهية بسبب انتهاك شروط الخدمة.",
+        fr: "Les remboursements ne s'appliquent pas aux demandes faites plus de 14 jours après une charge, aux comptes ayant déjà bénéficié d'un remboursement, ni aux comptes résiliés pour violation des Conditions d'utilisation.",
+        en: "Refunds do not apply to requests made more than 14 days after a charge, to accounts that have previously received a refund, or to accounts terminated for Terms of Service violations.",
     },
     s5_title: {
-        ar: "5. معالج الدفع",
-        fr: "5. Traitement des paiements",
-        en: "5. Payment Processor",
+        ar: "5. مدفوعات PayPal",
+        fr: "5. Paiements PayPal",
+        en: "5. PayPal Payments",
     },
     s5_body: {
-        ar: "تُعالَج جميع المدفوعات بواسطة Paddle.com Market Limited، وهي التاجر القانوني المسؤول (Merchant of Record) عن جميع معاملاتنا. قد تحمل كشوفاتك البنكية اسم 'Paddle.com' بدلاً من 9anon AI. يخضع استرداد الأموال لسياسات Paddle الإضافية المتاحة على paddle.com.",
-        fr: "Tous les paiements sont traités par Paddle.com Market Limited, marchand de référence légal (Merchant of Record) pour l'ensemble de nos transactions. Votre relevé bancaire peut mentionner 'Paddle.com' plutôt que 9anon AI. Les remboursements sont également soumis aux politiques complémentaires de Paddle disponibles sur paddle.com.",
-        en: "All payments are processed by Paddle.com Market Limited, the legal Merchant of Record for all our transactions. Your bank statement may show 'Paddle.com' instead of 9anon AI. Refunds are also subject to Paddle's additional policies available at paddle.com.",
+        ar: "تُعالَج المدفوعات بشكل آمن عبر PayPal. 9anon هي البائع والتاجر القانوني المسؤول عن جميع عمليات الشراء، وقد يُظهر كشف حسابك PayPal / 9anon. لا نخزّن بيانات البطاقة؛ وتصدر الاستردادات المعتمدة عبر PayPal إلى وسيلة الدفع الأصلية.",
+        fr: "Les paiements sont traités de manière sécurisée via PayPal. 9anon est le vendeur et le marchand de référence pour tous les achats, et votre relevé peut afficher PayPal / 9anon. Nous ne stockons pas les données de carte ; les remboursements approuvés sont émis via PayPal vers le moyen de paiement d'origine.",
+        en: "Payments are processed securely through PayPal. 9anon is the seller and merchant of record for all purchases, and your statement may show PayPal / 9anon. We do not store card details; approved refunds are issued through PayPal to the original payment method.",
     },
     s6_title: {
         ar: "6. التواصل معنا",

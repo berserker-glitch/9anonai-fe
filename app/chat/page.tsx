@@ -28,6 +28,7 @@ import { ChatInput } from "@/components/interaction/chat-input";
 import { ScrollToBottom } from "@/components/utility/scroll-to-bottom";
 import { ConfirmModal } from "@/components/utility/modal";
 import { SettingsModal } from "@/components/settings/settings-modal";
+import { UpgradeDialog, type UpgradeReason } from "@/components/billing/upgrade-dialog";
 import { ReferralModal } from "@/components/referral/referral-modal";
 import { FilesModal } from "@/components/chat/files-modal";
 import { FeedbackModal } from "@/components/chat/feedback-modal";
@@ -237,7 +238,7 @@ function getLanguageFromPersonalization(personalization?: string | null): string
 export default function NewChatPage() {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const { user, token, logout, isLoading: authLoading } = useAuth();
+    const { user, token, logout, isLoading: authLoading, isPro } = useAuth();
     const { language } = useLanguage();
 
     // State
@@ -254,6 +255,8 @@ export default function NewChatPage() {
     const [attachedFiles, setAttachedFiles] = useState<File[]>([]);
     const [showWelcome, setShowWelcome] = useState(true);
     const [settingsOpen, setSettingsOpen] = useState(false);
+    const [settingsTab, setSettingsTab] = useState<"subscription" | undefined>(undefined);
+    const [upgradeReason, setUpgradeReason] = useState<UpgradeReason | null>(null);
     const [referralOpen, setReferralOpen] = useState(false);
     const [filesModalOpen, setFilesModalOpen] = useState(false);
     const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
@@ -371,11 +374,19 @@ export default function NewChatPage() {
         }
     }, []);
 
-    // File upload handler
+    // File upload handler — Basic plan can't attach; surface the upgrade prompt
     const handleFileUpload = (files: FileList | null) => {
         if (!files || files.length === 0) return;
+        if (!isPro) { setUpgradeReason("uploads"); return; }
         const fileArray = Array.from(files);
         setAttachedFiles(prev => [...prev, ...fileArray]);
+    };
+
+    // Open Settings directly on the Subscription tab (from an upgrade prompt)
+    const openSubscription = () => {
+        setUpgradeReason(null);
+        setSettingsTab("subscription");
+        setSettingsOpen(true);
     };
 
     // Create new chat
@@ -665,6 +676,21 @@ export default function NewChatPage() {
 
             if (!response.ok) {
                 const errData = await response.json().catch(() => ({}));
+                const code = errData?.details?.code;
+                // Freemium limits → show the upgrade prompt instead of an error bubble,
+                // drop the optimistic turn, and restore the user's typed text.
+                if (response.status === 402 && code === "MESSAGE_LIMIT_REACHED") {
+                    setMessages(prev => prev.filter(m => m.id !== currentMessageId && m.id !== assistantId));
+                    setInputValue(content);
+                    setUpgradeReason("messages");
+                    return;
+                }
+                if (response.status === 403 && code === "UPGRADE_REQUIRED") {
+                    setMessages(prev => prev.filter(m => m.id !== currentMessageId && m.id !== assistantId));
+                    setInputValue(content);
+                    setUpgradeReason("uploads");
+                    return;
+                }
                 throw new Error(errData.error || `HTTP error! status: ${response.status}`);
             }
 
@@ -980,7 +1006,9 @@ export default function NewChatPage() {
                             <Avatar fallback={user?.name?.[0] || user?.email?.[0] || "U"} size="md" isOnline />
                             <div className="flex-1 min-w-0">
                                 <p className="text-sm font-medium truncate">{user?.name || user?.email}</p>
-                                <p className="text-xs text-muted-foreground">{ui("free_plan", language)}</p>
+                                <p className={`text-xs ${isPro ? "text-primary font-semibold" : "text-muted-foreground"}`}>
+                                    {isPro ? ui("pro_plan", language) : ui("basic_plan", language)}
+                                </p>
                             </div>
                             <button
                                 onClick={() => setReferralOpen(true)}
@@ -1013,7 +1041,7 @@ export default function NewChatPage() {
                 </Sidebar>
 
                 {/* Main Content */}
-                <main className="flex-1 flex flex-col min-w-0 bg-background md:rounded-[2rem] md:border border-border md:m-2 overflow-hidden relative">
+                <main className="flex-1 flex flex-col min-w-0 bg-background md:rounded-[2rem] md:m-2 overflow-hidden relative">
                     {showWelcome ? (
                         <div className="flex-1 flex flex-col items-center justify-center p-6 sm:p-12 animate-in fade-in duration-1000">
                             <div className="w-full max-w-3xl flex flex-col items-center mb-8">
@@ -1037,6 +1065,8 @@ export default function NewChatPage() {
                                         attachedFiles={attachedFiles}
                                         onRemoveFile={(idx) => setAttachedFiles(prev => prev.filter((_, i) => i !== idx))}
                                         placeholder={ui("input_placeholder", language)}
+                                        canAttach={isPro}
+                                        onUpgradeRequired={() => setUpgradeReason("uploads")}
                                     />
                                 </div>
 
@@ -1310,6 +1340,8 @@ export default function NewChatPage() {
                             onRemoveFile={(idx) => setAttachedFiles(prev => prev.filter((_, i) => i !== idx))}
                             isLoading={isGenerating}
                             placeholder={ui("input_placeholder", language)}
+                            canAttach={isPro}
+                            onUpgradeRequired={() => setUpgradeReason("uploads")}
                         />
                     )}
                 </main>
@@ -1320,9 +1352,18 @@ export default function NewChatPage() {
             {/* Settings Modal - Placed outside of Sidebar to prevent containment */}
             <SettingsModal
                 isOpen={settingsOpen}
-                onClose={() => setSettingsOpen(false)}
+                onClose={() => { setSettingsOpen(false); setSettingsTab(undefined); }}
                 user={user}
                 onLogout={logout}
+                initialTab={settingsTab}
+            />
+
+            {/* Freemium upgrade prompt — message limit or upload gating */}
+            <UpgradeDialog
+                reason={upgradeReason}
+                onClose={() => setUpgradeReason(null)}
+                onUpgrade={openSubscription}
+                lang={language}
             />
 
             <ConfirmModal
