@@ -40,13 +40,13 @@
             "items": [
                 "With your explicit consent",
                 "To comply with legal requirements",
-                "With Paddle.com Market Limited (our Merchant of Record) — billing data (email, transaction details) necessary to process your subscription",
+                "With PayPal, our payment processor, for billing data (email, transaction details) necessary to process your Pro payment",
                 "With trusted infrastructure providers (hosting, analytics) under confidentiality agreements"
             ]
         },
         "payment": {
             "title": "5. Payment Data",
-            "content": "We do not store your payment card details. All payment information is processed directly by Paddle.com Market Limited, our Merchant of Record. Paddle's privacy practices govern the collection and use of your payment data — see paddle.com/legal/privacy. We receive only a confirmation of successful payment and a transaction identifier."
+            "content": "We do not store your payment card details. Payments for the Pro plan are processed securely through PayPal; 9anon is the seller and merchant of record for all purchases. PayPal handles payment details, including guest card payments, and your card data never touches our servers. We receive only a confirmation of successful payment and a transaction identifier."
         },
         "cookies": {
             "title": "5. Cookies",

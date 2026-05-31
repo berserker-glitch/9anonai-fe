@@ -8,7 +8,8 @@
         "compare": "Compare 9anoun",
         "blog": "Blog",
         "legalTopics": "Legal Topics",
-        "tools": "Tools"
+        "tools": "Tools",
+        "pricing": "Pricing"
     },
     "hero": {
         "badge": "AI-Powered Legal Assistant",
@@ -68,6 +69,25 @@
         "step3Title": "Get Your Answer",
         "step3Desc": "Receive an accurate answer with supporting legal sources."
     },
+    "pricingTeaser": {
+        "tag": "Pricing",
+        "title": "Start free.",
+        "titleHighlight": "Go Pro for $5.",
+        "subtitle": "No contracts, no hidden fees. Upgrade only when you need unlimited answers and document analysis.",
+        "basicName": "Basic",
+        "basicPrice": "Free",
+        "basicDesc": "Real legal answers, on the house.",
+        "basicFeature1": "5 AI answers per conversation",
+        "basicFeature2": "Unlimited conversations",
+        "proName": "Pro",
+        "proPrice": "$5",
+        "proPer": "/ mo",
+        "proTag": "Best value",
+        "proDesc": "Everything, with no limits.",
+        "proFeature1": "Unlimited AI answers",
+        "proFeature2": "Upload & analyze documents",
+        "cta": "See full pricing"
+    },
     "cta": {
         "title": "Ready to Get",
         "titleHighlight": "Legal Answers?",
@@ -80,6 +100,7 @@
         "features": "Features",
         "howItWorks": "How It Works",
         "startChat": "Start Chat",
+        "pricing": "Pricing",
         "blog": "Blog",
         "legal": "Legal",
         "topLegalTopics": "Top Legal Topics",

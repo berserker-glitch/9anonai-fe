@@ -42,28 +42,30 @@
         },
         "billing": {
             "title": "7. Billing & Payments",
-            "content": "All payments on this platform are processed by Paddle.com Market Limited (\\\"Paddle\\\"), acting as our Merchant of Record for all transactions. By completing a purchase you enter a direct agreement with Paddle for payment processing. Your bank or card statement will show a charge from 'PADDLE.NET' or 'Paddle.com'. Paddle handles VAT, sales tax, and currency conversion on our behalf.",
+            "content": "Payments for the Pro plan are processed securely through PayPal. 9anon is the seller and merchant of record for all purchases. You do not need a PayPal account to pay — PayPal also accepts major debit and credit cards as a guest. Your statement will show a charge from PayPal / 9anon.",
             "items": [
-                "Accepted payment methods: Visa, Mastercard, Maestro, American Express, PayPal",
-                "Prices are displayed in USD; Paddle converts to your local currency at checkout",
-                "Applicable VAT or sales tax may be added at checkout depending on your country",
-                "Paddle issues payment receipts and handles billing disputes on our behalf"
+                "The Pro plan costs US$5.00 (USD) per month",
+                "Each monthly payment is a separate, one-time charge — we do not store your card details or automatically charge you",
+                "Prices are shown in US Dollars (USD); your bank may apply a currency-conversion fee",
+                "You are responsible for any taxes that may apply in your country",
+                "PayPal issues an electronic receipt for every successful payment"
             ]
         },
         "subscription": {
-            "title": "8. Subscriptions & Cancellation",
-            "content": "Paid plans (Basic and Pro) are billed monthly on a recurring basis and auto-renew until cancelled. You will be notified before each renewal charge.",
+            "title": "8. Pro Plan & Monthly Renewal",
+            "content": "The Pro plan renews manually each month. There is no automatic recurring billing — you actively choose to pay each month to keep Pro active. There is no grace period: if a renewal is not paid by its due date, your account immediately returns to the free Basic plan until you pay again.",
             "items": [
-                "You are charged on the same calendar date each month",
-                "Cancel any time from the Settings page — access continues until the end of the current billing period",
-                "Downgrading or cancelling takes effect at the start of the next billing cycle",
-                "We send a reminder email before each renewal charge"
+                "Your renewal date falls on the same calendar day each month, based on your most recent payment",
+                "On each renewal date an invoice appears in Settings → Subscription for you to pay",
+                "Pay the invoice to keep Pro features — unlimited AI answers and document & image uploads",
+                "If you do not pay, you keep Pro until the end of the period already paid for, then return to Basic; your data and conversations are preserved",
+                "To stop using Pro, simply do not pay the next invoice — no cancellation step is required"
             ]
         },
         "refund": {
             "title": "9. Refunds",
-            "content": "All paid plans include a 14-day money-back guarantee from the date of your first payment. Renewal charges are non-refundable after 14 days from each renewal date. To request a refund, email contact@9anonai.com with 'Refund' in the subject line. See our full Refund Policy at /refund for details.",
-            "important": "The guarantee does not apply to accounts that have previously received a refund, requests submitted after the 14-day window, or accounts terminated for Terms of Service violations."
+            "content": "Each Pro payment buys one month of access and is a single one-time charge. If you are not satisfied, you may request a refund within 14 days of a charge by emailing contact@9anonai.com with 'Refund' in the subject line; approved refunds are returned through PayPal to your original payment method. After 14 days, that month's charge is non-refundable. See our full Refund Policy at /refund for details.",
+            "important": "Refunds do not apply to requests made more than 14 days after a charge, to accounts that have previously received a refund, or to accounts terminated for Terms of Service violations."
         },
         "modifications": {
             "title": "10. Modifications",
