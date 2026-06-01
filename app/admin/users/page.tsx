@@ -102,6 +102,12 @@ function UsersAnalyticsContent({ range }: { range: string }) {
         { name: "Google", value: allUsers.filter((u) => u.authMethod === "google").length },
     ].filter((d) => d.value > 0);
 
+    const planPieData = [
+        { name: "Active Pro", value: allUsers.filter((u) => u.plan === "pro").length },
+        { name: "Basic / Free", value: allUsers.filter((u) => u.plan !== "pro" && u.rawPlan !== "pro").length },
+        { name: "Expired Pro", value: allUsers.filter((u) => u.rawPlan === "pro" && u.plan !== "pro").length },
+    ].filter((d) => d.value > 0);
+
     return (
         <div className="space-y-6">
             {/* Title */}
@@ -201,6 +207,18 @@ function UsersAnalyticsContent({ range }: { range: string }) {
                 >
                     <PieChartWrapper
                         data={authPieData}
+                        height={260}
+                        emptyMessage="No users yet"
+                        showLegend
+                    />
+                </ChartCard>
+
+                <ChartCard
+                    title="Plan Distribution"
+                    subtitle="Current effective user plans"
+                >
+                    <PieChartWrapper
+                        data={planPieData}
                         height={260}
                         emptyMessage="No users yet"
                         showLegend

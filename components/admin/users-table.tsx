@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Search, Download, RefreshCw, Star, Mail } from "lucide-react";
+import { Search, Download, RefreshCw, Star, Mail, Crown } from "lucide-react";
 import { ConversationDrawer, UserStats } from "./conversation-drawer";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
@@ -31,6 +31,43 @@ function formatTime(dateString: string) {
     });
 }
 
+function isExpiredProUser(user: UserStats) {
+    return user.rawPlan === "pro" && user.plan !== "pro";
+}
+
+function formatPlanDate(dateString: string | null) {
+    if (!dateString) return null;
+    return new Date(dateString).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+    });
+}
+
+function getPlanBadge(user: UserStats) {
+    if (user.plan === "pro") {
+        return {
+            label: "Pro",
+            detail: user.proExpiresAt ? `Until ${formatPlanDate(user.proExpiresAt)}` : "Active",
+            className: "bg-emerald-500/10 text-emerald-600 border-emerald-500/25",
+        };
+    }
+
+    if (isExpiredProUser(user)) {
+        return {
+            label: "Expired Pro",
+            detail: user.proExpiresAt ? `Expired ${formatPlanDate(user.proExpiresAt)}` : "Expired",
+            className: "bg-amber-500/10 text-amber-600 border-amber-500/25",
+        };
+    }
+
+    return {
+        label: "Basic",
+        detail: "Free",
+        className: "bg-muted text-muted-foreground border-border",
+    };
+}
+
 type SortField = "conversationCount" | "messageCount" | "createdAt" | "lastActive";
 
 export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }: UsersTableProps) {
@@ -39,6 +76,7 @@ export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
     const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
     const [showGoogleOnly, setShowGoogleOnly] = useState(false);
+    const [showProOnly, setShowProOnly] = useState(false);
     const [togglingId, setTogglingId] = useState<string | null>(null);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState<UserStats | null>(null);
@@ -49,6 +87,7 @@ export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }
                 (u) =>
                     (!showFavoritesOnly || u.isFavorite) &&
                     (!showGoogleOnly || u.authMethod === "google") &&
+                    (!showProOnly || u.plan === "pro") &&
                     (u.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
                         (u.name && u.name.toLowerCase().includes(searchQuery.toLowerCase())))
             )
@@ -61,7 +100,7 @@ export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }
                 }
                 return sortOrder === "asc" ? comparison : -comparison;
             });
-    }, [users, searchQuery, sortField, sortOrder, showFavoritesOnly, showGoogleOnly]);
+    }, [users, searchQuery, sortField, sortOrder, showFavoritesOnly, showGoogleOnly, showProOnly]);
 
     const handleToggleFavorite = async (userId: string) => {
         if (!token || togglingId) return;
@@ -93,7 +132,7 @@ export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }
     };
 
     const handleExport = () => {
-        const headers = ["ID", "Email", "Name", "Role", "Auth Method", "Created At", "Marketing Source", "Conversations", "Messages", "Last Active"];
+        const headers = ["ID", "Email", "Name", "Role", "Plan", "Raw Plan", "Pro Expires At", "Auth Method", "Created At", "Marketing Source", "Conversations", "Messages", "Last Active"];
         const csvContent = [
             headers.join(","),
             ...users.map((u) =>
@@ -102,6 +141,9 @@ export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }
                     u.email,
                     `"${u.name || ""}"`,
                     u.role,
+                    u.plan,
+                    u.rawPlan || u.plan,
+                    u.proExpiresAt ? new Date(u.proExpiresAt).toISOString() : "",
                     u.authMethod,
                     new Date(u.createdAt).toISOString(),
                     u.marketingSource || "",
@@ -164,6 +206,14 @@ export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }
                                 Google
                             </button>
                             <button
+                                onClick={() => setShowProOnly((v) => !v)}
+                                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-colors ${showProOnly ? "bg-emerald-500/10 text-emerald-600 border border-emerald-500/25 hover:bg-emerald-500/20" : "bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80"}`}
+                                title="Show active Pro users only"
+                            >
+                                <Crown className="h-4 w-4" />
+                                Pro
+                            </button>
+                            <button
                                 onClick={handleExport}
                                 className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-xl hover:bg-primary/90 transition-colors"
                             >
@@ -192,6 +242,7 @@ export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }
                                 <th className="px-4 py-4 w-10"></th>
                                 <th className="text-left px-6 py-4 text-sm font-medium text-muted-foreground">User</th>
                                 <th className="text-left px-6 py-4 text-sm font-medium text-muted-foreground">Role</th>
+                                <th className="text-left px-6 py-4 text-sm font-medium text-muted-foreground">Plan</th>
                                 <th
                                     className="text-left px-6 py-4 text-sm font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
                                     onClick={() => handleSort("conversationCount")}
@@ -264,6 +315,20 @@ export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }
                                         </span>
                                     </td>
                                     <td className="px-6 py-4">
+                                        {(() => {
+                                            const planBadge = getPlanBadge(u);
+                                            return (
+                                                <div className="space-y-1">
+                                                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${planBadge.className}`}>
+                                                        {u.plan === "pro" && <Crown className="h-3 w-3" />}
+                                                        {planBadge.label}
+                                                    </span>
+                                                    <p className="text-[11px] text-muted-foreground whitespace-nowrap">{planBadge.detail}</p>
+                                                </div>
+                                            );
+                                        })()}
+                                    </td>
+                                    <td className="px-6 py-4">
                                         <span className="font-medium text-sm">{u.conversationCount.toLocaleString()}</span>
                                     </td>
                                     <td className="px-6 py-4">
@@ -324,7 +389,7 @@ export function UsersTable({ users, token, onRefresh, isLoading, onUsersChange }
                             ))}
                             {filteredUsers.length === 0 && (
                                 <tr>
-                                    <td colSpan={11} className="px-6 py-12 text-center text-muted-foreground text-sm">
+                                    <td colSpan={12} className="px-6 py-12 text-center text-muted-foreground text-sm">
                                         No users found
                                     </td>
                                 </tr>

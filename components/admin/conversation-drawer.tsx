@@ -11,6 +11,9 @@ export interface UserStats {
     name: string | null;
     role: string;
     isFavorite: boolean;
+    plan: "basic" | "pro";
+    rawPlan?: string | null;
+    proExpiresAt: string | null;
     createdAt: string;
     marketingSource: string | null;
     authMethod: "google" | "email";
