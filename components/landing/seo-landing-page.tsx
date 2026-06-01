@@ -39,6 +39,8 @@ interface SEOLandingPageProps {
     gradientTo?: string;
     glowColor?: string;
     dir?: "ltr" | "rtl";
+    /** Current active language code (e.g., 'ar', 'fr', 'en') for link routing */
+    lang?: string;
     blogPosts?: { slug: string; title: string; description: string; date: string; readingTime: number }[];
 }
 
@@ -54,9 +56,27 @@ export function SEOLandingPage({
     features,
     contentSections,
     dir = "ltr",
+    lang,
     blogPosts = [],
 }: SEOLandingPageProps) {
     const isRtl = dir === "rtl";
+
+    // Helper to dynamically resolve internal relative paths to include active locale
+    const getLocalizedHref = (href: string) => {
+        if (!href.startsWith("/")) return href;
+        // Skip if already localized
+        if (href.startsWith("/ar/") || href.startsWith("/fr/") || href.startsWith("/en/") ||
+            href === "/ar" || href === "/fr" || href === "/en") {
+            return href;
+        }
+        // Exclude static, non-localized tool/legal paths
+        const unlocalizedPaths = ["/chat", "/privacy", "/tos", "/vs-9anoun", "/contract-builder", "/pricing", "/refund"];
+        if (unlocalizedPaths.some(p => href === p || href.startsWith(p + "/"))) {
+            return href;
+        }
+        const activeLang = lang || (isRtl ? "ar" : "fr");
+        return `/${activeLang}${href}`;
+    };
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -207,7 +227,7 @@ export function SEOLandingPage({
                         {relatedLinks.map((link, i) => (
                             <Link
                                 key={i}
-                                href={link.href}
+                                href={getLocalizedHref(link.href)}
                                 className={`group flex items-center gap-4 px-5 py-4 rounded-xl bg-muted/25 hover:bg-muted/50 transition-all duration-200 ${isRtl ? "flex-row-reverse" : ""}`}
                             >
                                 <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
@@ -222,8 +242,8 @@ export function SEOLandingPage({
             {blogPosts.length > 0 && (
                 <BlogCrossLinks
                     posts={blogPosts}
-                    lang={isRtl ? "ar" : "en"}
-                    blogBasePath={isRtl ? "/blog" : "/en/blog"}
+                    lang={lang || (isRtl ? "ar" : "en")}
+                    blogBasePath={lang ? `/${lang}/blog` : (isRtl ? "/ar/blog" : "/fr/blog")}
                     dir={dir}
                 />
             )}

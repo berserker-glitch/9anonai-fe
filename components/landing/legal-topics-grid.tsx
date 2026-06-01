@@ -67,7 +67,7 @@ export function LegalTopicsGrid() {
             return (
               <Link
                 key={topic.href}
-                href={topic.href}
+                href={`/${language}${topic.href}`}
                 className={`group flex items-center gap-4 px-5 py-4 rounded-xl bg-muted/25 hover:bg-muted/50 transition-all duration-200 scroll-animate opacity-0 transform translate-y-8 transition-[opacity,transform] duration-700 ${isArabic ? "flex-row-reverse" : ""}`}
               >
                 <topic.Icon

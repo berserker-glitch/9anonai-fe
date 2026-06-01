@@ -11,76 +11,101 @@ export const generateIdFromText = (text: string, index?: number): string => {
 
 /**
  * Custom ReactMarkdown components to enhance the styling and functionality
- * of blog posts (e.g. adding IDs to headings for the Table of Contents).
+ * of blog posts (e.g. adding IDs to headings for the Table of Contents,
+ * and dynamically resolving localized internal routes for SEO).
+ * 
+ * @param {string} lang - The active language code (e.g., 'ar', 'fr', 'en') used to prefix internal links.
+ * @returns {Components} A mapping of markdown element tags to custom React components.
  */
-export const getMarkdownComponents = (isRtl: boolean): Components => ({
-    // Headings with auto-generated IDs
-    h1: ({ node, children, ...props }) => (
-        <h1 id={generateIdFromText(children?.toString() || "")} className="font-display text-4xl sm:text-5xl font-bold mb-6 text-foreground leading-tight" {...props}>
-            {children}
-        </h1>
-    ),
-    h2: ({ node, children, ...props }) => (
-        <h2 id={generateIdFromText(children?.toString() || "")} className="font-display text-2xl sm:text-3xl font-bold mt-12 mb-6 text-foreground border-b border-border/40 pb-2 flex items-center gap-3" {...props}>
-            <span className="w-2 h-8 bg-primary rounded-full hidden sm:block"></span>
-            {children}
-        </h2>
-    ),
-    h3: ({ node, children, ...props }) => (
-        <h3 id={generateIdFromText(children?.toString() || "")} className="font-display text-xl sm:text-2xl font-bold mt-8 mb-4 text-foreground/90" {...props}>
-            {children}
-        </h3>
-    ),
-
-    // Paragraphs and text
-    p: ({ node, children, ...props }) => (
-        <p className={`text-muted-foreground leading-relaxed mb-6 ${isRtl ? 'text-lg' : 'text-base'}`} {...props}>
-            {children}
-        </p>
-    ),
-
-    // Blockquotes for legal quotes or important notes
-    blockquote: ({ node, children, ...props }) => (
-        <blockquote className={`my-8 border-l-4 ${isRtl ? 'border-r-4 border-l-0 pl-0 pr-6' : 'pl-6'} border-primary bg-primary/5 py-4 px-6 rounded-r-xl rtl:rounded-l-xl rtl:rounded-r-none font-medium italic text-foreground`} {...props}>
-            {children}
-        </blockquote>
-    ),
-
-    // Lists
-    ul: ({ node, children, ...props }) => (
-        <ul className="list-none space-y-3 my-6 text-muted-foreground" {...props}>
-            {children}
-        </ul>
-    ),
-    ol: ({ node, children, ...props }) => (
-        <ol className="list-decimal list-inside space-y-3 my-6 text-muted-foreground marker:text-primary marker:font-bold" {...props}>
-            {children}
-        </ol>
-    ),
-    li: ({ node, children, ordered, ...props }: any) => {
-        if (ordered) {
-            return <li className="pl-2 rtl:pr-2 leading-relaxed" {...props}>{children}</li>
-        }
-        return (
-            <li className={`relative ${isRtl ? 'pr-6' : 'pl-6'} leading-relaxed`} {...props}>
-                <span className={`absolute top-2.5 ${isRtl ? 'right-0' : 'left-0'} w-2 h-2 rounded-full bg-primary/50`}></span>
+export const getMarkdownComponents = (lang: string): Components => {
+    const isRtl = lang === "ar";
+    return {
+        // Headings with auto-generated IDs
+        h1: ({ node, children, ...props }) => (
+            <h1 id={generateIdFromText(children?.toString() || "")} className="font-display text-4xl sm:text-5xl font-bold mb-6 text-foreground leading-tight" {...props}>
                 {children}
-            </li>
-        )
-    },
+            </h1>
+        ),
+        h2: ({ node, children, ...props }) => (
+            <h2 id={generateIdFromText(children?.toString() || "")} className="font-display text-2xl sm:text-3xl font-bold mt-12 mb-6 text-foreground border-b border-border/40 pb-2 flex items-center gap-3" {...props}>
+                <span className="w-2 h-8 bg-primary rounded-full hidden sm:block"></span>
+                {children}
+            </h2>
+        ),
+        h3: ({ node, children, ...props }) => (
+            <h3 id={generateIdFromText(children?.toString() || "")} className="font-display text-xl sm:text-2xl font-bold mt-8 mb-4 text-foreground/90" {...props}>
+                {children}
+            </h3>
+        ),
 
-    // Links
-    a: ({ node, children, href, ...props }) => (
-        <a
-            href={href}
-            className="text-primary hover:text-emerald-500 font-medium underline underline-offset-4 decoration-primary/30 hover:decoration-emerald-500 transition-colors"
-            target={href?.startsWith('http') ? '_blank' : undefined}
-            rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
-            {...props}
-        >
-            {children}
-        </a>
-    ),
+        // Paragraphs and text
+        p: ({ node, children, ...props }) => (
+            <p className={`text-muted-foreground leading-relaxed mb-6 ${isRtl ? 'text-lg' : 'text-base'}`} {...props}>
+                {children}
+            </p>
+        ),
+
+        // Blockquotes for legal quotes or important notes
+        blockquote: ({ node, children, ...props }) => (
+            <blockquote className={`my-8 border-l-4 ${isRtl ? 'border-r-4 border-l-0 pl-0 pr-6' : 'pl-6'} border-primary bg-primary/5 py-4 px-6 rounded-r-xl rtl:rounded-l-xl rtl:rounded-r-none font-medium italic text-foreground`} {...props}>
+                {children}
+            </blockquote>
+        ),
+
+        // Lists
+        ul: ({ node, children, ...props }) => (
+            <ul className="list-none space-y-3 my-6 text-muted-foreground" {...props}>
+                {children}
+            </ul>
+        ),
+        ol: ({ node, children, ...props }) => (
+            <ol className="list-decimal list-inside space-y-3 my-6 text-muted-foreground marker:text-primary marker:font-bold" {...props}>
+                {children}
+            </ol>
+        ),
+        li: ({ node, children, ordered, ...props }: any) => {
+            if (ordered) {
+                return <li className="pl-2 rtl:pr-2 leading-relaxed" {...props}>{children}</li>
+            }
+            return (
+                <li className={`relative ${isRtl ? 'pr-6' : 'pl-6'} leading-relaxed`} {...props}>
+                    <span className={`absolute top-2.5 ${isRtl ? 'right-0' : 'left-0'} w-2 h-2 rounded-full bg-primary/50`}></span>
+                    {children}
+                </li>
+            )
+        },
+
+        // Links with dynamic localization for SEO
+        a: ({ node, children, href, ...props }) => {
+            let resolvedHref = href;
+
+            // Only process relative internal URLs to prevent 301 redirect hops
+            if (href && href.startsWith("/")) {
+                // Avoid double-prefixing URLs that already have a language prefix
+                const hasLangPrefix = href.startsWith("/ar/") || href.startsWith("/fr/") || href.startsWith("/en/") ||
+                                     href === "/ar" || href === "/fr" || href === "/en";
+
+                // Static, non-localized tool/legal pages that should not receive a language prefix
+                const unlocalizedPaths = ["/chat", "/privacy", "/tos", "/vs-9anoun", "/contract-builder", "/pricing", "/refund"];
+                const isUnlocalized = unlocalizedPaths.some(p => href === p || href.startsWith(p + "/"));
+
+                if (!hasLangPrefix && !isUnlocalized) {
+                    resolvedHref = `/${lang}${href}`;
+                }
+            }
+
+            return (
+                <a
+                    href={resolvedHref}
+                    className="text-primary hover:text-emerald-500 font-medium underline underline-offset-4 decoration-primary/30 hover:decoration-emerald-500 transition-colors"
+                    target={href?.startsWith("http") ? "_blank" : undefined}
+                    rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
+                    {...props}
+                >
+                    {children}
+                </a>
+            );
+        },
 
     // Strong/Bold
     strong: ({ node, children, ...props }) => (
@@ -111,4 +136,5 @@ export const getMarkdownComponents = (isRtl: boolean): Components => ({
             )}
         </figure>
     ),
-});
+    };
+};

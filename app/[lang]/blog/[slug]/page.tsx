@@ -239,7 +239,7 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: Blo
                         <div className={`markdown-content ${isRtl ? "font-arabic" : "font-sans"}`}>
                             <ReactMarkdown
                                 remarkPlugins={[remarkGfm]}
-                                components={getMarkdownComponents(isRtl)}
+                                components={getMarkdownComponents(lang)}
                             >
                                 {post.content}
                             </ReactMarkdown>

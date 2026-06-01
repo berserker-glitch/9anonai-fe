@@ -6,15 +6,17 @@ export default function robots(): MetadataRoute.Robots {
             {
                 userAgent: "*",
                 allow: "/",
-                disallow: ["/api/", "/chat/", "/_next/"],
-            },
-            {
-                userAgent: "Googlebot",
-                allow: "/",
-            },
-            {
-                userAgent: "Bingbot",
-                allow: "/",
+                // Disallow crawlers from dynamic chat pages, APIs, and administrative setup areas to optimize crawl budget
+                disallow: [
+                    "/api/", 
+                    "/_next/", 
+                    "/chat", 
+                    "/chat/", 
+                    "/admin/", 
+                    "/setup/",
+                    "/pricing",
+                    "/refund"
+                ],
             },
         ],
         // Main sitemap + dedicated image sitemap for Google Image indexing

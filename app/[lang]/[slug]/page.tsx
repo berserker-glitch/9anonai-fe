@@ -155,6 +155,7 @@ export default async function SEOPage({
                 gradientTo={page.gradientTo}
                 glowColor={page.glowColor}
                 dir={dir}
+                lang={lang}
                 blogPosts={recentPosts}
             />
         </>

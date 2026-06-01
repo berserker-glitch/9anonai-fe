@@ -90,7 +90,7 @@ function NavDropdown({
                             {items.map((item) => (
                                 <Link
                                     key={item.href}
-                                    href={item.href}
+                                    href={`/${lang}${item.href}`}
                                     onClick={() => setOpen(false)}
                                     className="px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors duration-150"
                                 >
@@ -103,7 +103,7 @@ function NavDropdown({
                             {items.map((item) => (
                                 <Link
                                     key={item.href}
-                                    href={item.href}
+                                    href={`/${lang}${item.href}`}
                                     onClick={() => setOpen(false)}
                                     className="block px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors duration-150"
                                 >
@@ -182,7 +182,7 @@ export function Header() {
                             <nav className="hidden md:flex items-center gap-6">
                                 {[
                                     { href: "#features",         key: "nav.features" },
-                                    { href: "/about",            key: "nav.about"    },
+                                    { href: `/${language}/about`, key: "nav.about"    },
                                     { href: `/${language}/blog`, key: "nav.blog"     },
                                 ].map((item) => (
                                     <Link
@@ -304,7 +304,7 @@ export function Header() {
                         <nav className="flex flex-col">
                             {[
                                 { href: "#features",         key: "nav.features" },
-                                { href: "/about",            key: "nav.about"    },
+                                { href: `/${language}/about`, key: "nav.about"    },
                                 { href: "/pricing",          key: "nav.pricing"  },
                                 { href: `/${language}/blog`, key: "nav.blog"     },
                             ].map((item) => (
@@ -333,7 +333,7 @@ export function Header() {
                                     {legalTopics.map((item) => (
                                         <Link
                                             key={item.href}
-                                            href={item.href}
+                                            href={`/${language}${item.href}`}
                                             onClick={() => setMobileOpen(false)}
                                             className="py-2 px-2 text-sm text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors"
                                         >
